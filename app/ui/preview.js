@@ -15,6 +15,7 @@ import {
   tabByPath,
   tabsOf,
 } from './state.js';
+import * as link from './link.js';
 
 const PICTURES = new Set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'bmp', 'ico', 'heic', 'tif', 'tiff', 'avif']);
 
@@ -40,8 +41,15 @@ const P = {
   bigWait: false,
   retried: false,
   lostLoads: 0,
+  srcFor: 0,
+  againFor: 0,
   lostTraces: [],
   width: 'full',
+  outKind: null,
+  outDoc: null,
+  loadDoc: null,
+  shownDoc: null,
+  pv: -1,
 };
 
 let iframe = null;
@@ -71,6 +79,7 @@ export function initPreview(hooks) {
 
 function send(msg) {
   P.out = msg.id;
+  P.outKind = msg.t;
   armWatchdog();
   iframe.contentWindow.postMessage(msg, '*');
 }
@@ -93,6 +102,7 @@ function pump() {
     const msg = { t: 'html', id: P.nextId++, html: tab.state.doc.toString() };
     if (P.pendingY !== null) msg.y = P.pendingY;
     P.pendingY = null;
+    P.outDoc = P.showing === tab.path ? tab.state.doc : null;
     send(msg);
   }
 }
@@ -163,13 +173,20 @@ export async function load() {
   P.pendingY = null;
   P.pendingCss.clear();
   P.sentCss.clear();
+  P.shownDoc = null;
+  P.loadDoc = null;
+  P.pv = -1;
+  link.onPageGone();
 
   if (project.folder) await invoke('add_root', { folder: project.folder });
+  const page = pageTabOf(project);
+  const loading = page && P.showing === page.path ? page.state.doc : null;
   await syncBuffers(project);
   if (P.loadId !== id) {
     note(`load ${id} gave way to ${P.loadId}`);
     return;
   }
+  P.loadDoc = loading;
   if (project.folder) {
     invoke('folder_stamp', { folder: project.folder }).then((stamp) => {
       project.stamp = stamp;
@@ -178,9 +195,23 @@ export async function load() {
 
   showFrame(true);
   iframe.src = urlFor(P.showing, id);
+  P.srcFor = id;
   note(`src ${iframe.src}`);
   armReadyWait(id);
   updateHeader();
+}
+
+// An older page that finishes loading after the new address was set can take
+// the new navigation's place, and then no ready ever comes for it. Seen on
+// WebKitGTK and WebView2 when two loads start within about 30 ms. The address is
+// set again at once, one time per load, instead of waiting for the retry.
+function sendAgain(v) {
+  const id = P.loadId;
+  if (P.phase !== 'loading' || P.srcFor !== id || P.againFor === id || !(typeof v === 'number' && v < id)) return;
+  P.againFor = id;
+  iframe.src = `${urlFor(P.showing, id)}&again=1`;
+  note(`again ${iframe.src}`);
+  armReadyWait(id);
 }
 
 const FIRST_READY_MS = 3000;
@@ -213,20 +244,30 @@ function onMessage(event) {
   switch (msg.t) {
     case 'ready':
       note(`ready v${msg.v}, loadId ${P.loadId}`);
-      if (msg.v !== P.loadId) return;
+      if (msg.v !== P.loadId) {
+        sendAgain(msg.v);
+        return;
+      }
       onReady(msg);
       break;
-    case 'done':
+    case 'done': {
       if (msg.id !== P.out) return;
+      const kind = P.outKind;
       P.out = null;
+      P.outKind = null;
+      if (kind === 'html') P.shownDoc = P.outDoc;
+      P.outDoc = null;
+      if (typeof msg.pv === 'number') P.pv = msg.pv;
       clearWatchdog();
       P.lastMs = msg.ms;
       applyInfo(msg);
       pump();
       goToPlace();
+      link.onPageDone(kind, msg);
       updateHeader();
       if (host.onDone) host.onDone(msg);
       break;
+    }
     case 'fail':
       if (msg.id === P.out) load();
       break;
@@ -251,6 +292,7 @@ function onMessage(event) {
       }
       break;
     default:
+      link.onHelperMessage(msg);
       break;
   }
 }
@@ -259,13 +301,48 @@ function onReady(msg) {
   clearReadyWait();
   P.retried = false;
   P.phase = 'live';
+  P.shownDoc = P.loadDoc;
+  P.loadDoc = null;
+  P.pv = typeof msg.pv === 'number' ? msg.pv : -1;
   const tab = pageTabOf(S.projects.get(P.projectId));
   if (tab && P.showing === tab.path) iframe.contentWindow.postMessage({ t: 'scroll', y: tab.pageY }, '*');
   applyInfo(msg);
   pump();
   goToPlace();
+  link.onPageReady(msg);
   updateHeader();
   if (host.onReady) host.onReady(msg);
+}
+
+// True when the page shows the page tab's latest text, so a page element and
+// a code element can be paired (PLAN "In step"). The document is compared by
+// identity: CodeMirror makes a new one on every change.
+export function inSync() {
+  if (P.phase !== 'live' || S.rightView === 'help') return false;
+  const page = pageTabOf(S.projects.get(P.projectId));
+  if (!page || P.showing !== page.path) return false;
+  return P.shownDoc === page.state.doc;
+}
+
+export function pageVersion() {
+  return P.pv;
+}
+
+export function showingPageTab() {
+  if (P.phase !== 'live') return false;
+  const page = pageTabOf(S.projects.get(P.projectId));
+  return !!page && P.showing === page.path;
+}
+
+export function linkedCss(tab) {
+  return P.lastLinks.includes(tab.name);
+}
+
+// False when the page is not live: the message is dropped and no reply comes.
+export function postToPage(msg) {
+  if (P.phase !== 'live' || !iframe || !iframe.contentWindow) return false;
+  iframe.contentWindow.postMessage(msg, '*');
+  return true;
 }
 
 function applyInfo(msg) {
@@ -337,6 +414,9 @@ function onNav(href) {
     P.out = null;
     clearWatchdog();
     clearReadyWait();
+    P.shownDoc = null;
+    P.pv = -1;
+    link.onPageGone();
     P.showing = path;
     iframe.src = urlFor(path, P.loadId);
     note(`picture ${iframe.src}`);
@@ -424,7 +504,9 @@ export function onTabSwitch(prev, next) {
   if (same) {
     if (isPage(next)) {
       project.pageTab = next.path;
+      const was = P.showing;
       P.showing = next.path;
+      if (was !== P.showing) link.onShowingChanged();
       if (P.phase === 'none') {
         load();
       } else {
@@ -433,6 +515,7 @@ export function onTabSwitch(prev, next) {
       }
     }
     pump();
+    link.onTabSwitch(prev, next);
     updateHeader();
     return;
   }
@@ -445,6 +528,7 @@ export function onTabSwitch(prev, next) {
   } else {
     goEmpty();
   }
+  link.onTabSwitch(prev, next);
   updateHeader();
 }
 
@@ -464,6 +548,12 @@ export function goEmpty() {
   P.lastLinks = [];
   P.hasStyle = false;
   P.hasScript = false;
+  P.outKind = null;
+  P.outDoc = null;
+  P.loadDoc = null;
+  P.shownDoc = null;
+  P.pv = -1;
+  link.onPageGone();
   showFrame(false);
   updateHeader();
 }
@@ -487,7 +577,9 @@ export function pageTabMoved(project) {
     goEmpty();
     return;
   }
+  const was = P.showing;
   P.showing = page.path;
+  if (was !== P.showing) link.onShowingChanged();
   if (P.phase === 'none') {
     load();
   } else {
@@ -500,6 +592,7 @@ export function pageTabMoved(project) {
 export function reloadAfterMove(project, pathMap) {
   if (project.id !== P.projectId) return;
   if (P.showing && pathMap.has(P.showing)) P.showing = pathMap.get(P.showing);
+  link.onPathsMoved(pathMap);
   const moved = new Set();
   for (const old of P.sentCss) moved.add(pathMap.get(old) || old);
   P.sentCss = moved;
@@ -540,6 +633,8 @@ function hintFor(tab, project) {
   if (page && S.ed && S.ed.hintActive(page === tab ? S.ed.view.state : page.state)) {
     return 'The mistake changes your page too';
   }
+  const seeing = link.headerHint(tab, project);
+  if (seeing) return seeing;
   if (kindOf(tab).previewMode === 'swap') {
     return P.lastLinks.includes(tab.name)
       ? `${tab.name} changes how this page looks`
@@ -571,6 +666,16 @@ export function updateHeader() {
   setText(label, single ? 'Showing the practice page' : `Showing ${baseName(P.showing)}`);
   setText(hint, hintFor(tab, project));
   updatePracticeBar(tab);
+  updatePointButton(project);
+}
+
+// Point needs the page tab's own page: a page reached by a link has no code open.
+function updatePointButton(project) {
+  const button = document.getElementById('btn-point');
+  if (!button || iframe.style.visibility === 'hidden') return;
+  const page = pageTabOf(project);
+  const off = !page || P.showing !== page.path;
+  if (button.disabled !== off) button.disabled = off;
 }
 
 function updatePracticeBar(tab) {
@@ -602,7 +707,7 @@ function updatePracticeBar(tab) {
 const WIDTHS = { phone: 375, tablet: 768 };
 
 function setWidthButtons(on) {
-  for (const id of ['w-phone', 'w-tablet', 'w-full', 'btn-safari']) {
+  for (const id of ['btn-point', 'btn-boxes', 'w-phone', 'w-tablet', 'w-full', 'btn-safari']) {
     const button = document.getElementById(id);
     if (button) button.disabled = !on;
   }
@@ -656,8 +761,16 @@ export function setWidth(name) {
 
 const probes = new Map();
 
-export function __probe(sel, prop) {
-  return ask({ t: 'probe', sel, prop });
+export function __probe(sel, prop, extra) {
+  return ask({ ...extra, t: 'probe', sel, prop });
+}
+
+export function __hover(sel, index = 0) {
+  return ask({ t: 'hover', sel, index });
+}
+
+export function __pickAt(sel, index = 0) {
+  return ask({ t: 'pickAt', sel, index });
 }
 
 export function __click(sel, index = 0) {

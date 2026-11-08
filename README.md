@@ -10,6 +10,7 @@ A child opens or creates `.html` and `.css` files, edits them in tabs, and watch
 
 - **Help that teaches.** Lessons and "I want to..." recipes, with examples to open and change.
 - **Things to start from.** Blank projects, with the style inside the page or in its own file, sample projects, and a gallery of finished multi-page websites to look inside and change.
+- **See how it fits.** Fold arrows, the two tags of an element lit together, a "You are inside" row, the page and the code lighting each other up, explanations on hover, and Show the Boxes.
 - **Work is not lost.** Files are saved through a temporary file, a first save never merges into a folder that already exists, and closing unsaved work asks first.
 - **Safe to experiment.** Scripts do not run in the preview. The app teaches HTML and CSS only, and links to outside sites open in your web browser.
 
@@ -83,7 +84,7 @@ The preview is drawn by macOS's own WebKit. Deeper detail: [docs/ARCHITECTURE.md
 
 ## Status
 
-Early and in use, in the 0.1 series. The version is in `app/src-tauri/tauri.conf.json`. Some speed targets on a 2016 Intel MacBook Pro are not met yet; [docs/BACKLOG.md](docs/BACKLOG.md) has the list.
+Early and in use, in the 0.2 series. The version is in `app/src-tauri/tauri.conf.json`. Some speed targets on a 2016 Intel MacBook Pro are not met yet; [docs/BACKLOG.md](docs/BACKLOG.md) has the list.
 
 ## Licence
 

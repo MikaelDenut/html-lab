@@ -80,6 +80,16 @@
   --tint-b: #DCF1EF;
   --scrim: rgba(20, 35, 60, .5);
   --dlg-shadow: 0 18px 50px rgba(20, 35, 60, .3);
+
+  --pair: #DCF1EF;
+  --pair-line: #5BA8A3;
+  --band: #F2F8F7;
+  --band-edge: #8CC9C3;
+  --lit: #E3F3F1;
+  --lit-edge: #0B6E69;
+  --lit-tag: #C4E7E2;
+  --pill: #E4EAF2;
+  --pill-ink: #4A5A73;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -141,6 +151,16 @@
     --tint-a: #1F3A66;
     --tint-b: #134E4A;
     --scrim: rgba(0, 0, 0, .6);
+
+    --pair: #1D4747;
+    --pair-line: #3FA597;
+    --band: #1A2D45;
+    --band-edge: #3A6F82;
+    --lit: #173A40;
+    --lit-edge: #5EEAD4;
+    --lit-tag: #1F5A57;
+    --pill: #22324B;
+    --pill-ink: #A9B7CB;
   }
 }
 
@@ -876,7 +896,7 @@ body.divider-drag iframe {
 .hint-box {
   display: flex;
   gap: 12px;
-  margin: 6px 16px 8px 54px;
+  margin: 6px 16px 8px 72px;
   padding: 14px 16px;
   border-radius: 12px;
   background: var(--hintBg);
@@ -1058,12 +1078,23 @@ body.divider-drag iframe {
 }
 
 .page-title {
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 600;
   white-space: nowrap;
+}
+
+.page-title > svg {
+  flex: none;
+}
+
+#page-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #page-hint {
@@ -1087,6 +1118,14 @@ body.divider-drag iframe {
   width: 32px;
   height: 36px;
   border-radius: 8px;
+}
+
+.page-btn-gap {
+  flex: none;
+  width: 1px;
+  height: 20px;
+  margin: 0 5px;
+  background: var(--line);
 }
 
 .ico-32[aria-pressed="true"] {
@@ -2590,4 +2629,313 @@ body.divider-drag iframe {
 
 .find-close:hover {
   background: var(--hover-tb);
+}
+
+/* ---- 0.2.0: seeing how it fits. Band comes before lit, so a lit line wins. ---- */
+
+/* HTML Lab 0.2.0: fold gutter, fold pill, section band, "You are inside" row.
+   Selectors start with .cm-editor so they beat CodeMirror's base theme (".cm-foldGutter span" pads and
+   sets the cursor). No transitions or animations. */
+
+/* Fold gutter, 18 wide, between the line numbers and the code. */
+.cm-editor .cm-foldGutter .cm-gutterElement {
+  box-sizing: border-box;
+  width: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.cm-editor .cm-foldGutter .fold-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: var(--code-lh);
+  padding: 0;
+  color: var(--num);
+  cursor: pointer;
+}
+
+.cm-editor .cm-foldGutter .cm-gutterElement:hover .fold-mark {
+  color: var(--ink);
+}
+
+/* "12 lines folded". A click unfolds. Oops: the mistake colors and the oops icon in front. */
+.cm-editor .fold-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 4px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--pill);
+  color: var(--pill-ink);
+  font-family: var(--font-ui);
+  font-size: 0.8125em;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.cm-editor .fold-pill:hover {
+  color: var(--ink);
+}
+
+.cm-editor .fold-pill.oops {
+  background: var(--hintBg);
+  color: var(--amber);
+  box-shadow: inset 0 0 0 1px var(--hintLine);
+}
+
+/* Section band: every line of the element or rule, with a 3 px bar on its left. A solid line background
+   would hide the selection layer, so with a selection only the bar stays. */
+.cm-editor .cm-line.cm-band {
+  background-color: var(--band);
+  box-shadow: inset 3px 0 0 var(--band-edge);
+}
+
+.cm-editor.has-selection .cm-line.cm-band {
+  background-color: transparent;
+}
+
+.cm-editor .cm-line.cm-band-first {
+  border-top-right-radius: 6px;
+}
+
+.cm-editor .cm-line.cm-band-last {
+  border-bottom-right-radius: 6px;
+}
+
+/* "You are inside" row, 28 high, between #editor-host and #statusline. */
+#inside-line {
+  flex: none;
+  box-sizing: border-box;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  color: var(--ink2);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+#inside-line > * {
+  flex: none;
+}
+
+/* inside.js measures each child once and drops the first crumbs that do not fit, so children never
+   shrink and spacing is padding (counted in their widths), not margin or gap. */
+#inside-line .inside-crumbs {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+#inside-line .inside-crumbs > * {
+  flex: none;
+}
+
+#inside-line .inside-crumb {
+  height: 24px;
+  margin: 0;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--c-tag);
+  font-family: var(--font-code);
+  font-size: 14px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+#inside-line .inside-crumb:hover {
+  background: var(--hover-tab);
+}
+
+#inside-line .inside-crumb:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+@supports not selector(:focus-visible) {
+  #inside-line .inside-crumb:focus {
+    outline-offset: -3px;
+  }
+}
+
+#inside-line .inside-sep {
+  padding: 0 2px;
+  color: var(--num);
+}
+
+#inside-line .inside-more {
+  padding: 0 4px;
+  color: var(--ink2);
+}
+
+#inside-line .inside-none {
+  color: var(--ink2);
+}
+
+/* link-editor.js: the lines the mouse points at on the page, and the line chip. */
+
+.cm-editor .cm-line.cm-lit {
+  background-color: var(--lit);
+  box-shadow: inset 3px 0 0 var(--lit-edge);
+}
+
+.cm-editor .cm-line.cm-lit-first {
+  border-top-left-radius: 3px;
+}
+
+.cm-editor .cm-line.cm-lit-last {
+  border-bottom-left-radius: 3px;
+}
+
+.cm-editor .cm-lit-tag {
+  background-color: var(--lit-tag);
+  border-radius: 3px;
+}
+
+/* The selection is drawn under the lines, so the lit colors step aside while there is one,
+   the same way the active line does. The bar and an underline keep the element marked. */
+.cm-editor.has-selection .cm-line.cm-lit {
+  background-color: transparent;
+}
+
+.cm-editor.has-selection .cm-lit-tag {
+  background-color: transparent;
+  box-shadow: inset 0 -2px 0 var(--lit-edge);
+}
+
+/* top or bottom is set inline from the scroller's box, so an open Find bar stays clear. */
+.cm-editor .lit-chip {
+  position: absolute;
+  right: 20px;
+  z-index: 250;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  margin: 0;
+  padding: 0 10px 0 12px;
+  border: 1px solid var(--lit-edge);
+  border-radius: 14px;
+  background-color: var(--pill);
+  color: var(--pill-ink);
+  box-shadow: 0 1px 4px rgba(20, 35, 60, 0.25);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cm-editor .lit-chip-up {
+  top: 8px;
+}
+
+.cm-editor .lit-chip-down {
+  bottom: 8px;
+}
+
+.cm-editor .lit-chip:hover {
+  border-color: var(--ink2);
+}
+
+.cm-editor .lit-chip .icon {
+  flex: none;
+}
+
+/* Explanations and picture previews on hover in the code (ui-src/explain.js).
+   Both sit inside CodeMirror's .cm-tooltip box in #tooltip-root, which gives the panel
+   background, the 1px line border, the 8px radius and the code font. */
+.explain-tip {
+  max-width: 300px;
+  padding: 10px 12px 12px;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 22px;
+  white-space: normal;
+}
+
+.explain-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explain-swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--num);
+}
+
+.explain-code {
+  min-width: 0;
+  font-family: var(--font-code);
+  font-size: 15px;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.explain-means {
+  margin-top: 2px;
+}
+
+.explain-more {
+  height: 32px;
+  margin-top: 10px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--brand);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.explain-more:hover {
+  background: var(--hover-tab);
+}
+
+.picture-tip {
+  padding: 6px;
+}
+
+/* The page is always white, also in dark mode, so a picture shows on white as it does there. */
+.picture-img {
+  display: block;
+  max-width: 160px;
+  max-height: 120px;
+  background: #fff;
+}
+
+.picture-msg {
+  max-width: 260px;
+  margin: 0;
+  padding: 4px 6px;
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 22px;
+  white-space: normal;
+  word-break: break-word;
 }

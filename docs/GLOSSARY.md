@@ -26,6 +26,9 @@ would assume. Paths are relative to `app/`.
 | `__new` | Path prefix for a project with no folder: `__new/<projectId>/<file>` | A real folder |
 | `__help` | Path prefix for Help results: `__help/<topicId>/<file>`. These get no helper and an empty `sandbox` | A file on disk |
 | page tab | `pageTab`: the HTML tab the preview follows. A CSS tab leaves it in place | The tab that has focus |
+| in sync | `inSync()` in `ui/preview.js`: the page shows exactly the page tab's current text (same `EditorState.doc` object), Help is not showing, and the page is live. Page lighting acts only then | Saved |
+| pv | Page version: a number the helper bumps on every change it applies, sent in `ready` and `done`. Replies carrying an older `pv` are dropped | The app version |
+| hl-layer | The helper's own element, with a closed shadow root, where outlines, box labels and the Point cursor are drawn. It is not counted as an element of the page | A page element of the user's |
 
 ## Projects and files
 
@@ -65,6 +68,13 @@ would assume. Paths are relative to `app/`.
 | Typing Helpers | Preference for auto-closing tags and similar | The preview helper |
 | Help on This Word | Opens the Help topic for the word under the cursor (Cmd+Shift+L) | Help search |
 | Keep working | The button that cancels a close or quit | A Save |
+| fold pill | The "12 lines folded" mark that replaces a folded part. A click unfolds it. It turns into an Oops pill when a mistake hides inside | A tooltip |
+| band | The soft background that shows a whole element or CSS rule while the cursor is on its name or the mouse is on its fold arrow | A selection |
+| lit lines | The lines of the element the mouse is on in the page, lit in the code. A "Line 40" chip leads to them when they are off screen | The cursor's line highlight |
+| You are inside | The row under the code naming the elements around the cursor, "html › body › p", or the CSS rule and its `@media` (`ui/inside.js`) | Breadcrumbs of folders |
+| Point at the Page | A mode (header button, View menu) in which a click on the page selects that element's code instead of following links | Clicking a link in the page |
+| Show the Boxes | A check item (header button, View menu) that outlines every box on the page in four colours by depth | The browser's developer tools |
+| explanation | The box shown when the mouse rests on a tag name, CSS word, colour name or picture file name, with "More in Help" | A mistake hint |
 
 ## Testing and release
 

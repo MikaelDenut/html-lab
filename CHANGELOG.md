@@ -10,6 +10,41 @@ All notable changes to HTML Lab. The format follows Keep a Changelog. Every chan
 that leaves the build folder bumps the version by one, and 0.1.9 is followed by
 0.2.0. Decisions are recorded in [docs/adr/](docs/adr/).
 
+## [0.2.0] - 2026-11-08
+
+Three planned steps (0.1.8, 0.1.9 and 0.2.0) released as one version.
+
+### Added
+
+- Fold arrows next to the line numbers. A part such as `<body>` to `</body>` folds into
+  one line with a pill, "12 lines folded". A click on the pill unfolds it. The pill
+  turns into an Oops pill when a mistake hides inside.
+- Edit menu: Fold This Part (Cmd+Alt+[), Unfold This Part (Cmd+Alt+]) and Unfold
+  Everything. On Windows and Linux the keys are Ctrl+Shift+[ and Ctrl+Shift+].
+- Both tag names of an element light up together while the cursor is on one of them.
+- A soft band shows a whole element or CSS rule while the cursor is on its name or the
+  mouse is on its fold arrow.
+- A "You are inside" row under the code: "html › body › main › p", or the CSS rule and
+  its `@media`. A click on a name selects that part of the code.
+- The mouse on the page lights up that element's code while the page's tab is active.
+  When that code is off screen, a chip such as "Line 40" takes you to it.
+- Point at the Page (View menu and a header button): click something on the page to
+  select its code.
+- Moving the cursor into another element outlines it on the page for 2 seconds. The cursor in a CSS
+  rule outlines what the rule styles, and the header says how many things it styles.
+- Explanations: rest the mouse on a tag name, a CSS word or a color name to see what it
+  means, with "More in Help". Resting on a picture's file name shows the picture.
+- Show the Boxes (View menu and a header button) outlines every box on the page, in four
+  colors by depth.
+
+### Fixed
+
+- On Windows and Linux the page kept its built-in fonts only until the first change.
+  It keeps them now, and a page without style no longer says "The style is inside this
+  page".
+- A page shown right after another one no longer waits 3 seconds when the first one
+  finishes loading late. Seen on Windows and Linux.
+
 ## [0.1.7] - 2026-11-08
 
 ### Added

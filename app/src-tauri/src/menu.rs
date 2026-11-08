@@ -10,10 +10,23 @@ const BROWSER_LABEL: &str = if cfg!(target_os = "macos") {
     "Open in Browser"
 };
 
+// Ctrl+Alt is AltGr on Windows and Linux, and AltGr+8 types `[` on a Finnish keyboard.
+const FOLD_KEY: &str = if cfg!(target_os = "macos") {
+    "Cmd+Alt+["
+} else {
+    "Ctrl+Shift+["
+};
+const UNFOLD_KEY: &str = if cfg!(target_os = "macos") {
+    "Cmd+Alt+]"
+} else {
+    "Ctrl+Shift+]"
+};
+
 pub struct MenuHandles<R: Runtime> {
     pub items: Vec<(&'static str, MenuItem<R>)>,
     pub typing_helpers: CheckMenuItem<R>,
     pub autosave: CheckMenuItem<R>,
+    pub boxes: CheckMenuItem<R>,
 }
 
 pub const FILE_ITEMS: &[(&str, &str, Option<&str>)] = &[
@@ -43,6 +56,12 @@ pub const EDIT_CODE: &[(&str, &str, Option<&str>)] = &[
     ("comment", "Comment Line", Some("CmdOrCtrl+/")),
     ("tidy", "Tidy Indents", Some("CmdOrCtrl+Shift+I")),
 ];
+pub const EDIT_FOLD: &[(&str, &str, Option<&str>)] = &[
+    ("fold", "Fold This Part", Some(FOLD_KEY)),
+    ("unfold", "Unfold This Part", Some(UNFOLD_KEY)),
+    ("unfold-all", "Unfold Everything", None),
+];
+pub const VIEW_SEE: &[(&str, &str, Option<&str>)] = &[("point", "Point at the Page", None)];
 pub const VIEW_ITEMS: &[(&str, &str, Option<&str>)] = &[
     ("my-page", "My Page", Some("CmdOrCtrl+Shift+M")),
     ("help", "Help", Some("CmdOrCtrl+Shift+H")),
@@ -91,6 +110,10 @@ const NEEDS_TAB: &[&str] = &[
     "close-tab",
     "show-folder",
     "tidy",
+    "fold",
+    "unfold",
+    "unfold-all",
+    "point",
     "safari",
     "help-word",
 ];
@@ -108,6 +131,10 @@ const APP_COMMANDS: &[&str] = &[
     "replace",
     "comment",
     "tidy",
+    "fold",
+    "unfold",
+    "unfold-all",
+    "point",
     "my-page",
     "help",
     "bigger",
@@ -165,6 +192,8 @@ pub fn build<R: Runtime>(
     let select_all = make(EDIT_ITEMS)?;
     let find = make(EDIT_FIND)?;
     let code = make(EDIT_CODE)?;
+    let fold = make(EDIT_FOLD)?;
+    let see = make(VIEW_SEE)?;
     let view_a = make(VIEW_ITEMS)?;
     let view_b = make(VIEW_TEXT)?;
     let view_c = make(VIEW_WIDTHS)?;
@@ -184,6 +213,10 @@ pub fn build<R: Runtime>(
         .build(app)?;
     let typing_item = CheckMenuItemBuilder::with_id("typing-helpers", "Typing Helpers")
         .checked(typing_helpers)
+        .build(app)?;
+    let boxes_item = CheckMenuItemBuilder::with_id("boxes", "Show the Boxes")
+        .checked(false)
+        .enabled(false)
         .build(app)?;
 
     let file_menu = {
@@ -222,6 +255,10 @@ pub fn build<R: Runtime>(
         for i in &code {
             b = b.item(i);
         }
+        b = b.separator();
+        for i in &fold {
+            b = b.item(i);
+        }
         b.build()?
     };
 
@@ -235,6 +272,10 @@ pub fn build<R: Runtime>(
             b = b.item(i);
         }
         b = b.separator().item(&typing_item).separator();
+        for i in &see {
+            b = b.item(i);
+        }
+        b = b.item(&boxes_item).separator();
         for i in &view_c {
             b = b.item(i);
         }
@@ -301,6 +342,7 @@ pub fn build<R: Runtime>(
             items,
             typing_helpers: typing_item,
             autosave: autosave_item,
+            boxes: boxes_item,
         },
     ))
 }
@@ -331,6 +373,8 @@ mod tests {
             EDIT_ITEMS,
             EDIT_FIND,
             EDIT_CODE,
+            EDIT_FOLD,
+            VIEW_SEE,
             VIEW_ITEMS,
             VIEW_TEXT,
             VIEW_WIDTHS,
@@ -384,5 +428,23 @@ mod tests {
         assert!(item_enabled("new", false, false, false));
         assert!(item_enabled("undo", true, true, true));
         assert!(item_enabled("select-all", false, false, true));
+        for id in ["fold", "unfold", "unfold-all", "point"] {
+            assert!(!item_enabled(id, false, false, false), "{id} without a tab");
+            assert!(item_enabled(id, true, false, false), "{id} with a tab");
+            assert!(!item_enabled(id, true, true, true), "{id} under a dialog");
+        }
+    }
+
+    #[test]
+    fn fold_keys_avoid_altgr_off_the_mac() {
+        let keys: Vec<&str> = EDIT_FOLD.iter().filter_map(|(_, _, a)| *a).collect();
+        assert_eq!(keys.len(), 2);
+        for key in keys {
+            if cfg!(target_os = "macos") {
+                assert!(key.starts_with("Cmd+Alt+"), "{key}");
+            } else {
+                assert!(key.starts_with("Ctrl+Shift+"), "{key}");
+            }
+        }
     }
 }

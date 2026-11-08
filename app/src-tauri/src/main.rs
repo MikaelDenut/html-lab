@@ -310,17 +310,23 @@ fn localized(value: serde_json::Value) -> serde_json::Value {
         return value;
     }
     match value {
-        Value::String(text) => Value::String(
-            text.replace("Cmd+", "Ctrl+")
-                .replace("Safari", "your browser")
-                .replace(" Mac", " computer"),
-        ),
+        Value::String(text) => Value::String(localize_text(&text)),
         Value::Array(list) => Value::Array(list.into_iter().map(localized).collect()),
         Value::Object(map) => {
             Value::Object(map.into_iter().map(|(k, v)| (k, localized(v))).collect())
         }
         other => other,
     }
+}
+
+// Help text as Windows and Linux show it. The fold keys go first: there they are
+// Ctrl+Shift, because Ctrl+Alt is AltGr (see FOLD_KEY in menu.rs).
+fn localize_text(text: &str) -> String {
+    text.replace("Cmd+Alt+[", "Ctrl+Shift+[")
+        .replace("Cmd+Alt+]", "Ctrl+Shift+]")
+        .replace("Cmd+", "Ctrl+")
+        .replace("Safari", "your browser")
+        .replace(" Mac", " computer")
 }
 
 #[tauri::command(async)]
@@ -380,6 +386,10 @@ struct MenuState {
     any_changed: bool,
     typing_helpers: bool,
     autosave: bool,
+    #[serde(default)]
+    boxes: bool,
+    #[serde(default)]
+    pointable: bool,
 }
 
 #[tauri::command(async)]
@@ -390,12 +400,13 @@ fn set_menu_state(app: AppHandle, menu_state: MenuState) {
     let guard = st.menu.lock().unwrap();
     if let Some(handles) = guard.as_ref() {
         for (id, item) in &handles.items {
+            // Point needs the page tab's own page, not one reached by a link.
             let on = menu::item_enabled(
                 id,
                 menu_state.has_tabs,
                 menu_state.has_folder,
                 menu_state.dialog_open,
-            );
+            ) && (*id != "point" || menu_state.pointable);
             let _ = item.set_enabled(on);
         }
         let _ = handles
@@ -404,6 +415,10 @@ fn set_menu_state(app: AppHandle, menu_state: MenuState) {
         let _ = handles.autosave.set_checked(menu_state.autosave);
         let _ = handles.typing_helpers.set_enabled(!menu_state.dialog_open);
         let _ = handles.autosave.set_enabled(!menu_state.dialog_open);
+        let _ = handles.boxes.set_checked(menu_state.boxes);
+        let _ = handles
+            .boxes
+            .set_enabled(!menu_state.dialog_open && menu_state.has_tabs);
     }
 }
 
@@ -1169,4 +1184,18 @@ fn main() {
         }
         _ => {}
     });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::localize_text;
+
+    #[test]
+    fn help_keys_match_the_menu_off_the_mac() {
+        assert_eq!(localize_text("Cmd+Alt+["), "Ctrl+Shift+[");
+        assert_eq!(localize_text("Cmd+Alt+]"), "Ctrl+Shift+]");
+        assert_eq!(localize_text("Cmd+Shift+I"), "Ctrl+Shift+I");
+        assert_eq!(localize_text("Open in Safari"), "Open in your browser");
+        assert_eq!(localize_text("on your Mac"), "on your computer");
+    }
 }

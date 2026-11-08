@@ -2252,6 +2252,16 @@
           "color": null
         },
         {
+          "code": "Cmd+Alt+[",
+          "means": "Fold the part of your code you are in",
+          "color": null
+        },
+        {
+          "code": "Cmd+Alt+]",
+          "means": "Unfold it again",
+          "color": null
+        },
+        {
           "code": "Cmd+Shift+M",
           "means": "Show my page",
           "color": null
@@ -4021,6 +4031,134 @@
           "hidden": false
         }
       ]
+    },
+    {
+      "id": "want-fold-code",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Hide part of my code for a while",
+      "short": "Fold code",
+      "keywords": "fold unfold hide arrow long collapse",
+      "explain": "Fold a part of your code, and the lines inside it hide for a while. A part goes from an opening tag to its closing tag. Your code is still all there, and your page does not change.",
+      "ways": [
+        {
+          "title": "Fold a part",
+          "steps": [
+            {
+              "say": "Try it with this list. Put it in the body of your page:",
+              "lang": "html",
+              "text": "<ul>\n  <li>Saturn</li>\n  <li>Mars</li>\n  <li>Earth</li>\n</ul>"
+            },
+            {
+              "say": "Click the little arrow next to the line numbers, on the line with **<ul>**."
+            },
+            {
+              "say": "The three lines inside the list hide. You see \"3 lines folded\" in their place."
+            }
+          ]
+        },
+        {
+          "title": "Unfold it again",
+          "steps": [
+            {
+              "say": "Click \"3 lines folded\" or the little arrow. The lines come back."
+            }
+          ]
+        },
+        {
+          "title": "Unfold everything",
+          "steps": [
+            {
+              "say": "Choose Unfold Everything in the Edit menu. Every folded part in this file unfolds."
+            }
+          ]
+        }
+      ],
+      "tip": "Is something wrong inside a folded part? Then you see a ! in a circle on it. Click it to see what is wrong.",
+      "learn": "web-page"
+    },
+    {
+      "id": "want-find-code",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Find the code for something on my page",
+      "short": "Find the code",
+      "keywords": "point pointing hand where mouse",
+      "explain": "Each part of your page comes from a tag in your code. HTML Lab can show you which tag it is.",
+      "ways": [
+        {
+          "title": "With your mouse",
+          "steps": [
+            {
+              "say": "Try it with this. Put it in the body of your page:",
+              "lang": "html",
+              "text": "<h1>My planets</h1>\n<p>Saturn has <strong>rings</strong>.</p>"
+            },
+            {
+              "say": "Press My page at the top of the window. Then move your mouse onto the word rings."
+            },
+            {
+              "say": "A thin line goes around it, and the code for it lights up."
+            }
+          ]
+        },
+        {
+          "title": "With the Point button",
+          "steps": [
+            {
+              "say": "Press My page at the top of the window. Then press the Point button, the pointing hand above your page."
+            },
+            {
+              "say": "Click something on your page, like the word rings. Your code jumps to its opening tag."
+            }
+          ]
+        }
+      ],
+      "tip": "In a CSS file, the code does not light up. Click the tab of your page first, or use the Point button.",
+      "learn": "web-page"
+    },
+    {
+      "id": "want-see-boxes",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "See the boxes on my page",
+      "short": "See the boxes",
+      "keywords": "outline show nested layout structure",
+      "explain": "Every tag on your page is a box, and boxes sit inside boxes. HTML Lab can draw a line around each box, so you see how your page is built. Your code does not change.",
+      "ways": [
+        {
+          "title": "Turn the boxes on",
+          "steps": [
+            {
+              "say": "Try it with this. Put it in the body of your page:",
+              "lang": "html",
+              "text": "<main>\n  <h1>My planets</h1>\n  <p>Saturn has <strong>rings</strong>.</p>\n</main>"
+            },
+            {
+              "say": "Press My page at the top of the window. Then choose Show the Boxes in the View menu."
+            },
+            {
+              "say": "A line goes around every box. Big boxes show their tag's name too."
+            },
+            {
+              "say": "A box inside another box gets a new color. Here **h1** and **p** sit inside **main**."
+            }
+          ]
+        },
+        {
+          "title": "Turn the boxes off",
+          "steps": [
+            {
+              "say": "The boxes stay on while you change your code. To turn them off, choose Show the Boxes in the View menu again."
+            }
+          ]
+        }
+      ],
+      "tip": "The Boxes button above your page works too. It is the square with little squares on its corners.",
+      "learn": "box"
     }
   ]
 }

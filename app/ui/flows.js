@@ -19,6 +19,7 @@ import {
   tabsOf,
 } from './state.js';
 import * as preview from './preview.js';
+import { updateInside } from './inside.js';
 import { firstPageOf, forgetActive, noteDocChange, renderStrip, switchTo, syncMenu, updateStatus } from './tabs.js';
 import {
   cancelDialog,
@@ -719,6 +720,7 @@ function removeTab(tab) {
       switchToAfterClose(next, tab);
     } else {
       preview.reset();
+      updateInside();
     }
   }
   renderStrip();
@@ -731,6 +733,7 @@ function removeTab(tab) {
 function switchToAfterClose(next, closed) {
   S.activePath = next.path;
   S.ed.show(next);
+  updateInside();
   if (!S.dialogOpen) S.ed.view.focus();
   preview.onTabSwitch(closed, next);
 }

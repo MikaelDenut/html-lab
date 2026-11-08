@@ -22,7 +22,7 @@ fn write_fonts() {
             let path = dir.join(file).canonicalize().unwrap();
             writeln!(table, "({file:?}, include_bytes!({:?})),", path.to_str().unwrap()).unwrap();
         }
-        style.push_str("<style>");
+        style.push_str("<style data-hl-fonts>");
         for face in &faces {
             let mac = face["mac"].as_str().unwrap();
             write!(

@@ -80,7 +80,9 @@ One owner per concern.
 | `app.js` | Boot (`boot`, `:380`), which screens show (`layout`, `:73`), menu command dispatch (`COMMANDS`, `:176`), loading the editor bundle (`whenEditor`, `:35`) |
 | `flows.js` | The order of steps in New, Open, Save, Close, Quit, Try it and autosave |
 | `tabs.js` | The tab strip, the status line, and the single sender of `set_menu_state` |
-| `preview.js` | The preview update loop and the page header |
+| `preview.js` | The preview update loop and the page header. Knows which text the page shows (`inSync`, `pageVersion`) |
+| `link.js` | Page and code lighting each other up (0.2.0): hover on the page, Point at the Page, the 2 second outline, CSS rule counts, Show the Boxes. Talks to the page only through `preview.postToPage`, and acts only while `inSync()` holds |
+| `inside.js` | The "You are inside" row under the code |
 | `dialogs.js` | All in-app dialogs. Takes rules through callbacks, never imports `api.js` |
 | `help.js` | The Help panel. Receives Tauri access through `deps`, never imports `api.js` |
 | `views.js` | Pure string builders |
@@ -92,7 +94,11 @@ One owner per concern.
 |---|---|---|
 | `editor.js` | `ui/editor.bundle.js` | The CodeMirror setup, one view with one `EditorState` per tab, `languageFor`, Tidy |
 | `hints.js` | `ui/editor.bundle.js` | Mistake hints (`findMistake`, `:67`) and the unfinished-tag test (`unfinishedTagAt`, `:17`), which the update loop reuses at `ui/preview.js:412` |
+| `structure.js` | `ui/editor.bundle.js` | Fold arrows, fold pills (with the Oops pill), the soft band, `insidePath`, `cssRuleAt` |
+| `link-editor.js` | `ui/editor.bundle.js` | The editor half of page lighting: `codeElements` (elements in code order), `alignPage` (code list against the page's list), the lit lines and the tag-name pair |
+| `explain.js` | `ui/editor.bundle.js` | Explanations on hover for tag names, CSS words, colour names and picture file names |
 | `helper.js` | `src-tauri/helper.min.js` | Everything that runs inside the learner's page |
+| `helper-inspect.js` | `src-tauri/helper.min.js` | The page half of page lighting: element numbering, hover, pick, outlines and box labels, drawn in a `<hl-layer>` with a closed shadow root |
 
 Both built files are tracked in git, and both are rebuilt by esbuild at `scripts/sign-notarize.sh:16` and `:17`.
 
@@ -107,11 +113,14 @@ Allow-list for imports. A new edge is a decision, not a convenience.
 | `ui/api.js` | Only `window.__TAURI__` |
 | `ui/state.js`, `ui/views.js`, `ui/help.js` | No project imports (`grep -n "import " ui/*.js`) |
 | `ui/dialogs.js` | `views.js` |
-| `ui/preview.js` | `api.js`, `state.js` |
-| `ui/tabs.js` | `api.js`, `state.js`, `views.js`, `help.js`, `preview.js` |
-| `ui/flows.js` | `api.js`, `state.js`, `preview.js`, `tabs.js`, `dialogs.js` |
+| `ui/link.js` | `state.js`. Everything else comes in as hooks through `initLink` |
+| `ui/inside.js` | Nothing at import time. The state comes in through `initInside` |
+| `ui/preview.js` | `api.js`, `state.js`, `link.js` |
+| `ui/tabs.js` | `api.js`, `state.js`, `views.js`, `help.js`, `preview.js`, `link.js`, `inside.js` |
+| `ui/flows.js` | `api.js`, `state.js`, `preview.js`, `tabs.js`, `dialogs.js`, `inside.js` |
 | `ui/app.js` | All of the above. Test harnesses load only through dynamic `import()` (`ui/app.js:446`, `:449`, `:452`) |
-| `ui-src/helper.js` | `morphdom` only. It talks to the app through `postMessage`, never through Tauri |
+| `ui-src/helper.js` | `morphdom` and `helper-inspect.js` only. It talks to the app through `postMessage`, never through Tauri |
+| `ui-src/structure.js`, `link-editor.js`, `explain.js` | CodeMirror packages only. App data (Help rows, picture URLs) comes in through `explainExtension`'s callbacks |
 
 Enforced by:
 
@@ -127,7 +136,7 @@ Known departures from the single-owner rule, measured 2026-11-08:
 
 ## The URL schemes
 
-Both are registered at `src-tauri/src/main.rs:964` and `:977`, and both answer on a blocking thread. The app window's own policy is `app.security.csp` in `src-tauri/tauri.conf.json:26`: frames may come only from `preview:`, and images from the app, `data:` and `gallery:`.
+Both are registered at `src-tauri/src/main.rs:964` and `:977`, and both answer on a blocking thread. The app window's own policy is `app.security.csp` in `src-tauri/tauri.conf.json:26`: frames may come only from `preview:`, and images from the app, `data:`, `gallery:` and `preview:` (the picture shown when the mouse rests on a picture's file name, 0.2.0).
 
 ### `preview://`
 
@@ -161,6 +170,22 @@ The helper (`ui-src/helper.js`):
 - catches clicks and turns them into `nav` or `ext` messages (`:149`);
 - posts `ready` after `DOMContentLoaded`, once linked sheets have loaded or failed, with a capped wait (`whenStyled`, `:218`). This is the one timer in the file, despite the comment at `:2`;
 - ignores messages from any source but the parent (`:130`). Both sides ignore unknown message types.
+
+### Page lighting (0.2.0)
+
+`helper-inspect.js` numbers the page's elements in document order, leaving out its own nodes (`<hl-layer>` and `style[data-hl-fonts]`). morphdom keys those own nodes by name, so they are never paired with the learner's elements and never discarded. Every change bumps a page version `pv`, sent in `ready` and `done`.
+
+The app asks once per `pv` for the list of names (`names`), and `link-editor.js` `alignPage` pairs it with the elements in the code. A number from the page is used only while `inSync()` holds and its `pv` is the current one, so a reply about older text is dropped rather than lighting the wrong line.
+
+| App to page | Page to app |
+|---|---|
+| `names` | `names` (list, `pv`) |
+| `mark` (number, `pv`): the 2 second outline | `over` (chain of numbers, `pv`), `out` |
+| `rule` (selector, or null to clear) | `ruled` (count, `pv`) |
+| `point` (on or off) | `pick` (chain, `pv`), `pointOff` (Esc in the page) |
+| `boxes` (on or off) | `boxed` (count, `pv`) |
+
+A `ruled` reply to an ask sent before a clear is dropped (`dropReplies` in `link.js`).
 
 ## The preview update loop
 

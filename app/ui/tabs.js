@@ -3,6 +3,8 @@ import { invoke } from './api.js';
 import { kindOf, projectOf, S, activeTab, activeProject, isChanged, tabByPath, tabsOf, isPage } from './state.js';
 import { tabHtml } from './views.js';
 import * as preview from './preview.js';
+import { boxesOn } from './link.js';
+import { updateInside } from './inside.js';
 
 const STATUS_TEXT = {
   fresh: { text: 'Not saved yet', mark: 'amber' },
@@ -92,6 +94,8 @@ export function syncMenu() {
     anyChanged: S.tabs.some(isChanged),
     typingHelpers: S.prefs.typingHelpers,
     autosave: S.prefs.autosave,
+    boxes: boxesOn(),
+    pointable: preview.showingPageTab(),
   };
   const key = JSON.stringify(state);
   if (key === lastMenu) return;
@@ -118,6 +122,7 @@ export function switchTo(path, { focus = true } = {}) {
   const mark = S.steps ? [performance.now()] : null;
   S.activePath = path;
   S.ed.show(next);
+  updateInside();
   if (mark) mark.push(performance.now());
   if (focus && !S.dialogOpen) S.ed.view.focus();
   if (mark) mark.push(performance.now());

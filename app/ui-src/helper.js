@@ -1,4 +1,5 @@
 import morphdom from 'morphdom';
+import { initInspect } from './helper-inspect.js';
 
 const me = document.currentScript;
 if (me) me.remove();
@@ -11,6 +12,8 @@ const overrides = new Map();
 function post(msg) {
   parentWin.postMessage(msg, '*');
 }
+
+const inspect = initInspect({ post });
 
 function localFileOf(href) {
   try {
@@ -41,7 +44,7 @@ function report(doc) {
   }
   return {
     links,
-    hasStyle: !!doc.querySelector('[style], style:not([data-hl-file])'),
+    hasStyle: !!doc.querySelector('[style]:not(hl-layer), style:not([data-hl-file]):not([data-hl-fonts])'),
     hasScript: !!doc.querySelector('script'),
   };
 }
@@ -59,10 +62,25 @@ function applyOverride(doc, file, css) {
   }
 }
 
+// The layer and the font style are the helper's own. A key makes morphdom never
+// pair them with an element of the page, and the discard hook keeps them.
+const OWN_KEY = '\u0000hl-';
+
+function nodeKey(node) {
+  if (!node) return undefined;
+  if (inspect.ownNode(node)) return OWN_KEY + node.nodeName;
+  // Never node.id: a form with a field named id returns that field.
+  return (node.getAttribute && node.getAttribute('id')) || undefined;
+}
+
 function morphOptions() {
   return {
+    getNodeKey: nodeKey,
     onBeforeElUpdated(from, to) {
       return !from.isEqualNode(to);
+    },
+    onBeforeNodeDiscarded(node) {
+      return !inspect.keepNode(node);
     },
   };
 }
@@ -78,7 +96,8 @@ function updateHtml(msg) {
     for (const [file, css] of overrides) applyOverride(doc, file, css);
     morphdom(document.documentElement, doc.documentElement, morphOptions());
     if (typeof msg.y === 'number') window.scrollTo(0, msg.y);
-    post({ t: 'done', id: msg.id, ms: performance.now() - start, ...report(document) });
+    inspect.afterUpdate('html');
+    post({ t: 'done', id: msg.id, ms: performance.now() - start, pv: inspect.pv, ...report(document) });
   } catch (e) {
     post({ t: 'fail', id: msg.id });
   }
@@ -89,7 +108,8 @@ function updateCss(msg) {
   try {
     overrides.set(msg.file, msg.css);
     applyOverride(document, msg.file, msg.css);
-    post({ t: 'done', id: msg.id, ms: performance.now() - start, ...report(document) });
+    inspect.afterUpdate('css');
+    post({ t: 'done', id: msg.id, ms: performance.now() - start, pv: inspect.pv, ...report(document) });
   } catch (e) {
     post({ t: 'fail', id: msg.id });
   }
@@ -98,9 +118,10 @@ function updateCss(msg) {
 function probe(msg) {
   const el = msg.sel ? document.querySelector(msg.sel) : null;
   post({
+    ...inspect.probeInfo(msg),
     t: 'probed',
     id: msg.id,
-    html: document.documentElement.outerHTML,
+    html: inspect.stripLayer(document.documentElement.outerHTML),
     url: location.href,
     y: window.scrollY,
     w: window.innerWidth,
@@ -121,6 +142,7 @@ window.addEventListener('message', (event) => {
   if (event.source !== parentWin) return;
   const msg = event.data;
   if (!msg) return;
+  if (inspect.onMessage(msg)) return;
   if (msg.t === 'html') updateHtml(msg);
   else if (msg.t === 'css') updateCss(msg);
   else if (msg.t === 'scroll') window.scrollTo(0, msg.y);
@@ -140,6 +162,11 @@ document.addEventListener(
   (event) => {
     const link = event.target && event.target.closest ? event.target.closest('a[href], area[href]') : null;
     if (!link) return;
+    // Enter on a focused link clicks it without the catcher: Point blocks it too.
+    if (inspect.pointing) {
+      event.preventDefault();
+      return;
+    }
     const raw = link.getAttribute('href');
     if (raw.startsWith('#')) return;
     let url;
@@ -175,6 +202,7 @@ document.addEventListener('contextmenu', (event) => event.preventDefault());
 document.addEventListener(
   'keydown',
   (event) => {
+    if (inspect.onKeydown(event)) return;
     const mac = /Macintosh/.test(navigator.userAgent);
     if (!mac && (['F3', 'F5', 'F7'].includes(event.key) || (event.ctrlKey && 'rpu'.includes(event.key.toLowerCase())))) {
       event.preventDefault();
@@ -230,5 +258,8 @@ function whenStyled(done) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  whenStyled(() => post({ t: 'ready', v: version, ...report(document) }));
+  whenStyled(() => {
+    inspect.afterUpdate('ready');
+    post({ t: 'ready', v: version, pv: inspect.pv, ...report(document) });
+  });
 });

@@ -63,6 +63,15 @@ LEAD, OPEN, WIP, MITIGATED, FIXED, WONTFIX, STALE, as defined by the project's w
 | N2 | OPEN | A child uses it alone for 20 minutes |
 | N3 | OPEN | Monkey test, full read of Help and samples, design detector style findings, two near-limit contrasts (harbour 4.56:1, resume 3.04:1) |
 
+## Open after 0.2.0 (see how it fits)
+
+| Id | Status | Item | Evidence |
+|---|---|---|---|
+| V1 | MITIGATED | The page and code line-up can pair the wrong elements where the browser rebuilds the code a lot, such as a `<p>` holding a `<div>` (`R32` in PLAN.md). The in-step check and the look-ahead of 8 limit it | `ui-src/link-editor.js` `alignPage` |
+| V2 | OPEN | Tests cannot set CSS `:hover`, so the page's own hover effects under Point and Show the Boxes are checked by eye only (`R33`) | `ui/self-test-see.js` |
+| V3 | OPEN | Show the Boxes: a nested box's label sits over the first letter of the box above it, as in the list items of the space sample | `smoke-35-show-the-boxes.png` |
+| V4 | OPEN | Show the Boxes stays checked after the last tab closes and comes back on with the next page | `ui/link.js` `toggleBoxes` |
+
 ## Open after 0.1.5 (Windows and Linux)
 
 - The Windows smoke test was run on a 1024 x 768 screen; the layout below 1280 wide is not yet reviewed.

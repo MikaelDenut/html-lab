@@ -1,7 +1,8 @@
 import { invoke } from './api.js';
 import { S, activeTab, activeProject } from './state.js';
+import { seeSteps } from './smoke-test-see.js';
 
-export const MIN_STEPS = 32;
+export const MIN_STEPS = 39; // 32 + SEE_STEPS (7)
 const MIN_TEMPLATES = 6;
 
 const results = [];
@@ -590,6 +591,17 @@ export async function run({ preview }) {
     await clickOn(byText('Keep working', box), 'Keep working');
     await until(() => !dialog(), 'the question to close');
     if (!document.querySelector('.tab.active')) throw new Error('the tab went away');
+  });
+
+  await seeSteps({
+    step, clickOn, clickAfter, lineWith, key, wait, until,
+    assert: (cond, message) => {
+      if (!cond) throw new Error(message || 'assertion failed');
+    },
+    eq: (a, b, message) => {
+      if (a !== b) throw new Error(`${message || 'expected equal'}: got ${JSON.stringify(a)}, wanted ${JSON.stringify(b)}`);
+    },
+    S, E: S.E, P: preview.state, preview, $,
   });
 
   await step('No script errors', async () => {

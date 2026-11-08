@@ -36,6 +36,9 @@ import { highlightTree, tags as t } from '@lezer/highlight';
 import { colorPicker } from '@replit/codemirror-css-color-picker';
 import { findMistake, mistakeHints, unfinishedTagAt } from './hints.js';
 import { countMatches, countText, findPanel } from './find-panel.js';
+import { cssRuleAt, foldHere, insidePath, selectRange, structureExtension, unfoldEverything, unfoldHere } from './structure.js';
+import { alignPage, codeElements, elementAt, linkExtension, selectTagName, setLit } from './link-editor.js';
+import { explainExtension } from './explain.js';
 
 function languageFor(language) {
   switch (language) {
@@ -110,7 +113,14 @@ const theme = EditorView.theme({
     fontFamily: 'var(--font-code)',
   },
   '.cm-tooltip-autocomplete ul li[aria-selected]': { backgroundColor: 'var(--active)', color: 'var(--ink)' },
-  '.cm-matchingBracket, &.cm-focused .cm-matchingBracket': { backgroundColor: 'var(--active)', color: 'inherit' },
+  '.cm-matchingBracket, &.cm-focused .cm-matchingBracket': {
+    backgroundColor: 'var(--pair)',
+    color: 'inherit',
+    borderRadius: '3px',
+    boxShadow: 'inset 0 0 0 1px var(--pair-line)',
+  },
+  // A tag with no partner happens all the time while typing; the mistake hint covers real mistakes.
+  '.cm-nonmatchingBracket, &.cm-focused .cm-nonmatchingBracket': { backgroundColor: 'transparent', color: 'inherit' },
 });
 
 const searchKeys = searchKeymap.filter((binding) => binding.key !== 'Mod-Shift-l');
@@ -186,6 +196,19 @@ export function createEditor(host, callbacks) {
   };
   const shared = makeShared();
   const hints = mistakeHints({ onChange: callbacks.onHintChange, onLearn: callbacks.onLearn });
+  const mistakeOf = (state) => {
+    const value = state.field(hints.field, false);
+    return value ? value.mistake : null;
+  };
+  const seeing = [
+    structureExtension({ mistakeOf }),
+    linkExtension(),
+    explainExtension({
+      lookup: callbacks.lookup,
+      onHelpWord: callbacks.onHelpWord,
+      pictureFor: callbacks.pictureFor,
+    }),
+  ];
   let typingOn = true;
 
   const updates = EditorView.updateListener.of((update) => {
@@ -209,7 +232,14 @@ export function createEditor(host, callbacks) {
   function newState(text, language) {
     return EditorState.create({
       doc: text,
-      extensions: [shared, helpers.of(typingOn ? helpersOn() : []), measureStamp.of([]), languageExtensions(language), updates],
+      extensions: [
+        shared,
+        helpers.of(typingOn ? helpersOn() : []),
+        measureStamp.of([]),
+        languageExtensions(language),
+        seeing,
+        updates,
+      ],
     });
   }
 
@@ -400,6 +430,8 @@ export function highlightRuns(code, language) {
 }
 
 export { findMistake, unfinishedTagAt, EditorView, ensureSyntaxTree, countMatches, countText };
+export { cssRuleAt, foldHere, insidePath, selectRange, unfoldEverything, unfoldHere };
+export { alignPage, codeElements, elementAt, selectTagName, setLit };
 
 export { runScopeHandlers } from '@codemirror/view';
 export { undo, redo };

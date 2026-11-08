@@ -1,12 +1,14 @@
 import { invoke, listen } from './api.js';
 import { browserName, browserOnlyKey, commandKey } from './platform.js';
-import { S, activeTab, activeProject, pageTabOf } from './state.js';
+import { S, activeTab, activeProject, pageTabOf, projectOf } from './state.js';
 import { installSprite } from './icons.js';
 import * as preview from './preview.js';
 import { nextTabPath, noteDocChange, renderStrip, switchTo, syncMenu } from './tabs.js';
 import * as flows from './flows.js';
 import { setDialogListener } from './dialogs.js';
 import { initHelp, refreshTried, showGroup, showHome, showTopic, showWord } from './help.js';
+import * as link from './link.js';
+import { initInside, updateInside } from './inside.js';
 
 let divider = null;
 
@@ -32,8 +34,12 @@ export function whenEditor() {
         onUpdate: onEditorUpdate,
         onHintChange: () => preview.updateHeader(),
         onLearn: () => openHelpFirstTopic(),
+        lookup: lookupRows,
+        onHelpWord: (word) => openHelpView(() => showWord(word)),
+        pictureFor,
       });
       if (!S.prefs.typingHelpers) S.ed.setTypingHelpers(false, []);
+      initInside({ S });
       window.__htmllabEditorReady = true;
     });
   }
@@ -50,9 +56,53 @@ function onEditorUpdate(update) {
     noteDocChange(tab);
     preview.onKey(tab);
     flows.noteChangeForAutosave();
+    link.onDocChange(tab);
   } else if (update.selectionSet) {
     preview.onCursor(tab);
+    link.onCursorMove(tab);
   }
+  if (update.docChanged || update.selectionSet) updateInside();
+}
+
+// The look-up lists, for the explanations on hover. Loaded on the first hover.
+const LOOKUP_TOPICS = { tags: 'html-tags', words: 'css-words', colors: 'color-names' };
+
+function rowKey(code) {
+  return String(code || '').replace(/[<>/]/g, '').trim().toLowerCase();
+}
+
+async function lookupRows() {
+  const out = {};
+  for (const [part, id] of Object.entries(LOOKUP_TOPICS)) {
+    const topic = await invoke('help_topic', { id });
+    const map = new Map();
+    for (const row of (topic && topic.rows) || []) {
+      const key = rowKey(row.code);
+      if (key && !map.has(key)) map.set(key, row);
+    }
+    out[part] = map;
+  }
+  return out;
+}
+
+// Where the tooltip finds a picture: the same address the page uses.
+function pictureFor(view, src) {
+  const tab = view.htmllabTab;
+  if (!tab) return null;
+  const value = src.trim();
+  if (!value) return null;
+  if (/^https?:/i.test(value) || value.startsWith('//')) return { internet: true };
+  if (/^data:image\//i.test(value)) return { url: value };
+  if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return null;
+  let url;
+  try {
+    url = new URL(value, preview.urlFor(tab.path, 0));
+  } catch (e) {
+    return null;
+  }
+  url.search = '';
+  url.hash = '';
+  return projectOf(tab).folder ? { url: url.href } : { unsaved: true, url: url.href };
 }
 
 let helpOpened = false;
@@ -76,6 +126,7 @@ export function layout() {
 export function showRight(view) {
   const was = S.rightView;
   S.rightView = view;
+  if (view === 'help' && was !== 'help') link.onHelpShown();
   layout();
   if (view === 'help' && !helpOpened) {
     helpOpened = true;
@@ -86,7 +137,10 @@ export function showRight(view) {
 
 function openHelpView(show) {
   helpOpened = true;
-  S.rightView = 'help';
+  if (S.rightView !== 'help') {
+    S.rightView = 'help';
+    link.onHelpShown();
+  }
   layout();
   if (show) show();
 }
@@ -150,6 +204,13 @@ function toggleAutosave() {
   if (on) flows.noteChangeForAutosave();
 }
 
+// Point and Show the Boxes act on the page, so the page comes back first when Help shows.
+function seeOnPage(fn) {
+  if (!activeTab()) return;
+  if (S.rightView === 'help') showRight('page');
+  fn();
+}
+
 const ALWAYS = new Set(['undo', 'redo', 'select-all']);
 
 const COMMANDS = {
@@ -170,6 +231,11 @@ const COMMANDS = {
   replace: editorCommand((v) => S.E.runFind(v, 'replace')),
   comment: editorCommand((v) => S.E.commentLine(v)),
   tidy: editorCommand((v) => S.E.tidy(v)),
+  fold: editorCommand((v) => S.E.foldHere(v)),
+  unfold: editorCommand((v) => S.E.unfoldHere(v)),
+  'unfold-all': editorCommand((v) => S.E.unfoldEverything(v)),
+  point: () => seeOnPage(() => link.togglePoint()),
+  boxes: () => seeOnPage(() => link.toggleBoxes()),
   'my-page': () => showRight('page'),
   help: () => showRight('help'),
   bigger: () => setTextSize(S.prefs.textSize + 1),
@@ -304,6 +370,8 @@ function wireScreens() {
   $('size-minus').addEventListener('click', () => setTextSize(S.prefs.textSize - 1));
   $('size-plus').addEventListener('click', () => setTextSize(S.prefs.textSize + 1));
 
+  $('btn-point').addEventListener('click', () => link.togglePoint());
+  $('btn-boxes').addEventListener('click', () => link.toggleBoxes());
   $('w-phone').addEventListener('click', () => preview.setWidth('phone'));
   $('w-tablet').addEventListener('click', () => preview.setWidth('tablet'));
   $('w-full').addEventListener('click', () => preview.setWidth('full'));
@@ -322,6 +390,7 @@ function wireScreens() {
   });
 
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !S.dialogOpen && link.pointOn()) link.togglePoint();
     if (browserOnlyKey(event)) event.preventDefault();
     if (commandKey(event) && handleCommandKey(event.key)) event.preventDefault();
   });
@@ -375,6 +444,22 @@ async function boot() {
     switchTo: (path) => switchTo(path),
     openPageTab: (projectId, path) => flows.openPageTab(projectId, path),
     onPreviewKey: (key) => handleCommandKey(key),
+  });
+  link.initLink({
+    S,
+    post: (msg) => preview.postToPage(msg),
+    inSync: () => preview.inSync(),
+    pv: () => preview.pageVersion(),
+    pageTab: () => pageTabOf(S.projects.get(preview.state.projectId)),
+    showingPage: () => preview.showingPageTab(),
+    linkedCss: (tab) => preview.linkedCss(tab),
+    switchTo: (path) => switchTo(path),
+    updateHeader: () => preview.updateHeader(),
+    setPressed: (id, on) => {
+      const button = $(id);
+      if (button) button.setAttribute('aria-pressed', String(on));
+    },
+    syncMenu: () => syncMenu(),
   });
   flows.initFlows({ whenEditor, layout, showRight, onTriedChanged: () => refreshTried() });
   initHelp($('help-panel'), {

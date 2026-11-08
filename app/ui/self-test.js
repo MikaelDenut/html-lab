@@ -6,11 +6,12 @@ import { switchTo } from './tabs.js';
 import { cancelDialog, isDialogOpen } from './dialogs.js';
 import { showHome, showTopic, showWord } from './help.js';
 import { checkFiles, checkTopic, counted, resetCounted } from './engine-check.js';
+import { seeTests } from './self-test-see.js';
 
-export const MIN_TESTS = 90;
+export const MIN_TESTS = 137; // 90 + SEE_TESTS (47)
 const MIN_TEMPLATES = 6;
 const MIN_SAMPLES = 5 + MIN_TEMPLATES;
-const MIN_TOPICS = 97;
+const MIN_TOPICS = 100;
 const MIN_LESSONS = 53;
 const MIN_ENGINE = { pages: 112, sheets: 11, snippets: 259 };
 
@@ -58,9 +59,9 @@ export async function run(ctx) {
       `preview to settle (phase ${P.phase}, out ${P.out})`,
       6000,
     );
-  const probe = async (sel, prop) => {
+  const probe = async (sel, prop, extra) => {
     await settle();
-    const res = await preview.__probe(sel, prop);
+    const res = await preview.__probe(sel, prop, extra);
     assert(res, `probe failed for ${sel}`);
     return res;
   };
@@ -322,7 +323,9 @@ export async function run(ctx) {
     replace('color: gold', 'color: red');
     eq((await probe('h1', 'color')).value, 'rgb(255, 0, 0)', 'live color');
     eq($('page-label').textContent, `Showing ${page.name}`, 'label');
-    assert($('page-hint').textContent.includes('style.css changes how this page looks'), $('page-hint').textContent);
+    // Outside every rule, so the hint is the file row, not the rule count (0.2.0).
+    view.dispatch({ selection: { anchor: view.state.doc.length } });
+    await until(() => $('page-hint').textContent.includes('style.css changes how this page looks'), $('page-hint').textContent);
   });
 
   await t('typing updates the page without saving', async () => {
@@ -1268,7 +1271,7 @@ export async function run(ctx) {
     runCommand('help-recipes');
     await until(() => document.querySelector('.help-subhead'), 'section headings');
     eq(document.querySelectorAll('.help-subhead').length, 8, 'sections');
-    eq(index.topics.filter((x) => x.kind === 'recipe').length, 38, 'recipes');
+    eq(index.topics.filter((x) => x.kind === 'recipe').length, 41, 'recipes');
     await showTopic('want-red-text');
     const shown = () => document.querySelector('#help-panel .help-view:not([hidden])');
     await until(() => shown().textContent.includes('Make my text red'), 'the recipe');
@@ -1426,12 +1429,17 @@ export async function run(ctx) {
     await type('');
   });
 
-  await t('E2: table opens Tables, margin opens The box, xyz opens search', async () => {
+  await t('E2: table opens Tables, margin opens Give things room, xyz opens search', async () => {
+    // The topic on screen, not the whole panel: hidden views keep old text.
+    const shownTitle = () => {
+      const title = document.querySelector('#help-panel .help-view:not([hidden]) .topic-title');
+      return title ? title.textContent : '';
+    };
     showRight('help');
     await showWord('table');
-    assert($('help-panel').textContent.includes('Tables'), 'table');
+    assert(shownTitle().includes('Tables'), `table: ${shownTitle()}`);
     await showWord('margin');
-    assert($('help-panel').textContent.includes('The box'), 'margin');
+    assert(shownTitle().includes('Give things room'), `margin: ${shownTitle()}`);
     await showWord('xyz');
     const search = document.querySelector('#help-panel input');
     eq(search && search.value, 'xyz', 'search field');
@@ -1631,6 +1639,11 @@ export async function run(ctx) {
       assert(S.tabs.some((x) => x.path === P.showing), `open ${i}: the page panel shows ${P.showing}`);
       assert((await probe('h1')).found, `open ${i}: no h1 on the page`);
     }
+  });
+
+  await seeTests({
+    t, assert, eq, until, wait, settle, probe, openContent, sample, doc, setDoc, typeAfter, replace,
+    view, S, E, P, preview, flows, runCommand, switchTo, tabNamed, pageTabOf, activeTab, $,
   });
 
   if (filter === 'lost') {

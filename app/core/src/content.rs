@@ -1065,7 +1065,7 @@ mod tests {
         let own: Value = serde_json::from_str(HELP_JSON).expect("content/help.json is valid JSON");
         assert_eq!(
             own["topics"].as_array().expect("topics").len(),
-            66,
+            69,
             "topics in content/help.json"
         );
         let help = help().clone();

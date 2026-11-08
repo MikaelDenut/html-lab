@@ -133,6 +133,7 @@ pub fn merge(prefs: &mut Prefs, patch: &serde_json::Value);    // only keys pres
     #code-panel
       #tabstrip  (the tabs go in #tab-list, then #tab-add stays last)
       #editor-host
+      #inside-line  (the "You are inside" row, 0.2.0, filled by inside.js)
       #statusline
         #status-mark  #status-text  #btn-tidy  #size-minus  #size-value (optional)  #size-plus
   #divider
@@ -141,7 +142,7 @@ pub fn merge(prefs: &mut Prefs, patch: &serde_json::Value);    // only keys pres
       #w-open-help
     #page-panel
       #page-header
-        #page-label  #page-hint  #w-phone  #w-tablet  #w-full  #btn-safari
+        #page-label  #page-hint  #btn-point  #btn-boxes  .page-btn-gap  #w-phone  #w-tablet  #w-full  #btn-safari
       #page-frame-wrap
         iframe#preview  #page-empty (with #page-empty-link)
       #practice-bar
@@ -157,7 +158,8 @@ Rules:
 - `#page-frame-wrap` lays the iframe out. `preview.js` sets the width and the scale for E3.
 - While Help shows, `#page-panel` uses `visibility: hidden` and `position: absolute`, never `display: none`. The class is `.behind`.
 - `#status-mark` takes `data-state`: `amber`, `bulb`, `check`.
-- Width buttons take `aria-pressed`.
+- Width buttons, `#btn-point` and `#btn-boxes` take `aria-pressed`.
+- `#btn-point` is disabled unless the page shows the page tab (`updatePointButton` in `preview.js`).
 
 `ui/views.js`, pure, no state, no Tauri:
 

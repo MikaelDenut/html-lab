@@ -362,6 +362,38 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 - appears covered by: the tests in `core/src/names.rs` around line 138
 - what a guard would have to do: raise the limit and see the test fail
 
+### Page lighting (0.2.0)
+
+### C39. The code lights up only for the text the page shows
+
+- evidence: `ui/preview.js` `export function inSync`; `ui/link.js` drops replies whose `pv` is not the current one
+- origin: written with 0.2.0
+- confirmed: false
+- appears covered by: self-test `Lit: out of step the code does not light, but the page still outlines`
+- what a guard would have to do: make `inSync()` return true always and watch that test fail
+
+### C40. The helper's own nodes are never counted or morphed as page elements
+
+- evidence: `ui-src/helper.js` `function nodeKey` and `onBeforeNodeDiscarded`; `ui-src/helper-inspect.js` `const own`
+- origin: written with 0.2.0, after the morph removed `style[data-hl-fonts]` on Windows and Linux
+- confirmed: false
+- appears covered by: self-test `Line-up: every sample and template page pairs each element with an id with its code`, and the Linux check of the built-in fonts after a change
+- what a guard would have to do: drop the key for `hl-layer` and watch the line-up test fail
+
+### C41. A reply to a page question asked before a clear changes nothing
+
+- evidence: `ui/link.js` `dropReplies`
+- origin: found by the first 0.2.0 self-test run: a stale `ruled` reply set the hint after the cursor left the rule
+- confirmed: true (the test failed before the fix)
+- appears covered by: self-test `Rule: after a page update the count is asked again, without outlines`
+
+### C42. Fold keys use no AltGr chord off the Mac
+
+- evidence: `src-tauri/src/menu.rs` `FOLD_KEY`, `UNFOLD_KEY`
+- origin: written with 0.2.0: Ctrl+Alt is AltGr on Windows, and AltGr+[ types a bracket on many keyboards
+- confirmed: false
+- appears covered by: `fold_keys_avoid_altgr_off_the_mac` in `src-tauri/src/menu.rs`, `help_keys_match_the_menu_off_the_mac` in `src-tauri/src/main.rs`
+
 ---
 
 ## Adding an invariant
