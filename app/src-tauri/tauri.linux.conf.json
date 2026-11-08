@@ -1,0 +1,11 @@
+{
+  "bundle": {
+    "fileAssociations": [
+      { "ext": ["html", "htm"], "mimeType": "text/html" },
+      { "ext": ["css"], "mimeType": "text/css" }
+    ],
+    "linux": {
+      "deb": { "section": "education", "desktopTemplate": "linux/html-lab.desktop" }
+    }
+  }
+}

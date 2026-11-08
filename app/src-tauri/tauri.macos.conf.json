@@ -1,0 +1,9 @@
+{
+  "bundle": {
+    "fileAssociations": [
+      { "ext": ["html", "htm"], "contentTypes": ["public.html"], "name": "HTML page", "role": "Editor", "rank": "Alternate" },
+      { "ext": ["css"], "name": "CSS style file", "role": "Editor", "rank": "Default" },
+      { "ext": [], "contentTypes": ["public.folder"], "name": "Folder", "role": "Viewer", "rank": "Alternate" }
+    ]
+  }
+}

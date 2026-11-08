@@ -340,6 +340,7 @@ function wireNative() {
     $('drop-overlay').hidden = !on;
   });
   listen('files-dropped', (paths) => flows.droppedFiles(paths));
+  listen('open-requested', () => flows.externalOpens());
 }
 
 function fontsReady(capMs) {
@@ -411,6 +412,7 @@ async function boot() {
     const ok = await flows.restoreSession(prefs.session).catch(() => false);
     if (!ok) layout();
   }
+  flows.externalOpens();
   if (flags.speedCheck) {
     const mod = await import('./speed-check.js');
     mod.run({ whenEditor, showRight, setTextSize, flows, preview, divider });

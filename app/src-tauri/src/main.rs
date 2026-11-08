@@ -40,9 +40,14 @@ struct LaunchFlags {
     speed_start: Option<u64>,
     self_test: Option<String>,
     smoke_test: bool,
+    #[serde(skip)]
+    open_paths: Vec<String>,
 }
 
 static APP: OnceLock<AppHandle> = OnceLock::new();
+
+// A Mac hands over the files of a cold launch before setup has run, so the queue lives outside AppState.
+static OPEN_REQUESTS: Mutex<Vec<String>> = Mutex::new(Vec::new());
 
 fn state(app: &AppHandle) -> tauri::State<'_, AppState> {
     app.state::<AppState>()
@@ -433,6 +438,53 @@ fn reveal_window(app: &AppHandle) {
     }
 }
 
+fn bring_to_front(app: &AppHandle) {
+    let Some(st) = app.try_state::<AppState>() else {
+        return;
+    };
+    if !st.window_shown.load(Ordering::SeqCst) {
+        return;
+    }
+    if let Some(w) = main_window(app) {
+        let _ = w.unminimize();
+        let _ = w.show();
+        let _ = w.set_focus();
+    }
+}
+
+fn queue_open(app: &AppHandle, paths: Vec<String>) {
+    if !paths.is_empty() {
+        OPEN_REQUESTS.lock().unwrap().extend(paths);
+        let _ = app.emit("open-requested", ());
+    }
+    let handle = app.clone();
+    let _ = app.run_on_main_thread(move || bring_to_front(&handle));
+}
+
+fn arg_paths(args: impl IntoIterator<Item = String>, cwd: &std::path::Path) -> Vec<String> {
+    args.into_iter()
+        .filter(|a| !a.starts_with('-'))
+        .map(|a| files::path_text(cwd.join(a)))
+        .collect()
+}
+
+#[tauri::command]
+fn take_open_requests() -> Vec<String> {
+    std::mem::take(&mut *OPEN_REQUESTS.lock().unwrap())
+}
+
+#[tauri::command(async)]
+fn plan_open(paths: Vec<String>) -> project::OpenPlan {
+    project::plan_open(&paths)
+}
+
+#[tauri::command]
+fn test_queue_open(app: AppHandle, paths: Vec<String>) {
+    if test_mode(&app) {
+        queue_open(&app, paths);
+    }
+}
+
 #[tauri::command(async)]
 fn show_window(app: AppHandle) {
     let handle = app.clone();
@@ -789,6 +841,8 @@ fn read_flags() -> LaunchFlags {
             flags.self_test = Some("all".into());
         } else if arg == "--smoke-test" {
             flags.smoke_test = true;
+        } else if !arg.starts_with('-') {
+            flags.open_paths.push(arg);
         }
     }
     flags
@@ -923,8 +977,19 @@ fn on_menu_event(app: &AppHandle, event: MenuEvent) {
     }
 }
 
-fn base_builder() -> tauri::Builder<tauri::Wry> {
+fn base_builder(flags: &LaunchFlags) -> tauri::Builder<tauri::Wry> {
     let builder = tauri::Builder::default();
+    #[cfg(not(target_os = "macos"))]
+    let builder = if flags.self_test.is_some() || flags.smoke_test || flags.speed_check {
+        builder
+    } else {
+        builder.plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
+            let paths = arg_paths(args.into_iter().skip(1), std::path::Path::new(&cwd));
+            queue_open(app, paths);
+        }))
+    };
+    #[cfg(target_os = "macos")]
+    let _ = flags;
     #[cfg(not(target_os = "macos"))]
     let builder = builder.plugin(tauri_plugin_clipboard_manager::init());
     builder
@@ -932,9 +997,12 @@ fn base_builder() -> tauri::Builder<tauri::Wry> {
 
 fn main() {
     let flags = read_flags();
+    if let Ok(cwd) = std::env::current_dir() {
+        OPEN_REQUESTS.lock().unwrap().extend(arg_paths(flags.open_paths.clone(), &cwd));
+    }
     let nonce = make_nonce();
 
-    let app = base_builder()
+    let app = base_builder(&flags)
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .register_asynchronous_uri_scheme_protocol("preview", |ctx, request, responder| {
@@ -1075,17 +1143,30 @@ fn main() {
             test_window_state,
             test_snapshot,
             test_preview_trace,
+            test_queue_open,
+            take_open_requests,
+            plan_open,
             log_error,
         ])
         .build(tauri::generate_context!())
         .expect("HTML Lab could not start");
 
-    app.run(|app, event| {
-        if let RunEvent::ExitRequested { api, .. } = event {
+    app.run(|app, event| match event {
+        RunEvent::ExitRequested { api, .. } => {
             if !state(app).quitting.load(Ordering::SeqCst) {
                 api.prevent_exit();
                 begin_quit(app);
             }
         }
+        #[cfg(target_os = "macos")]
+        RunEvent::Opened { urls } => {
+            let paths = urls
+                .iter()
+                .filter_map(|u| u.to_file_path().ok())
+                .map(files::path_text)
+                .collect();
+            queue_open(app, paths);
+        }
+        _ => {}
     });
 }

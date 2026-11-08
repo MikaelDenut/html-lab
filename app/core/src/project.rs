@@ -65,6 +65,82 @@ fn opening_rank(file: &ScanFile) -> (bool, bool, usize, String, String) {
     )
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FolderOpen {
+    pub folder_name: String,
+    pub files: Vec<String>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OpenPlan {
+    pub folders: Vec<FolderOpen>,
+    pub files: Vec<String>,
+    pub empty_folders: Vec<String>,
+    pub others: Vec<String>,
+}
+
+fn folder_rank(name: &str) -> (u8, String) {
+    let lower = name.to_lowercase();
+    let page = kind_for_name(name).is_some_and(|k| k.is_page);
+    let first = if lower == "index.html" || lower == "index.htm" {
+        0
+    } else if page {
+        1
+    } else {
+        2
+    };
+    (first, lower)
+}
+
+fn folder_files(folder: &Path) -> Vec<String> {
+    let Ok(entries) = fs::read_dir(folder) else {
+        return Vec::new();
+    };
+    let mut names: Vec<String> = entries
+        .filter_map(|e| e.ok())
+        .filter(|e| fs::metadata(e.path()).is_ok_and(|m| m.is_file()))
+        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .filter(|n| !n.starts_with('.') && kind_for_name(n).is_some())
+        .collect();
+    names.sort_by_key(|n| folder_rank(n));
+    if names.len() > MAX_PROJECT_FILES {
+        names.truncate(1);
+    }
+    names.into_iter().map(|n| path_text(folder.join(n))).collect()
+}
+
+pub fn plan_open(paths: &[String]) -> OpenPlan {
+    let mut plan = OpenPlan::default();
+    for given in paths {
+        let Ok(path) = dunce::canonicalize(given) else {
+            plan.others.push(name_of(Path::new(given)));
+            continue;
+        };
+        let Ok(meta) = fs::metadata(&path) else {
+            plan.others.push(name_of(&path));
+            continue;
+        };
+        if meta.is_dir() {
+            let files = folder_files(&path);
+            if files.is_empty() {
+                plan.empty_folders.push(name_of(&path));
+            } else {
+                plan.folders.push(FolderOpen { folder_name: name_of(&path), files });
+            }
+        } else if kind_for_name(&name_of(&path)).is_some() {
+            let text = path_text(&path);
+            if !plan.files.contains(&text) {
+                plan.files.push(text);
+            }
+        } else {
+            plan.others.push(name_of(&path));
+        }
+    }
+    plan
+}
+
 pub fn scan_folder(picked: &Path) -> ScanResult {
     let given_folder = picked.parent().unwrap_or(Path::new(""));
     let Ok(picked) = dunce::canonicalize(picked) else {
@@ -399,6 +475,46 @@ mod tests {
     use std::os::unix::fs::PermissionsExt;
     use std::path::PathBuf;
     use tempfile::{tempdir, TempDir};
+
+    #[test]
+    fn plan_open_sorts_a_folder_with_its_home_page_first() {
+        let (_dir, folder) = folder_with(&["style.css", "about.html", "index.html", "photo.jpg", "notes.txt"]);
+        let plan = plan_open(&[path_text(&folder)]);
+        assert_eq!(plan.folders.len(), 1);
+        let names: Vec<String> = plan.folders[0].files.iter().map(|f| name_of(Path::new(f))).collect();
+        assert_eq!(names, ["index.html", "about.html", "style.css"]);
+        assert!(plan.files.is_empty() && plan.others.is_empty() && plan.empty_folders.is_empty());
+    }
+
+    #[test]
+    fn plan_open_keeps_pages_and_style_files_and_names_the_rest() {
+        let (_dir, folder) = folder_with(&["a.html", "b.CSS", "c.txt"]);
+        let paths: Vec<String> = ["a.html", "b.CSS", "c.txt", "gone.html"]
+            .iter()
+            .map(|n| path_text(folder.join(n)))
+            .collect();
+        let plan = plan_open(&paths);
+        assert_eq!(plan.files.len(), 2);
+        assert_eq!(plan.others, ["c.txt", "gone.html"]);
+    }
+
+    #[test]
+    fn plan_open_reports_a_folder_with_nothing_to_open() {
+        let (_dir, folder) = folder_with(&["notes.txt", "photo.jpg"]);
+        let plan = plan_open(&[path_text(&folder)]);
+        assert!(plan.folders.is_empty());
+        assert_eq!(plan.empty_folders.len(), 1);
+    }
+
+    #[test]
+    fn plan_open_opens_only_the_first_page_of_a_huge_folder() {
+        let names: Vec<String> = (0..30).map(|i| format!("page{i:02}.html")).collect();
+        let refs: Vec<&str> = names.iter().map(|s| s.as_str()).collect();
+        let (_dir, folder) = folder_with(&refs);
+        let plan = plan_open(&[path_text(&folder)]);
+        assert_eq!(plan.folders[0].files.len(), 1);
+        assert!(plan.folders[0].files[0].ends_with("page00.html"));
+    }
 
     fn folder_with(names: &[&str]) -> (TempDir, PathBuf) {
         let dir = tempdir().unwrap();

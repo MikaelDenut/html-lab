@@ -10,6 +10,17 @@ All notable changes to HTML Lab. The format follows Keep a Changelog. Every chan
 that leaves the build folder bumps the version by one, and 0.1.9 is followed by
 0.2.0. Decisions are recorded in [docs/adr/](docs/adr/).
 
+## [0.1.7] - 2026-11-08
+
+### Added
+
+- HTML Lab is in the Open With list for HTML and CSS files on Mac, Windows and Linux.
+  The browser stays the default for web pages. On a Mac, HTML Lab opens CSS files on
+  double-click when no other app has claimed them.
+- A folder dropped on the HTML Lab icon opens as a project, with its home page shown.
+- A file opened while HTML Lab is running goes into the open window, and waits if a
+  message is showing.
+
 ## [0.1.6] - 2026-11-08
 
 ### Added

@@ -7,7 +7,7 @@ import { cancelDialog, isDialogOpen } from './dialogs.js';
 import { showHome, showTopic, showWord } from './help.js';
 import { checkFiles, checkTopic, counted, resetCounted } from './engine-check.js';
 
-export const MIN_TESTS = 87;
+export const MIN_TESTS = 90;
 const MIN_TEMPLATES = 6;
 const MIN_SAMPLES = 5 + MIN_TEMPLATES;
 const MIN_TOPICS = 97;
@@ -573,6 +573,51 @@ export async function run(ctx) {
     await waitDialog('This file is too big for HTML Lab.');
     click('OK');
     await flow2;
+    eq(S.tabs.length, 0, 'tab opened');
+  });
+
+  await t('a folder opened from outside opens as a project with its home page shown', async () => {
+    const dir = `${parent}/outside-${freshFolder()}`;
+    await invoke('test_make_folder', { path: dir });
+    for (const [name, text] of [['about.html', '<h1>About</h1>\n'], ['index.html', '<h1>Home</h1>\n'], ['style.css', 'h1 { color: red; }\n'], ['notes.txt', 'x']]) {
+      await invoke('test_write_bytes', { path: `${dir}/${name}`, bytes: [...new TextEncoder().encode(text)] });
+    }
+    await invoke('test_queue_open', { paths: [dir] });
+    await until(() => S.tabs.length === 3, `three tabs, got ${S.tabs.length}`);
+    eq(activeTab().name, 'index.html', 'the shown page');
+    assert(!isDialogOpen(), 'a dialog opened');
+    eq((await probe('h1')).text, 'Home');
+  });
+
+  await t('a page opened from outside while a dialog is open waits for the dialog', async () => {
+    const bad = `${parent}/wait-${freshFolder()}`;
+    await invoke('test_make_folder', { path: bad });
+    await invoke('test_write_bytes', { path: `${bad}/photo.html`, bytes: [0x3c, 0x70, 0x00, 0xff, 0xfe] });
+    const good = `${parent}/later-${freshFolder()}`;
+    await invoke('test_make_folder', { path: good });
+    await invoke('test_write_bytes', { path: `${good}/later.html`, bytes: [...new TextEncoder().encode('<h1>Later</h1>\n')] });
+    const flow = flows.openPaths([`${bad}/photo.html`]);
+    await waitDialog('HTML Lab cannot read this file.');
+    await invoke('test_queue_open', { paths: [`${good}/later.html`] });
+    await wait(300);
+    eq(S.tabs.length, 0, 'opened behind the dialog');
+    click('OK');
+    await flow;
+    await until(() => S.tabs.length === 1 && activeTab().name === 'later.html', 'later.html to open');
+  });
+
+  await t('other files and empty folders opened from outside give a message', async () => {
+    const dir = `${parent}/odd-${freshFolder()}`;
+    const empty = `${dir}/empty`;
+    await invoke('test_make_folder', { path: empty });
+    await invoke('test_write_bytes', { path: `${dir}/notes.txt`, bytes: [120] });
+    await invoke('test_queue_open', { paths: [`${dir}/notes.txt`, empty] });
+    await waitDialog('empty has no HTML or CSS files.');
+    click('OK');
+    await dialogGone();
+    await waitDialog('notes.txt cannot be opened here.');
+    click('OK');
+    await dialogGone();
     eq(S.tabs.length, 0, 'tab opened');
   });
 

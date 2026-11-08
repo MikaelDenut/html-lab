@@ -186,6 +186,7 @@ export async function openFlow() {
   } finally {
     S.panelOpen = false;
   }
+  externalOpens();
   if (picked.length) await openPaths(picked);
 }
 
@@ -589,6 +590,53 @@ export function onWindowBlurred() {
 
 export function onDialogClosed() {
   if (autosaveWaiting) autosaveNow();
+  externalOpens();
+}
+
+let externalBusy = false;
+let externalAgain = false;
+
+function namesList(names) {
+  if (names.length === 1) return names[0];
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
+async function openPlanned(plan) {
+  for (const folder of plan.folders) await openList(folder.files);
+  if (plan.files.length) await openPaths(plan.files);
+  if (plan.emptyFolders.length) {
+    await showMessage({
+      title: `${namesList(plan.emptyFolders)} has no HTML or CSS files.`,
+      text: 'HTML Lab opens folders that have web pages or style files in them.',
+      buttons: [{ id: 'ok', label: 'OK', primary: true }],
+    });
+  }
+  if (plan.others.length) {
+    await showMessage({
+      title: 'HTML Lab opens HTML and CSS files.',
+      text: `${namesList(plan.others)} cannot be opened here.`,
+      buttons: [{ id: 'ok', label: 'OK', primary: true }],
+    });
+  }
+}
+
+export async function externalOpens() {
+  if (externalBusy) {
+    externalAgain = true;
+    return;
+  }
+  externalBusy = true;
+  try {
+    do {
+      externalAgain = false;
+      await whenEditor();
+      if (isDialogOpen() || S.panelOpen) return;
+      const paths = await invoke('take_open_requests');
+      if (paths.length) await openPlanned(await invoke('plan_open', { paths }));
+    } while (externalAgain);
+  } finally {
+    externalBusy = false;
+  }
 }
 
 async function autosaveSilently(project) {
