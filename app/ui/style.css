@@ -26,6 +26,8 @@
   --num: #5F6F86;
   --active: #EEF3F9;
   --selection: #BFE5E1;
+  --find: #FFE58A;
+  --find-now: #FFB648;
   --color-word-bg: transparent;
   --brand: #0B6E69;
   --onBrand: #FFFFFF;
@@ -91,6 +93,8 @@
     --num: #8B9BB2;
     --active: #1F3049;
     --selection: #2B5A73;
+    --find: #6B5A14;
+    --find-now: #8A520A;
     --color-word-bg: #FFFFFF;
     --brand: #5EEAD4;
     --onBrand: #0F1A2B;
@@ -2515,4 +2519,75 @@ body.divider-drag iframe {
 
 :root:not([data-platform="mac"]) .tb-lights {
   width: 8px;
+}
+
+/* The Find bar above the code. */
+.hl-find {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+}
+
+.find-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.find-field {
+  flex: 1 1 160px;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 320px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--field);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.find-field::placeholder {
+  color: var(--placeholder);
+}
+
+.find-field:focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+
+.find-btn {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+}
+
+.find-count {
+  min-width: 72px;
+  color: var(--ink2);
+  white-space: nowrap;
+}
+
+.find-count.none {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.find-close {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink2);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.find-close:hover {
+  background: var(--hover-tb);
 }

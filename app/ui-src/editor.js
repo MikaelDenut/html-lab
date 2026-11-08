@@ -1,4 +1,4 @@
-import { Compartment, EditorState } from '@codemirror/state';
+import { Compartment, EditorState, Prec } from '@codemirror/state';
 import {
   EditorView,
   drawSelection,
@@ -29,12 +29,13 @@ import {
   syntaxHighlighting,
 } from '@codemirror/language';
 import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { findNext, findPrevious, openSearchPanel, search, searchKeymap } from '@codemirror/search';
+import { closeSearchPanel, findNext, findPrevious, openSearchPanel, search, searchKeymap, searchPanelOpen } from '@codemirror/search';
 import { autoCloseTags, html, htmlLanguage } from '@codemirror/lang-html';
 import { css, cssLanguage } from '@codemirror/lang-css';
 import { highlightTree, tags as t } from '@lezer/highlight';
 import { colorPicker } from '@replit/codemirror-css-color-picker';
 import { findMistake, mistakeHints, unfinishedTagAt } from './hints.js';
+import { countMatches, countText, findPanel } from './find-panel.js';
 
 function languageFor(language) {
   switch (language) {
@@ -85,6 +86,10 @@ const theme = EditorView.theme({
     textAlign: 'right',
   },
   '.cm-activeLine': { backgroundColor: 'var(--active)' },
+  // The selection is drawn under the lines, so a solid active line would hide it.
+  '&.has-selection .cm-activeLine': { backgroundColor: 'transparent' },
+  '&.cm-editor .cm-searchMatch': { backgroundColor: 'var(--find)', borderRadius: '3px' },
+  '&.cm-editor .cm-searchMatch.cm-searchMatch-selected': { backgroundColor: 'var(--find-now)' },
   '.cm-activeLineGutter': { backgroundColor: 'var(--active)' },
   '.cm-cursor, .cm-dropCursor': { borderLeft: '2px solid var(--brand)' },
   '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground': { backgroundColor: 'var(--selection)' },
@@ -127,6 +132,15 @@ const contentAttrs = EditorView.contentAttributes.of({
   'aria-label': 'Code',
 });
 
+const selectionClass = EditorView.editorAttributes.compute(['selection'], (state) =>
+  state.selection.ranges.some((range) => !range.empty) ? { class: 'has-selection' } : null,
+);
+
+// Esc in the code closes the Find bar. Low precedence, so an open suggestion list closes first.
+const escapeClosesFind = Prec.low(
+  keymap.of([{ key: 'Escape', run: (view) => searchPanelOpen(view.state) && closeSearchPanel(view) }]),
+);
+
 const helpers = new Compartment();
 const measureStamp = new Compartment();
 
@@ -149,7 +163,9 @@ function makeShared() {
     history(),
     indentOnInput(),
     bracketMatching(),
-    search({ top: true }),
+    search({ top: true, createPanel: findPanel }),
+    selectionClass,
+    escapeClosesFind,
     EditorView.lineWrapping,
     indentUnit.of('  '),
     EditorState.tabSize.of(2),
@@ -383,7 +399,7 @@ export function highlightRuns(code, language) {
   return runs;
 }
 
-export { findMistake, unfinishedTagAt, EditorView, ensureSyntaxTree };
+export { findMistake, unfinishedTagAt, EditorView, ensureSyntaxTree, countMatches, countText };
 
 export { runScopeHandlers } from '@codemirror/view';
 export { undo, redo };

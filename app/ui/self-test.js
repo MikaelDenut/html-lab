@@ -7,7 +7,7 @@ import { cancelDialog, isDialogOpen } from './dialogs.js';
 import { showHome, showTopic, showWord } from './help.js';
 import { checkFiles, checkTopic, counted, resetCounted } from './engine-check.js';
 
-export const MIN_TESTS = 85;
+export const MIN_TESTS = 87;
 const MIN_TEMPLATES = 6;
 const MIN_SAMPLES = 5 + MIN_TEMPLATES;
 const MIN_TOPICS = 97;
@@ -230,6 +230,61 @@ export async function run(ctx) {
     assert(!key({ key: 'L', code: 'KeyL', keyCode: 76, ...modKey, shiftKey: true }), 'Cmd+Shift+L was taken');
     assert(key({ key: '/', code: 'Slash', keyCode: 191, ...modKey }), 'Cmd+/ was not handled');
     assert(doc().includes('<!--'), 'no comment made');
+  });
+
+  await t('a selection on one line can be seen', async () => {
+    await openContent('A', [['a.html', '<p>Hello world</p>\n']]);
+    view.focus();
+    view.dispatch({ selection: { anchor: 3, head: 8 } });
+    await until(() => view.dom.classList.contains('has-selection'), 'selection class');
+    const line = view.dom.querySelector('.cm-activeLine');
+    assert(line, 'no active line');
+    const colour = getComputedStyle(line).backgroundColor;
+    assert(colour === 'transparent' || colour === 'rgba(0, 0, 0, 0)', `the active line would hide the selection: ${colour}`);
+    view.dispatch({ selection: { anchor: 3 } });
+    await until(() => !view.dom.classList.contains('has-selection'), 'selection class gone');
+    const back = getComputedStyle(view.dom.querySelector('.cm-activeLine')).backgroundColor;
+    assert(back !== 'transparent' && back !== 'rgba(0, 0, 0, 0)', 'the active line did not come back');
+  });
+
+  await t('the Find bar finds, counts, changes one, changes all, and closes on Esc', async () => {
+    await openContent('A', [['a.html', '<p>cat cat dog cat</p>\n']]);
+    view.focus();
+    view.dispatch({ selection: { anchor: 0 } });
+    E.runFind(S.ed.view, 'find');
+    const bar = await until(() => view.dom.querySelector('.hl-find'), 'the Find bar');
+    const field = (name) => bar.querySelector(`input[name="${name}"]`);
+    const press = (name) => bar.querySelector(`button[name="${name}"]`).click();
+    const count = () => bar.querySelector('.find-count').textContent;
+    const countIs = (want) => until(() => count() === want, `the count to say ${want}`);
+    const fill = (name, text) => {
+      field(name).value = text;
+      field(name).dispatchEvent(new Event('input', { bubbles: true }));
+    };
+    assert(!bar.textContent.includes('regexp'), 'regexp is still shown');
+    eq(document.activeElement, field('search'), 'the cursor is in the Find box');
+    fill('search', 'cat');
+    await countIs('3 found');
+    press('next');
+    await countIs('1 of 3');
+    press('next');
+    await countIs('2 of 3');
+    press('prev');
+    await countIs('1 of 3');
+    fill('replace', 'fox');
+    press('replace');
+    await until(() => doc().startsWith('<p>fox cat dog cat'), `after one change: ${doc()}`);
+    press('replaceAll');
+    await until(() => doc().startsWith('<p>fox fox dog fox'), `after change all: ${doc()}`);
+    E.undo(view);
+    await until(() => doc().startsWith('<p>fox cat dog cat'), `undo of change all: ${doc()}`);
+    fill('search', 'zebra');
+    await countIs('Not found');
+    view.focus();
+    const key = (init) => E.runScopeHandlers(view, new KeyboardEvent('keydown', init), 'editor');
+    view.dispatch({ selection: { anchor: 0 } });
+    assert(key({ key: 'Escape', keyCode: 27 }), 'Esc was not handled');
+    await until(() => !view.dom.querySelector('.hl-find'), 'the Find bar to close');
   });
 
   await t('undo in one tab does not touch another', async () => {
@@ -905,8 +960,7 @@ export async function run(ctx) {
     let flow = flows.addFileFlow();
     await waitDialog('Add a new file');
     setField('input[type="text"]', 'My Moon');
-    await wait(60);
-    assert(dialogRoot().textContent.includes('my-moon.html'), dialogRoot().textContent);
+    await until(() => dialogRoot().textContent.includes('my-moon.html'), 'the file name in the dialog');
     click('Add this file');
     await flow;
     eq(activeTab().name, 'my-moon.html', 'new tab active');
@@ -955,8 +1009,7 @@ export async function run(ctx) {
     await waitDialog('Save your project');
     const name = `Gallery ${freshFolder()}`;
     setField('input[type="text"]', name);
-    await wait(60);
-    assert(dialogRoot().textContent.includes(name), 'folder line');
+    await until(() => dialogRoot().textContent.includes(name), 'the folder line');
     assert(dialogRoot().textContent.includes('sun.jpg'), 'pictures in the list');
     click('Save my project');
     await flow;
@@ -1386,12 +1439,10 @@ export async function run(ctx) {
     await openContent('A', [['a.html', page]]);
     const before = P.loadId;
     preview.setWidth('phone');
-    await wait(60);
+    await until(async () => (await probe('h1')).w === 375, 'the phone width');
     eq((await probe('h1', 'color')).value, 'rgb(0, 0, 255)', 'phone');
-    eq((await probe('h1')).w, 375, 'phone width');
     preview.setWidth('tablet');
-    await wait(60);
-    eq((await probe('h1')).w, 768, 'tablet width');
+    await until(async () => (await probe('h1')).w === 768, 'the tablet width');
     eq((await probe('h1', 'color')).value, 'rgb(255, 0, 0)', 'tablet');
     preview.setWidth('full');
     await wait(60);
@@ -1503,11 +1554,10 @@ export async function run(ctx) {
   await t('text size: buttons, limits, and the code really changes', async () => {
     await openContent('A', [['a.html', '<p>x</p>\n']]);
     ctx.setTextSize(16);
-    await wait(10);
-    const base = view.defaultLineHeight;
+    const lineHeightNear = (want) => Math.abs(view.defaultLineHeight - want) < 3;
+    await until(() => lineHeightNear(28), 'a line height of 28 at size 16');
     ctx.setTextSize(24);
-    await wait(50);
-    assert(view.defaultLineHeight > base, `line height ${base} -> ${view.defaultLineHeight}`);
+    await until(() => lineHeightNear(42), 'a line height of 42 at size 24');
     assert($('size-plus').disabled, 'plus at the limit');
     ctx.setTextSize(13);
     assert($('size-minus').disabled, 'minus at the limit');

@@ -10,6 +10,23 @@ All notable changes to HTML Lab. The format follows Keep a Changelog. Every chan
 that leaves the build folder bumps the version by one, and 0.1.9 is followed by
 0.2.0. Decisions are recorded in [docs/adr/](docs/adr/).
 
+## [0.1.6] - 2026-11-08
+
+### Added
+
+- A new Find bar made for kids: "Find a word" and "Change it to" boxes, Back, Next,
+  Change and Change all, a count such as "2 of 5", and "Not found".
+- Esc closes the Find bar from the code too.
+
+### Fixed
+
+- A selection on one line can now be seen. The highlight of the cursor's line was
+  hiding it.
+
+### Changed
+
+- Found words use the app's own colours, in light and dark mode.
+
 ## [0.1.5] - 2026-11-08
 
 ### Added

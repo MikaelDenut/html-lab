@@ -1,6 +1,6 @@
 {
   "productName": "HTML Lab",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "identifier": "fi.cyborvent.htmllab",
   "build": { "frontendDist": "../ui" },
   "app": {
