@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fizzwhirl Park</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="logo" href="index.html">
+        <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+          <circle class="logo-wheel" cx="22" cy="20" r="16"/>
+          <path class="logo-spokes" d="M22 4 V36 M8.1 12 L35.9 28 M35.9 12 L8.1 28 M22 20 L12 42 M22 20 L32 42"/>
+        </svg>
+        Fizzwhirl Park
+      </a>
+      <nav class="menu" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html" aria-current="page">Park map</a></li>
+          <li><a href="rides.html">Rides</a></li>
+          <li><a href="tickets.html">Tickets</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div>
+        <h1>Whirls, splashes and squeals</h1>
+        <p>Eight rides in six zones, all on one big map. Find your favourite ride and plan your day.</p>
+      </div>
+      <!-- The ticket is one big link. The dashed line is where you tear it. -->
+      <a class="big-ticket" href="tickets.html">
+        <span class="ticket-main"><b>Day ticket</b> All rides, all day</span>
+        <span class="ticket-stub"><span class="from">from</span> <b>22 €</b> Buy tickets</span>
+      </a>
+    </section>
+
+    <section class="park wrap" aria-labelledby="map-title">
+      <h2 id="map-title">Park map</h2>
+      <p class="park-help">Click a ride sign to open the Rides page. Its chips take you to each group of rides.</p>
+      <!-- Little drawings we use many times. <use> copies them. -->
+      <svg class="symbols" width="0" height="0" aria-hidden="true">
+        <symbol id="i-ride" viewBox="0 0 24 24"><path d="M12 3 L14.6 9 L21 9.5 L16 13.6 L17.6 20 L12 16.5 L6.4 20 L8 13.6 L3 9.5 L9.4 9 Z"/></symbol>
+        <symbol id="i-food" viewBox="0 0 24 24"><path d="M7 10 L12 21 L17 10 M6 10 C6 3 18 3 18 10 Z"/></symbol>
+        <symbol id="i-loo" viewBox="0 0 24 24"><path d="M12 7 A2.5 2.5 0 1 0 12 2 A2.5 2.5 0 1 0 12 7 Z M8 22 L9 13 L7 12 L9 8 H15 L17 12 L15 13 L16 22"/></symbol>
+        <symbol id="i-aid" viewBox="0 0 24 24"><path d="M5 4 H19 Q21 4 21 6 V18 Q21 20 19 20 H5 Q3 20 3 18 V6 Q3 4 5 4 Z M12 8 V16 M8 12 H16"/></symbol>
+        <symbol id="i-picnic" viewBox="0 0 24 24"><path d="M3 9 H21 M7 9 L4 20 M17 9 L20 20 M5 15 H19"/></symbol>
+      </svg>
+
+      <div class="park-map">
+        <section class="zone peaks">
+          <h3>Thrill Peaks</h3>
+          <svg class="zone-art" width="200" height="80" viewBox="0 0 200 80" aria-hidden="true">
+            <path class="track" d="M0 74 C30 74 40 12 76 12 C102 12 104 56 88 56 C72 56 74 26 100 26 C134 26 150 74 200 74"/>
+            <path class="legs" d="M76 12 V80 M40 46 V80 M128 44 V80 M164 66 V80"/>
+          </svg>
+          <ul class="ride-list">
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Gigglecoaster</a></li>
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Tickle Tower</a></li>
+          </ul>
+        </section>
+
+        <section class="zone sky">
+          <h3>Sky Garden</h3>
+          <!-- The wheel turns round. Each car turns back the other way, so it hangs straight. Six spokes, six cars. -->
+          <div class="wheel" aria-hidden="true">
+            <div class="rim">
+              <svg class="spokes" width="100" height="100" viewBox="0 0 100 100"><path d="M50 4 V96 M10.2 27 L89.8 73 M89.8 27 L10.2 73"/></svg>
+              <span class="car c1"></span><span class="car c2"></span><span class="car c3"></span>
+              <span class="car c4"></span><span class="car c5"></span><span class="car c6"></span>
+            </div>
+          </div>
+          <ul class="ride-list">
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Big Daisy Wheel</a></li>
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Moonhopper</a></li>
+          </ul>
+        </section>
+
+        <section class="zone splash">
+          <h3>Puddle Lagoon</h3>
+          <svg class="zone-art" width="200" height="60" viewBox="0 0 200 60" aria-hidden="true">
+            <path class="waves" d="M0 20 Q25 6 50 20 T100 20 T150 20 T200 20 M0 44 Q25 30 50 44 T100 44 T150 44 T200 44"/>
+          </svg>
+          <ul class="ride-list">
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Soggy Sock Falls</a></li>
+          </ul>
+        </section>
+
+        <section class="zone square">
+          <h3>Fizzwhirl Square</h3>
+          <ul class="ride-list">
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Bumblebee Bumpers</a></li>
+          </ul>
+          <ul class="services">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-food"/></svg>Food court</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-loo"/></svg>Toilets</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-aid"/></svg>First aid</li>
+          </ul>
+        </section>
+
+        <section class="zone woods">
+          <h3>Monkey Woods</h3>
+          <ul class="ride-list">
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Sleepy Sloth Train</a></li>
+          </ul>
+          <ul class="services">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-picnic"/></svg>Picnic tables</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-loo"/></svg>Toilets</li>
+          </ul>
+        </section>
+
+        <section class="zone meadow">
+          <h3>Teeny Meadow</h3>
+          <ul class="ride-list">
+            <li><a href="rides.html"><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>Teeny Meadow Carousel</a></li>
+          </ul>
+        </section>
+
+        <section class="zone gate">
+          <h3>Main Gate</h3>
+          <p>Come in here. Get your wristband and a paper map, and say hello to the sloth.</p>
+        </section>
+      </div>
+
+      <ul class="map-key" aria-label="Map key">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-ride"/></svg>A ride</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-food"/></svg>Food</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-loo"/></svg>Toilets</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-aid"/></svg>First aid</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-picnic"/></svg>Picnic tables</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <div class="wrap">
+      <p>Fizzwhirl Park is a pretend park, made with HTML and CSS. Open every day from April to October, 10:00 to 18:00.</p>
+      <p>The first Ferris wheel turned in 1893. <a href="https://en.wikipedia.org/wiki/Ferris_wheel">Read about the Ferris wheel on Wikipedia</a></p>
+    </div>
+  </footer>
+</body>
+</html>

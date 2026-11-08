@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Pebblewick Post - Front page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <h1 class="paper-name"><a href="index.html">The Pebblewick Post</a></h1>
+    <p class="motto">The school newspaper of Pebblewick School, written by pupils for everyone</p>
+    <p class="date-line"><span>Issue 21</span> <span>Friday 2 October 2026</span> <span>Price: one smile</span></p>
+    <nav aria-label="Sections">
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Front page</a></li>
+        <li><a href="story.html">Big story</a></li>
+        <li><a href="clubs.html">Clubs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <!-- The thin lines between the stories are the grid's gap. -->
+    <div class="front">
+      <article class="lead">
+        <h2 class="lead-title"><a href="story.html">Giant pumpkin wins the school garden show</a></h2>
+        <p class="standfirst">Big Bert grew from one small seed. Now he is too heavy for one pupil to lift.</p>
+        <figure>
+          <img src="newspaper-pumpkins.jpg" width="900" height="676" alt="Big orange pumpkins with green stalks lying in a field">
+          <figcaption>Big Bert's cousins at a pumpkin farm. Bert was too shy for photos.</figcaption>
+        </figure>
+        <div class="columns">
+          <p>On Monday the garden club carried a pumpkin into the school hall. It took four pupils and one wheelbarrow. The pumpkin is called Big Bert, and he weighs 38 kilograms.</p>
+          <p>"We planted the seed in May," says Noor from class 5. "We gave it water every single day, even in the holidays."</p>
+          <p>Big Bert won first prize at the garden show. The judges said he was the roundest and the most orange.</p>
+          <p class="more"><a href="story.html">Read the whole story</a></p>
+        </div>
+      </article>
+
+      <aside class="pale">
+        <h2 class="box-title">Weather</h2>
+        <div class="sky" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></div>
+        <p class="temp">14&deg;C</p>
+        <p>Sunny with a few clouds. Good for football!</p>
+        <ul class="forecast">
+          <li><strong>Sat</strong> Sunny <span>16&deg;</span></li>
+          <li><strong>Sun</strong> Cloudy <span>13&deg;</span></li>
+          <li><strong>Mon</strong> Rain <span>11&deg;</span></li>
+        </ul>
+      </aside>
+
+      <article class="brief" id="gloves">
+        <h2 class="box-title">Who owns these gloves?</h2>
+        <svg class="glove" viewBox="0 0 90 90" role="img" aria-label="A red woolly glove for the left hand">
+          <g fill="#c8402a">
+            <rect x="24" y="24" width="11" height="32" rx="5.5"/>
+            <rect x="36" y="12" width="11" height="44" rx="5.5"/>
+            <rect x="48" y="8" width="11" height="48" rx="5.5"/>
+            <rect x="60" y="14" width="11" height="42" rx="5.5"/>
+            <rect x="24" y="40" width="47" height="32" rx="8"/>
+            <rect x="66" y="40" width="11" height="28" rx="5.5" transform="rotate(35 71 54)"/>
+          </g>
+          <rect x="24" y="70" width="47" height="14" rx="3" fill="#1f5f8b"/>
+          <path d="M24 75 H71 M24 80 H71" stroke="#fbfcfd" stroke-width="2"/>
+        </svg>
+        <p>The lost and found box has 14 gloves. All of them are for the left hand. The office would like to know why.</p>
+      </article>
+
+      <h2 class="section-bar">Around school</h2>
+
+      <article class="story wide side-by-side" id="chess">
+        <img src="newspaper-chess.jpg" width="640" height="426" alt="Old chess pieces standing on a chess board">
+        <div>
+          <h3 class="story-title">Chess club wins the town cup</h3>
+          <p>After three hours and one very long game, our chess team won the cup. The winning move was made by a tiny pawn.</p>
+          <p class="byline">By Elias, class 6</p>
+        </div>
+      </article>
+
+      <article class="story">
+        <!-- Every book is a rectangle. Change a fill to paint a new book! -->
+        <svg class="shelf" viewBox="0 0 320 213" role="img" aria-label="Two shelves of new library books in bright colours, with a shark book at the front">
+          <rect width="320" height="213" fill="#e6f0f7"/>
+          <rect x="18" y="26" width="20" height="70" fill="#1f5f8b"/><rect x="40" y="34" width="16" height="62" fill="#3f8f5a"/><rect x="58" y="22" width="24" height="74" fill="#e07a5f"/>
+          <rect x="84" y="30" width="18" height="66" fill="#f2b632"/><rect x="104" y="26" width="22" height="70" fill="#7fb3d5"/><rect x="128" y="38" width="14" height="58" fill="#c8402a"/>
+          <rect x="144" y="20" width="26" height="76" fill="#13233a"/><rect x="172" y="32" width="18" height="64" fill="#1f5f8b"/><rect x="192" y="24" width="20" height="72" fill="#3f8f5a"/>
+          <rect x="214" y="36" width="16" height="60" fill="#e07a5f"/><rect x="232" y="26" width="24" height="70" fill="#f2b632"/><rect x="258" y="22" width="18" height="74" fill="#7fb3d5"/>
+          <rect x="278" y="34" width="22" height="62" fill="#c8402a"/>
+          <rect x="18" y="122" width="18" height="70" fill="#f2b632"/><rect x="38" y="128" width="24" height="64" fill="#7fb3d5"/><rect x="64" y="118" width="16" height="74" fill="#c8402a"/>
+          <rect x="82" y="124" width="22" height="68" fill="#13233a"/><rect x="192" y="120" width="20" height="72" fill="#7fb3d5"/><rect x="214" y="130" width="16" height="62" fill="#c8402a"/>
+          <rect x="232" y="122" width="24" height="70" fill="#13233a"/><rect x="258" y="126" width="18" height="66" fill="#1f5f8b"/><rect x="278" y="118" width="22" height="74" fill="#3f8f5a"/>
+          <!-- The shark book shows its cover: blue sea, a white wave and a grey fin. -->
+          <rect x="110" y="118" width="76" height="74" rx="2" fill="#1f5f8b"/>
+          <path d="M138 165 L152 134 L162 165 Z" fill="#c8d3df"/>
+          <path d="M118 170 Q132 162 146 170 T174 170" fill="none" stroke="#ffffff" stroke-width="3"/>
+          <g fill="#8a5a3c"><rect x="8" y="96" width="304" height="8"/><rect x="8" y="192" width="304" height="8"/></g>
+        </svg>
+        <h3 class="story-title">300 new books arrive</h3>
+        <p>The library has new shelves and new books. The top request? More books about sharks.</p>
+      </article>
+
+      <article class="story">
+        <h3 class="story-title">Bike to school week</h3>
+        <p>Next week, ride, walk or scoot to school. Every class that joins in gets a sticker for the class chart.</p>
+        <p class="byline">By Mila, class 4</p>
+      </article>
+
+      <article class="story">
+        <h3 class="story-title">The volcano that worked</h3>
+        <p>Class 4 made a volcano with baking soda and vinegar. It fizzed all over the table. Everyone cheered, then everyone cleaned.</p>
+      </article>
+
+      <article class="story">
+        <h3 class="story-title">Riddle: what has many keys but cannot open a door?</h3>
+        <details>
+          <summary>Show the answer</summary>
+          <p>A piano!</p>
+        </details>
+      </article>
+
+      <article class="story wide pale">
+        <h3 class="story-title">Write for the Post!</h3>
+        <p>Did something funny, strange or brilliant happen at school? Tell us. Our newspaper team meets every Wednesday in the library. You do not need to be good at spelling, just good at noticing things.</p>
+        <p class="byline">The Post team, classes 5 and 6</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>The Pebblewick Post and Pebblewick School are made up for this website.</p>
+    <p>How real newspapers work: <a href="https://simple.wikipedia.org/wiki/Newspaper">Newspaper (Simple English Wikipedia)</a></p>
+  </footer>
+</body>
+</html>

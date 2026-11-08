@@ -1,0 +1,15 @@
+{
+  "title": "Small railway",
+  "name": "my-railway",
+  "blurb": "A small railway with a departure board, a route map and tickets",
+  "category": "industrial",
+  "layout": "Departure board, route line map, ticket cards",
+  "shows": [
+    "A departure board on a dotted light panel",
+    "A station clock whose hands turn with rotate",
+    "Two train lines that cross on a CSS map",
+    "Tickets with a tear line and punched holes",
+    "A little train that rides along a line"
+  ],
+  "accent": "#ffc72c"
+}

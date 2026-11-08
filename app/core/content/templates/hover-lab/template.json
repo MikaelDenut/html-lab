@@ -1,0 +1,15 @@
+{
+  "title": "Hover playground",
+  "name": "hover-playground",
+  "blurb": "Over 30 hover tricks: cards, buttons and pictures that play",
+  "category": "effects",
+  "layout": "Grid of labelled effect cards",
+  "shows": [
+    "Cards that grow, tilt, flip and wiggle",
+    "Ten buttons with fun hover tricks",
+    "Pictures that zoom and turn to colour",
+    "A border that draws itself",
+    "Pick one picture and the others fade"
+  ],
+  "accent": "#ff4f81"
+}

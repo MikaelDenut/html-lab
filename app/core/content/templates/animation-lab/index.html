@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animation lab - Fades</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="logo"><a href="index.html"><span class="logo-ball"></span>Animation lab</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html" aria-current="page">Fades</a></li>
+        <li><a href="moves.html">Moves</a></li>
+        <li><a href="timing.html">Timing</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Fade lab</h1>
+      <p>Each card is a test. Put your mouse on it, or press <kbd>Tab</kbd> to reach it, and the test plays.</p>
+      <p>The long bar with each test is its timing track. It fills up with blue while the animation plays, from 0 seconds to the end. The little marks cut it into ten equal parts.</p>
+    </section>
+
+    <!-- tabindex="0" lets the Tab key stop here, so the keyboard can start the test too.
+         data-time is only the label on the bar. The real time is --time in style.css. -->
+    <div class="grid">
+      <article class="card fade-in" tabindex="0">
+        <div class="demo"><span class="ball"></span></div>
+        <h2>Fade in</h2>
+        <p><code>opacity</code> goes from 0 (gone) to 1 (all there).</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Fade in and out</p>
+      </article>
+      <article class="card fade-out" tabindex="0">
+        <div class="demo"><span class="ball"></span></div>
+        <h2>Fade out</h2>
+        <p><code>opacity</code> goes from 1 to 0. <code>both</code> keeps it gone.</p>
+        <div class="track" data-time="1.2s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Fade in and out</p>
+      </article>
+      <article class="card fade-up" tabindex="0">
+        <div class="demo"><span class="word">Hello!</span></div>
+        <h2>Fade up</h2>
+        <p><code>opacity</code> and <code>translateY</code> together.</p>
+        <div class="track" data-time="0.8s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Fade in and out</p>
+      </article>
+      <article class="card fade-side" tabindex="0">
+        <div class="demo"><span class="box">Hi</span></div>
+        <h2>From the side</h2>
+        <p>It starts 80px to the left with <code>translateX(-80px)</code>.</p>
+        <div class="track" data-time="0.8s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Fade in and out</p>
+      </article>
+      <article class="card zoom-in" tabindex="0">
+        <div class="demo"><span class="ball"></span></div>
+        <h2>Zoom in</h2>
+        <p>It starts tiny with <code>scale(0.2)</code> and grows.</p>
+        <div class="track" data-time="0.6s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Move, turn and grow</p>
+      </article>
+      <article class="card blur-in" tabindex="0">
+        <div class="demo"><span class="word">Magic</span></div>
+        <h2>Blur in</h2>
+        <p><code>filter: blur(12px)</code> clears up to <code>blur(0)</code>.</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Blur and color filters</p>
+      </article>
+    </div>
+
+    <section class="how">
+      <h2>How an animation works</h2>
+      <pre><code>@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ball:hover {
+  animation: fade-in 1s;
+}</code></pre>
+      <div>
+        <p><code>@keyframes</code> is the plan. It says how things look at the start (<code>from</code>) and at the end (<code>to</code>).</p>
+        <p><code>animation</code> plays the plan. First the plan's name, then how long it takes.</p>
+        <p class="fact">Did you know? A film shows 24 still pictures every second. Your brain joins them into one moving picture.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, this lab stops every test. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Animation">Read about animation on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "title": "Science Festival",
+  "name": "My science festival",
+  "blurb": "A one-day science festival for families, with a big timetable",
+  "category": "professional",
+  "layout": "Schedule grid by time and room",
+  "shows": [
+    "A timetable made with CSS grid and row spans",
+    "The grid turns into a list on a phone",
+    "Number boxes that look like a flip clock",
+    "A map of the building drawn with SVG",
+    "Questions that open and close, no script"
+  ],
+  "accent": "#6644d8"
+}

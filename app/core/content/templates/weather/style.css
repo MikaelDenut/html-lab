@@ -1,0 +1,800 @@
+/* Fernhollow Weather Station: the school's weather board. Every icon is drawn with CSS. */
+
+/* All colours, fonts and sizes live here. Change one line and the whole station changes! */
+:root {
+  --board: #1f3d36;
+  --board-light: #2c5a4f;
+  --quiet-on-board: #b3d1c6;
+  --page: #edf1ee;
+  --tile: #ffffff;
+  --ink: #17241f;
+  --quiet-ink: #4c5f57;
+  --line: #d5dfda;
+  --chalk: #f7f8f4;
+  --sun: #f5b400;
+  --sun-light: #ffe08a;
+  --warm: #d6452f;
+  --rain: #2b6fd6;
+  --cloud: #c5d1cc;
+  --leaf: #2e9e6b;
+  --stripe: #f3f6f4;
+  --open-quiz: #fff6d6;
+  --white: #ffffff;
+  --text-font: "Gill Sans", "Avenir Next", sans-serif;
+  --number-font: "DIN Alternate", "Avenir Next", sans-serif;
+  /* Every text size is about 1.25 times the one before it. */
+  --text-s: 14px;
+  --text-m: 18px;
+  --text-l: 23px;
+  --text-xl: 29px;
+  --text-2xl: 37px;
+  --text-3xl: 47px;
+  --text-4xl: 59px;
+  --text-6xl: 93px;
+  /* The spaces between things, from tiny to big. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --round: 20px;
+  --shadow: 0 6px 18px rgba(23, 36, 31, 0.1);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.55;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-l); }
+p { max-width: 70ch; margin: 0 0 var(--space-s); }
+a { color: var(--rain); font-weight: 600; }
+a:hover { color: var(--board); }
+
+/* A thick green ring shows where the keyboard is. On the green board it turns yellow. */
+a:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--board);
+  outline-offset: 3px;
+}
+
+.top-bar a:focus-visible, .footer a:focus-visible { outline-color: var(--sun); }
+
+/* The top bar is the green board of the station. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-s) 5%;
+  background: var(--board);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--chalk);
+  font-size: var(--text-l);
+  text-decoration: none;
+}
+
+.logo:hover { color: var(--white); }
+.logo .icon { font-size: 8px; }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-m);
+  border-radius: 10px;
+  color: var(--chalk);
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.menu a:hover { background: var(--board-light); color: var(--white); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on is a chalk-white button. */
+.menu a[aria-current="page"] { background: var(--chalk); color: var(--board); }
+
+.page-head { padding: var(--space-xl) 5% var(--space-s); }
+.page-head p { color: var(--quiet-ink); }
+
+/* A green dot says the station is working. */
+.online { margin-right: var(--space-s); color: var(--board); font-weight: 600; }
+
+.online::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: var(--space-xs);
+  border-radius: 50%;
+  background: var(--leaf);
+}
+
+/* The dashboard is a grid with 4 columns. Some tiles are 2 columns wide or 2 rows tall. */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-m);
+  padding: var(--space-m) 5% var(--space-xl);
+}
+
+.wide { grid-column: span 2; }
+.tall { grid-row: span 2; }
+
+.tile {
+  padding: var(--space-m) var(--space-l) var(--space-l);
+  border-radius: var(--round);
+  background: var(--tile);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+/* Small labels on top of each tile are short, so capitals are fine here. */
+.tile h2, .tile h3 {
+  color: var(--quiet-ink);
+  font-size: var(--text-s);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Numbers use DIN, the letters of measuring tools and road signs. */
+.reading {
+  margin: var(--space-s) 0 0;
+  font-family: var(--number-font);
+  font-size: var(--text-3xl);
+  line-height: 1;
+}
+
+.reading small { font-size: var(--text-m); }
+
+/* The big tile is the green board itself, with chalk-white writing.
+   margin: auto above and below puts the reading in the middle of the tall tile. */
+.now {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--board);
+  color: var(--chalk);
+}
+
+.now h2, .now p { color: var(--quiet-on-board); }
+.now .reading { color: var(--chalk); font-size: var(--text-6xl); }
+.now .icon { margin-top: auto; font-size: 28px; }
+.now p:last-child { margin-bottom: auto; }
+.now .cloud { background: var(--chalk); }
+
+/* ICONS. Every size is in em, so font-size makes a whole icon bigger or smaller.
+   z-index: 0 makes each icon its own layer, so the sun rays (z-index: -1) stay in front of the white tile. */
+.icon {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  width: 6em;
+  height: 5em;
+  font-size: 12px;
+}
+
+/* The sun is a circle, light in the middle and deep yellow at the edge. */
+.sun {
+  position: absolute;
+  top: 0.6em;
+  left: 0.6em;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--sun-light), var(--sun) 70%);
+}
+
+/* The rays are a conic-gradient: thin yellow slices all around, behind the sun. */
+.sun::before {
+  content: "";
+  position: absolute;
+  inset: -0.7em;
+  z-index: -1;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--sun) 0 8deg, transparent 8deg 30deg);
+}
+
+.sunny .sun { top: 1em; left: 1.5em; }
+
+/* A cloud is one round box and two circles, made with ::before and ::after. */
+.cloud {
+  position: absolute;
+  top: 2.6em;
+  left: 1.2em;
+  width: 4.6em;
+  height: 1.8em;
+  border-radius: 1em;
+  background: var(--cloud);
+}
+
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.cloud::before { top: -1.1em; left: 0.6em; width: 2.2em; height: 2.2em; }
+.cloud::after { top: -0.7em; left: 2.3em; width: 1.6em; height: 1.6em; }
+.cloudy .cloud, .rain .cloud { top: 1.8em; left: 0.7em; }
+
+/* A rain drop is a square with three round corners, turned 45 degrees. */
+.drop {
+  position: absolute;
+  top: 3.9em;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 0 50% 50% 50%;
+  background: var(--rain);
+  transform: rotate(45deg);
+}
+
+.drop:nth-child(2) { left: 1.4em; }
+.drop:nth-child(3) { left: 2.8em; }
+.drop:nth-child(4) { left: 4.2em; }
+
+/* The one thing that moves on this page: rain falls in the rain tile. */
+@media (prefers-reduced-motion: no-preference) {
+  .falling .drop { animation: fall 1.4s linear infinite; }
+  .falling .drop:nth-child(3) { animation-delay: 0.5s; }
+  .falling .drop:nth-child(4) { animation-delay: 0.9s; }
+}
+
+@keyframes fall {
+  from { transform: translateY(0) rotate(45deg); opacity: 1; }
+  to { transform: translateY(1.4em) rotate(45deg); opacity: 0; }
+}
+
+/* THERMOMETER: a tall tube, a round bulb, and red inside as high as the temperature. */
+.thermometer {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-m);
+  margin: var(--space-m) 0 52px;
+}
+
+.scale {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 230px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--quiet-ink);
+  font-family: var(--number-font);
+  line-height: 0;
+}
+
+.tube {
+  position: relative;
+  width: 34px;
+  height: 230px;
+  border: 5px solid var(--line);
+  border-bottom: 0;
+  border-radius: 17px 17px 0 0;
+}
+
+.mercury {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  right: 5px;
+  border-radius: 8px 8px 0 0;
+  background: var(--warm);
+}
+
+.tube::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin: -14px 0 0 -30px;
+  border: 5px solid var(--line);
+  border-radius: 50%;
+  background: var(--warm);
+}
+
+/* COMPASS: the arrow is one box, turned with transform: rotate(). */
+.compass {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: var(--space-s) auto;
+  border: 6px solid var(--line);
+  border-radius: 50%;
+  color: var(--quiet-ink);
+  font-family: var(--number-font);
+}
+
+.compass span { position: absolute; line-height: 1; }
+.north { top: 8px; left: 50%; transform: translateX(-50%); }
+.south { bottom: 8px; left: 50%; transform: translateX(-50%); }
+.west { top: 50%; left: 10px; transform: translateY(-50%); }
+.east { top: 50%; right: 10px; transform: translateY(-50%); }
+
+/* 45deg makes the arrow point north-east. Try 90deg or 180deg! */
+.arrow {
+  position: absolute;
+  top: 24%;
+  bottom: 24%;
+  left: 50%;
+  width: 6px;
+  margin-left: -3px;
+  border-radius: 3px;
+  background: var(--ink);
+  transform: rotate(45deg);
+  transition: transform 0.8s var(--ease);
+}
+
+/* The arrow head is a triangle, made from thick borders. */
+.arrow::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: -9px;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 20px solid var(--warm);
+}
+
+/* A gust of wind wobbles the arrow a tiny bit when your mouse is on the tile. */
+.tile:hover .arrow { transform: rotate(50deg); }
+
+/* HUMIDITY: a real hygrometer has a round dial, so a ring fits here.
+   conic-gradient paints blue up to the number in --wet. */
+.ring {
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 140px;
+  margin: var(--space-s) auto;
+  border-radius: 50%;
+  background: conic-gradient(var(--rain) 0 var(--wet), var(--line) var(--wet) 100%);
+}
+
+.ring b {
+  display: grid;
+  place-items: center;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  background: var(--white);
+  font-family: var(--number-font);
+  font-size: var(--text-xl);
+  font-weight: normal;
+}
+
+/* PRESSURE GAUGE: half of a colour wheel, a white middle, and a needle. */
+.gauge {
+  position: relative;
+  width: 170px;
+  height: 85px;
+  margin: var(--space-m) auto 0;
+  overflow: hidden;
+}
+
+.gauge::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -85px;
+  border-radius: 50%;
+  background: conic-gradient(from -90deg, var(--rain) 0 60deg, var(--leaf) 60deg 120deg, var(--sun) 120deg 180deg, transparent 180deg);
+}
+
+.gauge::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--white);
+}
+
+.needle {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 1;
+  width: 4px;
+  height: 78px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transform: rotate(11deg);
+  transform-origin: 50% 100%;
+}
+
+/* The two ends of the gauge, with space-between pushing them apart. */
+.gauge-ends {
+  display: flex;
+  justify-content: space-between;
+  width: 190px;
+  margin: var(--space-xs) auto 0;
+  color: var(--quiet-ink);
+  font-size: var(--text-s);
+}
+
+/* SUN PATH: a dashed half circle. The sun sits at the end of a turning arm. */
+.sun-path {
+  position: relative;
+  max-width: 320px;
+  aspect-ratio: 2 / 1;
+  margin: var(--space-l) auto 0;
+  border: 3px dashed var(--sun);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+
+/* The ground is a line under the path, so we see the sun come up and go down. */
+.ground {
+  max-width: 360px;
+  height: 3px;
+  margin: 0 auto var(--space-s);
+  background: var(--quiet-ink);
+}
+
+.sun-arm {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  height: 0;
+  transform: rotate(-124deg);
+  transform-origin: 0 0;
+}
+
+.sun-dot {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 32px;
+  height: 32px;
+  border: 6px solid var(--sun-light);
+  border-radius: 50%;
+  background: var(--sun);
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  max-width: 360px;
+  margin: 0 auto;
+  font-family: var(--number-font);
+}
+
+.section { padding: var(--space-xl) 5%; }
+.section > h2 { margin-bottom: var(--space-m); }
+
+/* Small readings in a row. auto-fit makes as many columns as fit the window. */
+.hours {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hours li {
+  padding: var(--space-m) var(--space-s);
+  border-radius: var(--round);
+  background: var(--tile);
+  box-shadow: var(--shadow);
+  font-family: var(--number-font);
+  font-size: var(--text-l);
+  text-align: center;
+}
+
+.hours b {
+  display: block;
+  color: var(--quiet-ink);
+  font-size: var(--text-s);
+  font-weight: normal;
+}
+
+.hours .icon { font-size: 10px; }
+
+/* A table with a green top row and soft stripes on every second row. */
+.table {
+  width: 100%;
+  max-width: 760px;
+  border-collapse: collapse;
+  border-radius: var(--round);
+  background: var(--tile);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-align: left;
+}
+
+.table th { background: var(--board); color: var(--chalk); font-weight: 600; }
+.table th, .table td { padding: var(--space-s) var(--space-m); }
+.table tbody tr:nth-child(even) { background: var(--stripe); }
+
+/* WEEK: seven cards in a row. flex-wrap lets them jump to a new row when there is no room. */
+.week {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.day {
+  flex: 1 1 130px;
+  max-width: 180px;
+  padding: var(--space-m) var(--space-s);
+}
+
+.day .icon { font-size: 11px; }
+
+/* display: block puts the high and the low on two lines. */
+.high, .low { display: block; font-family: var(--number-font); }
+.high { color: var(--warm); font-size: var(--text-xl); }
+.low { color: var(--rain); font-size: var(--text-m); }
+
+/* Today's card is the green board colour, and its name says "Today". */
+.today { background: var(--board); color: var(--chalk); }
+.today h3 { color: var(--quiet-on-board); }
+.today .cloud { background: var(--chalk); }
+.today .high { color: #ffb4a6; }
+.today .low { color: #b9d3ff; }
+
+/* BAR CHART: each bar is as tall as the height in its style. 10% for every mm of rain. */
+.chart {
+  max-width: 900px;
+  margin: 0;
+  padding: var(--space-l);
+  border-radius: var(--round);
+  background: var(--tile);
+  box-shadow: var(--shadow);
+}
+
+.bars {
+  display: flex;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.bars li { flex: 1; }
+
+.bars b {
+  display: block;
+  margin-top: var(--space-xs);
+  font-family: var(--number-font);
+  font-weight: normal;
+}
+
+/* The lines behind the bars are the chart's scale: one line for every 2 mm. */
+.bar-space {
+  display: flex;
+  align-items: flex-end;
+  height: 220px;
+  border-bottom: 3px solid var(--ink);
+  background: linear-gradient(var(--line) 2px, transparent 2px) 0 0 / 100% 20%;
+}
+
+.bar {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+  background: var(--rain);
+  transition: background 0.2s var(--ease);
+}
+
+.bars li:hover .bar { background: var(--board); }
+
+.chart figcaption { margin-top: var(--space-m); color: var(--quiet-ink); }
+
+/* RANGE CHART: the track starts at 5 degrees and ends at 25. Every degree is 5% of the track,
+   so a bar starts at (low - 5) x 5% and is (high - low) x 5% long. */
+.ranges {
+  display: grid;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ranges li {
+  display: grid;
+  grid-template-columns: 3em 1fr 6em;
+  align-items: center;
+  gap: var(--space-m);
+  font-family: var(--number-font);
+}
+
+.track {
+  position: relative;
+  height: 18px;
+  border-radius: 9px;
+  background: var(--page);
+}
+
+.range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc((var(--low) - 5) * 5%);
+  width: calc((var(--high) - var(--low)) * 5%);
+  border-radius: 9px;
+  background: linear-gradient(90deg, var(--rain), var(--warm));
+}
+
+/* LEARN: the trip of a water drop. counter() writes the numbers 1, 2, 3, 4 by itself,
+   and a dashed line joins the numbers into one path. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  position: relative;
+  padding-top: 60px;
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--board);
+  color: var(--chalk);
+  font-family: var(--number-font);
+  font-size: var(--text-l);
+}
+
+/* The path: a dashed line from each number to the next one. The last step has none. */
+.steps li::after {
+  content: "";
+  position: absolute;
+  top: 21px;
+  left: 52px;
+  right: calc(8px - var(--space-l));
+  border-top: 3px dashed var(--rain);
+}
+
+.steps li:last-child::after { display: none; }
+.steps .icon { display: block; margin-bottom: var(--space-s); font-size: 9px; }
+
+.cloud-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-l);
+}
+
+.cloud-card {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--round);
+  background: var(--tile);
+  box-shadow: var(--shadow);
+}
+
+.cloud-card img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.cloud-card figcaption { padding: var(--space-m) var(--space-l) var(--space-l); }
+.how-high { color: var(--board); font-weight: 600; }
+
+/* QUIZ: details and summary open and close with no script at all. */
+.quiz { display: grid; gap: var(--space-s); max-width: 760px; }
+
+.quiz details {
+  padding: 0 var(--space-l);
+  border-radius: var(--round);
+  background: var(--tile);
+  box-shadow: var(--shadow);
+}
+
+.quiz summary {
+  min-height: 44px;
+  padding: var(--space-m) 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.quiz summary:hover { color: var(--board); }
+.quiz details[open] { background: var(--open-quiz); }
+.quiz details p { padding-bottom: var(--space-m); }
+
+.footer {
+  padding: var(--space-xl) 5%;
+  background: var(--board);
+  color: var(--chalk);
+}
+
+.footer a { color: var(--sun-light); }
+.footer a:hover { color: var(--white); }
+
+/* On a middle window the dashboard has 2 columns, the hours 3,
+   and the water trip runs down the page with the dashed line on the left. */
+@media (max-width: 900px) {
+  .dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hours { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .steps { grid-template-columns: 1fr; }
+  .steps li { padding: 0 0 0 64px; }
+
+  .steps li::after {
+    top: 52px;
+    bottom: calc(8px - var(--space-l));
+    left: 20px;
+    right: auto;
+    border-top: 0;
+    border-left: 3px dashed var(--rain);
+  }
+}
+
+/* On a phone every tile is one column wide and things get a bit smaller. */
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  h1 { font-size: var(--text-2xl); }
+  .top-bar { justify-content: center; padding: var(--space-s) var(--space-m); }
+  .menu a { padding: 0 12px; }
+  .dashboard { grid-template-columns: 1fr; padding: var(--space-m); }
+  .wide, .tall { grid-column: auto; grid-row: auto; }
+  .now .icon { font-size: 20px; }
+  .now .reading { font-size: var(--text-4xl); }
+  .page-head, .section { padding-left: var(--space-m); padding-right: var(--space-m); }
+  .chart { padding: var(--space-m) var(--space-s); }
+  .bars { gap: var(--space-xs); font-size: var(--text-s); }
+
+  .ranges li {
+    grid-template-columns: 2.5em 1fr 4.5em;
+    gap: var(--space-s);
+    font-size: var(--text-s);
+  }
+
+  .table th, .table td { padding: var(--space-s); }
+}

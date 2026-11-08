@@ -1,0 +1,15 @@
+{
+  "title": "Nature Photographer",
+  "name": "nature-photos",
+  "blurb": "Ada Fernwood's photo wall, photo stories and camera tips",
+  "category": "creative",
+  "layout": "Masonry photo wall with CSS columns, lightbox",
+  "shows": [
+    "A photo wall made with CSS columns",
+    "Captions that fade in on hover",
+    "A big photo box with :target, no script",
+    "Wide photos cut to shape with object-fit",
+    "A sidebar that stays on screen (sticky)"
+  ],
+  "accent": "#f08c42"
+}

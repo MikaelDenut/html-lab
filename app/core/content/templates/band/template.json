@@ -1,0 +1,15 @@
+{
+  "title": "Kids Rock Band",
+  "name": "rock-band",
+  "blurb": "The Thunder Pancakes: albums, a tour and a spinning record",
+  "category": "creative",
+  "layout": "Album grid, tour dates list, spinning record",
+  "shows": [
+    "A record that spins, drawn with CSS",
+    "Album covers made only with CSS",
+    "Records that slide out when your mouse is on",
+    "Track numbers 01, 02, 03 from a CSS counter",
+    "Sold-out stamps turned with rotate"
+  ],
+  "accent": "#ff5c8a"
+}

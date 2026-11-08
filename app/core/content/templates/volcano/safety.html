@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cinderkettle Observatory - Safety</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path class="logo-hill" d="M4 42 L20 14 H28 L44 42 Z"></path>
+        <path class="logo-lava" d="M22 14 H26 L27 42 H21 Z"></path>
+        <circle class="logo-ash" cx="27" cy="8" r="5"></circle>
+      </svg>
+      <span>Cinderkettle<small>Volcano Observatory</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Inside the volcano</a></li>
+        <li><a href="types.html">Types</a></li>
+        <li><a href="safety.html" aria-current="page">Safety</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <svg class="chart-defs" aria-hidden="true" width="0" height="0">
+      <defs>
+        <pattern id="paper" width="20" height="20" patternUnits="userSpaceOnUse"><path class="paper-line" d="M20 0 H0 V20"></path></pattern>
+      </defs>
+    </svg>
+    <section class="page-title">
+      <h1>How we keep watch</h1>
+      <p class="lead">A volcano often gives signs before it erupts. We measure them every day, so people who live nearby can get ready in time.</p>
+    </section>
+
+    <section class="section">
+      <h2>What we measure</h2>
+      <article class="reading">
+        <div>
+          <h3>Ground shaking</h3>
+          <p>Rising magma cracks the rock and makes small earthquakes. A seismometer feels shakes that are too small for people to notice.</p>
+        </div>
+        <svg class="strip" viewBox="0 0 600 140" aria-hidden="true">
+          <rect width="600" height="140" fill="url(#paper)"></rect>
+          <polyline class="trace" points="0,70 40,70 50,66 60,74 70,70 140,70 150,62 158,80 166,58 174,84 182,64 190,74 200,70 260,70 270,40 280,104 290,28 300,112 310,46 320,94 330,60 340,80 350,70 420,70 430,64 440,76 450,70 600,70"></polyline>
+        </svg>
+      </article>
+      <article class="reading">
+        <div>
+          <h3>Gas</h3>
+          <p>Magma lets out gases, such as sulfur dioxide. If more gas comes out each day, magma may be moving up. Our gas sensors measure it.</p>
+        </div>
+        <figure class="chart">
+          <svg class="strip" viewBox="0 0 600 140" aria-hidden="true">
+            <rect width="600" height="140" fill="url(#paper)"></rect>
+            <rect class="bar" x="40" y="104" width="44" height="26"></rect>
+            <rect class="bar" x="120" y="98" width="44" height="32"></rect>
+            <rect class="bar" x="200" y="88" width="44" height="42"></rect>
+            <rect class="bar" x="280" y="76" width="44" height="54"></rect>
+            <rect class="bar" x="360" y="60" width="44" height="70"></rect>
+            <rect class="bar" x="440" y="38" width="44" height="92"></rect>
+            <rect class="bar" x="520" y="20" width="44" height="110"></rect>
+          </svg>
+          <figcaption>Gas each day this week, from Monday to Sunday.</figcaption>
+        </figure>
+      </article>
+      <article class="reading">
+        <div>
+          <h3>Swelling</h3>
+          <p>Magma pushing up can make the ground bulge, like a balloon under a carpet. GPS stations and tiltmeters (machines that feel the ground tip a tiny bit) notice even a tiny bulge.</p>
+        </div>
+        <svg class="strip" viewBox="0 0 600 140" aria-hidden="true">
+          <rect width="600" height="140" fill="url(#paper)"></rect>
+          <path class="trace before" d="M0 110 H600"></path>
+          <path class="trace" d="M0 110 C150 110 220 64 300 64 C380 64 450 110 600 110"></path>
+          <rect class="station" x="208" y="44" width="8" height="34"></rect>
+          <rect class="station" x="384" y="44" width="8" height="34"></rect>
+          <path class="trace" d="M300 52 V18 M288 30 L300 18 L312 30"></path>
+        </svg>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>Our alert colours</h2>
+      <p>Real volcano observatories use colours like these to tell pilots how the volcano is doing.</p>
+      <ol class="alert-list">
+        <li class="green"><b>Green</b> Quiet. A normal day.</li>
+        <li class="yellow"><b>Yellow</b> Restless. More shakes or gas than usual.</li>
+        <li class="orange"><b>Orange</b> Very restless, or a small eruption has started.</li>
+        <li class="red"><b>Red</b> A big eruption with lots of ash is close or happening.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Volcano words</h2>
+      <dl class="glossary">
+        <dt>Magma</dt><dd>Melted rock under the ground.</dd>
+        <dt>Lava</dt><dd>Magma that has come out on top of the ground.</dd>
+        <dt>Ash</dt><dd>Tiny pieces of rock and glass thrown out by a volcano.</dd>
+        <dt>Eruption</dt><dd>When lava, ash or gas comes out of a volcano.</dd>
+        <dt>Active</dt><dd>Erupting now, or it erupted in about the last 10,000 years. For a volcano, that is not long ago!</dd>
+        <dt>Dormant</dt><dd>Sleeping. It has not erupted for a long time, but it could wake up.</dd>
+        <dt>Extinct</dt><dd>Finished. It is not expected to erupt ever again.</dd>
+        <dt>Seismometer</dt><dd>A machine that feels the ground shaking.</dd>
+        <dt>Volcanologist</dt><dd>A scientist who studies volcanoes.</dd>
+      </dl>
+
+      <div class="visit">
+        <h2>Visiting a volcano park?</h2>
+        <ul>
+          <li>Stay on the marked paths. The ground near a vent can be thin and hot.</li>
+          <li>Read the signs and listen to the park rangers.</li>
+          <li>Keep away from steam and gas holes. Some volcano gases are bad to breathe.</li>
+        </ul>
+      </div>
+      <p>Real volcano scientists share their news here: <a href="https://www.usgs.gov/programs/VHP">USGS Volcano Hazards Program</a></p>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Cinderkettle Volcano Observatory</b> is pretend, and so is Mount Cinderkettle. The science is real.</p>
+    <p>Want more? <a href="https://simple.wikipedia.org/wiki/Volcano">Read about volcanoes on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

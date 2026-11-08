@@ -1,0 +1,15 @@
+{
+  "title": "Town Library",
+  "name": "My town library",
+  "blurb": "A town library with wooden shelves of books and a catalogue table",
+  "category": "creative",
+  "layout": "Bookshelves of covers, a catalogue table",
+  "shows": [
+    "Book spines with titles turned sideways",
+    "Shelves that grow a new board for each row",
+    "Books that slide off the shelf on hover",
+    "A table you can filter with radio buttons",
+    "Shelf mark links that light up a row"
+  ],
+  "accent": "#b23a26"
+}

@@ -1,0 +1,521 @@
+/* Port of Brindlewick: one style file for all three pages.
+   The look: a port at night, under orange street lamps. A port works day and
+   night, so a dark page fits the people who check it from a truck or a crane. */
+
+/* Change one line here and the whole port changes colour! */
+:root {
+  --night: #11181e;
+  --deck: #1a242c;
+  --steel: #2b3a45;
+  --land: #364754;
+  --quay: #4a5a66;
+  --bridge-glass: #2a3b47;
+  --wave: #2f5a6c;
+  --fog: #e9eef1;
+  --fog-quiet: #a9bbc7;
+  --sodium: #f5a623;
+  --rust: #c4502f;
+  --rust-dark: #a8401f;
+  --cobalt: #3d6fc0;
+  --cobalt-deep: #2f5aa0;
+  --kelp: #3f9467;
+  --kelp-deep: #2e6b4b;
+  --box-white: #d8dfe4;
+  --hull: #24313b;
+  --sea-water: #173341;
+  --in-port: #56c98a;
+  --coming: #f5a623;
+  --at-sea: #6aa6f2;
+  --title-font: "DIN Condensed", "Avenir Next Condensed", sans-serif;
+  --text-font: "Avenir Next", "Gill Sans", sans-serif;
+  --data-font: Menlo, monospace;
+  --size-s: 16px;
+  --size-m: 20px;
+  --size-l: 25px;
+  --size-xl: 31px;
+  --size-2xl: 39px;
+  --size-3xl: 49px;
+  --size-4xl: 76px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 88px;
+  --round: 8px;
+  --shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--fog);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.55;
+}
+
+/* DIN Condensed is the letters on road signs and on the sides of boxes. */
+h1, h2, h3 {
+  max-width: 24ch;
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: 700;
+  line-height: 1.05;
+}
+h1 { font-size: var(--size-4xl); }
+h2 { font-size: var(--size-3xl); }
+h3 { font-size: var(--size-xl); }
+p, li { max-width: 70ch; }
+p { margin: 0 0 var(--space-s); }
+a { color: var(--sodium); }
+a:hover { color: var(--fog); }
+
+/* Menlo is for data: times, berth numbers and box codes. */
+.data { font-family: var(--data-font); font-size: var(--size-s); }
+
+/* Press Tab: an orange ring shows where you are. */
+a:focus-visible, button:focus-visible, input:focus-visible, .step-strip:focus-visible, .table-box:focus-visible {
+  outline: 3px solid var(--sodium);
+  outline-offset: 3px;
+}
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-m); }
+
+.top-bar { background: var(--deck); }
+.top-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--fog);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  line-height: 1;
+  text-decoration: none;
+}
+.logo small { display: block; color: var(--fog-quiet); font-family: var(--text-font); font-size: var(--size-s); }
+.logo-box.rust { fill: var(--rust); }
+.logo-box.cobalt { fill: var(--cobalt); }
+.logo-box.lifted { fill: var(--sodium); }
+
+/* Put your mouse on the logo and the top box is lifted, like a crane did it. */
+.logo:hover .lifted { transform: translateY(-5px); }
+
+.menu { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a {
+  position: relative;
+  display: block;
+  min-height: 44px;
+  padding: 10px var(--space-s);
+  border-radius: var(--round);
+  color: var(--fog);
+  font-size: var(--size-s);
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--steel); }
+.menu a:active { background: var(--land); }
+
+/* The page you are on gets an orange line under it. */
+.menu a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: var(--space-s);
+  right: var(--space-s);
+  bottom: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sodium);
+}
+
+.button {
+  display: inline-block;
+  min-height: 48px;
+  margin: 0 var(--space-s) var(--space-s) 0;
+  padding: var(--space-s) var(--space-m);
+  border: 0;
+  border-radius: var(--round);
+  background: var(--sodium);
+  color: var(--night);
+  font-family: var(--text-font);
+  font-size: var(--size-s);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button.ghost { background: transparent; color: var(--fog); box-shadow: inset 0 0 0 2px var(--fog-quiet); }
+
+/* Buttons lift up when your mouse is on them, and press down when you click. */
+.button:hover { color: var(--night); background: var(--fog); transform: translateY(-3px); }
+.button:active { transform: translateY(1px); }
+
+/* The top of the home page. An orange lamp glows in the top corner. */
+.hero {
+  padding: var(--space-xl) 0 var(--space-l);
+  background: radial-gradient(circle at 85% 0%, rgba(245, 166, 35, 0.2), transparent 50%), var(--night);
+}
+.hero-inner { display: grid; grid-template-columns: 5fr 6fr; gap: var(--space-l); align-items: center; }
+.hero h1 { max-width: 11ch; }
+.hero-lead { max-width: 34ch; margin-bottom: var(--space-m); color: var(--fog-quiet); font-size: var(--size-l); }
+
+/* The ship is a grid: the stack of boxes, the bridge beside it, the hull under both. */
+.ship-scene { margin: 0; }
+.ship { display: grid; grid-template-columns: 1fr 72px; align-items: end; gap: 0 4px; }
+.stack { display: grid; gap: 3px; padding-left: 26px; }
+.tier { display: flex; gap: 3px; }
+.tier.top { width: 64%; justify-self: end; }
+
+/* Each box is a flex item. A long box is a 40-foot box: two short boxes long.
+   The thin stripes are real: box walls are made of wavy steel. */
+.box {
+  flex: 1;
+  height: 38px;
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0 2px, transparent 2px 8px);
+}
+.box.long { flex: 2; }
+.rust { background-color: var(--rust); }
+.cobalt { background-color: var(--cobalt); }
+.kelp { background-color: var(--kelp); }
+.sodium { background-color: var(--sodium); }
+.white { background-color: var(--box-white); }
+
+.bridge { position: relative; height: 168px; border-radius: 4px 4px 0 0; background: var(--box-white); }
+.bridge::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 8px;
+  right: 8px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--bridge-glass);
+}
+
+/* clip-path cuts the hull into a boat shape: a pointed front, a straight back. */
+.hull {
+  grid-column: 1 / -1;
+  height: 70px;
+  background: linear-gradient(var(--hull) 62%, var(--rust) 62%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 98% 100%, 9% 100%);
+  clip-path: polygon(0 0, 100% 0, 98% 100%, 9% 100%);
+}
+.water {
+  position: relative;
+  height: 46px;
+  margin-top: -24px;
+  border-top: 3px solid var(--wave);
+  background: var(--sea-water);
+  opacity: 0.95;
+}
+
+/* Port facts and the box size drawing. */
+.section { padding-top: var(--space-xl); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; }
+.box-drawing { margin: 0; padding: var(--space-m); border-radius: var(--round); background: var(--deck); box-shadow: var(--shadow); }
+.box-drawing svg { display: block; width: 100%; height: auto; }
+.box-drawing figcaption { margin-top: var(--space-s); color: var(--fog-quiet); font-size: var(--size-s); }
+.box-side { fill: var(--rust); }
+.box-ribs { stroke: rgba(0, 0, 0, 0.25); stroke-width: 3; }
+.box-small { fill: var(--cobalt-deep); }
+.box-big { fill: var(--kelp-deep); }
+.measure { stroke: var(--fog-quiet); stroke-width: 2; fill: none; }
+.measure-text { fill: var(--fog); font-family: var(--data-font); font-size: 18px; }
+
+/* The box code looks like the white letters painted on a box door. */
+.code-plate {
+  display: inline-block;
+  margin: var(--space-xs) 0 var(--space-m);
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 4px;
+  background: var(--rust-dark);
+  color: var(--box-white);
+  font-family: var(--data-font);
+  font-size: var(--size-m);
+  letter-spacing: 0.08em;
+}
+
+.port-photo { margin: 0; }
+.port-photo img { border-radius: var(--round); box-shadow: var(--shadow); }
+.port-photo figcaption { margin-top: var(--space-s); color: var(--fog-quiet); font-size: var(--size-s); }
+
+/* The port card is a list of names and values: dt is the name, dd is the value. */
+.port-card { display: grid; grid-template-columns: auto 1fr; margin: var(--space-m) 0; }
+.port-card dt, .port-card dd { margin: 0; padding: var(--space-s) 0; border-bottom: 1px solid var(--steel); }
+.port-card dt { padding-right: var(--space-m); color: var(--fog-quiet); }
+.port-card dd { font-family: var(--data-font); font-size: var(--size-m); text-align: right; }
+
+.call-band { margin-top: var(--space-xl); padding: var(--space-l) 0; background: var(--deck); }
+.call-band .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+.call-band h2 { margin: 0; font-size: var(--size-2xl); }
+.call-band .button { margin: 0; }
+
+/* The title at the top of the other pages. */
+.page-title { padding: var(--space-l) 0 var(--space-m); }
+.page-title p { color: var(--fog-quiet); font-size: var(--size-l); max-width: 40ch; }
+
+/* The search form and the filter buttons sit side by side. */
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-m);
+  margin-bottom: var(--space-m);
+}
+.find-ship label { display: block; margin-bottom: var(--space-xs); font-size: var(--size-s); font-weight: 600; }
+.search-row { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+.search-row input {
+  width: 260px;
+  max-width: 100%;
+  min-height: 48px;
+  padding: var(--space-s);
+  border: 2px solid var(--fog-quiet);
+  border-radius: var(--round);
+  background: var(--deck);
+  color: var(--fog);
+  font: inherit;
+  font-size: var(--size-s);
+}
+.search-row input:hover { border-color: var(--fog); }
+.search-row .button { margin: 0; }
+.find-ship button:disabled { opacity: 0.5; cursor: not-allowed; }
+.practice { margin: var(--space-xs) 0 0; color: var(--fog-quiet); font-size: var(--size-s); }
+
+/* The real round buttons hide. Their labels look like switches instead. */
+.filter { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; border: 0; }
+.filter legend { margin-bottom: var(--space-xs); font-size: var(--size-s); font-weight: 600; }
+.filter input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.filter label {
+  display: block;
+  min-height: 44px;
+  padding: 10px var(--space-s);
+  border-radius: var(--round);
+  background: var(--deck);
+  font-size: var(--size-s);
+  cursor: pointer;
+}
+.filter label:hover { background: var(--steel); }
+.filter label:active { background: var(--land); }
+.filter input:checked + label { background: var(--sodium); color: var(--night); font-weight: 700; }
+.filter input:focus-visible + label { outline: 3px solid var(--sodium); outline-offset: 3px; }
+
+/* :has() looks inside the box: is "In port" ticked? Then hide every other ship. */
+.tracking:has(#show-port:checked) tbody tr:not(.in-port),
+.tracking:has(#show-coming:checked) tbody tr:not(.coming),
+.tracking:has(#show-sea:checked) tbody tr:not(.at-sea) { display: none; }
+
+/* On a small screen the table slides sideways inside its own box. */
+.table-box { overflow-x: auto; border-radius: var(--round); background: var(--deck); box-shadow: var(--shadow); }
+.ship-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: var(--size-s); }
+.ship-table caption { padding: var(--space-s) var(--space-m); text-align: left; color: var(--fog-quiet); }
+.ship-table th, .ship-table td {
+  padding: var(--space-s) var(--space-m);
+  border-top: 1px solid var(--steel);
+  text-align: left;
+  white-space: nowrap;
+}
+.ship-table thead th { color: var(--fog-quiet); font-weight: 600; }
+.ship-table tbody th { font-family: var(--title-font); font-size: var(--size-l); white-space: nowrap; }
+.ship-table tbody tr:hover { background: var(--steel); }
+
+/* Each status starts with a coloured dot. The dot takes the colour of the text. */
+.status { white-space: nowrap; font-weight: 700; }
+.status::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: var(--space-xs);
+  border-radius: 50%;
+  background: currentColor;
+}
+.in-port .status { color: var(--in-port); }
+.coming .status { color: var(--coming); }
+.at-sea .status { color: var(--at-sea); }
+
+/* The world map. The land is SVG, the colours come from here. */
+.route-map { margin: var(--space-m) 0; border-radius: var(--round); background: var(--deck); }
+.route-map svg { display: block; width: 100%; height: auto; }
+.land { fill: var(--land); }
+.route { fill: none; stroke-width: 3; stroke-dasharray: 9 7; stroke-linecap: round; }
+.to-new-york { stroke: var(--sodium); }
+.to-shanghai { stroke: var(--in-port); }
+.to-santos { stroke: var(--at-sea); }
+.port { fill: var(--fog); stroke: var(--fog); stroke-width: 0; }
+.port.home { fill: var(--sodium); stroke: var(--sodium); }
+.place { fill: var(--fog); font-family: var(--text-font); font-size: 20px; }
+.place.home { font-weight: 700; }
+.little-ship { fill: var(--fog); }
+
+/* The key under the map: a dashed line in front of each route. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--size-s);
+}
+.legend li { display: flex; align-items: center; gap: var(--space-s); color: var(--fog); }
+.legend li::before { content: ""; flex: none; width: 36px; border-top: 4px dashed; }
+.legend .to-new-york::before { border-top-color: var(--sodium); }
+.legend .to-shanghai::before { border-top-color: var(--in-port); }
+.legend .to-santos::before { border-top-color: var(--at-sea); }
+
+/* The crane drawing on the work page. */
+.crane-scene { margin: 0 auto; }
+.crane-scene svg { display: block; width: 100%; height: auto; border-radius: var(--round); background: var(--deck); }
+.crane-scene figcaption { margin-top: var(--space-s); color: var(--fog-quiet); font-size: var(--size-s); }
+.crane { fill: var(--sodium); }
+.crane-line { fill: none; stroke: var(--sodium); stroke-width: 4; }
+.cable { stroke: var(--fog-quiet); stroke-width: 2; }
+.quay { fill: var(--quay); }
+.sea { fill: var(--sea-water); }
+.ship-hull { fill: var(--hull); }
+.ship-paint { fill: var(--rust); }
+.rope { fill: none; stroke: var(--box-white); stroke-width: 2; }
+.truck { fill: var(--cobalt); }
+.wheel { fill: var(--night); }
+.svg-box.rust { fill: var(--rust); }
+.svg-box.cobalt { fill: var(--cobalt); }
+.svg-box.kelp { fill: var(--kelp); }
+.svg-box.white { fill: var(--box-white); }
+
+/* Six stops in a row. The numbers count by themselves with a CSS counter.
+   Numbers are allowed here, because the order of the stops matters. */
+.step-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-m);
+  margin: var(--space-m) 0 0;
+  padding: 0 0 var(--space-s);
+  list-style: none;
+  counter-reset: stop;
+}
+.step-strip li { position: relative; counter-increment: stop; }
+.step-strip li::before {
+  content: counter(stop);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-s);
+  border-radius: 50%;
+  background: var(--sodium);
+  color: var(--night);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+}
+
+/* A rail runs from each number to the next one. */
+.step-strip li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: 48px;
+  right: calc(-1 * var(--space-m));
+  height: 4px;
+  background: var(--steel);
+}
+.step-strip h3 { font-size: var(--size-l); }
+.step-strip p { margin: 0; color: var(--fog-quiet); font-size: var(--size-s); }
+.swipe-hint { display: none; color: var(--fog-quiet); font-size: var(--size-s); }
+
+.fact-box {
+  margin-top: var(--space-xl);
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--round);
+  background: var(--deck);
+  box-shadow: var(--shadow);
+}
+.fact-box h2 { font-size: var(--size-2xl); }
+
+/* Space under the page, before the footer.
+   :has() asks "is there a call band inside main?". If yes, the band touches the footer. */
+main { padding-bottom: var(--space-xl); }
+main:has(.call-band) { padding-bottom: 0; }
+
+.bottom { padding: var(--space-l) 0; border-top: 1px solid var(--steel); color: var(--fog-quiet); font-size: var(--size-s); }
+.bottom p { margin: var(--space-xs) 0; }
+
+/* Things that move by themselves: the ship bobs, the little ship sails, the crane trolley rolls.
+   They only move if the computer does not ask for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .ship { animation: bob 3.5s ease-in-out infinite alternate; }
+  .sailing-ship { animation: sail 14s linear infinite; }
+  .trolley { animation: roll 9s var(--ease) infinite; }
+  .button, .logo .lifted { transition: transform 0.4s var(--ease), background 0.2s; }
+}
+@keyframes bob {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(-7px) rotate(-0.6deg); }
+}
+@keyframes sail {
+  from { transform: translate(0, 0); opacity: 0; }
+  10%, 90% { opacity: 1; }
+  to { transform: translate(-160px, 22px); opacity: 0; }
+}
+@keyframes roll {
+  0%, 15% { transform: translateX(0); }
+  50%, 65% { transform: translateX(360px); }
+  100% { transform: translateX(0); }
+}
+
+/* On a narrower screen things stack, and the six stops become a strip you can swipe. */
+@media (max-width: 900px) {
+  .hero-inner, .split { grid-template-columns: 1fr; }
+  h1 { font-size: var(--size-3xl); }
+  h2 { font-size: var(--size-2xl); }
+  .step-strip {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(260px, 80%);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .step-strip li { scroll-snap-align: start; }
+  .swipe-hint { display: block; }
+}
+
+@media (max-width: 600px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  .hero-lead, .page-title p { font-size: var(--size-m); }
+  .ship { grid-template-columns: 1fr 48px; }
+  .box { height: 26px; }
+  .bridge { height: 118px; }
+  .hull { height: 50px; }
+  .ship-table tbody th { font-size: var(--size-m); }
+  .port-card dd { font-size: var(--size-s); }
+
+  /* On a phone the drawings are small, so the words and lines get bigger. */
+  .box-drawing { padding: var(--space-s); }
+  .measure-text { font-size: 28px; }
+  .place { font-size: 48px; }
+  .route { stroke-width: 6; stroke-dasharray: 14 10; }
+  .port { stroke-width: 8; }
+  .fact-box { padding: var(--space-m); }
+  .menu a { padding: 10px 8px; }
+}

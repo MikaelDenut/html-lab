@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gullwhistle Bay Pirate Club</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="logo" href="index.html">
+        <svg class="logo-flag" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+          <path class="pole" d="M9 4 V42"/>
+          <path class="flag" d="M10 6 H38 L31 15 L38 24 H10 Z"/>
+          <path class="flag-x" d="M17 10 L27 20 M27 10 L17 20"/>
+        </svg>
+        <span>Gullwhistle Bay <span class="logo-sub">Pirate Club</span></span>
+      </a>
+      <nav class="menu" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html" aria-current="page">The map</a></li>
+          <li><a href="crew.html">The crew</a></li>
+          <li><a href="hunt.html">The hunt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="map" aria-labelledby="map-title">
+      <!-- Drawings we use again and again live here. <use> copies them. -->
+      <svg class="symbols" width="0" height="0" aria-hidden="true">
+        <symbol id="palm" viewBox="0 0 40 50">
+          <path class="trunk" d="M21 50 C19 36 19 24 23 13"/>
+          <path class="leaves" d="M23 13 C16 4 6 6 2 15 C10 10 17 11 23 14 C16 16 11 21 9 29 C15 22 19 18 23 14 C28 18 31 23 33 31 C34 21 29 16 23 14 C30 10 36 11 40 16 C36 6 28 5 23 13 Z"/>
+        </symbol>
+      </svg>
+
+      <div class="neatline">
+        <div class="cartouche">
+          <h1 id="map-title">The Map of Gullwhistle Bay</h1>
+          <p>Follow the dotted path from island to island. Click an island to sail there.</p>
+        </div>
+
+        <div class="islands">
+          <!-- Two paths: one for wide screens, one for phones. Both stretch with the map. -->
+          <svg class="route route-wide" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+            <path class="rhumb" d="M350 250 L0 250 M350 250 L0 40 M350 250 L170 0 M350 250 L350 0 M350 250 L400 170 M350 250 L120 300"/>
+            <path class="trail" d="M50 42 C90 100 110 142 150 142 C200 142 210 52 250 42 C300 32 345 92 350 142 C355 202 300 242 250 242 C180 242 120 282 50 242"/>
+          </svg>
+          <svg class="route route-tall" viewBox="0 0 200 600" preserveAspectRatio="none" aria-hidden="true">
+            <path class="rhumb" d="M150 50 L0 50 M150 50 L0 230 M150 50 L80 600 M150 50 L200 330"/>
+            <path class="trail" d="M50 42 C50 112 150 72 150 142 C150 212 50 172 50 242 C50 312 150 272 150 342 C150 412 50 372 50 442 C50 512 150 472 150 542"/>
+          </svg>
+
+          <a class="island beach" href="hunt.html">
+            <svg class="island-art" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse class="ripple" cx="60" cy="60" rx="56" ry="18"/>
+              <ellipse class="land" cx="60" cy="60" rx="44" ry="12"/>
+              <use href="#palm" x="38" y="8" width="40" height="52"/>
+              <path class="start-flag" d="M88 58 V34 L102 39 L88 44"/>
+            </svg>
+            <h2>Biscuit Beach</h2>
+            <p>Start here: how the hunt works</p>
+          </a>
+
+          <a class="island cove" href="crew.html">
+            <svg class="island-art" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse class="ripple" cx="60" cy="52" rx="56" ry="26"/>
+              <path class="land" d="M14 52 C14 22 106 22 106 52 C106 62 92 66 86 58 C78 44 42 44 34 58 C28 66 14 62 14 52 Z"/>
+              <path class="roof" d="M49 35 L60 24 L71 35 Z"/>
+              <rect class="hut" x="53" y="35" width="14" height="10"/>
+            </svg>
+            <h2>Crew Cove</h2>
+            <p>Meet the crew</p>
+          </a>
+
+          <a class="island rock" href="hunt.html">
+            <svg class="island-art" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse class="ripple" cx="60" cy="62" rx="56" ry="16"/>
+              <path class="stone" d="M16 64 L32 36 L44 44 L58 16 L72 38 L84 30 L104 64 Z"/>
+              <path class="crack" d="M58 16 L54 42 M84 30 L80 48"/>
+            </svg>
+            <h2>Clue Rock</h2>
+            <p>The clues, on the hunt page</p>
+          </a>
+
+          <a class="island reef" href="crew.html">
+            <svg class="island-art" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse class="ripple" cx="60" cy="62" rx="56" ry="16"/>
+              <circle class="coral" cx="30" cy="62" r="8"/>
+              <circle class="coral" cx="50" cy="66" r="6"/>
+              <circle class="coral" cx="70" cy="61" r="9"/>
+              <circle class="coral" cx="92" cy="65" r="6"/>
+              <path class="bubble" d="M40 8 H100 Q106 8 106 14 V30 Q106 36 100 36 H68 L58 46 L60 36 H40 Q34 36 34 30 V14 Q34 8 40 8 Z"/>
+              <text class="bubble-text" x="70" y="28">Ahoy!</text>
+            </svg>
+            <h2>Word Reef</h2>
+            <p>Pirate words, on the crew page</p>
+          </a>
+
+          <a class="island turtle" href="hunt.html">
+            <svg class="island-art" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse class="ripple" cx="60" cy="62" rx="56" ry="16"/>
+              <ellipse class="skin" cx="99" cy="57" rx="11" ry="7"/>
+              <path class="shell" d="M22 64 C24 30 90 30 92 64 Z"/>
+              <path class="shell-line" d="M38 64 C40 48 74 48 76 64 M57 38 V64"/>
+              <circle class="eye" cx="103" cy="55" r="1.8"/>
+              <text class="snore" x="104" y="34">z z</text>
+            </svg>
+            <h2>Snoring Turtle Island</h2>
+            <p>Sign up, on the hunt page</p>
+          </a>
+
+          <a class="island treasure" href="hunt.html">
+            <svg class="island-art" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+              <ellipse class="ripple" cx="60" cy="60" rx="56" ry="18"/>
+              <ellipse class="land" cx="60" cy="60" rx="44" ry="12"/>
+              <use href="#palm" x="18" y="10" width="34" height="46"/>
+              <path class="x-mark" d="M62 50 L86 68 M86 50 L62 68"/>
+            </svg>
+            <h2>Treasure X</h2>
+            <p>The chest, on the hunt page</p>
+          </a>
+
+          <svg class="compass" width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="ring" cx="50" cy="56" r="32"/>
+            <path class="star-dark" d="M50 16 L57 56 L50 96 L43 56 Z"/>
+            <path class="star-light" d="M10 56 L50 49 L90 56 L50 63 Z"/>
+            <text class="north" x="50" y="13">N</text>
+          </svg>
+
+          <svg class="ship" width="100" height="80" viewBox="0 0 100 80" aria-hidden="true">
+            <path class="sail" d="M52 14 C72 20 72 42 52 48 Z"/>
+            <path class="sail" d="M48 18 C32 24 32 42 48 48 Z"/>
+            <path class="mast" d="M50 52 V8"/>
+            <path class="flag" d="M50 8 L63 11 L50 14 Z"/>
+            <path class="hull" d="M12 52 H88 L77 68 H23 Z"/>
+            <path class="wave" d="M4 74 Q14 68 24 74 T44 74 T64 74 T84 74 T104 74"/>
+          </svg>
+
+          <div class="whale">
+            <svg width="100" height="60" viewBox="0 0 100 60" aria-hidden="true">
+              <path class="spout" d="M28 18 C26 10 20 8 16 10 M28 18 C30 10 36 8 40 10 M28 18 V5"/>
+              <path class="whale-body" d="M6 38 C6 18 40 12 62 24 C70 28 76 32 80 30 L88 14 C92 20 92 26 88 30 L98 30 C96 36 90 38 84 37 C76 48 56 54 34 54 C16 54 6 48 6 38 Z"/>
+              <circle class="eye" cx="22" cy="34" r="2.2"/>
+              <path class="mouth" d="M10 42 C18 46 30 46 38 43"/>
+            </svg>
+            <p>Here be whales</p>
+          </div>
+
+          <p class="depths d1" aria-hidden="true"><span>4</span><span>7</span><span>9</span></p>
+          <p class="depths d2" aria-hidden="true"><span>12</span><span>15</span><span>11</span></p>
+          <p class="depths d3" aria-hidden="true"><span>3</span><span>5</span><span>2</span></p>
+        </div>
+
+        <div class="map-bottom">
+          <section class="map-key">
+            <h2>Map key</h2>
+            <ul>
+              <li><svg width="40" height="20" viewBox="0 0 40 20" aria-hidden="true"><path class="trail" d="M2 10 H38"/></svg> Our route</li>
+              <li><svg width="40" height="20" viewBox="0 0 40 20" aria-hidden="true"><path class="x-mark" d="M13 3 L27 17 M27 3 L13 17"/></svg> The treasure</li>
+              <li><span class="key-depth">7</span> How deep the sea is, in metres</li>
+              <li><svg width="40" height="20" viewBox="0 0 40 20" aria-hidden="true"><ellipse class="ripple" cx="20" cy="10" rx="17" ry="7"/></svg> Waves by the shore</li>
+            </ul>
+            <p class="scale"><span class="scale-bar"></span> 100 pirate steps</p>
+          </section>
+          <section class="next-hunt">
+            <h2>Next hunt</h2>
+            <p>Saturday at 10 o'clock, by the old oak tree in Gullwhistle Park. Bring a grown-up and a bag for treasure!</p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <div class="wrap">
+      <p>Gullwhistle Bay Pirate Club is a pretend club, made with HTML and CSS.</p>
+      <p>Real sea maps have a star like ours. <a href="https://en.wikipedia.org/wiki/Compass_rose">Read about the compass rose on Wikipedia</a></p>
+    </div>
+  </footer>
+</body>
+</html>

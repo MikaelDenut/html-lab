@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pedalwick Bike Works - Jobs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="side-menu">
+    <a class="logo" href="index.html">
+      <svg class="gear" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="36" fill="none" stroke="#e8b64c" stroke-width="16" stroke-dasharray="14.14 14.14"/>
+        <circle cx="50" cy="50" r="30" fill="#e8b64c"/>
+        <circle cx="50" cy="50" r="11" fill="#123a2e"/>
+      </svg>
+      <span>Pedalwick <b>Bike Works</b></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 A8 8 0 1 1 20 18 M12 18 L16 11"/></svg> Dashboard</a></li>
+        <li><a href="process.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="16" r="4"/><circle cx="18" cy="16" r="4"/><path d="M6 16 L10 9 H16 L18 16 M10 9 L12 16 H6 M14 6 H17"/></svg> How we build</a></li>
+        <li><a href="jobs.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8 17 C9 14 15 14 16 17"/></svg> Jobs</a></li>
+      </ul>
+    </nav>
+    <p class="shift"><span class="live-dot"></span> Day shift at work<br><small>6:00 to 14:00</small></p>
+  </header>
+
+  <main class="board">
+    <div class="board-top">
+      <h1>Come and build bikes!</h1>
+      <p class="status-pill">4 open jobs</p>
+    </div>
+
+    <section class="join-banner">
+      <svg class="bike" viewBox="0 0 200 120" aria-hidden="true">
+        <circle class="wheel" cx="42" cy="82" r="32"/>
+        <circle class="wheel" cx="158" cy="82" r="32"/>
+        <path d="M42 82 L95 82 L78 36 Z M78 36 L136 40 L95 82 M136 40 L158 82 M136 40 L130 24 L148 22 M66 30 L90 30"/>
+        <circle cx="95" cy="82" r="9"/>
+      </svg>
+      <div>
+        <h2>A team of 40 bike fans</h2>
+        <p>We build bikes for kids, for towns and for hills. Everyone learns on the job, and the tea is free.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-title">Open jobs</h2>
+      <!-- One list, one row for each job. The button sits at the end of the row. -->
+      <ul class="job-list">
+        <li class="job">
+          <div>
+            <h3>Wheel builder</h3>
+            <p>You fit the spokes into wheels and make them perfectly round. Calm hands help.</p>
+            <ul class="tags"><li>Full time</li><li>Day shift</li><li>We teach you</li></ul>
+          </div>
+          <a class="button" href="#ask">Ask about this job</a>
+        </li>
+        <li class="job">
+          <div>
+            <h3>Paint shop helper</h3>
+            <p>You hang frames on the paint line and check that every colour is shiny and even.</p>
+            <ul class="tags"><li>Part time</li><li>Mornings</li></ul>
+          </div>
+          <a class="button" href="#ask">Ask about this job</a>
+        </li>
+        <li class="job">
+          <div>
+            <h3>Test rider</h3>
+            <p>You ride every new bike on our test track and check the brakes, bell and gears.</p>
+            <ul class="tags"><li>Full time</li><li>Outdoors</li><li>Helmet given</li></ul>
+          </div>
+          <a class="button" href="#ask">Ask about this job</a>
+        </li>
+        <li class="job">
+          <div>
+            <h3>Forklift driver</h3>
+            <p>You move boxes of tubes, wheels and finished bikes around the factory.</p>
+            <ul class="tags"><li>Full time</li><li>Licence needed</li></ul>
+          </div>
+          <a class="button" href="#ask">Ask about this job</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="safety">
+      <h2 class="panel-title">Safety first</h2>
+      <ul class="safety-rules">
+        <li>Wear safety glasses on the factory floor.</li>
+        <li>Wear ear protectors near the tube cutter.</li>
+        <li>Walk on the green paths. Forklifts drive on the grey ones.</li>
+        <li>Tie long hair back near machines that spin.</li>
+        <li>See something wrong? Press the big red stop button and tell a team leader.</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="ask">
+      <h2 class="panel-title">Ask about a job</h2>
+      <form class="ask-form">
+        <label for="name">Your name</label>
+        <input id="name" type="text" placeholder="For example: Alex">
+        <label for="job">Which job?</label>
+        <select id="job">
+          <option>Wheel builder</option>
+          <option>Paint shop helper</option>
+          <option>Test rider</option>
+          <option>Forklift driver</option>
+        </select>
+        <label for="question">Your question</label>
+        <textarea id="question" rows="4" placeholder="For example: Can I try the test track?"></textarea>
+        <button class="button" type="button">Send question</button>
+      </form>
+      <p class="practice">A practice form: HTML Lab does not send it.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Pedalwick Bike Works is a make-believe factory at 7 Spoke Street, Sprocketford. Want to know how a bike works? Read about the <a href="https://simple.wikipedia.org/wiki/Bicycle">bicycle on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

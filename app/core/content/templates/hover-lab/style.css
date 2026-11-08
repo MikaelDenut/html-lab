@@ -1,0 +1,644 @@
+/* HOVER PLAYGROUND: one style.css for all three pages.
+   Each trick plays when the mouse is on it (:hover)
+   or when the Tab key stops on it (:focus-visible).
+   Most tricks move with transform and opacity: easy work for the Mac.
+   A few change a colour, a shadow or a filter. That is harder work,
+   so they play only on hover, on one small thing. */
+
+/* The colours, fonts, sizes and spaces of the whole site.
+   Change one line, change every page! Each size is 1.25 times the one before. */
+:root {
+  --sky: #edf5ff;
+  --ink: #2a2140;
+  --soft: #5a5070;
+  --card: #ffffff;
+  --pink: #ff4f81;
+  --red: #d81b60;
+  --blue: #1f5fd1;
+  --yellow: #ffc93c;
+  --green: #22b573;
+  --purple: #6d3fd9;
+  --cyan: #3ff3ff;
+  --title-font: "Marker Felt", "Chalkboard SE", fantasy;
+  --font: "Avenir Next", "Helvetica Neue", sans-serif;
+  --code-font: Menlo, Monaco, monospace;
+  --step-0: 18px;
+  --step-1: 23px;
+  --step-2: 29px;
+  --step-3: 37px;
+  --step-4: 47px;
+  --step-5: 60px;
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 48px;
+  --shadow: 0 10px 24px rgba(42, 33, 64, 0.14);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--sky);
+  color: var(--ink);
+  font: var(--step-0)/1.5 var(--font);
+}
+
+a { color: var(--blue); }
+code, kbd { font-family: var(--code-font); font-size: 0.8em; }
+
+/* nowrap keeps a code word in one piece, so box-shadow never breaks in two. */
+code {
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: #f1eaff;
+  white-space: nowrap;
+}
+
+kbd {
+  padding: 1px 6px;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  background: #fff;
+}
+
+/* Everything the Tab key can reach gets a thick blue ring. */
+a:focus-visible,
+[tabindex]:focus-visible { outline: 4px solid var(--blue); outline-offset: 4px; }
+
+/* The yellow bar at the top. flex puts the name and the menu in a row. */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-s) var(--space-l);
+  border-bottom: 4px solid var(--ink);
+  background: var(--yellow);
+}
+
+.logo { margin: 0; font: var(--step-1) var(--title-font); }
+.logo a { color: var(--ink); text-decoration: none; }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.menu a:hover { background: #ffe6ee; }
+.menu a:active { transform: translateY(2px); }
+
+/* The page you are on is dark, so you know where you are. */
+.menu a[aria-current="page"] { background: var(--ink); color: #fff; }
+
+.page { max-width: 1120px; margin: 0 auto; padding: var(--space-xl) var(--space-l); }
+.intro p { max-width: 70ch; }
+
+h1 {
+  max-width: 16ch;
+  margin: 0 0 var(--space-m);
+  font: clamp(var(--step-4), 8vw, var(--step-5))/1.05 var(--title-font);
+}
+
+.group-title { margin: var(--space-xl) 0 var(--space-m); font: var(--step-3) var(--title-font); }
+
+/* The card grid. auto-fill makes as many columns as fit,
+   and each card is at least 260px wide. Make the window narrow and watch! */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-l);
+}
+
+/* A card: a thick dark edge and a soft shadow under it. */
+.card {
+  padding: var(--space-m);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  margin: var(--space-m) var(--space-xs) var(--space-xs);
+  font: var(--step-2)/1.1 var(--title-font);
+}
+.card p { margin: var(--space-xs); }
+.help { color: var(--soft); font-weight: 600; }
+
+/* The stage of each card. Cards 2, 5, 8... and 3, 6, 9... get other colours. */
+.demo {
+  display: grid;
+  place-items: center;
+  height: 150px;
+  border-radius: 14px;
+  background: #ffe6ee;
+}
+:nth-child(3n+2) > .demo { background: #e2efff; }
+:nth-child(3n) > .demo { background: #fff1c9; }
+
+/* The little friend: a round square. The two eyes are radial-gradient circles. */
+.thing {
+  display: block;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 34% 40%, var(--ink) 0 5px, #fff 6px 11px, transparent 12px),
+    radial-gradient(circle at 66% 40%, var(--ink) 0 5px, #fff 6px 11px, transparent 12px),
+    var(--pink);
+}
+
+/* ===== CARDS PAGE ===== */
+
+/* GROW: 1.3 means 1.3 times as big. */
+.grow .thing { transition: transform 0.3s; }
+.grow:hover .thing,
+.grow:focus-visible .thing { transform: scale(1.3); }
+
+/* SHRINK: a number smaller than 1 makes it smaller. */
+.shrink .thing { transition: transform 0.3s; }
+.shrink:hover .thing,
+.shrink:focus-visible .thing { transform: scale(0.6); }
+
+/* LIFT UP: it jumps up and its shadow gets big and soft, like it floats. */
+.lift .thing {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.lift:hover .thing,
+.lift:focus-visible .thing {
+  transform: translateY(-16px);
+  box-shadow: 0 22px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* TILT: deg means degrees. A minus number leans to the left. */
+.tilt .thing { transition: transform 0.3s; }
+.tilt:hover .thing,
+.tilt:focus-visible .thing { transform: rotate(-12deg); }
+
+/* TURN AROUND: 360 degrees is one whole turn. */
+.turn .thing { transition: transform 0.6s; }
+.turn:hover .thing,
+.turn:focus-visible .thing { transform: rotate(360deg); }
+
+/* SLIDE: translateX moves it sideways. A minus number goes left. */
+.slide .thing { transition: transform 0.4s; }
+.slide:hover .thing,
+.slide:focus-visible .thing { transform: translateX(44px); }
+
+/* JELLY SQUISH: wide and flat, then tall and thin, then back. */
+@keyframes jelly {
+  30% { transform: scale(1.3, 0.7); }
+  50% { transform: scale(0.8, 1.2); }
+  70% { transform: scale(1.1, 0.9); }
+}
+.jelly:hover .thing,
+.jelly:focus-visible .thing { animation: jelly 0.6s; }
+
+/* WIGGLE: left, right, left, right. The 3 means: play it three times. */
+@keyframes wiggle {
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+.wiggle:hover .thing,
+.wiggle:focus-visible .thing { animation: wiggle 0.3s 3; }
+
+/* FLIP: the box turns round in 3D. The back has rotateY(180deg), so it faces away.
+   Halfway (after 0.3s) opacity swaps the faces, in case the 3D trick fails. */
+.flip .demo { perspective: 500px; }
+.flip-box { position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+.flip-box > span {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: opacity 0s 0.3s;
+}
+.flip-back {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: var(--blue);
+  color: #fff;
+  font: var(--step-1) var(--title-font);
+  transform: rotateY(180deg);
+  opacity: 0;
+}
+.flip:hover .flip-box,
+.flip:focus-visible .flip-box { transform: rotateY(180deg); }
+.flip:hover .flip-box .thing,
+.flip:focus-visible .flip-box .thing { opacity: 0; }
+.flip:hover .flip-back,
+.flip:focus-visible .flip-back { opacity: 1; }
+
+/* COLOUR SWAP: transition makes the new colour come slowly, in half a second. */
+.swap .thing { transition: background-color 0.5s; }
+.swap:hover .thing,
+.swap:focus-visible .thing { background-color: var(--green); }
+
+/* FADE AWAY: opacity 1 is all there, 0 is gone. 0.15 is a ghost! */
+.fade .thing { transition: opacity 0.5s; }
+.fade:hover .thing,
+.fade:focus-visible .thing { opacity: 0.15; }
+
+/* GLOW: a big soft shadow in a bright colour looks like light. */
+.glow .demo { background: var(--ink); }
+.glow .thing { transition: box-shadow 0.4s; }
+.glow:hover .thing,
+.glow:focus-visible .thing { box-shadow: 0 0 24px 8px var(--yellow); }
+
+/* UNDERLINE: scaleX(0) squeezes the line to nothing. On hover it grows from the left. */
+.word { position: relative; font: var(--step-3) var(--title-font); }
+.word::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.underline:hover .word::after,
+.underline:focus-visible .word::after { transform: scaleX(1); }
+
+/* DRAW A BORDER: ::before has lines on top and bottom, ::after on the sides.
+   Both start squeezed to nothing. The sides wait 0.3s, so they come second. */
+.frame { position: relative; padding: 14px 24px; font: var(--step-2) var(--title-font); }
+.frame::before,
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transition: transform 0.3s;
+}
+.frame::before {
+  border-top: 4px solid var(--purple);
+  border-bottom: 4px solid var(--purple);
+  transform: scaleX(0);
+}
+.frame::after {
+  /* impeccable-disable-next-line side-tab -- this card teaches a border that draws itself */
+  border-left: 4px solid var(--purple);
+  border-right: 4px solid var(--purple);
+  transform: scaleY(0);
+  transition-delay: 0.3s;
+}
+.draw:hover .frame::before,
+.draw:hover .frame::after,
+.draw:focus-visible .frame::before,
+.draw:focus-visible .frame::after { transform: scale(1); }
+
+/* FILL UP: a yellow box hides behind the word (z-index: -1), squeezed flat.
+   It grows from the left side until the box is full. */
+.fill-word {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 10px 22px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  font: var(--step-2) var(--title-font);
+}
+.fill-word::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.fill:hover .fill-word::before,
+.fill:focus-visible .fill-word::before { transform: scaleX(1); }
+
+/* ===== BUTTONS PAGE ===== */
+
+/* All buttons start the same: big, round corners, bold words.
+   They are links, so text-decoration: none takes the underline away. */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  min-height: 48px;
+  padding: 10px 26px;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font: 700 var(--step-0) var(--font);
+  cursor: pointer;
+}
+
+/* The icons are drawn with SVG lines. currentColor uses the text colour. */
+.btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* :target is the card whose id is in the address, after you click its button. */
+.card:target { border-color: var(--pink); background: #fff3f7; }
+
+/* Pressed down with the mouse: a little darker. */
+.btn:active { filter: brightness(0.9); }
+
+/* PUSH DOWN: the thick shadow is the side of the button. It moves down onto it. */
+.btn-push {
+  background: var(--yellow);
+  box-shadow: 0 8px 0 var(--ink);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.btn-push:hover,
+.btn-push:focus-visible { transform: translateY(6px); box-shadow: 0 2px 0 var(--ink); }
+
+/* SHINE: a see-through white stripe waits on the left, outside the button.
+   overflow: hidden hides it. On hover it runs across to the right. */
+.btn-shine { overflow: hidden; background: var(--blue); color: #fff; }
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  transition: transform 0.6s;
+}
+.btn-shine:hover::after,
+.btn-shine:focus-visible::after { transform: translateX(300%) skewX(-20deg); }
+
+/* ARROW SLIDES OUT: the arrow is see-through and a bit to the left. */
+.btn-icon .arrow {
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.btn-icon:hover .arrow,
+.btn-icon:focus-visible .arrow { opacity: 1; transform: translateX(4px); }
+
+/* FILL FROM BELOW: a dark box behind the words grows up from the bottom. */
+.btn-fill { z-index: 0; overflow: hidden; transition: color 0.3s; }
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--purple);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s;
+}
+.btn-fill:hover,
+.btn-fill:focus-visible { color: #fff; }
+.btn-fill:hover::before,
+.btn-fill:focus-visible::before { transform: scaleY(1); }
+
+/* NEON LIGHT: shadows with no offset, only blur, look like light.
+   inset puts one glow inside the button too. */
+.neon-card .demo { background: #1b1530; }
+.btn-neon {
+  border-color: var(--cyan);
+  background: #1b1530;
+  color: #8ff7ff;
+  transition: box-shadow 0.3s, text-shadow 0.3s;
+}
+.btn-neon:hover,
+.btn-neon:focus-visible {
+  box-shadow: 0 0 10px var(--cyan), 0 0 28px var(--cyan), inset 0 0 12px var(--cyan);
+  text-shadow: 0 0 8px var(--cyan);
+}
+
+/* RAINBOW EDGE: two backgrounds. White on top fills the inside (padding-box).
+   The rainbow under it shows only in the see-through border. It is twice as wide,
+   so it can slide along. Sliding a background is harder work than transform,
+   so it plays once, only on hover. */
+.btn-rainbow {
+  border: 4px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #ff4f81, #ffc93c, #22b573, #1f5fd1, #6d3fd9, #ff4f81) 0 0 / 200% 100% border-box;
+  transition: background-position 0.8s;
+}
+.btn-rainbow:hover,
+.btn-rainbow:focus-visible { background-position: 0 0, 100% 0; }
+
+/* JELLY BUTTON: it borrows @keyframes jelly from the cards page. */
+.btn-jelly { background: var(--pink); }
+.btn-jelly:hover,
+.btn-jelly:focus-visible { animation: jelly 0.6s; }
+
+/* SPRING POP: the 1.8 in cubic-bezier makes it grow too far, then spring back. */
+/* impeccable-disable-next-line bounce-easing -- this button teaches a springy cubic-bezier */
+.btn-pop { background: #b6f0d0; transition: transform 0.4s cubic-bezier(0.3, 1.8, 0.6, 1); }
+.btn-pop:hover,
+.btn-pop:focus-visible { transform: scale(1.15); }
+
+/* SPIN THE PLUS: a round button. The plus turns 135 degrees and looks like an x. */
+.btn-round {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+.btn-round svg {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  transition: transform 0.4s;
+}
+.btn-round:hover svg,
+.btn-round:focus-visible svg { transform: rotate(135deg); }
+
+/* PULSE RING: a ring around the button grows and fades out, again and again. */
+@keyframes ring {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.3, 1.7); }
+}
+.btn-pulse { background: #ffe6ee; }
+.btn-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 3px solid var(--red);
+  border-radius: 14px;
+  opacity: 0;
+}
+.btn-pulse:hover::after,
+.btn-pulse:focus-visible::after { animation: ring 1s infinite; }
+
+/* ===== PICTURES PAGE ===== */
+
+/* A picture frame. overflow: hidden cuts off anything that pokes out. */
+.pic-frame {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  border-radius: 14px;
+  background: #fff;
+}
+.pic-frame svg { display: block; width: 100%; height: auto; }
+
+/* ZOOM IN: the picture grows, but the frame stays the same size. */
+.zoom svg { transition: transform 0.5s; }
+.zoom:hover svg,
+.zoom:focus-visible svg { transform: scale(1.3); }
+
+/* GREY TO COLOUR: grayscale(1) is all grey, grayscale(0) is full colour. */
+.grey svg { filter: grayscale(1); transition: filter 0.5s; }
+.grey:hover svg,
+.grey:focus-visible svg { filter: grayscale(0); }
+
+/* CAPTION SLIDES UP: translateY(100%) hides the words just below the frame. */
+.caption figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  background: rgba(42, 33, 64, 0.9);
+  color: #fff;
+  font-weight: 700;
+  transform: translateY(100%);
+  transition: transform 0.4s;
+}
+.caption:hover figcaption,
+.caption:focus-visible figcaption { transform: translateY(0); }
+
+/* BLUR TO SHARP: blur(5px) smears the picture by 5px. */
+.blur svg { filter: blur(5px); transition: filter 0.5s; }
+.blur:hover svg,
+.blur:focus-visible svg { filter: blur(0); }
+
+/* POSTCARD: white padding is the card edge. It tilts and gets a bigger shadow. */
+.postcard .pic-frame {
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.postcard:hover .pic-frame,
+.postcard:focus-visible .pic-frame {
+  transform: rotate(-4deg) scale(1.03);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* DAY AND NIGHT: the strip is two pictures wide. Moving it -50% shows the second. */
+.strip { display: flex; width: 200%; transition: transform 0.6s; }
+.strip svg { width: 50%; }
+.day-night:hover .strip,
+.day-night:focus-visible .strip { transform: translateX(-50%); }
+
+/* MAGIC PEEPHOLE: circle(0%) shows nothing. circle(75%) shows it all. */
+.reveal .pic-frame { aspect-ratio: 16 / 10; background: #f3e8ff; }
+.secret {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font: var(--step-5) var(--title-font);
+  color: var(--purple);
+}
+.reveal svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  -webkit-clip-path: circle(0% at 50% 50%);
+  clip-path: circle(0% at 50% 50%);
+  transition: -webkit-clip-path 0.6s, clip-path 0.6s;
+}
+.reveal:hover svg,
+.reveal:focus-visible svg {
+  -webkit-clip-path: circle(75% at 50% 50%);
+  clip-path: circle(75% at 50% 50%);
+}
+
+/* COLOUR COVER: a blue layer with words, see-through at first. */
+.cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: rgba(31, 95, 209, 0.88);
+  color: #fff;
+  font: var(--step-1) var(--title-font);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.cover-card:hover .cover,
+.cover-card:focus-visible .cover { opacity: 1; }
+
+/* PICK ONE, THE OTHERS FADE: the mouse is on the gallery, but not on this picture. */
+.wide { grid-column: 1 / -1; }
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gallery li { overflow: hidden; border-radius: 12px; transition: opacity 0.3s, transform 0.3s; }
+.gallery svg { display: block; width: 100%; height: auto; }
+.gallery:hover li:not(:hover),
+.gallery:focus-within li:not(:focus) { opacity: 0.3; transform: scale(0.92); }
+
+.footer {
+  padding: var(--space-l);
+  border-top: 4px solid var(--ink);
+  background: #fff;
+  text-align: center;
+}
+.footer p { max-width: 70ch; margin: var(--space-s) auto; }
+.calm { color: var(--soft); }
+
+/* A narrow window, like a phone: less space around things,
+   and the name and the menu sit in the middle. */
+@media (max-width: 640px) {
+  .top { justify-content: center; padding: var(--space-s) var(--space-m); }
+  .menu ul { justify-content: center; }
+  .page { padding: var(--space-l) var(--space-m) var(--space-xl); }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* LESS MOTION: some people feel sick when things move.
+   Their Mac can ask for less motion. Then every move and change stops. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after { transition: none !important; animation: none !important; }
+}

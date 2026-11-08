@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sell your home - Kettle and Key</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap top-bar">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#b8352a"/><circle cx="16" cy="22" r="7" fill="none" stroke="#ffffff" stroke-width="3"/><path d="M23 22 H36 M31 22 V28 M35 22 V27" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/></svg>
+      Kettle and Key
+    </a>
+    <nav aria-label="Main menu">
+      <ul class="menu">
+        <li><a href="index.html">Homes for sale</a></li>
+        <li><a href="house.html">Featured home</a></li>
+        <li><a href="sell.html" aria-current="page">Sell your home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div class="page-top">
+      <h1>Sell your home with us</h1>
+      <p class="lead">Find out what homes like yours sell for. Then follow five steps from "we want to move" to the day you hand over the keys.</p>
+    </div>
+
+    <section class="estimate" id="estimate">
+      <div>
+        <h2>What is your home worth?</h2>
+        <p>Fill in the form and Maya works out a price for your home. Here is an example for a 3-bedroom house of about 110 m&sup2; with a garden. The price box shows what houses like it sold for.</p>
+        <form>
+          <div>
+            <label for="kind">Type of home</label>
+            <div class="select-box"><select id="kind"><option>House</option><option>Flat</option><option>Cottage</option></select></div>
+          </div>
+          <div>
+            <label for="bedrooms">Bedrooms</label>
+            <div class="select-box"><select id="bedrooms"><option>1</option><option>2</option><option selected>3</option><option>4 or more</option></select></div>
+          </div>
+          <div>
+            <label for="size">Size in m&sup2;</label>
+            <input id="size" type="number" min="20" max="400" value="110">
+          </div>
+          <div>
+            <label for="garden">Garden</label>
+            <div class="select-box"><select id="garden"><option>Yes</option><option>No</option><option>A balcony</option></select></div>
+          </div>
+          <button class="button" type="button">Ask Maya for a price</button>
+          <p class="practice">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </div>
+
+      <div class="result">
+        <p><strong>Houses like this one sold for</strong></p>
+        <p class="result-price">&euro;300,000 to &euro;400,000</p>
+        <div class="range"><span></span></div>
+        <p class="range-labels"><span>&euro;100,000</span><span>&euro;600,000</span></p>
+        <p>This is a guess from the last 20 sales in town. Maya gives you the real price after her visit.</p>
+        <p><a href="index.html">See what is for sale now</a></p>
+      </div>
+    </section>
+
+    <section class="sell-steps">
+      <h2>Five steps to sell your home</h2>
+      <!-- An ordered list (ol) for steps that happen in this order. CSS draws the numbers. -->
+      <ol class="steps">
+        <li>
+          <h3>Ask for a visit</h3>
+          <p>Maya comes to see your home. It takes about an hour and costs nothing.</p>
+        </li>
+        <li>
+          <h3>Get a price</h3>
+          <p>We tell you what homes like yours have sold for in Ambleford this year.</p>
+        </li>
+        <li>
+          <h3>Take the photos</h3>
+          <p>Our photographer comes on a sunny morning, when the rooms are brightest.</p>
+        </li>
+        <li>
+          <h3>Show your home</h3>
+          <p>Your home goes on this website, and we open the door at every viewing.</p>
+        </li>
+        <li>
+          <h3>Hand over the keys</h3>
+          <p>You say yes to a buyer, the papers are signed, and the new family moves in.</p>
+        </li>
+      </ol>
+    </section>
+
+    <blockquote class="quote">
+      <p>Maya sold our flat in three weeks, and she even watered our plants while we were away.</p>
+      <footer>Ellie and Tom Fairbrook, who moved from Quay Street to Mill Row</footer>
+    </blockquote>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>Kettle and Key, Ambleford and its homes are made up for this website.</p>
+      <p>What an estate agent does: <a href="https://simple.wikipedia.org/wiki/Real_estate">Real estate (Simple English Wikipedia)</a></p>
+    </div>
+  </footer>
+</body>
+</html>

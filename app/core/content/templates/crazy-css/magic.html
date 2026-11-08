@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crazy CSS - Magic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- The bar at the top: the name on the left, the menu on the right. -->
+  <header class="bar">
+    <p class="logo"><a href="index.html"><svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 9 L22 9.2 L16.2 13.8 L18.3 21 L12 16.8 L5.7 21 L7.8 13.8 L2 9.2 L9.4 9 Z"/></svg>Crazy CSS</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Show-offs</a></li>
+        <li><a href="magic.html" aria-current="page">Magic</a></li>
+        <li><a href="space.html">Space</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Magic tricks</h1>
+      <p>Words that type themselves, a picture that paints itself, a blob that will not keep still. Point at a piece and the magic starts.</p>
+    </section>
+
+    <div class="shows">
+      <!-- The curtain is an empty span. It covers the words, then slides away letter by letter. -->
+      <article class="piece type-piece wide" tabindex="0">
+        <div class="stage"><p class="type">I can type by myself!<span class="curtain" aria-hidden="true"></span></p></div>
+        <div class="plaque">
+          <h2>Typewriter</h2>
+          <p>A dark curtain slides off the words with <code>steps(21)</code>: one jump for each of the 21 letters, spaces and marks.</p>
+          <p class="help">Help: Typewriter text</p>
+        </div>
+      </article>
+
+      <!-- Two drawings on top of each other: a pencil sketch, and the coloured one. -->
+      <article class="piece wipe-piece big" tabindex="0">
+        <div class="stage">
+          <div class="wipe-art">
+            <svg class="sketch" viewBox="0 0 220 140" aria-hidden="true">
+              <rect x="2" y="2" width="216" height="136" rx="12"/><circle cx="180" cy="34" r="18"/>
+              <path d="M2 110 Q60 70 120 104 T218 96"/><rect x="60" y="72" width="50" height="40"/>
+              <path d="M54 74 L85 48 L116 74 Z"/><rect x="79" y="90" width="12" height="22"/>
+            </svg>
+            <svg class="paint" viewBox="0 0 220 140" role="img" aria-label="A pink house on a green hill under a yellow sun">
+              <rect width="220" height="140" rx="12" fill="#6fd3ff"/><circle cx="180" cy="34" r="18" fill="#ffe14d"/>
+              <path d="M0 110 Q60 70 120 104 T220 96 V128 Q220 140 208 140 H12 Q0 140 0 128 Z" fill="#5fd068"/>
+              <rect x="60" y="72" width="50" height="40" fill="#ff8fdc"/>
+              <path d="M54 74 L85 48 L116 74 Z" fill="#9b5cff"/><rect x="79" y="90" width="12" height="22" fill="#13072a"/>
+            </svg>
+          </div>
+        </div>
+        <div class="plaque">
+          <h2>Wipe and paint</h2>
+          <p><code>clip-path: inset()</code> uncovers the coloured picture from left to right.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </div>
+      </article>
+
+      <article class="piece blob-piece" tabindex="0">
+        <div class="stage"><span class="blob"></span></div>
+        <div class="plaque">
+          <h2>Shape-shifter</h2>
+          <p>Eight <code>border-radius</code> numbers change, so the shape never stays the same.</p>
+          <p class="help">Help: Shape-shifting blobs</p>
+        </div>
+      </article>
+
+      <article class="piece flip-piece" tabindex="0">
+        <div class="stage">
+          <div class="flip">
+            <div class="flipper">
+              <p class="side side-front">Which planet is the hottest?</p>
+              <p class="side side-back">Venus! Its thick air holds the heat in.</p>
+            </div>
+          </div>
+        </div>
+        <div class="plaque">
+          <h2>Flip card</h2>
+          <p><code>rotateY(180deg)</code> turns it over. Halfway, opacity swaps the two sides.</p>
+          <p class="help">Help: 3D flip cards</p>
+        </div>
+      </article>
+
+      <article class="piece blur-piece big" tabindex="0">
+        <div class="stage">
+          <svg class="cat" viewBox="0 0 120 110" role="img" aria-label="An orange cat">
+            <path d="M22 46 L26 8 L52 30 Z M98 46 L94 8 L68 30 Z" fill="#ff8a3d"/>
+            <circle cx="60" cy="62" r="42" fill="#ff8a3d"/>
+            <circle cx="44" cy="56" r="6" fill="#13072a"/><circle cx="76" cy="56" r="6" fill="#13072a"/>
+            <path d="M54 70 H66 L60 77 Z" fill="#ff3ec8"/>
+            <path d="M28 72 H46 M28 82 L46 77 M92 72 H74 M92 82 L74 77" stroke="#13072a" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="plaque">
+          <h2>Who is hiding?</h2>
+          <p><code>filter: blur(10px)</code> makes it foggy. On hover it goes to <code>blur(0)</code>.</p>
+          <p class="help">Help: Blur and color filters</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- A box with something true to read. -->
+    <section class="fact">
+      <h2>Real magic</h2>
+      <p>The first typewriters were sold about 150 years ago. In most of them, every letter had its own little metal arm. The arm hit an inked ribbon, and the ribbon printed the letter on the paper.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, the show stops. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://en.wikipedia.org/wiki/Typewriter">Read about typewriters on Wikipedia</a></p>
+  </footer>
+</body>
+</html>

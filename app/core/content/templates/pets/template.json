@@ -1,0 +1,15 @@
+{
+  "title": "Pet rescue club",
+  "name": "my-pet-club",
+  "blurb": "A friendly animal rescue club with pets looking for a home",
+  "category": "fun",
+  "layout": "CSS-only tabs, round and blob photos, text around a picture",
+  "shows": [
+    "Tabs that switch with no script, only CSS",
+    "Photos cut into circles and soft blobs",
+    "Words that flow around a round picture",
+    "Energy and cuddle bars made with width",
+    "Tick boxes you draw yourself with CSS"
+  ],
+  "accent": "#c92f63"
+}

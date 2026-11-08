@@ -1,0 +1,15 @@
+{
+  "title": "Family Cookbook",
+  "name": "My family cookbook",
+  "blurb": "A family cookbook with a big recipe card and a measuring table",
+  "category": "creative",
+  "layout": "Recipe card: ingredients beside the steps",
+  "shows": [
+    "Ingredients beside the steps, with grid",
+    "Tick boxes that cross out what you have",
+    "Steps numbered by a CSS counter",
+    "A tablecloth made of two stripes",
+    "Food drawn with SVG lines"
+  ],
+  "accent": "#c8372d"
+}

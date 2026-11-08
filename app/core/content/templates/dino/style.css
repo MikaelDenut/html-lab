@@ -1,0 +1,589 @@
+/* Rumblebone Museum: one style file for all three pages. */
+
+/* Change one colour here and the whole museum changes!
+   The walls are a cool gallery grey. The dark wood and the gold carry the warmth. */
+:root {
+  --bark: #3b2a1e;
+  --lamp: #553a24;
+  --page: #e4e7e2;
+  --card: #ffffff;
+  --panel: #d9ded6;
+  --stripe: #eef0ec;
+  --light: #fffaf1;
+  --clay: #a8471f;
+  --clay-dark: #8a3815;
+  --amber: #e3a63b;
+  --moss: #5e6e3a;
+  --sky: #346c77;
+  --ochre: #8a5f0c;
+  --title-font: Rockwell, Superclarendon, Georgia, serif;
+  --sign-font: Copperplate, "Gill Sans", sans-serif;
+  --text-font: "Avenir Next", "Gill Sans", sans-serif;
+  --round: 14px;
+  --shadow: 0 10px 24px rgba(59, 42, 30, 0.18);
+  --soft-shadow: 0 3px 10px rgba(59, 42, 30, 0.08);
+
+  /* Text sizes: each step is about 1.25 times the one before. */
+  --text-s: 14px;
+  --text-m: 18px;
+  --text-l: 23px;
+  --text-xl: 29px;
+  --text-2xl: 36px;
+  --text-3xl: 45px;
+  --text-4xl: 56px;
+
+  /* Spaces: small inside a group, big between groups. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 32px;
+  --space-xl: 56px;
+}
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--clay); }
+
+/* A ring shows where the keyboard is. Press Tab to try it! */
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--clay); outline-offset: 3px; }
+
+/* On the dark parts of the page, the ring is gold. */
+.top-bar a:focus-visible, .hero a:focus-visible, .lightbox a:focus-visible, .bottom a:focus-visible {
+  outline-color: var(--amber);
+}
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--bark);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.6;
+}
+h1, h2, h3 { font-family: var(--title-font); line-height: 1.15; margin: 0 0 var(--space-s); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-l); }
+
+/* The page sits in the middle and never gets too wide. */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* The museum sign at the top of every page. */
+.top-bar { background: var(--bark); border-bottom: 6px solid var(--amber); }
+.top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--light);
+  text-decoration: none;
+  font-family: var(--sign-font);
+  font-size: var(--text-l);
+  line-height: 1.1;
+}
+.logo small {
+  display: block;
+  font-size: var(--text-s);
+  letter-spacing: 2px;
+  color: var(--amber);
+}
+
+/* The drawings take their colours from the top of this file. */
+.logo-circle { fill: var(--amber); }
+.logo-toe { fill: var(--bark); }
+.bird-body { fill: var(--sky); }
+.bird-wing { fill: var(--bark); opacity: 0.3; }
+.bird-beak { fill: var(--amber); }
+.bird-leg { stroke: var(--clay); stroke-width: 4; }
+
+/* The menu is a list. Flex puts the links side by side, with no dots. */
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* min-height: 44px makes each link big enough for a finger. */
+.menu a {
+  display: block;
+  min-height: 44px;
+  color: var(--light);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+.menu a:hover { background: rgba(255, 250, 241, 0.15); }
+
+/* The page you are on gets a gold button in the menu. */
+.menu a[aria-current="page"] { background: var(--amber); color: var(--bark); }
+
+/* The home page is cut into named boxes, like a museum floor plan.
+   The names in the quotes draw the plan: the fact box stands beside the big hero. */
+.home {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "hero  hero fact"
+    "today best best";
+  gap: var(--space-l);
+  padding-top: var(--space-l);
+}
+.hero { grid-area: hero; }
+.today { grid-area: today; }
+/* align-self: start lets the fact box be only as tall as its words, not as tall as the hero. */
+.fact-box { grid-area: fact; align-self: start; }
+.highlights { grid-area: best; }
+
+/* The big dark box at the top of the home page. A lamp lights it from above. */
+.hero {
+  background: radial-gradient(circle at 50% 0%, var(--lamp), var(--bark) 70%);
+  color: var(--light);
+  text-align: center;
+  border-radius: var(--round);
+  padding: 44px 44px 30px;
+  box-shadow: var(--shadow);
+}
+.hero h1 { font-size: var(--text-4xl); }
+.hero-lead { font-size: var(--text-l); max-width: 620px; margin: 0 auto var(--space-m); }
+.button {
+  display: inline-block;
+  background: var(--clay);
+  color: var(--light);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 999px;
+  margin: 0 4px 8px;
+}
+.button.light { background: var(--light); color: var(--bark); }
+
+/* Mouse on a button: it gets darker. Pressed: it sinks down a little. */
+.button:hover { background: var(--clay-dark); }
+.button.light:hover { background: var(--panel); }
+.button:active, .menu a:active, .close:active { transform: translateY(1px); }
+
+/* The painting gets a golden frame, like in a real museum. */
+.painting { position: relative; margin: 28px 0 0; }
+.painting img { width: 100%; border: 8px solid var(--amber); border-radius: 6px; }
+.painting figcaption { font-size: var(--text-s); margin-top: 10px; opacity: 0.85; }
+
+/* A round sticker that tilts to and fro on the painting. */
+.badge {
+  position: absolute;
+  top: -24px;
+  right: 18px;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--clay);
+  border: 4px solid var(--light);
+  font-family: var(--title-font);
+  font-size: var(--text-m);
+  line-height: 1.1;
+  transform: rotate(-12deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Kept: a gentle sticker tilt, ease-in-out, no bounce. */
+  .badge { animation: tilt 3s ease-in-out infinite; }
+}
+@keyframes tilt {
+  0%, 100% { transform: rotate(-12deg); }
+  50% { transform: rotate(8deg) scale(1.06); }
+}
+
+/* A short gold line under each big heading. */
+.section-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background: var(--amber);
+}
+
+/* The list of things to do today, each with a time label. */
+.today-list { list-style: none; margin: 0; padding: 0; }
+.today-list li {
+  display: flex;
+  gap: var(--space-s);
+  align-items: flex-start;
+  background: var(--card);
+  border-radius: var(--round);
+  padding: var(--space-s) var(--space-m);
+  margin-bottom: var(--space-s);
+  box-shadow: var(--soft-shadow);
+}
+.today-list p { margin: 0; }
+.time {
+  background: var(--moss);
+  color: var(--light);
+  font-weight: 700;
+  padding: 2px 12px;
+  border-radius: 8px;
+}
+.fact-box, .info-box {
+  background: var(--panel);
+  border: 3px dashed var(--clay);
+  border-radius: var(--round);
+  padding: var(--space-m);
+}
+.fact-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.fact-box p, .info-box p { margin: 0 0 var(--space-s); }
+.fact-box svg {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  margin-bottom: var(--space-s);
+}
+.fact-box p { font-size: var(--text-l); }
+
+/* Cards sit in rows. They wrap when the window is narrow. */
+.card-row, .gallery { display: grid; gap: var(--space-m); }
+.card-row { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.gallery { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card, .dino-card {
+  background: var(--card);
+  border-radius: var(--round);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card h3 { margin: 18px 20px 6px; }
+.card p { margin: 0 20px 20px; }
+.card-text { padding: 18px 22px 22px; }
+
+/* The frame hides the parts of the picture that grow too big. */
+.zoom-frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.zoom-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+/* The picture grows when your mouse is on the card, or when you Tab to it. */
+.card:hover .zoom-frame img,
+.dino-card:hover .zoom-frame img,
+.zoom-frame:focus-visible img { transform: scale(1.12); }
+
+/* The card gets the ring, because the card cuts off anything that sticks out of it. */
+.zoom-frame:focus-visible { outline: none; }
+.card:has(.zoom-frame:focus-visible), .dino-card:has(.zoom-frame:focus-visible) {
+  outline: 3px solid var(--clay);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .zoom-frame img { transition: transform 0.5s ease; }
+}
+
+/* Show the left part of a wide painting. */
+.show-left { object-position: left center; }
+
+/* A little label that says you can click the picture. */
+.gallery .zoom-frame::after {
+  content: "See it big";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: var(--bark);
+  color: var(--light);
+  font-size: var(--text-s);
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* A banner at the top of the other pages. */
+.page-title {
+  margin: var(--space-l) 0;
+  padding: var(--space-xl) 44px;
+  border-radius: var(--round);
+  color: var(--light);
+  background-size: cover;
+  background-position: center;
+}
+.page-title h1 { font-size: var(--text-3xl); }
+.page-title p { max-width: 560px; font-size: var(--text-l); margin: 0; }
+
+/* Rock layers, like the ground where fossils are found. Each colour stop is one layer.
+   The words stand on the top layer. The older layers lie under them. */
+.page-title.dinos-banner {
+  padding-bottom: 92px;
+  background-image: linear-gradient(to top, #4a3322 0 14px, #6b4a30 14px 30px, #5f4329 30px 46px, var(--lamp) 46px 64px, var(--bark) 64px);
+}
+
+/* A painting behind a dark see-through layer. The layer stays dark where the words are. */
+.visit-banner {
+  background-image: linear-gradient(90deg, rgba(40, 26, 16, 0.95), rgba(40, 26, 16, 0.85) 60%, rgba(40, 26, 16, 0.2)), url(dino-stegosaurus.jpg);
+}
+
+/* Each age has its own colour. Cards and the timeline use it. */
+.triassic { --age: var(--ochre); }
+.jurassic { --age: var(--moss); }
+.cretaceous { --age: var(--clay); }
+.now { --age: var(--sky); }
+.age-tag {
+  display: inline-block;
+  background: var(--age);
+  color: var(--light);
+  font-family: var(--sign-font);
+  font-size: var(--text-s);
+  letter-spacing: 1px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  margin: 0 0 8px;
+}
+
+/* Facts in two neat columns: the question and the answer. */
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 14px;
+  margin: 0 0 14px;
+}
+.facts dt { font-weight: 700; color: var(--clay); }
+.facts dd { margin: 0; }
+.fun {
+  margin: 0;
+  padding-top: var(--space-s);
+  border-top: 2px dotted var(--panel);
+  font-style: italic;
+}
+
+/* The big picture is hidden until you click a small one. */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  margin: 0;
+  padding: 24px;
+  background: rgba(30, 20, 12, 0.94);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Click a link to #big-trex and the box with id="big-trex" becomes the :target.
+   Only the :target box shows, so the big picture appears. */
+.lightbox:target { display: flex; }
+
+/* The open box takes the focus, so Tab goes to Close next. The box itself needs no ring. */
+.lightbox:focus { outline: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox:target { animation: fade-in 0.3s ease-out; }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.lightbox img {
+  width: auto;
+  max-height: 76vh;
+  border: 8px solid var(--light);
+  border-radius: 6px;
+}
+.lightbox figcaption { color: var(--light); text-align: center; margin-top: 14px; }
+.close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  background: var(--amber);
+  color: var(--bark);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+.close:hover { background: var(--light); }
+
+/* The cross is drawn with two lines. stroke is the colour of a line. */
+.close svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* Two boxes side by side on the Visit page. */
+.visit-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: start;
+  gap: var(--space-l);
+}
+
+/* A table with stripes: every second row gets a light grey colour. */
+.hours {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.hours th, .hours td { padding: 9px 18px; text-align: left; }
+.hours th {
+  background: var(--bark);
+  color: var(--amber);
+  font-family: var(--sign-font);
+  letter-spacing: 1px;
+}
+
+/* The day names are headings too, so a screen reader says "Thursday" with the time. */
+.hours tbody th {
+  background: none;
+  color: var(--bark);
+  font-family: var(--text-font);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.hours tbody tr:nth-child(even) { background: var(--stripe); }
+.closed { color: var(--clay); font-weight: 700; }
+.time-trip, .questions { margin-top: var(--space-xl); }
+
+/* The timeline: one long line, and a dot for each age. */
+.timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 48px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  bottom: 12px;
+  width: 6px;
+  border-radius: 6px;
+  background: linear-gradient(var(--ochre), var(--moss), var(--clay), var(--sky));
+}
+.timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  grid-template-areas: "name story" "when story";
+  gap: 4px 24px;
+  background: var(--card);
+  border-radius: var(--round);
+  padding: 18px 22px;
+  margin-bottom: var(--space-m);
+  box-shadow: var(--soft-shadow);
+}
+
+/* This is the dot. It sits on top of the long line. */
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -48px;
+  top: 20px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--age);
+  border: 4px solid var(--page);
+}
+.timeline h3 { grid-area: name; margin: 0; color: var(--age); }
+.timeline p { margin: 0; }
+.when {
+  grid-area: when;
+  font-family: var(--text-font);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.story { grid-area: story; align-self: center; }
+
+/* Questions that open and close when you click them. */
+details {
+  background: var(--card);
+  border-radius: var(--round);
+  margin-bottom: var(--space-s);
+  box-shadow: var(--soft-shadow);
+}
+summary {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 700;
+  padding: 16px 56px 16px 22px;
+}
+summary:hover { color: var(--clay); }
+
+/* Safari draws a small triangle on every question. We hide it, because we draw our own plus sign. */
+summary::-webkit-details-marker { display: none; }
+details p { margin: 0; padding: 0 22px 18px; }
+
+/* Two short bars make a plus sign. When the answer is open, one bar lies flat: a minus sign. */
+summary::before, summary::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  width: 18px;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: 2px;
+  background: var(--clay);
+}
+summary::after { transform: rotate(90deg); }
+details[open] summary::after { transform: rotate(0deg); }
+
+/* The bottom of every page. */
+.bottom {
+  background: var(--bark);
+  color: var(--panel);
+  padding: 28px 0;
+  margin-top: var(--space-xl);
+}
+.bottom p { margin: 6px 0; }
+.bottom a { color: var(--amber); font-weight: 700; }
+
+/* A medium window: the plan gets two columns. */
+@media (max-width: 1000px) {
+  .home {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "hero hero" "today fact" "best best";
+  }
+}
+
+/* On a narrow screen everything goes in one column. */
+@media (max-width: 800px) {
+  .home { grid-template-columns: 1fr; grid-template-areas: "hero" "today" "fact" "best"; }
+  .visit-grid, .timeline li { grid-template-columns: 1fr; }
+  .timeline li { grid-template-areas: "name" "when" "story"; }
+  .hero, .page-title { padding: 32px 22px 26px; }
+  .hero h1, .page-title h1 { font-size: var(--text-2xl); }
+
+  /* On a narrow screen the words cover the whole painting, so the whole painting gets darker. */
+  .visit-banner {
+    background-image: linear-gradient(rgba(40, 26, 16, 0.85), rgba(40, 26, 16, 0.85)), url(dino-stegosaurus.jpg);
+  }
+}
+
+/* On a phone the menu goes under the logo. */
+@media (max-width: 480px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  .top-inner { justify-content: center; }
+  .hero h1, .page-title h1 { font-size: var(--text-xl); }
+  .painting img { height: 190px; object-fit: cover; object-position: 27% center; }
+  .badge { width: 76px; height: 76px; font-size: var(--text-s); }
+}

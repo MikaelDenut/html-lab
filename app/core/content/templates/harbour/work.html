@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How a box moves - Port of Brindlewick</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="wrap top-inner">
+        <a class="logo" href="index.html">
+          <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+            <rect class="logo-box rust" x="2" y="29" width="19" height="13" rx="2"/>
+            <rect class="logo-box cobalt" x="23" y="29" width="19" height="13" rx="2"/>
+            <rect class="logo-box lifted" x="8" y="14" width="28" height="13" rx="2"/>
+          </svg>
+          <span>Brindlewick<small>Port and container terminal</small></span>
+        </a>
+        <nav aria-label="Main menu">
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="ships.html">Ships today</a></li>
+            <li><a href="work.html" aria-current="page">How a box moves</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-title">
+        <div class="wrap">
+          <h1>How a box moves</h1>
+          <p>From the moment the ship arrives to the truck at the gate, there are six stops. Here is every one.</p>
+        </div>
+      </section>
+
+      <figure class="wrap crane-scene">
+        <svg viewBox="0 0 900 380" role="img" aria-label="A drawing of a big crane on the quay. It lifts a box from a ship and carries it to a truck.">
+          <path class="ship-hull" d="M30 248H440L428 312H66Z"/>
+          <path class="ship-paint" d="M54 290H432L428 312H66Z"/>
+          <rect class="svg-box white" x="40" y="168" width="44" height="80"/>
+          <rect class="wheel" x="46" y="176" width="32" height="8"/>
+          <rect class="svg-box rust" x="96" y="222" width="52" height="24"/>
+          <rect class="svg-box cobalt" x="152" y="222" width="52" height="24"/>
+          <rect class="svg-box white" x="208" y="222" width="52" height="24"/>
+          <rect class="svg-box kelp" x="264" y="222" width="52" height="24"/>
+          <rect class="svg-box rust" x="320" y="222" width="52" height="24"/>
+          <rect class="svg-box cobalt" x="376" y="222" width="52" height="24"/>
+          <rect class="svg-box kelp" x="96" y="196" width="52" height="24"/>
+          <rect class="svg-box rust" x="152" y="196" width="52" height="24"/>
+          <rect class="svg-box cobalt" x="208" y="196" width="52" height="24"/>
+          <rect class="svg-box white" x="320" y="196" width="52" height="24"/>
+          <rect class="sea" x="0" y="300" width="470" height="80"/>
+          <rect class="quay" x="460" y="290" width="440" height="90"/>
+          <path class="rope" d="M436 262Q458 278 480 282"/>
+          <rect class="svg-box white" x="474" y="278" width="12" height="12" rx="3"/>
+          <rect class="quay" x="860" y="176" width="6" height="114"/>
+          <rect class="crane" x="848" y="172" width="30" height="6" rx="3"/>
+          <path class="crane-line" d="M580 64 660 8 740 64M660 8 190 66M660 8 870 66"/>
+          <rect class="crane" x="180" y="64" width="710" height="14"/>
+          <rect class="crane" x="780" y="40" width="90" height="24"/>
+          <rect class="crane" x="540" y="78" width="14" height="212"/>
+          <rect class="crane" x="780" y="78" width="14" height="212"/>
+          <rect class="crane" x="540" y="110" width="254" height="10"/>
+          <rect class="wheel" x="530" y="282" width="34" height="8"/>
+          <rect class="wheel" x="770" y="282" width="34" height="8"/>
+          <rect class="truck" x="600" y="258" width="120" height="8"/>
+          <rect class="truck" x="722" y="236" width="34" height="34" rx="4"/>
+          <circle class="wheel" cx="616" cy="276" r="8"/>
+          <circle class="wheel" cx="700" cy="276" r="8"/>
+          <circle class="wheel" cx="740" cy="276" r="8"/>
+          <g class="trolley">
+            <rect class="svg-box white" x="270" y="78" width="40" height="12"/>
+            <path class="cable" d="M280 90 266 150M300 90 314 150"/>
+            <rect class="wheel" x="258" y="150" width="64" height="6"/>
+            <rect class="svg-box kelp" x="264" y="156" width="52" height="24"/>
+          </g>
+        </svg>
+        <figcaption>The trolley rolls along the crane's long arm, the boom. It carries a box from the ship to a truck.</figcaption>
+      </figure>
+
+      <section class="wrap section">
+        <h2 id="stops">Six stops from ship to truck</h2>
+        <p class="swipe-hint">Swipe sideways to see all six stops.</p>
+        <!-- tabindex="0": on a phone this list slides sideways, so the keyboard must be able to reach it and scroll it. -->
+        <ol class="step-strip" tabindex="0" aria-labelledby="stops">
+          <li>
+            <h3>Pilot and tugs</h3>
+            <p>A harbour pilot climbs aboard and guides the ship in. Strong little tugboats push it to its berth, its parking place at the quay.</p>
+          </li>
+          <li>
+            <h3>Ropes on bollards</h3>
+            <p>Thick ropes go from the ship to iron bollards on the quay, the stone edge of the harbour, so the ship cannot drift away.</p>
+          </li>
+          <li>
+            <h3>Crane and spreader</h3>
+            <p>The crane lowers its spreader, a steel frame that grabs a box, onto the box. Twistlocks, small turning locks, turn in the four corners and hold on tight.</p>
+          </li>
+          <li>
+            <h3>Straddle carrier</h3>
+            <p>A straddle carrier, a tall truck on long legs, drives right over the box, picks it up and takes it to the yard.</p>
+          </li>
+          <li>
+            <h3>Yard stack</h3>
+            <p>Boxes wait in long stacks. A computer remembers each box code and the exact spot of the box.</p>
+          </li>
+          <li>
+            <h3>Customs and gate</h3>
+            <p>Customs officers check what is inside and check the papers. At the gate a truck picks up the box and drives it away.</p>
+          </li>
+        </ol>
+      </section>
+
+      <aside class="wrap">
+        <div class="fact-box">
+          <h2>How do boxes hold on?</h2>
+          <p>Every box has a strong steel corner with an oval hole. A twistlock fits into the hole and turns a quarter of the way round. Now the boxes are locked together, so they stay in place when the ship rolls.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="bottom">
+      <div class="wrap">
+        <p>Port of Brindlewick, Quay Road 1. A pretend port, made with HTML and CSS.</p>
+        <p>Want to know more? <a href="https://en.wikipedia.org/wiki/Container_crane">Read about container cranes on Wikipedia</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

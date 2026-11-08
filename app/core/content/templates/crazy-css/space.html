@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crazy CSS - Space</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- The bar at the top: the name on the left, the menu on the right. -->
+  <header class="bar">
+    <p class="logo"><a href="index.html"><svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 9 L22 9.2 L16.2 13.8 L18.3 21 L12 16.8 L5.7 21 L7.8 13.8 L2 9.2 L9.4 9 Z"/></svg>Crazy CSS</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Show-offs</a></li>
+        <li><a href="magic.html">Magic</a></li>
+        <li><a href="space.html" aria-current="page">Space</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>CSS in space</h1>
+      <p>Two things on this page move all by themselves: the twinkling stars and the shooting star. Everything else waits for your mouse.</p>
+    </section>
+
+    <div class="shows">
+      <!-- The stars are dots painted with radial-gradient. A second layer of dots fades in and out. -->
+      <article class="piece stars-piece wide">
+        <div class="stage">
+          <svg class="moon" viewBox="0 0 60 60" aria-hidden="true"><path d="M40 6 A26 26 0 1 0 54 44 A20 20 0 1 1 40 6 Z"/></svg>
+        </div>
+        <div class="plaque">
+          <h2>Twinkling stars</h2>
+          <p>A layer of stars goes from <code>opacity: 1</code> to <code>0.2</code> and back, all the time.</p>
+          <p class="help">Help: Moving by itself</p>
+        </div>
+      </article>
+
+      <article class="piece shoot-piece big">
+        <div class="stage"><span class="shooter"></span></div>
+        <div class="plaque">
+          <h2>Shooting star</h2>
+          <p>It flies for one second, then <code>@keyframes</code> keeps it hidden for four.</p>
+          <p class="help">Help: Moving by itself</p>
+        </div>
+      </article>
+
+      <article class="piece orbit-piece" tabindex="0">
+        <div class="stage">
+          <span class="orbit-sun"></span>
+          <span class="orbit"><span class="planet"></span></span>
+        </div>
+        <div class="plaque">
+          <h2>Planet orbit</h2>
+          <p>The ring turns with <code>rotate</code>. It is <code>paused</code> until your mouse comes.</p>
+          <p class="help">Help: Spin and pulse</p>
+        </div>
+      </article>
+
+      <!-- The rocket is an SVG drawing. The flame is a span, so it can flicker. -->
+      <article class="piece rocket-piece" tabindex="0">
+        <div class="stage">
+          <div class="rocket">
+            <svg viewBox="0 0 60 100" aria-hidden="true">
+              <path class="fin" d="M18 60 L4 88 L18 82 Z M42 60 L56 88 L42 82 Z"/>
+              <path class="hull" d="M30 4 C46 18 46 50 42 84 H18 C14 50 14 18 30 4 Z"/>
+              <circle class="window" cx="30" cy="40" r="8"/>
+            </svg>
+            <span class="flame"></span>
+          </div>
+        </div>
+        <div class="plaque">
+          <h2>Rocket launch</h2>
+          <p>The flame flickers, and after <code>0.4s</code> of waiting the rocket flies up with <code>ease-in</code>.</p>
+          <p class="help">Help: Slow and smooth changes</p>
+        </div>
+      </article>
+
+      <article class="piece sun-piece big" tabindex="0">
+        <div class="stage"><span class="big-sun"></span></div>
+        <div class="plaque">
+          <h2>Glowing sun</h2>
+          <p>A big soft <code>box-shadow</code> is the light, and <code>scale</code> makes it breathe.</p>
+          <p class="help">Help: Glow and neon</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- A box with something true to read. -->
+    <section class="fact">
+      <h2>Why stars twinkle</h2>
+      <p>Stars twinkle because the air around Earth is always moving. Up in space, above the air, stars do not twinkle at all.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, the stars stand still. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://en.wikipedia.org/wiki/Twinkling">Read why stars twinkle on Wikipedia</a></p>
+  </footer>
+</body>
+</html>

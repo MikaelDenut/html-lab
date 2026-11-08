@@ -1,0 +1,15 @@
+{
+  "title": "CSS drawing",
+  "name": "My CSS studio",
+  "blurb": "A cat, a house, a snail, a sun and a fish, all drawn with CSS",
+  "category": "effects",
+  "layout": "Gallery of pictures drawn only with CSS",
+  "shows": [
+    "Pictures made only of boxes",
+    "Round corners, cuts and gradients",
+    "A house built step by step",
+    "An X-ray switch that shows the boxes",
+    "A face you can change yourself"
+  ],
+  "accent": "#ffc53d"
+}

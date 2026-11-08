@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rides - Fizzwhirl Park</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="logo" href="index.html">
+        <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+          <circle class="logo-wheel" cx="22" cy="20" r="16"/>
+          <path class="logo-spokes" d="M22 4 V36 M8.1 12 L35.9 28 M35.9 12 L8.1 28 M22 20 L12 42 M22 20 L32 42"/>
+        </svg>
+        Fizzwhirl Park
+      </a>
+      <nav class="menu" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html">Park map</a></li>
+          <li><a href="rides.html" aria-current="page">Rides</a></li>
+          <li><a href="tickets.html">Tickets</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1>Rides for every size</h1>
+      <p>Every ride has a measuring stick by the gate. If your head reaches the number, you can ride!</p>
+    </div>
+
+    <nav class="chips" aria-label="Ride groups">
+      <ul>
+        <li><a href="#thrills">Big thrills</a></li>
+        <li><a href="#spin">Spin and bump</a></li>
+        <li><a href="#little">For little ones</a></li>
+        <li><a href="#soggy-sock-falls">Get wet</a></li>
+      </ul>
+    </nav>
+
+    <section class="ride-group" id="thrills">
+      <h2>Big thrills</h2>
+      <div class="ride-grid">
+        <article class="ride-card feature" id="gigglecoaster">
+          <!-- xMidYMax keeps the drawing at the bottom when the box is taller. -->
+          <svg class="ride-art" width="320" height="180" viewBox="0 0 320 180" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+            <path class="art-thin" d="M0 172 H320 M75 40 V172 M40 110 V172 M140 60 V172 M190 50 V172 M222 120 V172"/>
+            <path class="art-line" d="M0 168 C30 168 45 40 75 40 C105 40 110 112 92 112 C74 112 76 64 104 64 C140 64 160 50 190 50 C220 50 225 166 255 166 H320"/>
+            <path class="fill-ink" d="M248 172 V146 A30 30 0 0 1 308 146 V172 Z"/>
+            <rect class="fill-red" x="63" y="28" width="24" height="10" rx="3"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Gigglecoaster</h3>
+            <p class="zone-name">Thrill Peaks</p>
+            <p>Up, up, up... and down! The track has one loop, two big drops and a dark tunnel. Hold on to your hat. Better still, give your hat to a grown-up.</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 80%"></span> 4 of 5</p>
+          </div>
+          <p class="height-badge"><span class="sr-only">You must be at least </span><span class="tall">120</span> cm</p>
+        </article>
+
+        <article class="ride-card" id="tickle-tower">
+          <svg class="ride-art" width="160" height="90" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="art-line" d="M30 28 V48 M23 35 L30 27 L37 35 M30 58 V78 M23 71 L30 79 L37 71"/>
+            <rect class="fill-white" x="72" y="10" width="16" height="80"/>
+            <rect class="fill-orange" x="58" y="40" width="44" height="14" rx="5"/>
+            <circle class="fill-red" cx="80" cy="9" r="5"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Tickle Tower</h3>
+            <p class="zone-name">Thrill Peaks</p>
+            <p>Your seat goes slowly up the tower, waits at the top... then drops. Your tummy tickles all the way down.</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 100%"></span> 5 of 5</p>
+          </div>
+          <p class="height-badge"><span class="sr-only">You must be at least </span><span class="tall">130</span> cm</p>
+        </article>
+
+        <article class="ride-card" id="soggy-sock-falls">
+          <svg class="ride-art" width="160" height="90" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="art-water" d="M0 26 H46 L104 76 H160"/>
+            <path class="fill-orange" d="M98 68 H134 L128 80 H104 Z"/>
+            <circle class="fill-white" cx="92" cy="58" r="4"/>
+            <circle class="fill-white" cx="142" cy="60" r="4"/>
+            <path class="fill-pink" d="M64 6 H74 V20 C74 26 66 28 58 26 L57 21 C63 21 64 18 64 15 Z"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Soggy Sock Falls</h3>
+            <p class="zone-name">Puddle Lagoon</p>
+            <p>Float down the river in a log boat, then whoosh down the waterfall. Yes, your socks will get wet.</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 60%"></span> 3 of 5</p>
+          </div>
+          <p class="height-badge"><span class="sr-only">You must be at least </span><span class="tall">100</span> cm</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ride-group" id="spin">
+      <h2>Spin and bump</h2>
+      <div class="ride-grid">
+        <article class="ride-card" id="moonhopper">
+          <svg class="ride-art night" width="160" height="90" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="art-line" d="M80 90 V44 M80 44 L122 26 M80 44 L38 26"/>
+            <path class="fill-white" d="M110 18 H134 C144 18 150 24 154 26 C150 28 144 34 134 34 H110 L104 40 V12 Z"/>
+            <path class="fill-white" d="M50 18 H26 C16 18 10 24 6 26 C10 28 16 34 26 34 H50 L56 40 V12 Z"/>
+            <circle class="fill-red" cx="132" cy="26" r="4"/>
+            <circle class="fill-red" cx="28" cy="26" r="4"/>
+            <circle class="fill-lemon" cx="80" cy="44" r="7"/>
+            <circle class="fill-lemon" cx="30" cy="66" r="2"/>
+            <circle class="fill-lemon" cx="132" cy="70" r="2"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Moonhopper</h3>
+            <p class="zone-name">Sky Garden</p>
+            <p>Steer your own little rocket. Pull the lever and your rocket hops up into the sky.</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 40%"></span> 2 of 5</p>
+          </div>
+          <p class="height-badge"><span class="sr-only">You must be at least </span><span class="tall">90</span> cm</p>
+        </article>
+
+        <article class="ride-card" id="bumblebee-bumpers">
+          <svg class="ride-art" width="160" height="90" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="art-line" d="M30 42 L22 28 M130 42 L138 28 M80 36 V22 M70 40 L62 30 M90 40 L98 30"/>
+            <rect class="fill-lemon" x="16" y="42" width="56" height="32" rx="14"/>
+            <rect class="fill-lemon" x="88" y="42" width="56" height="32" rx="14"/>
+            <path class="art-line" d="M38 44 V72 M52 44 V72 M108 44 V72 M122 44 V72"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Bumblebee Bumpers</h3>
+            <p class="zone-name">Fizzwhirl Square</p>
+            <p>Drive a stripy bee car and bump into your friends. Gently! Under 110 cm? Ride next to a grown-up.</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 40%"></span> 2 of 5</p>
+          </div>
+          <p class="height-badge"><span class="sr-only">You must be at least </span><span class="tall">90</span> cm</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ride-group" id="little">
+      <h2>For little ones</h2>
+      <div class="ride-grid">
+        <article class="ride-card" id="sleepy-sloth-train">
+          <svg class="ride-art" width="160" height="90" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="art-thin" d="M0 82 H160"/>
+            <rect class="fill-mint" x="92" y="40" width="54" height="34" rx="6"/>
+            <rect class="fill-mint" x="126" y="24" width="14" height="18"/>
+            <rect class="fill-pink" x="30" y="48" width="54" height="26" rx="5"/>
+            <circle class="fill-white" cx="110" cy="56" r="9"/>
+            <circle class="fill-ink" cx="107" cy="55" r="2"/>
+            <circle class="fill-ink" cx="114" cy="55" r="2"/>
+            <circle class="fill-ink" cx="44" cy="76" r="6"/>
+            <circle class="fill-ink" cx="70" cy="76" r="6"/>
+            <circle class="fill-ink" cx="104" cy="76" r="6"/>
+            <circle class="fill-ink" cx="134" cy="76" r="6"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Sleepy Sloth Train</h3>
+            <p class="zone-name">Monkey Woods</p>
+            <p>A slow train through the trees. Wooden sloths hide in the branches. Can you count them all?</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 20%"></span> 1 of 5</p>
+          </div>
+          <p class="height-badge"><span class="tall">Any</span> height</p>
+        </article>
+
+        <article class="ride-card" id="carousel">
+          <img class="ride-photo" src="themepark-horse.jpg" alt="A painted wooden horse on a carousel, cream with a gold mane and a green saddle" width="640" height="485">
+          <div class="ride-info">
+            <h3>Teeny Meadow Carousel</h3>
+            <p class="zone-name">Teeny Meadow</p>
+            <p>Pick a painted horse and go round and round to happy music. Every horse has its own name.</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 20%"></span> 1 of 5</p>
+          </div>
+          <p class="height-badge"><span class="tall">Any</span> height</p>
+        </article>
+
+        <article class="ride-card" id="big-daisy-wheel">
+          <svg class="ride-art" width="160" height="90" viewBox="0 0 160 90" aria-hidden="true">
+            <path class="art-thin" d="M80 10 V78 M46 44 H114 M56 20 L104 68 M104 20 L56 68"/>
+            <path class="art-line" d="M80 44 L62 90 M80 44 L98 90"/>
+            <circle class="art-line" cx="80" cy="44" r="34"/>
+            <path class="fill-white" d="M80 4 A6 6 0 1 1 80 16 A6 6 0 1 1 80 4 Z M114 38 A6 6 0 1 1 114 50 A6 6 0 1 1 114 38 Z M80 72 A6 6 0 1 1 80 84 A6 6 0 1 1 80 72 Z M46 38 A6 6 0 1 1 46 50 A6 6 0 1 1 46 38 Z"/>
+            <circle class="fill-lemon" cx="80" cy="44" r="9"/>
+          </svg>
+          <div class="ride-info">
+            <h3>Big Daisy Wheel</h3>
+            <p class="zone-name">Sky Garden</p>
+            <p>Ride to the very top for the best view of the park. Can you spot the sloth on the train?</p>
+            <p class="thrill">Thrill <span class="meter" style="--level: 20%"></span> 1 of 5</p>
+          </div>
+          <p class="height-badge"><span class="tall">Any</span> height</p>
+        </article>
+
+        <figure class="fact">
+          <img src="themepark-first-wheel.jpg" alt="An old black and white photo of the first Ferris wheel, very tall, with big cars round the edge" width="600" height="444">
+          <figcaption>The first Ferris wheel turned in Chicago in 1893. It was about 80 metres tall, and each car held about 60 people!</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <div class="wrap">
+      <p>Fizzwhirl Park is a pretend park, made with HTML and CSS. Open every day from April to October, 10:00 to 18:00.</p>
+      <p>How does a roller coaster work? <a href="https://en.wikipedia.org/wiki/Roller_coaster">Read about roller coasters on Wikipedia</a></p>
+    </div>
+  </footer>
+</body>
+</html>

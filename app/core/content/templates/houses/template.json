@@ -1,0 +1,15 @@
+{
+  "title": "Estate Agent",
+  "name": "estate-agent",
+  "blurb": "A seaside estate agent with homes for sale and a floor plan",
+  "category": "professional",
+  "layout": "Listing grid with filters, detail page",
+  "shows": [
+    "Filter chips made from radio buttons",
+    "A corner ribbon turned 45 degrees",
+    "A photo strip that snaps sideways",
+    "A floor plan drawn with SVG",
+    "Steps numbered by CSS counters"
+  ],
+  "accent": "#b8352a"
+}

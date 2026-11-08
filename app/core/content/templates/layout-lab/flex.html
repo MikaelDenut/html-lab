@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cornerkite Studio - Flexbox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="kite" viewBox="0 0 40 40" aria-hidden="true">
+        <path class="kite-head" d="M20 2 L38 20 H20 Z"></path><path class="kite-menu" d="M20 2 L2 20 H20 Z"></path>
+        <path class="kite-main" d="M2 20 L20 38 V20 Z"></path><path class="kite-side" d="M38 20 L20 38 V20 Z"></path>
+      </svg>
+      <span>Cornerkite Studio <small>Layout library</small></span>
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html">Eight layouts</a></li>
+        <li><a href="grid.html">Grid</a></li>
+        <li><a href="flex.html" aria-current="page">Flexbox</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="page-title">
+      <h1>Line things up with flexbox</h1>
+      <p class="lead">Flexbox puts boxes in a row and decides where the empty space goes. Change one word and the boxes move.</p>
+    </section>
+
+    <section class="flex-examples">
+      <article class="flex-card">
+        <h2>Start</h2>
+        <div class="rail start" aria-hidden="true">
+          <span class="box head">1</span><span class="box menu">2</span><span class="box main">3</span>
+        </div>
+        <code><b>justify-content</b>: <span class="word">flex-start</span>;</code>
+        <p>The boxes line up on the left. Flexbox does this if you say nothing. Good for a row of tags.</p>
+      </article>
+
+      <article class="flex-card">
+        <h2>Center</h2>
+        <div class="rail center" aria-hidden="true">
+          <span class="box head">1</span><span class="box menu">2</span><span class="box main">3</span>
+        </div>
+        <code><b>justify-content</b>: center;</code>
+        <p>The boxes huddle in the middle, with the same space on both sides. Good for a title on a banner. CSS spells it the American way: center.</p>
+      </article>
+
+      <article class="flex-card">
+        <h2>Space between</h2>
+        <div class="rail between" aria-hidden="true">
+          <span class="box head">1</span><span class="box menu">2</span><span class="box main">3</span>
+        </div>
+        <code><b>justify-content</b>: <span class="word">space-between</span>;</code>
+        <p>The first box goes left, the last box goes right. Look at the bar at the top of this page: logo on the left, menu on the right.</p>
+      </article>
+
+      <article class="flex-card">
+        <h2>Wrap</h2>
+        <div class="rail wrap-rail" aria-hidden="true">
+          <span class="box head">1</span><span class="box menu">2</span><span class="box main">3</span><span class="box side">4</span>
+          <span class="box head">5</span><span class="box menu">6</span><span class="box main">7</span>
+        </div>
+        <code><b>flex-wrap</b>: wrap;</code>
+        <p>No room left? The boxes jump to the next row instead of getting squashed.</p>
+      </article>
+    </section>
+
+    <section class="playground">
+      <h2 id="try-title">Try it yourself</h2>
+      <p>Pick a word and watch where the three boxes go. The code under them changes too.</p>
+      <div class="play-area" role="radiogroup" aria-labelledby="try-title">
+        <input type="radio" name="jc" id="jc-start" checked>
+        <label for="jc-start">flex-start</label>
+        <input type="radio" name="jc" id="jc-center">
+        <label for="jc-center">center</label>
+        <input type="radio" name="jc" id="jc-end">
+        <label for="jc-end">flex-end</label>
+        <input type="radio" name="jc" id="jc-between">
+        <label for="jc-between">space-between</label>
+        <input type="radio" name="jc" id="jc-around">
+        <label for="jc-around">space-around</label>
+        <input type="radio" name="jc" id="jc-evenly">
+        <label for="jc-evenly">space-evenly</label>
+        <div class="rail play" aria-hidden="true">
+          <span class="box head">1</span><span class="box menu">2</span><span class="box main">3</span>
+        </div>
+        <code class="play-code"><b>justify-content</b>: <span class="value"></span>;</code>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Cornerkite Studio</b>, 7 Kerning Court. A pretend web studio, made with HTML and CSS.</p>
+    <p>Want to know more? <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts">Read about flexbox on MDN</a></p>
+  </footer>
+</body>
+</html>

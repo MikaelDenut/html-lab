@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fathomwick Ocean Club - The big dive</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">Fathomwick <span>Ocean Club</span></a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">The big dive</a></li>
+        <li><a href="creatures.html">Creatures</a></li>
+        <li><a href="protect.html">Protect</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="surface">
+      <div>
+        <h1>Dive to the bottom of the sea</h1>
+        <p>The ocean is almost 11 km deep in its deepest place. Scroll down and sink with us. The deeper you go, the darker and colder it gets, and the harder the water presses on you.</p>
+        <a class="button" href="#sunlight">Start the dive</a>
+      </div>
+      <svg class="sub bob" viewBox="0 0 260 170" role="img" aria-label="Our orange club submarine on the waves">
+        <path class="hull" d="M110 52 V30 H150 V52"/>
+        <path class="hull" d="M40 92 C40 64 70 52 130 52 C190 52 220 64 220 92 C220 120 190 132 130 132 C70 132 40 120 40 92 Z"/>
+        <circle class="window" cx="100" cy="90" r="14"/>
+        <circle class="window" cx="152" cy="90" r="14"/>
+        <path class="line" d="M220 84 L242 72 V112 L220 100 M130 30 V14"/>
+        <path class="sea" d="M4 150 Q36 136 68 150 T132 150 T196 150 T256 150"/>
+      </svg>
+    </section>
+
+    <section class="zone sunlight" id="sunlight">
+      <div class="gauge"><p class="depth"><b>0 m</b><span>to 200 m</span></p></div>
+      <div class="story">
+        <h2>The sunlight zone</h2>
+        <p>Sunlight reaches down here, so seaweed and tiny floating plants called phytoplankton can grow. They make about half of the oxygen on Earth. Most of the animals in the sea live in this zone.</p>
+        <dl class="log">
+          <div><dt>Light</dt><dd>Bright sunshine</dd></div>
+          <div><dt>Pressure at 200 m</dt><dd>About 20 times more than at the top</dd></div>
+        </dl>
+        <div class="finds">
+          <figure class="find">
+            <img src="ocean-turtle.jpg" width="640" height="480" alt="A green sea turtle swimming over a sandy sea floor">
+            <figcaption>
+              <h3>Green sea turtle</h3>
+              <p>When it sleeps, it can stay under water for hours without a breath.</p>
+            </figcaption>
+          </figure>
+          <figure class="find">
+            <img src="ocean-manta.jpg" width="720" height="540" alt="A manta ray gliding through blue water above a reef">
+            <figcaption>
+              <h3>Manta ray</h3>
+              <p>Its wings can be 7 m from tip to tip, yet it eats plankton smaller than a grain of rice.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone twilight dark" id="twilight">
+      <div class="gauge"><p class="depth"><b>200 m</b><span>to 1,000 m</span></p></div>
+      <div class="story">
+        <h2>The twilight zone</h2>
+        <p>Only a little blue light gets this far. It is too dark for plants to grow. Many animals here make their own light. This is called bioluminescence.</p>
+        <dl class="log">
+          <div><dt>Light</dt><dd>A little blue</dd></div>
+          <div><dt>Pressure at 1,000 m</dt><dd>About 100 times more than at the top</dd></div>
+        </dl>
+        <div class="finds">
+          <figure class="find">
+            <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of a small fish with a row of glowing dots">
+              <path class="body" d="M36 90 C66 56 146 58 178 88 L214 60 V120 L178 92 C146 122 66 124 36 90 Z"/>
+              <circle class="eye" cx="64" cy="84" r="8"/>
+              <g class="lights">
+                <circle cx="90" cy="102" r="4"/>
+                <circle cx="108" cy="105" r="4"/>
+                <circle cx="126" cy="106" r="4"/>
+                <circle cx="144" cy="104" r="4"/>
+                <circle cx="160" cy="99" r="4"/>
+              </g>
+            </svg>
+            <figcaption>
+              <h3>Lanternfish</h3>
+              <p>Rows of tiny lights glow along its belly. At night it swims hundreds of metres up to eat, and goes back down before morning.</p>
+            </figcaption>
+          </figure>
+          <figure class="find">
+            <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of a sperm whale with a huge square head">
+              <path class="body" d="M16 78 Q16 52 56 52 H150 Q186 54 196 82 Q212 80 226 72 L228 90 Q212 94 196 96 Q178 126 118 126 H56 Q16 126 16 98 Z"/>
+              <circle class="eye" cx="70" cy="80" r="6"/>
+              <path class="stroke" d="M24 106 H86"/>
+            </svg>
+            <figcaption>
+              <h3>Sperm whale</h3>
+              <p>It dives deeper than 1,000 m to hunt squid, and can hold its breath for more than an hour.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone midnight dark" id="midnight">
+      <div class="gauge"><p class="depth"><b>1,000 m</b><span>to 4,000 m</span></p></div>
+      <div class="story">
+        <h2>The midnight zone</h2>
+        <p>No sunlight reaches here at all. The only light comes from animals. The water is about 4&nbsp;&deg;C, as cold as a fridge.</p>
+        <dl class="log">
+          <div><dt>Light</dt><dd>Only from animals</dd></div>
+          <div><dt>Pressure at 4,000 m</dt><dd>About 400 times more than at the top</dd></div>
+        </dl>
+        <div class="finds">
+          <figure class="find">
+            <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of an anglerfish with sharp teeth and a glowing light on a rod">
+              <path class="body" d="M60 104 C60 66 98 50 136 58 C170 66 186 88 186 104 C186 130 160 148 124 148 C88 148 60 132 60 104 Z"/>
+              <path class="body" d="M184 104 L222 80 V128 Z"/>
+              <path class="stroke" d="M66 112 L74 102 L82 114 L90 102 L98 114 L106 103 M112 60 C102 30 76 24 58 42"/>
+              <circle class="lure" cx="56" cy="46" r="9"/>
+              <circle class="eye" cx="112" cy="86" r="7"/>
+            </svg>
+            <figcaption>
+              <h3>Anglerfish</h3>
+              <p>She has a glowing light on a rod above her mouth. Small fish swim to the light, and then: snap!</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone abyss dark" id="abyss">
+      <div class="gauge"><p class="depth"><b>4,000 m</b><span>to 6,000 m</span></p></div>
+      <div class="story">
+        <h2>The abyss</h2>
+        <p>A wide, flat plain of soft mud, dark and close to freezing. Plains like this cover about half of the Earth's surface, and most of them have never been seen.</p>
+        <dl class="log">
+          <div><dt>Light</dt><dd>Only from animals</dd></div>
+          <div><dt>Pressure at 6,000 m</dt><dd>About 600 times more than at the top</dd></div>
+        </dl>
+        <div class="finds">
+          <figure class="find">
+            <img src="ocean-dumbo.jpg" width="720" height="540" alt="A pale dumbo octopus with fins like ears on a black background">
+            <figcaption>
+              <h3>Dumbo octopus</h3>
+              <p>It flaps fins that look like ears. One was filmed almost 7,000 m down, deeper than any other octopus.</p>
+            </figcaption>
+          </figure>
+          <figure class="find">
+            <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of a pink sea pig with little legs">
+              <path class="nubs" d="M76 124 V142 M100 126 V146 M124 126 V146 M148 126 V146 M170 124 V142 M156 80 L164 58 M178 86 L192 68"/>
+              <path class="pale" d="M38 110 C38 80 80 72 128 74 C174 76 206 90 206 110 C206 124 190 130 170 130 H70 C50 130 38 124 38 110 Z"/>
+            </svg>
+            <figcaption>
+              <h3>Sea pig</h3>
+              <p>A sea cucumber that walks over the mud on little legs, eating bits of food that sink from above.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="zone trench dark" id="trench">
+      <div class="gauge"><p class="depth"><b>6,000 m</b><span>to 11,000 m</span></p></div>
+      <div class="story">
+        <h2>The trenches</h2>
+        <p>Long, deep cracks in the sea floor. The deepest place of all, the Challenger Deep, is almost 11 km down. Mount Everest would fit inside with room to spare.</p>
+        <dl class="log">
+          <div><dt>Light</dt><dd>Only from animals</dd></div>
+          <div><dt>Pressure at 11,000 m</dt><dd>Over 1,000 times more than at the top</dd></div>
+        </dl>
+        <div class="finds">
+          <figure class="find">
+            <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of a pale pink snailfish with a long thin tail">
+              <path class="pale" d="M36 94 C36 68 72 60 104 68 C148 80 190 90 222 94 C190 100 148 110 104 120 C72 128 36 120 36 94 Z"/>
+              <circle cx="66" cy="88" r="7"/>
+            </svg>
+            <figcaption>
+              <h3>Snailfish</h3>
+              <p>The deepest fish ever seen. A snailfish was filmed 8,336 m down in a trench near Japan.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <p>You reached the bottom! Now <a href="creatures.html">meet more creatures</a> or find out how to <a href="protect.html">protect the ocean</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Fathomwick Ocean Club is made up, but every fact about the sea is real.</p>
+    <p>Want to dive deeper? Read about <a href="https://simple.wikipedia.org/wiki/Ocean">the ocean on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

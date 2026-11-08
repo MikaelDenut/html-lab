@@ -1,0 +1,4026 @@
+{
+  "groups": [
+    {
+      "id": "start",
+      "title": "Start here",
+      "line": "What a web page is, and how to begin",
+      "tile": "#DCF1EF",
+      "color": "#0B6E69",
+      "icon": "start-here"
+    },
+    {
+      "id": "recipes",
+      "title": "I want to...",
+      "line": "Find it, copy it, paste it into your code",
+      "tile": "#FEF3C7",
+      "color": "#B45309",
+      "icon": "recipes"
+    },
+    {
+      "id": "html",
+      "title": "HTML",
+      "line": "Tags that build your page",
+      "tile": "#FDE8DC",
+      "color": "#C2410C",
+      "icon": "html-topics"
+    },
+    {
+      "id": "ways",
+      "title": "Three ways to add CSS",
+      "line": "Make your page look the way you want",
+      "tile": "#E1EBFD",
+      "color": "#1D56C9",
+      "icon": "add-css"
+    },
+    {
+      "id": "css",
+      "title": "CSS",
+      "line": "Colors, fonts, spacing and layout",
+      "tile": "#E1EBFD",
+      "color": "#1D56C9",
+      "icon": "css-topics"
+    },
+    {
+      "id": "design",
+      "title": "Good design",
+      "line": "Make pages clear, calm and easy to read",
+      "tile": "#FCE7F3",
+      "color": "#BE185D",
+      "icon": "design"
+    },
+    {
+      "id": "effects",
+      "title": "Effects and animation",
+      "line": "Fades, hovers, spins and crazy moves",
+      "tile": "#F3E8FF",
+      "color": "#7C3AED",
+      "icon": "effects"
+    },
+    {
+      "id": "lookup",
+      "title": "Look-up lists",
+      "line": "All the tags, colors and shortcuts",
+      "tile": "#E4EAF2",
+      "color": "#4A5A73",
+      "icon": "look-up-lists"
+    }
+  ],
+  "topics": [
+    {
+      "id": "web-page",
+      "group": "start",
+      "kind": "lesson",
+      "title": "What is a web page?",
+      "short": "Web page",
+      "keywords": "tag element attribute html code",
+      "explain": "A web page is a file of code called HTML. Code is words that tell the computer what to show. A tag is a word in pointy brackets. Most tags come in two parts: one opens, and one with a slash closes.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<h1>Hello!</h1>\n<p>This is my first page.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<h1>",
+          "tint": "a",
+          "means": "opens a heading, a big title"
+        },
+        {
+          "word": "Hello!",
+          "tint": "b",
+          "means": "is what you see on the page"
+        },
+        {
+          "word": "</h1>",
+          "tint": "a",
+          "means": "closes it, with a slash"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 126
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <h1>Hello!</h1>\n    <p>This is my first page.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<h1>Hello!</h1>"
+      },
+      "turn": "change Hello to your own name.",
+      "bar": "change **Hello** to **your own name**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML"
+    },
+    {
+      "id": "bones",
+      "group": "start",
+      "kind": "lesson",
+      "title": "The bones of every page",
+      "short": "Bones",
+      "keywords": "skeleton doctype head body title meta charset",
+      "explain": "Every page has the same bones. The first line says this is a web page. The head holds notes about the page, like its title. The body holds everything you see.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My first page</title>\n  </head>\n  <body>\n    <h1>Hello!</h1>\n  </body>\n</html>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<!doctype html>",
+          "tint": "a",
+          "means": "says this is a web page"
+        },
+        {
+          "word": "<head>",
+          "tint": "b",
+          "means": "holds notes that do not show"
+        },
+        {
+          "word": "<meta charset=\"utf-8\">",
+          "tint": "a",
+          "means": "lets you write letters like ä and ö"
+        },
+        {
+          "word": "<body>",
+          "tint": "a",
+          "means": "holds what you see"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 92
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My first page</title>\n  </head>\n  <body>\n    <h1>Hello!</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<title>My page</title>"
+      },
+      "turn": "change Hello to Good morning. Only the body shows on the page.",
+      "bar": "change **Hello** to **Good morning**. Only the body shows on the page.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/html"
+    },
+    {
+      "id": "using-the-app",
+      "group": "start",
+      "kind": "lesson",
+      "title": "How to use HTML Lab",
+      "short": "Using the app",
+      "keywords": "app tabs save open tab dot esc typing helpers view",
+      "explain": "Each file has a tab above the code, so click a tab to see that file. A dot on a tab means there are changes that are not saved. Press Save to keep them, and the dot goes away. The page below tells you more.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<h2>Leaving the code</h2>\n<p>In the code, the Tab key makes spaces.\nTo leave the code, press Esc, then Tab.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "Tab",
+          "tint": "a",
+          "means": "is the key above Caps Lock"
+        },
+        {
+          "word": "Esc",
+          "tint": "b",
+          "means": "is at the top left of the keyboard"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 424
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>Hello!</h1>\n\n    <h2>Leaving the code</h2>\n    <p>In the code, the Tab key makes spaces.\n    To leave the code, press Esc, then Tab.</p>\n\n    <h2>Typing Helpers</h2>\n    <p>They close tags and brackets for you,\n    and suggest words. To practice writing them\n    yourself, turn them off in the View menu,\n    at the top of the screen.</p>\n\n    <h2>Phone and Tablet</h2>\n    <p>The little phone and tablet buttons above\n    the page show it at those sizes. The\n    computer button brings it back.</p>\n\n    <h2>On a Finnish keyboard</h2>\n    <p>A slash / is Shift+7. The curly brackets\n    { and } are Alt+Shift+8 and Alt+Shift+9.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "style.css",
+          "code": "h1, h2 {\n  color: teal;\n}\n\nh2 {\n  font-size: 18px;\n  margin-bottom: 0;\n}\n\np {\n  margin-top: 4px;\n}\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<p>Write something here.</p>"
+      },
+      "turn": "change Hello to your name. Look for the dot on the tab. Then press Save.",
+      "bar": "change **Hello** to **your name**. Look for the dot on the tab. Then press Save.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web"
+    },
+    {
+      "id": "headings",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Headings and paragraphs",
+      "short": "Headings",
+      "keywords": "h1 h2 p text title h3 h4 h5 h6 heading paragraph",
+      "explain": "A heading is a title for one part of your page. h1 is the biggest heading, h2 is smaller, and so on down to h6. The p tag makes a paragraph, which is a block of text.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<h1>My pets</h1>\n<h2>My dog</h2>\n<p>She loves long walks.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "h1",
+          "tint": "a",
+          "means": "is the biggest heading"
+        },
+        {
+          "word": "h2",
+          "tint": "b",
+          "means": "is a smaller heading"
+        },
+        {
+          "word": "<p>",
+          "tint": "a",
+          "means": "is a paragraph"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 174
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <h1>My pets</h1>\n    <h2>My dog</h2>\n    <p>She loves long walks.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<h2>A new heading</h2>\n<p>Write something here.</p>"
+      },
+      "turn": "change h2 to h1 in both tags. My dog gets bigger.",
+      "bar": "change **h2** to **h1** in both tags. My dog gets bigger.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements"
+    },
+    {
+      "id": "bold-italic",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Bold, italic and line breaks",
+      "short": "Bold and italic",
+      "keywords": "strong em br comment b i note",
+      "explain": "The strong tag makes words bold, which means thick and dark. The em tag makes words italic, which means they lean to the side. The br tag starts a new line, and it has no closing tag. A comment is a note to yourself that never shows on the page.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<p>Pancakes are <strong>so</strong> good.</p>\n<p>I eat them <em>every</em> day.</p>\n<p>First line<br>Second line</p>\n<!-- This note does not show. -->"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<strong>",
+          "tint": "a",
+          "means": "makes words bold"
+        },
+        {
+          "word": "<em>",
+          "tint": "b",
+          "means": "makes words lean"
+        },
+        {
+          "word": "<br>",
+          "tint": "a",
+          "means": "starts a new line"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 148
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <p>Pancakes are <strong>so</strong> good.</p>\n    <p>I eat them <em>every</em> day.</p>\n    <p>First line<br>Second line</p>\n    <!-- This note does not show. -->\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<p>This is <strong>very</strong> important.</p>"
+      },
+      "turn": "change em to strong in both tags. The word every turns bold.",
+      "bar": "change **em** to **strong** in both tags. The word every turns bold.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strong"
+    },
+    {
+      "id": "links",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Links to other pages",
+      "short": "Links",
+      "keywords": "a href link second page anchor click",
+      "explain": "A link is words you can click to go to another page. The a tag makes a link. Its href word says which page to open. Write the file name of that page there.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<a href=\"planets.html\">See my planets</a>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "\"planets.html\"",
+          "tint": "a",
+          "means": "is the page to open"
+        },
+        {
+          "word": "See my planets",
+          "tint": "b",
+          "means": "are the words to click"
+        }
+      ],
+      "result": {
+        "files": [
+          "home.html"
+        ],
+        "height": 126
+      },
+      "files": [
+        {
+          "name": "home.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <h1>My home page</h1>\n    <p><a href=\"planets.html\">See my planets</a></p>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "planets.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <h1>My planets</h1>\n    <p><a href=\"home.html\">Back home</a></p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<a href=\"planets.html\">My planets</a>"
+      },
+      "turn": "change See my planets to your own words. Then click the link.",
+      "bar": "change **See my planets** to **your own words**. Then click the link.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a"
+    },
+    {
+      "id": "pictures",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Pictures",
+      "short": "Pictures",
+      "keywords": "img image picture photo file path src alt svg png jpg",
+      "explain": "The img tag shows a picture. Its src word names the file, and its alt word says what the picture shows. Save your project first. Then put the picture in the same folder.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<img src=\"saturn.jpg\" alt=\"The planet Saturn\">"
+        }
+      ],
+      "legend": [
+        {
+          "word": "src",
+          "tint": "a",
+          "means": "names the picture file"
+        },
+        {
+          "word": "alt",
+          "tint": "b",
+          "means": "says what the picture shows"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 215
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <h2>My favorite planet</h2>\n    <img src=\"saturn.jpg\" alt=\"The planet Saturn\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "saturn.jpg",
+          "hidden": true,
+          "picture": true
+        },
+        {
+          "name": "mars.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<img src=\"my-picture.png\" alt=\"What it shows\">"
+      },
+      "turn": "change saturn to mars. A new picture shows.",
+      "bar": "change **saturn** to **mars**. A new picture shows.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img"
+    },
+    {
+      "id": "web-pictures",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Pictures for the web",
+      "short": "Pictures for the web",
+      "keywords": "webp jpg jpeg png svg avif gif format file type small fast width height lazy loading",
+      "explain": "Pick the right kind of picture file. A photo is best as JPG or WebP. A drawing, or a picture with a see-through part, is best as PNG or SVG. WebP files are small, so your page opens fast. Give each picture its width and height, so the page does not jump while it loads. AVIF is newer and even smaller, but older Macs cannot show it yet.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<img src=\"boat.jpg\" alt=\"A sailing boat on a lake\"\n     width=\"320\" height=\"240\" loading=\"lazy\">"
+        }
+      ],
+      "legend": [
+        {
+          "word": "width",
+          "tint": "a",
+          "means": "is how wide the picture is, in pixels"
+        },
+        {
+          "word": "height",
+          "tint": "b",
+          "means": "is how tall it is"
+        },
+        {
+          "word": "loading=\"lazy\"",
+          "tint": "a",
+          "means": "waits until you scroll near the picture"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 332
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <h2>A day at the lake</h2>\n    <img src=\"boat.jpg\" alt=\"A sailing boat on a lake\" width=\"320\" height=\"240\" loading=\"lazy\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "boat.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<img src=\"my-picture.webp\" alt=\"What it shows\" width=\"320\" height=\"240\">"
+      },
+      "turn": "change 320 to 160 and 240 to 120. The picture gets smaller and keeps its shape.",
+      "bar": "change **320** to **160** and **240** to **120**. The picture gets smaller and keeps its shape.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types"
+    },
+    {
+      "id": "lists",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Lists",
+      "short": "Lists",
+      "keywords": "ul ol li list bullet numbered",
+      "explain": "A list shows things one under the other. The ul tag makes a list with dots. The ol tag makes a list with numbers. Each thing goes in its own li tag.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<ul>\n  <li>Saturn has rings</li>\n  <li>Mars is red</li>\n  <li>Jupiter is huge</li>\n</ul>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<ul>",
+          "tint": "a",
+          "means": "makes a list with dots"
+        },
+        {
+          "word": "<li>",
+          "tint": "b",
+          "means": "is one thing in the list"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 98
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <ul>\n      <li>Saturn has rings</li>\n      <li>Mars is red</li>\n      <li>Jupiter is huge</li>\n    </ul>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<ul>\n  <li>First thing</li>\n  <li>Second thing</li>\n</ul>"
+      },
+      "turn": "change ul to ol in both tags. The dots turn into numbers.",
+      "bar": "change **ul** to **ol** in both tags. The dots turn into numbers.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ul"
+    },
+    {
+      "id": "tables",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Tables",
+      "short": "Tables",
+      "keywords": "table tr td th cell",
+      "explain": "A table puts things in rows and boxes. The tr tag makes a row, which is one line across. The td tag makes one box in that row. The th tag is a box for a heading, and its words are bold.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<table>\n  <tr>\n    <th>Planet</th>\n    <th>Moons</th>\n  </tr>\n  <tr>\n    <td>Earth</td>\n    <td>1</td>\n  </tr>\n</table>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<tr>",
+          "tint": "a",
+          "means": "makes a row"
+        },
+        {
+          "word": "<th>",
+          "tint": "b",
+          "means": "is a box for a heading"
+        },
+        {
+          "word": "<td>",
+          "tint": "a",
+          "means": "is one box in a row"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 98
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      /* This draws the lines of the table. */\n      th, td {\n        border: 1px solid gray;\n        padding: 6px;\n      }\n    </style>\n  </head>\n  <body>\n    <table>\n      <tr>\n        <th>Planet</th>\n        <th>Moons</th>\n      </tr>\n      <tr>\n        <td>Earth</td>\n        <td>1</td>\n      </tr>\n    </table>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<table>\n  <tr>\n    <td>First box</td>\n    <td>Second box</td>\n  </tr>\n</table>"
+      },
+      "turn": "change Earth to Mars, and 1 to 2.",
+      "bar": "change **Earth** to **Mars**, and **1** to **2**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table"
+    },
+    {
+      "id": "sections",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Page sections",
+      "short": "Sections",
+      "keywords": "header nav main footer div span section",
+      "explain": "These tags are boxes for the parts of your page. The header tag is the top, main is the middle, and footer is the bottom. The nav tag holds your links. The div tag is a plain box for anything, and span is a small box inside a line of text.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<header>My pancake page</header>\n<nav><a href=\"my-page.html\">Home</a></nav>\n<main>\n  <div>Pancakes are <span>round</span>.</div>\n</main>\n<footer>Made by me</footer>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<header>",
+          "tint": "a",
+          "means": "is the top of the page"
+        },
+        {
+          "word": "<main>",
+          "tint": "b",
+          "means": "is the big middle part"
+        },
+        {
+          "word": "<span>",
+          "tint": "a",
+          "means": "is a small box in a line"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 180
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      /* This gives each part a color, so you can see it. */\n      header { background: orange; padding: 10px; }\n      nav { background: khaki; padding: 10px; }\n      main { background: lightblue; padding: 10px; }\n      span { background: pink; }\n      footer { background: lightgray; padding: 10px; }\n    </style>\n  </head>\n  <body>\n    <header>My pancake page</header>\n    <nav><a href=\"my-page.html\">Home</a></nav>\n    <main>\n      <div>Pancakes are <span>round</span>.</div>\n    </main>\n    <footer>Made by me</footer>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<header>\n  <h1>My page</h1>\n</header>"
+      },
+      "turn": "change orange to hotpink in the style block. The top of the page changes.",
+      "bar": "change **orange** to **hotpink** in the style block. The top of the page changes.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/header"
+    },
+    {
+      "id": "forms",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Forms and buttons",
+      "short": "Forms",
+      "keywords": "form input button label",
+      "explain": "A form is a place where people can type. The input tag makes a box to type in. The button tag makes a button to press. Buttons here do not send anything yet.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<form>\n  <label>Name: <input type=\"text\"></label>\n  <button>Say hello</button>\n</form>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "<label>",
+          "tint": "a",
+          "means": "holds the words next to the box"
+        },
+        {
+          "word": "<input type=\"text\">",
+          "tint": "b",
+          "means": "makes a box to type in"
+        },
+        {
+          "word": "<button>",
+          "tint": "a",
+          "means": "makes a button to press"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 52
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <form>\n      <label>Name: <input type=\"text\"></label>\n      <button>Say hello</button>\n    </form>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<label>Name: <input type=\"text\"></label>\n<button>OK</button>"
+      },
+      "turn": "type in the box. Then change Say hello to Go.",
+      "bar": "type in the box. Then change **Say hello** to **Go**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form"
+    },
+    {
+      "id": "characters",
+      "group": "html",
+      "kind": "lesson",
+      "title": "Special characters",
+      "short": "Characters",
+      "keywords": "entity symbol copyright copy hearts lt gt amp",
+      "explain": "Some signs are hard to type. Others, like pointy brackets, already have a job in code. For these, write a short name with & in front and ; after it. Your page shows the sign.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<p>&copy; Made by me</p>\n<p>I &hearts; pancakes</p>\n<p>The sign &lt; starts a tag</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "&copy;",
+          "tint": "a",
+          "means": "shows a C in a circle, for what you made"
+        },
+        {
+          "word": "&hearts;",
+          "tint": "b",
+          "means": "shows a heart"
+        },
+        {
+          "word": "&lt;",
+          "tint": "a",
+          "means": "shows a pointy bracket"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 130
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <p>&copy; Made by me</p>\n    <p>I &hearts; pancakes</p>\n    <p>The sign &lt; starts a tag</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<p>&copy; Made by me</p>"
+      },
+      "turn": "change hearts to spades. Then try diams.",
+      "bar": "change **hearts** to **spades**. Then try **diams**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Glossary/Entity"
+    },
+    {
+      "id": "inline-style",
+      "group": "ways",
+      "kind": "lesson",
+      "title": "Inline style: change one tag",
+      "short": "Inline style",
+      "keywords": "style color css inline blue",
+      "explain": "You can add style right inside a tag. It changes only that one tag.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<p style=\"color: blue;\">I am blue!</p>\n<p>I stay the same.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "color",
+          "tint": "a",
+          "means": "is what to change"
+        },
+        {
+          "word": "blue",
+          "tint": "b",
+          "means": "is the new look"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 96
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <body>\n    <p style=\"color: blue;\">I am blue!</p>\n    <p>I stay the same.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<p style=\"color: blue;\">I am blue!</p>"
+      },
+      "turn": "change blue to orange. Then try the word purple.",
+      "bar": "change **blue** to **orange** and watch this side change.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/style"
+    },
+    {
+      "id": "style-block",
+      "group": "ways",
+      "kind": "lesson",
+      "title": "Style block: change one page",
+      "short": "Style block",
+      "keywords": "style color css internal",
+      "explain": "Put a style block at the top of your page. It changes every tag of one kind, on this page only.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  h1 { color: green; }\n</style>\n<h1>First heading</h1>\n<h1>Second heading</h1>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "h1",
+          "tint": "a",
+          "means": "is which tags to change"
+        },
+        {
+          "word": "color: green;",
+          "tint": "b",
+          "means": "is the new look"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 150
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      h1 { color: green; }\n    </style>\n  </head>\n  <body>\n    <h1>First heading</h1>\n    <h1>Second heading</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1 { color: green; }\n</style>"
+      },
+      "turn": "change green to red. Both headings change at once!",
+      "bar": "change **green** to **red**. Both headings change at once!",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style"
+    },
+    {
+      "id": "style-file",
+      "group": "ways",
+      "kind": "lesson",
+      "title": "Style file: change many pages",
+      "short": "Style file",
+      "keywords": "style.css link external color",
+      "explain": "Keep your style in its own file. Every page that links to the file gets the same look.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<!-- in home.html and planets.html -->\n<link rel=\"stylesheet\" href=\"style.css\">"
+        },
+        {
+          "lang": "css",
+          "text": "/* in style.css */\nh1 { color: purple; }"
+        }
+      ],
+      "legend": [
+        {
+          "word": "\"style.css\"",
+          "tint": "a",
+          "means": "is the file to use"
+        },
+        {
+          "word": "color: purple;",
+          "tint": "b",
+          "means": "is the new look"
+        }
+      ],
+      "result": {
+        "files": [
+          "home.html",
+          "planets.html"
+        ],
+        "height": 88
+      },
+      "files": [
+        {
+          "name": "home.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My home page</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>My home page</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "planets.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My planets page</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>My planets page</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "style.css",
+          "code": "h1 {\n  color: purple;\n}\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+      },
+      "turn": "change purple to teal in style.css. Both pages change.",
+      "bar": "change **purple** to **teal** in style.css. Both pages change.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link"
+    },
+    {
+      "id": "which-style-wins",
+      "group": "ways",
+      "kind": "lesson",
+      "title": "Which style wins?",
+      "short": "Which style wins?",
+      "keywords": "order css color win",
+      "explain": "If two styles try to change the same tag, inline style wins. Between a style block and a style file, the one written last wins.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p { color: green; }\n</style>\n<p style=\"color: red;\">Who wins?</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "green",
+          "tint": "a",
+          "means": "comes from the style block"
+        },
+        {
+          "word": "red",
+          "tint": "b",
+          "means": "comes from the tag, so it wins"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 60
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p { color: green; }\n    </style>\n  </head>\n  <body>\n    <p style=\"color: red;\">Who wins?</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<p style=\"color: red;\">Who wins?</p>"
+      },
+      "turn": "delete the inline style. What color is the text now?",
+      "bar": "delete the inline style. What color is the text now?",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade"
+    },
+    {
+      "id": "picking",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Picking what to style",
+      "short": "Picking",
+      "keywords": "selector tag class id pick",
+      "explain": "You can choose which tags a style changes. Write p to pick every p tag. A class is a name for many tags, and .fact picks them all. An id is a name for one tag only, and #top picks it.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p { color: navy; }\n  .fact { background: orange; }\n  #top { color: red; }\n</style>\n<h1 id=\"top\">Saturn</h1>\n<p>It is very big.</p>\n<p class=\"fact\">It has rings.</p>\n<p class=\"fact\">It could float in water.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "p",
+          "tint": "a",
+          "means": "picks every p tag"
+        },
+        {
+          "word": ".fact",
+          "tint": "b",
+          "means": "picks every tag with the class fact"
+        },
+        {
+          "word": "#top",
+          "tint": "a",
+          "means": "picks the one tag with the id top"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 194
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p { color: navy; }\n      .fact { background: orange; }\n      #top { color: red; }\n    </style>\n  </head>\n  <body>\n    <h1 id=\"top\">Saturn</h1>\n    <p>It is very big.</p>\n    <p class=\"fact\">It has rings.</p>\n    <p class=\"fact\">It could float in water.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .fact { background: orange; }\n</style>"
+      },
+      "turn": "change orange to hotpink. Both tags with the class change.",
+      "bar": "change **orange** to **hotpink**. Both tags with the class change.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Selectors"
+    },
+    {
+      "id": "colors",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Colors",
+      "short": "Colors",
+      "keywords": "color hex rgb name rgba",
+      "explain": "You can write a color in three ways. A name is the easiest, like tomato. A hex code starts with # and has six letters or numbers. rgb mixes red, green and blue, each from 0 to 255.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  h1 { color: tomato; }\n  h2 { color: #0b6e69; }\n  p { color: rgb(128, 0, 128); }\n</style>\n<h1>A color name</h1>\n<h2>A hex code</h2>\n<p>Red, green and blue</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "tomato",
+          "tint": "a",
+          "means": "is a color name"
+        },
+        {
+          "word": "#0b6e69",
+          "tint": "b",
+          "means": "is a hex code"
+        },
+        {
+          "word": "rgb(128, 0, 128)",
+          "tint": "a",
+          "means": "mixes red, green and blue"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 174
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      h1 { color: tomato; }\n      h2 { color: #0b6e69; }\n      p { color: rgb(128, 0, 128); }\n    </style>\n  </head>\n  <body>\n    <h1>A color name</h1>\n    <h2>A hex code</h2>\n    <p>Red, green and blue</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1 { color: tomato; }\n</style>"
+      },
+      "turn": "change the first 128 to 255. The purple turns pink.",
+      "bar": "change the first **128** to **255**. The purple turns pink.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value"
+    },
+    {
+      "id": "text-fonts",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Text and fonts",
+      "short": "Text",
+      "keywords": "font size family bold font-size font-family font-weight text-align center",
+      "explain": "A font is a style of letters. font-family picks the font, and font-size says how big the letters are. font-weight makes them thick. text-align moves them left, center or right.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  h1 {\n    font-family: Verdana;\n    font-size: 28px;\n    text-align: center;\n  }\n  p { font-weight: bold; }\n</style>\n<h1>Pancake day</h1>\n<p>Today we eat pancakes.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "font-family",
+          "tint": "a",
+          "means": "picks the font"
+        },
+        {
+          "word": "28px",
+          "tint": "b",
+          "means": "means 28 tiny dots on the screen"
+        },
+        {
+          "word": "text-align",
+          "tint": "a",
+          "means": "moves the text"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 118
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      h1 {\n        font-family: Verdana;\n        font-size: 28px;\n        text-align: center;\n      }\n      p { font-weight: bold; }\n    </style>\n  </head>\n  <body>\n    <h1>Pancake day</h1>\n    <p>Today we eat pancakes.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  p { font-size: 20px; }\n</style>"
+      },
+      "turn": "change 28px to 50px. Then change center to right.",
+      "bar": "change **28px** to **50px**. Then change **center** to **right**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-size"
+    },
+    {
+      "id": "box",
+      "group": "css",
+      "kind": "lesson",
+      "title": "The box: margin, border, padding",
+      "short": "The box",
+      "keywords": "box space spacing margin-top margin-bottom margin-left margin-right padding-top padding-bottom padding-left padding-right",
+      "explain": "Every tag is a box. Padding is the space inside the box, around the words. Border is the line around the box. Margin is the space outside the box.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p {\n    background: lightblue;\n    padding: 20px;\n    border: 4px solid teal;\n    margin: 30px;\n  }\n</style>\n<p>Every tag is a box.</p>\n<p>So is this one.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "padding: 20px;",
+          "tint": "a",
+          "means": "is the space inside"
+        },
+        {
+          "word": "border: 4px solid teal;",
+          "tint": "b",
+          "means": "is the line around it"
+        },
+        {
+          "word": "margin: 30px;",
+          "tint": "a",
+          "means": "is the space outside"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 234
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p {\n        background: lightblue;\n        padding: 20px;\n        border: 4px solid teal;\n        margin: 30px;\n      }\n    </style>\n  </head>\n  <body>\n    <p>Every tag is a box.</p>\n    <p>So is this one.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  p {\n    padding: 10px;\n    border: 2px solid teal;\n    margin: 10px;\n  }\n</style>"
+      },
+      "turn": "change 20px to 60px. The box grows around the words.",
+      "bar": "change **20px** to **60px**. The box grows around the words.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Box_model/Introduction"
+    },
+    {
+      "id": "sizes",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Sizes",
+      "short": "Sizes",
+      "keywords": "width height px percent units pixel pixels min-width min-height max-height",
+      "explain": "width says how wide a tag is, and height says how tall. px means pixels, the tiny dots on your screen. The percent sign means a part of the space around the tag, so 50% is half.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  div { height: 60px; margin: 8px; }\n  .small { width: 150px; background: gold; }\n  .half { width: 50%; background: skyblue; }\n</style>\n<div class=\"small\">150px wide</div>\n<div class=\"half\">Half of the page</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "height: 60px;",
+          "tint": "a",
+          "means": "is how tall the box is"
+        },
+        {
+          "word": "150px",
+          "tint": "b",
+          "means": "stays the same size"
+        },
+        {
+          "word": "50%",
+          "tint": "a",
+          "means": "is half of the space around it"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 156
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      div { height: 60px; margin: 8px; }\n      .small { width: 150px; background: gold; }\n      .half { width: 50%; background: skyblue; }\n    </style>\n  </head>\n  <body>\n    <div class=\"small\">150px wide</div>\n    <div class=\"half\">Half of the page</div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  img { width: 200px; }\n</style>"
+      },
+      "turn": "change 50% to 100%. The blue box grows.",
+      "bar": "change **50%** to **100%**. The blue box grows.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/width"
+    },
+    {
+      "id": "backgrounds",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Backgrounds",
+      "short": "Backgrounds",
+      "keywords": "background color image background-color background-image url",
+      "explain": "The background is what sits behind your text. background-color fills it with one color. background-image shows a picture, and the picture repeats like tiles on a wall, so it covers the color. Save your project first, and keep the picture in the same folder.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  body {\n    background-color: navy;\n    background-image: url(\"stars.jpg\");\n    color: white;\n  }\n</style>\n<h1>Good night, stars</h1>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "background-color",
+          "tint": "a",
+          "means": "fills it with one color"
+        },
+        {
+          "word": "url(\"stars.jpg\")",
+          "tint": "b",
+          "means": "is the picture to show"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 92
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      body {\n        background-color: navy;\n        background-image: url(\"stars.jpg\");\n        color: white;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Good night, stars</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "stars.jpg",
+          "hidden": true,
+          "picture": true
+        },
+        {
+          "name": "my-picture.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  body { background-color: lavender; }\n</style>"
+      },
+      "turn": "change stars to my-picture. A new picture shows.",
+      "bar": "change **stars** to **my-picture**. A new picture shows.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/background"
+    },
+    {
+      "id": "flexbox",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Flexbox: rows and columns",
+      "short": "Flexbox",
+      "keywords": "flex layout flexbox display flex-direction flex-wrap gap row column",
+      "explain": "Flexbox lines up boxes. Put them inside an outer box, and give the outer box display: flex. They sit in a row, side by side, or in a column, one under the other.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .planets {\n    display: flex;\n    flex-direction: row;\n    gap: 10px;\n  }\n  span { background: gold; padding: 20px; }\n</style>\n<div class=\"planets\">\n  <span>Mars</span>\n  <span>Earth</span>\n  <span>Saturn</span>\n</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "display: flex;",
+          "tint": "a",
+          "means": "lines up the boxes inside"
+        },
+        {
+          "word": "flex-direction: row;",
+          "tint": "b",
+          "means": "says a row or a column"
+        },
+        {
+          "word": "gap: 10px;",
+          "tint": "a",
+          "means": "is the space between them"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 86
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .planets {\n        display: flex;\n        flex-direction: row;\n        gap: 10px;\n      }\n      span { background: gold; padding: 20px; }\n    </style>\n  </head>\n  <body>\n    <div class=\"planets\">\n      <span>Mars</span>\n      <span>Earth</span>\n      <span>Saturn</span>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .planets {\n    display: flex;\n    gap: 10px;\n  }\n</style>"
+      },
+      "turn": "change row to column. The boxes stack up.",
+      "bar": "change **row** to **column**. The boxes stack up.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts"
+    },
+    {
+      "id": "grid",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Grid: neat boxes",
+      "short": "Grid",
+      "keywords": "grid layout grid-template-columns fr",
+      "explain": "Grid puts boxes in neat rows and columns, like a chess board. Give the outer box display: grid. grid-template-columns says how many columns you want, and how wide each one is. 1fr means one equal part of the space.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .pets {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 10px;\n  }\n  span { background: skyblue; padding: 20px; }\n</style>\n<div class=\"pets\">\n  <span>Cat</span>\n  <span>Dog</span>\n  <span>Fish</span>\n  <span>Bird</span>\n</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "display: grid;",
+          "tint": "a",
+          "means": "turns on the grid"
+        },
+        {
+          "word": "1fr 1fr",
+          "tint": "b",
+          "means": "means two columns, the same width"
+        },
+        {
+          "word": "gap: 10px;",
+          "tint": "a",
+          "means": "is the space between the boxes"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 154
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .pets {\n        display: grid;\n        grid-template-columns: 1fr 1fr;\n        gap: 10px;\n      }\n      span { background: skyblue; padding: 20px; }\n    </style>\n  </head>\n  <body>\n    <div class=\"pets\">\n      <span>Cat</span>\n      <span>Dog</span>\n      <span>Fish</span>\n      <span>Bird</span>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .boxes {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 10px;\n  }\n</style>"
+      },
+      "turn": "add one more 1fr. Now there are three columns.",
+      "bar": "add one more **1fr**. Now there are three columns.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Basic_concepts"
+    },
+    {
+      "id": "hover",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Hover and movement",
+      "short": "Hover",
+      "keywords": "hover transition animation keyframes mouse move",
+      "explain": "Hover means your mouse pointer is on a tag. A :hover style works only then. transition makes the change slow and smooth, and 1s means one second. @keyframes makes a tag move by itself.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p {\n    background: gold;\n    padding: 10px;\n    transition: background 1s;\n  }\n  p:hover { background: tomato; }\n\n  @keyframes slide {\n    from { margin-left: 0; }\n    to { margin-left: 100px; }\n  }\n  h1 {\n    animation: slide 2s infinite alternate;\n  }\n</style>\n<h1>I move</h1>\n<p>Put your mouse on me</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "transition",
+          "tint": "a",
+          "means": "makes the change slow"
+        },
+        {
+          "word": ":hover",
+          "tint": "b",
+          "means": "works when the mouse is on it"
+        },
+        {
+          "word": "@keyframes",
+          "tint": "a",
+          "means": "says how a tag moves"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 146
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p {\n        background: gold;\n        padding: 10px;\n        transition: background 1s;\n      }\n      p:hover { background: tomato; }\n\n      @keyframes slide {\n        from { margin-left: 0; }\n        to { margin-left: 100px; }\n      }\n      h1 {\n        animation: slide 2s infinite alternate;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>I move</h1>\n    <p>Put your mouse on me</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1:hover { color: tomato; }\n</style>"
+      },
+      "turn": "put your mouse on the gold box. Then change 1s to 3s and try again.",
+      "bar": "put your mouse on the gold box. Then change **1s** to **3s** and try again.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:hover"
+    },
+    {
+      "id": "phone-pages",
+      "group": "css",
+      "kind": "lesson",
+      "title": "Pages that fit a phone",
+      "short": "Phone pages",
+      "keywords": "phone mobile responsive media max-width tablet screen",
+      "explain": "A phone screen is not very wide. @media makes a style work only when the page is small. max-width: 400px means 400 wide or less. Press the Phone button, the little phone above the page, to try it.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .pets { display: flex; gap: 10px; }\n  span { background: skyblue; padding: 20px; }\n\n  @media (max-width: 400px) {\n    .pets { flex-direction: column; }\n    body { background: orange; }\n  }\n</style>\n<div class=\"pets\">\n  <span>Cat</span>\n  <span>Dog</span>\n  <span>Fish</span>\n</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "@media",
+          "tint": "a",
+          "means": "starts a style for small pages"
+        },
+        {
+          "word": "max-width: 400px",
+          "tint": "b",
+          "means": "means 400 wide or less"
+        },
+        {
+          "word": "column",
+          "tint": "a",
+          "means": "stacks the boxes"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 86
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .pets { display: flex; gap: 10px; }\n      span { background: skyblue; padding: 20px; }\n\n      @media (max-width: 400px) {\n        .pets { flex-direction: column; }\n        body { background: orange; }\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"pets\">\n      <span>Cat</span>\n      <span>Dog</span>\n      <span>Fish</span>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @media (max-width: 400px) {\n    body { background: lavender; }\n  }\n</style>"
+      },
+      "turn": "press the Phone button above the page. Then change orange to purple.",
+      "bar": "press the Phone button above the page. Then change **orange** to **purple**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media"
+    },
+    {
+      "id": "how-html",
+      "group": "lookup",
+      "kind": "list",
+      "lang": "html",
+      "title": "How do I... in HTML",
+      "short": "Copy the code for links, pictures, lists and more",
+      "keywords": "how link links page website jump top picture pictures image images img photo embed size caption figure list lists table details new line br strong comment note copy snippet",
+      "rows": [
+        {
+          "means": "Link to another page of my site",
+          "code": "<a href=\"planets.html\">See my planets</a>",
+          "tip": "The page **planets.html** must be in the same folder as this page."
+        },
+        {
+          "means": "Link to a website",
+          "code": "<a href=\"https://www.nasa.gov\">Visit NASA</a>",
+          "tip": "A website address starts with **https://**. In HTML Lab it opens in your web browser."
+        },
+        {
+          "means": "Jump to a place on the same page",
+          "code": "<a href=\"#games\">Go to my games</a>\n\n<h2 id=\"games\">My games</h2>",
+          "tip": "The **id** gives the place a name. The **#** in the link jumps there."
+        },
+        {
+          "means": "Jump back to the top",
+          "code": "<a href=\"#top\">Back to the top</a>",
+          "tip": "**#top** always jumps to the top of the page."
+        },
+        {
+          "means": "Show a picture",
+          "code": "<img src=\"tree.jpg\" alt=\"A big green tree\">",
+          "tip": "Put the picture file in the same folder as your page. The **alt** words tell what the picture shows, for people who cannot see it."
+        },
+        {
+          "means": "Show a picture at a set size",
+          "code": "<img src=\"tree.jpg\" alt=\"A big green tree\" width=\"300\">",
+          "tip": "Give only the **width**, and the picture keeps its shape."
+        },
+        {
+          "means": "Make a picture a link",
+          "code": "<a href=\"trees.html\">\n  <img src=\"tree.jpg\" alt=\"My tree page\">\n</a>",
+          "tip": "Click the picture, and you go to the page."
+        },
+        {
+          "means": "Show a picture with words under it",
+          "code": "<figure>\n  <img src=\"tree.jpg\" alt=\"A big green tree\">\n  <figcaption>The tree in our garden</figcaption>\n</figure>"
+        },
+        {
+          "means": "Make a list with dots",
+          "code": "<ul>\n  <li>Apples</li>\n  <li>Pears</li>\n  <li>Plums</li>\n</ul>"
+        },
+        {
+          "means": "Make a numbered list",
+          "code": "<ol>\n  <li>Crack the eggs</li>\n  <li>Stir</li>\n  <li>Bake</li>\n</ol>"
+        },
+        {
+          "means": "Make a table",
+          "code": "<table>\n  <tr>\n    <th>Planet</th>\n    <th>Moons</th>\n  </tr>\n  <tr>\n    <td>Mars</td>\n    <td>2</td>\n  </tr>\n</table>",
+          "tip": "**th** is a heading cell, **td** is a normal cell, and each **tr** is one row."
+        },
+        {
+          "means": "Make something open when clicked",
+          "code": "<details>\n  <summary>What is the biggest planet?</summary>\n  <p>Jupiter!</p>\n</details>",
+          "tip": "No code needed: the page opens and closes it by itself."
+        },
+        {
+          "means": "Start a new line",
+          "code": "Roses are red,<br>\nviolets are blue."
+        },
+        {
+          "means": "Make words strong or slanted",
+          "code": "<p>This is <strong>very</strong> important, <em>really</em>.</p>"
+        },
+        {
+          "means": "Show a < or > on the page",
+          "code": "<p>A heading tag looks like &lt;h1&gt;.</p>",
+          "tip": "**&lt;** shows a **<** and **&gt;** shows a **>**, so the page does not think it is a tag."
+        },
+        {
+          "means": "Write a note only I can see",
+          "code": "<!-- Remember to add my dog's picture here -->",
+          "tip": "The page does not show anything between **<!--** and **-->**."
+        },
+        {
+          "means": "Use my CSS file",
+          "code": "<link rel=\"stylesheet\" href=\"style.css\">",
+          "tip": "Put this line inside **<head>**."
+        }
+      ]
+    },
+    {
+      "id": "how-css",
+      "group": "lookup",
+      "kind": "list",
+      "lang": "css",
+      "title": "How do I... in CSS",
+      "short": "Copy the style for colors, pictures, boxes and more",
+      "keywords": "how color colour background center middle bigger font class button hover border shadow rounded corners side grid space padding margin fade grow copy snippet",
+      "rows": [
+        {
+          "means": "Change the color of the words",
+          "code": "h1 {\n  color: crimson;\n}",
+          "tip": "Try any name from the Color names list."
+        },
+        {
+          "means": "Change the color behind the page",
+          "code": "body {\n  background-color: lightyellow;\n}"
+        },
+        {
+          "means": "Mix my own color",
+          "code": "h1 {\n  color: #ff6600;\n}",
+          "tip": "After the **#** come two signs for red, two for green and two for blue. Each sign is 0 to 9 or a to f."
+        },
+        {
+          "means": "Put a picture behind the page",
+          "code": "body {\n  background-image: url(\"stars.jpg\");\n  background-size: cover;\n}",
+          "tip": "**cover** stretches the picture over the whole page."
+        },
+        {
+          "means": "Keep pictures inside the page",
+          "code": "img {\n  max-width: 100%;\n  height: auto;\n}",
+          "tip": "A big picture shrinks to fit, and keeps its shape."
+        },
+        {
+          "means": "Round the corners",
+          "code": "img {\n  border-radius: 16px;\n}",
+          "tip": "**border-radius: 50%** on a square picture makes a circle."
+        },
+        {
+          "means": "Put text in the middle",
+          "code": "h1 {\n  text-align: center;\n}"
+        },
+        {
+          "means": "Put the whole page in the middle",
+          "code": "main {\n  max-width: 40rem;\n  margin: 0 auto;\n}",
+          "tip": "Lines that are not too long are easier to read."
+        },
+        {
+          "means": "Make the words bigger",
+          "code": "p {\n  font-size: 1.25rem;\n}"
+        },
+        {
+          "means": "Change the font",
+          "code": "body {\n  font-family: Georgia, serif;\n}",
+          "tip": "Every Mac has Georgia. **serif** is the backup."
+        },
+        {
+          "means": "Style one thing only",
+          "code": ".note {\n  color: purple;\n}",
+          "tip": "Give the tag **class=\"note\"** in your HTML. The dot means a class."
+        },
+        {
+          "means": "Make a link look like a button",
+          "code": ".button {\n  display: inline-block;\n  padding: 12px 20px;\n  border-radius: 8px;\n  background-color: royalblue;\n  color: white;\n  text-decoration: none;\n}",
+          "tip": "Give the link **class=\"button\"**. It still goes where its **href** says."
+        },
+        {
+          "means": "Change a link when the mouse is on it",
+          "code": "a:hover {\n  color: tomato;\n}"
+        },
+        {
+          "means": "Add space inside and around a box",
+          "code": ".card {\n  padding: 20px;\n  margin-bottom: 20px;\n}",
+          "tip": "**padding** is the space inside the border, **margin** is the space outside it."
+        },
+        {
+          "means": "Add a border",
+          "code": ".card {\n  border: 3px solid teal;\n}"
+        },
+        {
+          "means": "Add a soft shadow",
+          "code": ".card {\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\n}"
+        },
+        {
+          "means": "Put boxes side by side",
+          "code": ".row {\n  display: flex;\n  gap: 16px;\n}",
+          "tip": "Give the box around them **class=\"row\"**."
+        },
+        {
+          "means": "Make a grid that fits any window",
+          "code": ".cards {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n  gap: 16px;\n}",
+          "tip": "Wide window: many cards in a row. Narrow window: fewer."
+        },
+        {
+          "means": "Take the dots off a list",
+          "code": "ul {\n  list-style: none;\n  padding: 0;\n}"
+        },
+        {
+          "means": "Grow a little when the mouse is on it",
+          "code": ".card {\n  transition: transform 0.2s;\n}\n\n.card:hover {\n  transform: scale(1.05);\n}"
+        },
+        {
+          "means": "Fade in when the page opens",
+          "code": "h1 {\n  animation: fade-in 1s;\n}\n\n@keyframes fade-in {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}"
+        }
+      ]
+    },
+    {
+      "id": "html-tags",
+      "group": "lookup",
+      "kind": "list",
+      "title": "HTML tags",
+      "short": "HTML tags",
+      "keywords": "tag list",
+      "rows": [
+        {
+          "code": "<html>",
+          "means": "Holds the whole page",
+          "color": null
+        },
+        {
+          "code": "<head>",
+          "means": "Holds notes about the page",
+          "color": null
+        },
+        {
+          "code": "<title>",
+          "means": "The name of the page, not on the page itself",
+          "color": null
+        },
+        {
+          "code": "<body>",
+          "means": "Holds everything you see",
+          "color": null
+        },
+        {
+          "code": "<h1>",
+          "means": "A big heading",
+          "color": null
+        },
+        {
+          "code": "<h2>",
+          "means": "A smaller heading",
+          "color": null
+        },
+        {
+          "code": "<p>",
+          "means": "A paragraph, a block of text",
+          "color": null
+        },
+        {
+          "code": "<strong>",
+          "means": "Bold words",
+          "color": null
+        },
+        {
+          "code": "<em>",
+          "means": "Italic words, which lean",
+          "color": null
+        },
+        {
+          "code": "<br>",
+          "means": "A new line, with no closing tag",
+          "color": null
+        },
+        {
+          "code": "<a>",
+          "means": "A link to another page",
+          "color": null
+        },
+        {
+          "code": "<img>",
+          "means": "A picture, with no closing tag",
+          "color": null
+        },
+        {
+          "code": "<ul>",
+          "means": "A list with dots",
+          "color": null
+        },
+        {
+          "code": "<ol>",
+          "means": "A list with numbers",
+          "color": null
+        },
+        {
+          "code": "<li>",
+          "means": "One thing in a list",
+          "color": null
+        },
+        {
+          "code": "<table>",
+          "means": "A table of rows and boxes",
+          "color": null
+        },
+        {
+          "code": "<tr>",
+          "means": "One row in a table",
+          "color": null
+        },
+        {
+          "code": "<th>",
+          "means": "A box for a heading in a table",
+          "color": null
+        },
+        {
+          "code": "<td>",
+          "means": "One box in a table",
+          "color": null
+        },
+        {
+          "code": "<header>",
+          "means": "The top part of a page",
+          "color": null
+        },
+        {
+          "code": "<nav>",
+          "means": "A part that holds links",
+          "color": null
+        },
+        {
+          "code": "<main>",
+          "means": "The big middle part of a page",
+          "color": null
+        },
+        {
+          "code": "<footer>",
+          "means": "The bottom part of a page",
+          "color": null
+        },
+        {
+          "code": "<div>",
+          "means": "A plain box for anything",
+          "color": null
+        },
+        {
+          "code": "<span>",
+          "means": "A small box inside a line of text",
+          "color": null
+        },
+        {
+          "code": "<form>",
+          "means": "A place where people can type",
+          "color": null
+        },
+        {
+          "code": "<label>",
+          "means": "The words next to a box",
+          "color": null
+        },
+        {
+          "code": "<input>",
+          "means": "A box to type in",
+          "color": null
+        },
+        {
+          "code": "<button>",
+          "means": "A button to press",
+          "color": null
+        },
+        {
+          "code": "<style>",
+          "means": "Holds CSS, the code for how a page looks",
+          "color": null
+        },
+        {
+          "code": "<link>",
+          "means": "Joins a style file to your page",
+          "color": null
+        }
+      ]
+    },
+    {
+      "id": "css-words",
+      "group": "lookup",
+      "kind": "list",
+      "title": "CSS words",
+      "short": "CSS words",
+      "keywords": "property list font-style text-decoration line-height border-radius justify-content align-items opacity",
+      "rows": [
+        {
+          "code": "color",
+          "means": "The color of the text",
+          "color": null
+        },
+        {
+          "code": "background-color",
+          "means": "The color behind the text",
+          "color": null
+        },
+        {
+          "code": "background-image",
+          "means": "A picture behind the text",
+          "color": null
+        },
+        {
+          "code": "font-size",
+          "means": "How big the letters are",
+          "color": null
+        },
+        {
+          "code": "font-family",
+          "means": "Which font the letters use",
+          "color": null
+        },
+        {
+          "code": "font-weight",
+          "means": "How thick the letters are",
+          "color": null
+        },
+        {
+          "code": "font-style",
+          "means": "Makes letters lean, with the word italic",
+          "color": null
+        },
+        {
+          "code": "text-align",
+          "means": "Moves text left, center or right",
+          "color": null
+        },
+        {
+          "code": "text-decoration",
+          "means": "Adds a line under text, or takes it away",
+          "color": null
+        },
+        {
+          "code": "line-height",
+          "means": "How much room each line of text gets",
+          "color": null
+        },
+        {
+          "code": "width",
+          "means": "How wide a box is",
+          "color": null
+        },
+        {
+          "code": "height",
+          "means": "How tall a box is",
+          "color": null
+        },
+        {
+          "code": "max-width",
+          "means": "The widest a box may grow",
+          "color": null
+        },
+        {
+          "code": "margin",
+          "means": "The space outside a box",
+          "color": null
+        },
+        {
+          "code": "padding",
+          "means": "The space inside a box",
+          "color": null
+        },
+        {
+          "code": "border",
+          "means": "The line around a box",
+          "color": null
+        },
+        {
+          "code": "border-radius",
+          "means": "Makes the corners of a box round",
+          "color": null
+        },
+        {
+          "code": "display",
+          "means": "How a box sits with others, like flex or grid",
+          "color": null
+        },
+        {
+          "code": "flex-direction",
+          "means": "Lines up boxes in a row or a column",
+          "color": null
+        },
+        {
+          "code": "justify-content",
+          "means": "Moves boxes along a row",
+          "color": null
+        },
+        {
+          "code": "align-items",
+          "means": "Moves boxes up or down in a row",
+          "color": null
+        },
+        {
+          "code": "gap",
+          "means": "The space between boxes",
+          "color": null
+        },
+        {
+          "code": "grid-template-columns",
+          "means": "How many columns a grid has",
+          "color": null
+        },
+        {
+          "code": "transition",
+          "means": "Makes a change slow and smooth",
+          "color": null
+        },
+        {
+          "code": "animation",
+          "means": "Makes a tag move by itself",
+          "color": null
+        },
+        {
+          "code": "opacity",
+          "means": "How much you can see through a tag",
+          "color": null
+        }
+      ]
+    },
+    {
+      "id": "color-names",
+      "group": "lookup",
+      "kind": "list",
+      "title": "Color names",
+      "short": "Color names",
+      "keywords": "color list gold navy red tomato crimson coral salmon orange yellow khaki lime green seagreen teal turquoise skyblue royalblue blue indigo purple violet orchid lavender hotpink pink chocolate brown tan black gray silver white",
+      "rows": [
+        {
+          "code": "red",
+          "means": "A strong red, like a fire truck",
+          "color": "red"
+        },
+        {
+          "code": "tomato",
+          "means": "A soft red, like a tomato",
+          "color": "tomato"
+        },
+        {
+          "code": "crimson",
+          "means": "A deep, dark red",
+          "color": "crimson"
+        },
+        {
+          "code": "coral",
+          "means": "A pink orange, like coral in the sea",
+          "color": "coral"
+        },
+        {
+          "code": "salmon",
+          "means": "A pink orange, like the fish",
+          "color": "salmon"
+        },
+        {
+          "code": "orange",
+          "means": "Orange, like the fruit",
+          "color": "orange"
+        },
+        {
+          "code": "gold",
+          "means": "A shiny yellow",
+          "color": "gold"
+        },
+        {
+          "code": "yellow",
+          "means": "A bright yellow, like a lemon",
+          "color": "yellow"
+        },
+        {
+          "code": "khaki",
+          "means": "A pale, sandy yellow",
+          "color": "khaki"
+        },
+        {
+          "code": "lime",
+          "means": "A very bright green",
+          "color": "lime"
+        },
+        {
+          "code": "green",
+          "means": "A deep green, like a leaf",
+          "color": "green"
+        },
+        {
+          "code": "seagreen",
+          "means": "A cool green, like the sea",
+          "color": "seagreen"
+        },
+        {
+          "code": "teal",
+          "means": "A dark blue green",
+          "color": "teal"
+        },
+        {
+          "code": "turquoise",
+          "means": "A bright blue green",
+          "color": "turquoise"
+        },
+        {
+          "code": "skyblue",
+          "means": "A soft blue, like the sky",
+          "color": "skyblue"
+        },
+        {
+          "code": "royalblue",
+          "means": "A bright, clear blue",
+          "color": "royalblue"
+        },
+        {
+          "code": "blue",
+          "means": "A strong blue",
+          "color": "blue"
+        },
+        {
+          "code": "navy",
+          "means": "A very dark blue",
+          "color": "navy"
+        },
+        {
+          "code": "indigo",
+          "means": "A deep blue purple",
+          "color": "indigo"
+        },
+        {
+          "code": "purple",
+          "means": "A dark purple",
+          "color": "purple"
+        },
+        {
+          "code": "violet",
+          "means": "A soft purple, like the flower",
+          "color": "violet"
+        },
+        {
+          "code": "orchid",
+          "means": "A pink purple, like the flower",
+          "color": "orchid"
+        },
+        {
+          "code": "lavender",
+          "means": "A very pale purple",
+          "color": "lavender"
+        },
+        {
+          "code": "hotpink",
+          "means": "A bright, loud pink",
+          "color": "hotpink"
+        },
+        {
+          "code": "pink",
+          "means": "A soft pink",
+          "color": "pink"
+        },
+        {
+          "code": "chocolate",
+          "means": "A warm brown, like chocolate",
+          "color": "chocolate"
+        },
+        {
+          "code": "brown",
+          "means": "A dark red brown",
+          "color": "brown"
+        },
+        {
+          "code": "tan",
+          "means": "A light, sandy brown",
+          "color": "tan"
+        },
+        {
+          "code": "black",
+          "means": "The darkest color",
+          "color": "black"
+        },
+        {
+          "code": "gray",
+          "means": "A middle gray",
+          "color": "gray"
+        },
+        {
+          "code": "silver",
+          "means": "A light gray, like a spoon",
+          "color": "silver"
+        },
+        {
+          "code": "white",
+          "means": "The lightest color",
+          "color": "white"
+        }
+      ]
+    },
+    {
+      "id": "keyboard-shortcuts",
+      "group": "lookup",
+      "kind": "list",
+      "title": "Keyboard shortcuts",
+      "short": "Keyboard shortcuts",
+      "keywords": "keys shortcut cmd ctrl",
+      "rows": [
+        {
+          "code": "Cmd+N",
+          "means": "Make a new page",
+          "color": null
+        },
+        {
+          "code": "Cmd+O",
+          "means": "Open my page",
+          "color": null
+        },
+        {
+          "code": "Cmd+S",
+          "means": "Save",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+S",
+          "means": "Save a copy",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+N",
+          "means": "Add a new file",
+          "color": null
+        },
+        {
+          "code": "Cmd+W",
+          "means": "Close the tab",
+          "color": null
+        },
+        {
+          "code": "Cmd+Z",
+          "means": "Undo, take back the last change",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+Z",
+          "means": "Redo, bring the change back",
+          "color": null
+        },
+        {
+          "code": "Cmd+X",
+          "means": "Cut",
+          "color": null
+        },
+        {
+          "code": "Cmd+C",
+          "means": "Copy",
+          "color": null
+        },
+        {
+          "code": "Cmd+V",
+          "means": "Paste",
+          "color": null
+        },
+        {
+          "code": "Cmd+A",
+          "means": "Select all the code",
+          "color": null
+        },
+        {
+          "code": "Cmd+F",
+          "means": "Find a word",
+          "color": null
+        },
+        {
+          "code": "Cmd+G",
+          "means": "Find the next one",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+G",
+          "means": "Find the one before",
+          "color": null
+        },
+        {
+          "code": "Cmd+Alt+F",
+          "means": "Replace a word with another",
+          "color": null
+        },
+        {
+          "code": "Cmd+/",
+          "means": "Turn a line into a comment, or back",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+I",
+          "means": "Tidy the spaces at the start of the lines",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+M",
+          "means": "Show my page",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+H",
+          "means": "Show Help",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+L",
+          "means": "Show Help on the word you are on",
+          "color": null
+        },
+        {
+          "code": "Cmd+=",
+          "means": "Bigger text. The + key works too",
+          "color": null
+        },
+        {
+          "code": "Cmd+-",
+          "means": "Smaller text",
+          "color": null
+        },
+        {
+          "code": "Cmd+0",
+          "means": "Normal text",
+          "color": null
+        },
+        {
+          "code": "Ctrl+Tab",
+          "means": "Go to the next tab",
+          "color": null
+        },
+        {
+          "code": "Ctrl+Shift+Tab",
+          "means": "Go to the tab before",
+          "color": null
+        },
+        {
+          "code": "Cmd+1 to Cmd+9",
+          "means": "Go to tab 1 to tab 9",
+          "color": null
+        },
+        {
+          "code": "Esc then Tab",
+          "means": "Leave the code with the keyboard",
+          "color": null
+        },
+        {
+          "code": "Ctrl+Cmd+F",
+          "means": "Fill the whole screen",
+          "color": null
+        },
+        {
+          "code": "Cmd+M",
+          "means": "Make the window small",
+          "color": null
+        },
+        {
+          "code": "Cmd+H",
+          "means": "Hide HTML Lab",
+          "color": null
+        },
+        {
+          "code": "Cmd+Q",
+          "means": "Quit HTML Lab",
+          "color": null
+        }
+      ]
+    },
+    {
+      "id": "want-red-text",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Make my text red",
+      "short": "Red text",
+      "keywords": "red color colour text",
+      "explain": "Pick the way that fits. You can use other color names too, like blue, orange or hotpink.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"color: red;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<p style=\"color: red;\">My red text</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all paragraphs on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  p {\n    color: red;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all paragraphs on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "p {\n  color: red;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**p** means paragraphs. For big headings, write **h1** instead.",
+      "learn": "colors",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 58
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p style=\"color: red;\">My red text</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-bigger-text",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Make my text bigger",
+      "short": "Bigger text",
+      "keywords": "big bigger large small size font-size",
+      "explain": "The number is the size of the letters. A bigger number makes bigger text. Normal text is about 16px.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"font-size: 30px;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<p style=\"font-size: 30px;\">Big text</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all paragraphs on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  p {\n    font-size: 30px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all paragraphs on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "p {\n  font-size: 30px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**p** means paragraphs. For big headings, write **h1** instead.",
+      "learn": "text-fonts",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 104
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p style=\"font-size: 30px;\">Big text</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-text-middle",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Put my text in the middle",
+      "short": "Text in the middle",
+      "keywords": "center centre middle align text-align",
+      "explain": "You can also write left or right instead of center.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"text-align: center;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<h1 style=\"text-align: center;\">Hello</h1>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all big headings on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  h1 {\n    text-align: center;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all big headings on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "h1 {\n  text-align: center;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**h1** means big headings. For paragraphs, write **p** instead.",
+      "learn": "text-fonts",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 88
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <h1 style=\"text-align: center;\">Hello</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-bold-italic",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Make my text bold or italic",
+      "short": "Bold or italic",
+      "keywords": "bold italic strong em thick lean",
+      "explain": "Bold text is thick. Italic text leans to the side.",
+      "ways": [
+        {
+          "title": "Bold words",
+          "steps": [
+            {
+              "say": "Put **<strong>** before the words, and **</strong>** after them:",
+              "lang": "html",
+              "text": "<p>Mars is <strong>very</strong> red.</p>"
+            }
+          ]
+        },
+        {
+          "title": "Italic words",
+          "steps": [
+            {
+              "say": "Put **<em>** before the words, and **</em>** after them:",
+              "lang": "html",
+              "text": "<p>Mars is <em>very</em> red.</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all paragraphs on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  p {\n    font-weight: bold;\n  }\n</style>"
+            }
+          ]
+        }
+      ],
+      "tip": "In a style, **font-style: italic;** makes text lean.",
+      "learn": "bold-italic",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 92
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p>Mars is <strong>very</strong> red.</p>\n    <p>Mars is <em>very</em> red.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-font",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Change the font",
+      "short": "Font",
+      "keywords": "font font-family georgia arial verdana letters shape",
+      "explain": "A font is the shape of the letters. These work on every Mac: Georgia, Arial, Verdana, Courier New and Comic Sans MS.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"font-family: Georgia;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<p style=\"font-family: Georgia;\">Hello</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: the whole page on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  body {\n    font-family: Georgia;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: the whole page on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "body {\n  font-family: Georgia;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "text-fonts",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 94
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p style=\"font-family: Georgia;\">Nice new letters</p>\n    <p style=\"font-family: Verdana;\">Nice new letters</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-new-line",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Start a new line in my text",
+      "short": "New line",
+      "keywords": "br new line break enter",
+      "explain": "Pressing Enter in your code does not start a new line on the page. The **<br>** tag does.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put **<br>** where the new line should start:",
+              "lang": "html",
+              "text": "<p>Roses are red,<br>violets are blue.</p>"
+            }
+          ]
+        }
+      ],
+      "learn": "bold-italic",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 76
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p>Roses are red,<br>violets are blue.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-heading",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Make a big heading",
+      "short": "Big heading",
+      "keywords": "heading h1 h2 h3 title",
+      "explain": "**h1** is the biggest heading. **h2** is smaller, and **h3** is smaller still.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<h1>My big heading</h1>\n<h2>A smaller heading</h2>"
+            }
+          ]
+        }
+      ],
+      "learn": "headings",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 136
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <h1>My big heading</h1>\n    <h2>A smaller heading</h2>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-page-name",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Text",
+      "title": "Give my page a name",
+      "short": "Page name",
+      "keywords": "title name tab head",
+      "explain": "The name does not show on the page itself. Safari shows it at the top of its window.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the head of your page. A page has only one:",
+              "lang": "html",
+              "text": "<title>My space page</title>"
+            }
+          ]
+        }
+      ],
+      "learn": "bones"
+    },
+    {
+      "id": "want-page-color",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Colors",
+      "title": "Give my whole page a color",
+      "short": "Page color",
+      "keywords": "background background-color page body",
+      "explain": "Light colors are easiest to read on. Try lightblue, lightyellow or lavender.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"background-color: lightblue;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<body style=\"background-color: lightblue;\">"
+            }
+          ]
+        },
+        {
+          "title": "Style block: the whole page on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  body {\n    background-color: lightblue;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: the whole page on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "body {\n  background-color: lightblue;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "backgrounds",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 58
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      body {\n        background-color: lightblue;\n      }\n    </style>\n  </head>\n  <body>\n    <p>My page is blue now.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-color-behind",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Colors",
+      "title": "Put color behind my text",
+      "short": "Color behind text",
+      "keywords": "highlight marker behind yellow",
+      "explain": "It looks like a highlighter pen.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"background-color: yellow;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<p style=\"background-color: yellow;\">Look!</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all paragraphs on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  p {\n    background-color: yellow;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all paragraphs on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "p {\n  background-color: yellow;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**p** means paragraphs. For big headings, write **h1** instead.",
+      "learn": "backgrounds",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 58
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p style=\"background-color: yellow;\">Look!</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-picture-behind",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Colors",
+      "title": "Put a picture behind my page",
+      "short": "Picture behind page",
+      "keywords": "background-image wallpaper behind stars",
+      "explain": "Save your project first, then put the picture in its folder. File, then Show Project Folder, opens it.",
+      "ways": [
+        {
+          "title": "Style block: the whole page on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  body {\n    background-image: url(\"my-picture.jpg\");\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: the whole page on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "body {\n  background-image: url(\"my-picture.jpg\");\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "Change **my-picture.jpg** to the name of your picture.",
+      "learn": "backgrounds",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 88
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      body {\n        background-image: url(\"stars.jpg\");\n        color: white;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>To the stars!</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "stars.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-add-picture",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Pictures",
+      "title": "Add a picture",
+      "short": "Add a picture",
+      "keywords": "img picture image photo src alt",
+      "explain": "Save your project first, then put the picture in its folder. File, then Show Project Folder, opens it.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<img src=\"my-picture.jpg\" alt=\"My dog\">"
+            },
+            {
+              "say": "Change **my-picture.jpg** to the name of your picture. After **alt=**, write what the picture shows."
+            }
+          ]
+        }
+      ],
+      "learn": "pictures",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 207
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <img src=\"my-picture.jpg\" alt=\"Hills and a sun\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "my-picture.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-picture-size",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Pictures",
+      "title": "Make my picture smaller",
+      "short": "Picture size",
+      "keywords": "smaller bigger width resize shrink",
+      "explain": "The number is how wide the picture is. The height follows by itself.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"width: 200px;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<img src=\"my-picture.jpg\" alt=\"My dog\"\n     style=\"width: 200px;\">"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all pictures on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  img {\n    width: 200px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all pictures on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "img {\n  width: 200px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "sizes",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 95
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <img src=\"my-picture.jpg\" alt=\"Hills and a sun\" style=\"width: 120px;\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "my-picture.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-round-corners",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Pictures",
+      "title": "Make round corners",
+      "short": "Round corners",
+      "keywords": "round corners border-radius circle",
+      "explain": "A bigger number makes rounder corners. **50%** makes a circle.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"border-radius: 20px;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<img src=\"my-picture.jpg\" alt=\"My dog\"\n     style=\"border-radius: 20px;\">"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all pictures on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  img {\n    border-radius: 20px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all pictures on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "img {\n  border-radius: 20px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "It works on boxes and buttons too, not only on pictures.",
+      "learn": "box",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 207
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <img src=\"my-picture.jpg\" alt=\"Hills and a sun\" style=\"border-radius: 20px;\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "my-picture.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-picture-middle",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Pictures",
+      "title": "Put my picture in the middle",
+      "short": "Picture in the middle",
+      "keywords": "center centre middle auto picture",
+      "explain": "A picture needs two lines of style for this.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"display: block; margin: 0 auto;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<img src=\"my-picture.jpg\" alt=\"My dog\"\n     style=\"display: block; margin: 0 auto;\">"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all pictures on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  img {\n    display: block;\n    margin: 0 auto;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all pictures on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "img {\n  display: block;\n  margin: 0 auto;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "box",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 203
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <img src=\"my-picture.jpg\" alt=\"Hills and a sun\" style=\"display: block; margin: 0 auto;\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "my-picture.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-picture-link",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Pictures",
+      "title": "Make a picture into a link",
+      "short": "Picture link",
+      "keywords": "clickable click picture link",
+      "explain": "Put the picture tag between the link's opening tag and its closing tag.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<a href=\"planets.html\">\n  <img src=\"my-picture.jpg\" alt=\"Planets\">\n</a>"
+            }
+          ]
+        }
+      ],
+      "learn": "links"
+    },
+    {
+      "id": "want-link-page",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Links",
+      "title": "Link to my other page",
+      "short": "Link to a page",
+      "keywords": "link a href page another other",
+      "explain": "The other page must be in the same project.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<a href=\"planets.html\">See my planets</a>"
+            },
+            {
+              "say": "Change **planets.html** to the name of your other page."
+            }
+          ]
+        }
+      ],
+      "learn": "links",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 42
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <a href=\"#\">See my planets</a>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-link-web",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Links",
+      "title": "Link to a website",
+      "short": "Link to a website",
+      "keywords": "website internet web address https",
+      "explain": "Write the whole address, with **https://** at the start. The website opens in your web browser.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<a href=\"https://www.nasa.gov\">NASA</a>"
+            }
+          ]
+        }
+      ],
+      "learn": "links",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 42
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <a href=\"#\">NASA</a>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-link-no-line",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Links",
+      "title": "Take the line off my links",
+      "short": "No line under links",
+      "keywords": "underline text-decoration line",
+      "explain": "Links have a line under them at first. This takes it away.",
+      "ways": [
+        {
+          "title": "Style block: all links on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  a {\n    text-decoration: none;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all links on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "a {\n  text-decoration: none;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "links",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 42
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      a {\n        text-decoration: none;\n      }\n    </style>\n  </head>\n  <body>\n    <a href=\"#\">See my planets</a>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-link-button",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Links",
+      "title": "Make a link look like a button",
+      "short": "Link as a button",
+      "keywords": "button pretty link",
+      "explain": "A link can look any way you like. Change the colors and numbers to make it yours.",
+      "ways": [
+        {
+          "title": "Style block: all links on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  a {\n    display: inline-block;\n    padding: 10px 20px;\n    background-color: teal;\n    color: white;\n    border-radius: 8px;\n    text-decoration: none;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all links on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "a {\n  display: inline-block;\n  padding: 10px 20px;\n  background-color: teal;\n  color: white;\n  border-radius: 8px;\n  text-decoration: none;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "box",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 62
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      a {\n        display: inline-block;\n        padding: 10px 20px;\n        background-color: teal;\n        color: white;\n        border-radius: 8px;\n        text-decoration: none;\n      }\n    </style>\n  </head>\n  <body>\n    <a href=\"#\">See my planets</a>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-hover",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Links",
+      "title": "Change the color when the mouse is on it",
+      "short": "Mouse over",
+      "keywords": "hover mouse over point",
+      "explain": "**:hover** means while the mouse is on it. It works only in a style block or a style file, not inside a tag.",
+      "ways": [
+        {
+          "title": "Style block: all links on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  a:hover {\n    color: red;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all links on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "a:hover {\n  color: red;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "hover",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 42
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      a:hover {\n        color: red;\n      }\n    </style>\n  </head>\n  <body>\n    <a href=\"#\">Point at me</a>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-list",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Lists and tables",
+      "title": "Make a list",
+      "short": "List",
+      "keywords": "list ul ol li dots numbers bullet",
+      "explain": "**li** means one thing in the list. Add as many as you need.",
+      "ways": [
+        {
+          "title": "A list with dots",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<ul>\n  <li>Saturn</li>\n  <li>Mars</li>\n</ul>"
+            }
+          ]
+        },
+        {
+          "title": "A list with numbers",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<ol>\n  <li>Saturn</li>\n  <li>Mars</li>\n</ol>"
+            }
+          ]
+        }
+      ],
+      "learn": "lists",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 128
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <ul>\n      <li>Saturn</li>\n      <li>Mars</li>\n    </ul>\n    <ol>\n      <li>Saturn</li>\n      <li>Mars</li>\n    </ol>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-table",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Lists and tables",
+      "title": "Make a table",
+      "short": "Table",
+      "keywords": "table tr td th rows columns",
+      "explain": "**tr** is one row. **th** is a heading box, and **td** is a plain box.",
+      "ways": [
+        {
+          "title": "The table",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<table>\n  <tr>\n    <th>Planet</th>\n    <th>Moons</th>\n  </tr>\n  <tr>\n    <td>Earth</td>\n    <td>1</td>\n  </tr>\n</table>"
+            }
+          ]
+        },
+        {
+          "title": "Lines around the boxes",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  table, th, td {\n    border: 1px solid gray;\n    border-collapse: collapse;\n  }\n</style>"
+            }
+          ]
+        }
+      ],
+      "learn": "tables",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 67
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      table, th, td {\n        border: 1px solid gray;\n        border-collapse: collapse;\n      }\n    </style>\n  </head>\n  <body>\n    <table>\n      <tr>\n        <th>Planet</th>\n        <th>Moons</th>\n      </tr>\n      <tr>\n        <td>Earth</td>\n        <td>1</td>\n      </tr>\n    </table>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-border",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Boxes and layout",
+      "title": "Put a border around something",
+      "short": "Border",
+      "keywords": "border frame outline line box",
+      "explain": "**3px** is how thick it is. **solid** is a plain line, and **teal** is the color. Try **dashed** or **dotted** too.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"border: 3px solid teal;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<p style=\"border: 3px solid teal;\">A box</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all paragraphs on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  p {\n    border: 3px solid teal;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all paragraphs on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "p {\n  border: 3px solid teal;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**p** means paragraphs. For big headings, write **h1** instead.",
+      "learn": "box",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 64
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p style=\"border: 3px solid teal;\">A box</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-space",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Boxes and layout",
+      "title": "Put space around something",
+      "short": "Space",
+      "keywords": "space margin padding gap room",
+      "explain": "**padding** is space inside the border. **margin** is space outside the border.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"padding: 20px; margin: 20px;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<p style=\"padding: 20px; margin: 20px;\">\n  Lots of room\n</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all paragraphs on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  p {\n    padding: 20px;\n    margin: 20px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all paragraphs on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "p {\n  padding: 20px;\n  margin: 20px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "box",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 110
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p style=\"padding: 20px; margin: 20px; border: 2px solid teal;\">Lots of room</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-side-by-side",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Boxes and layout",
+      "title": "Put things side by side",
+      "short": "Side by side",
+      "keywords": "flex row beside next columns",
+      "explain": "Put the things in one box with a class. Then make that box a row.",
+      "ways": [
+        {
+          "title": "First, the things",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<div class=\"row\">\n  <p>Left</p>\n  <p>Right</p>\n</div>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: every row on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  .row {\n    display: flex;\n    gap: 20px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: every row on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": ".row {\n  display: flex;\n  gap: 20px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "flexbox",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 74
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      .row {\n        display: flex;\n        gap: 20px;\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"row\">\n      <p>Left</p>\n      <p>Right</p>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-grid",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Boxes and layout",
+      "title": "Make neat rows of boxes",
+      "short": "Rows of boxes",
+      "keywords": "grid columns boxes gallery",
+      "explain": "The three **1fr** words make three boxes in a row. Add more boxes, and they start a new row.",
+      "ways": [
+        {
+          "title": "First, the boxes",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<div class=\"boxes\">\n  <p>One</p>\n  <p>Two</p>\n  <p>Three</p>\n  <p>Four</p>\n</div>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: the boxes on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  .boxes {\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr;\n    gap: 10px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: the boxes on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": ".boxes {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  gap: 10px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "grid",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 110
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      .boxes {\n        display: grid;\n        grid-template-columns: 1fr 1fr 1fr;\n        gap: 10px;\n      }\n      p {\n        margin: 0;\n        padding: 10px;\n        background-color: lightblue;\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"boxes\">\n      <p>One</p>\n      <p>Two</p>\n      <p>Three</p>\n      <p>Four</p>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-some-things",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Boxes and layout",
+      "title": "Style only some things",
+      "short": "Only some things",
+      "keywords": "class dot some only selector",
+      "explain": "Give those tags a class. A class is a name you pick. In the style, it starts with a dot.",
+      "ways": [
+        {
+          "title": "First, name the tags",
+          "steps": [
+            {
+              "say": "Put **class=\"big\"** inside each tag you want to change:",
+              "lang": "html",
+              "text": "<p class=\"big\">I change</p>\n<p>I stay the same</p>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: everything named big on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  .big {\n    font-size: 30px;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: everything named big on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": ".big {\n  font-size: 30px;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "learn": "picking",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 138
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      .big {\n        font-size: 30px;\n      }\n    </style>\n  </head>\n  <body>\n    <p class=\"big\">I change</p>\n    <p>I stay the same</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-use-style-file",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Use a style file",
+      "short": "Style file",
+      "keywords": "style.css stylesheet separate",
+      "explain": "A style file keeps your style in one place, and many pages can use it.",
+      "ways": [
+        {
+          "title": "The easy way",
+          "steps": [
+            {
+              "say": "Press **+** above your code and choose CSS file. Keep the tick on, and HTML Lab links it to your page for you."
+            }
+          ]
+        },
+        {
+          "title": "By hand",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "The name after **href=** must be the same as your file's name.",
+      "learn": "style-file"
+    },
+    {
+      "id": "want-line-across",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Add a line across my page",
+      "short": "Line across",
+      "keywords": "hr divider across",
+      "explain": "It helps to split a page into parts.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<hr>"
+            }
+          ]
+        }
+      ],
+      "learn": "sections",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 110
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p>Above the line</p>\n    <hr>\n    <p>Below the line</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-button",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Add a button",
+      "short": "Button",
+      "keywords": "button press",
+      "explain": "A button does nothing yet when you press it. Making it do things takes another language, called JavaScript.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<button>Press me</button>"
+            }
+          ]
+        }
+      ],
+      "learn": "forms",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 43
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <button>Press me</button>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-note",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Write a note that does not show",
+      "short": "Hidden note",
+      "keywords": "comment note hidden secret",
+      "explain": "Notes help you remember things. They stay in your code and never show on the page.",
+      "ways": [
+        {
+          "title": "In an HTML page",
+          "steps": [
+            {
+              "say": "Put this anywhere in your page:",
+              "lang": "html",
+              "text": "<!-- This is my note -->"
+            }
+          ]
+        },
+        {
+          "title": "In a CSS file",
+          "steps": [
+            {
+              "say": "Put this anywhere in your CSS file:",
+              "lang": "css",
+              "text": "/* This is my note */"
+            }
+          ]
+        }
+      ],
+      "tip": "Comment Line in the Edit menu turns a whole line into a note."
+    },
+    {
+      "id": "want-special-signs",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Other things",
+      "title": "Write special signs",
+      "short": "Special signs",
+      "keywords": "signs symbol heart copyright lt gt amp",
+      "explain": "Some signs have a code, because **<** would start a tag. A code starts with **&** and ends with **;**.",
+      "ways": [
+        {
+          "title": "",
+          "steps": [
+            {
+              "say": "Put this in the body of your page:",
+              "lang": "html",
+              "text": "<p>3 &lt; 4 and I &hearts; space</p>"
+            }
+          ]
+        }
+      ],
+      "learn": "characters",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 58
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n  </head>\n  <body>\n    <p>3 &lt; 4 and I &hearts; space</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}

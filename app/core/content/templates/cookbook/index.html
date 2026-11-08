@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Quillaby Kitchen - Recipe of the week</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="23"></circle>
+        <path d="M24 9 C30 9 31 15 31 18 C31 22 28 25 24 25 C20 25 17 22 17 18 C17 15 18 9 24 9 Z M24 25 V40"></path>
+      </svg>
+      <span>The Quillaby Kitchen <small>Our family cookbook</small></span>
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">This week</a></li>
+        <li><a href="recipes.html">All recipes</a></li>
+        <li><a href="kitchen.html">Kitchen rules</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="tablecloth">
+      <article class="recipe-card">
+        <div class="card-top">
+          <div class="card-title">
+            <h1>Raspberry chia jars</h1>
+            <p class="lead">A pudding that makes itself while you sleep. You shake, you wait, you eat.</p>
+            <ul class="chips">
+              <li><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7 V12 L15 14"></path></svg>10 minutes to make</li>
+              <li><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3 A9 9 0 1 0 21 15 A7 7 0 0 1 15 3 Z"></path></svg>Waits all night</li>
+              <li><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3 H16 M7 6 H17 V19 C17 20 16 21 15 21 H9 C8 21 7 20 7 19 Z"></path></svg>Makes 2 jars</li>
+              <li class="safe"><svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12 L10 17 L19 7"></path></svg>No knife, no oven</li>
+            </ul>
+            <p class="byline">From Granny Edda's notebook, page 12</p>
+          </div>
+          <figure class="dish">
+            <img src="cookbook-chia-jar.jpg" alt="A glass jar of white chia pudding with raspberries on top and a spoon in it" width="560" height="840">
+          </figure>
+        </div>
+
+        <div class="card-body">
+          <section class="ingredients">
+            <h2>You need</h2>
+            <p class="hint">Tick each one when it is on the table.</p>
+            <ul class="tick-list">
+              <li><label><input type="checkbox"><span><b>4 tablespoons</b> chia seeds</span></label></li>
+              <li><label><input type="checkbox"><span><b>250 ml</b> milk (oat milk works too)</span></label></li>
+              <li><label><input type="checkbox"><span><b>2 teaspoons</b> honey</span></label></li>
+              <li><label><input type="checkbox"><span><b>2 drops</b> vanilla, if you like</span></label></li>
+              <li><label><input type="checkbox"><span><b>2 handfuls</b> raspberries</span></label></li>
+            </ul>
+            <h3>Tools</h3>
+            <ul class="tools">
+              <li>2 jars with lids</li>
+              <li>A tablespoon and a teaspoon</li>
+              <li>A measuring jug</li>
+            </ul>
+          </section>
+
+          <section class="steps">
+            <h2>Steps</h2>
+            <ol class="step-list">
+              <li>Wash your hands with soap for 20 seconds.</li>
+              <li>Put 2 tablespoons of chia seeds into each jar.</li>
+              <li>Pour half of the milk into each jar. Add 1 teaspoon of honey and a drop of vanilla to each one.</li>
+              <li>Close the lids tight. Shake each jar for 10 seconds.</li>
+              <li>Wait 10 minutes, then shake again. This stops lumps.</li>
+              <li>Put the jars in the fridge for at least 4 hours, or all night.</li>
+              <li>Put the raspberries on top and eat it with a spoon!</li>
+            </ol>
+            <aside class="tip">
+              <h3>Granny Edda's tip</h3>
+              <p>Too thick? Stir in a splash of milk. Too runny? Put it back in the fridge for one more hour.</p>
+            </aside>
+          </section>
+        </div>
+      </article>
+    </div>
+
+    <section class="science">
+      <div>
+        <h2>Why does it get thick?</h2>
+        <p>Chia seeds drink. A dry seed can soak up about 12 times its own weight in liquid, and it grows a soft jelly coat. All those jelly coats together turn the milk into pudding.</p>
+        <p>Is anyone allergic to seeds or milk? Ask an adult before you start.</p>
+        <p class="buttons"><a class="button" href="recipes.html">Find another recipe</a></p>
+      </div>
+      <figure class="seed-diagram">
+        <svg viewBox="0 0 320 140" aria-hidden="true">
+          <ellipse class="seed" cx="60" cy="62" rx="9" ry="6"></ellipse>
+          <path class="arrow" d="M110 62 H200 M188 52 L200 62 L188 72"></path>
+          <circle class="jelly" cx="260" cy="62" r="34"></circle>
+          <ellipse class="seed" cx="260" cy="62" rx="9" ry="6"></ellipse>
+          <text x="60" y="122">Dry seed</text>
+          <text x="260" y="122">In milk</text>
+        </svg>
+        <figcaption>The jelly coat grows around each seed.</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>The Quillaby Family Cookbook</b>, with recipes from Granny Edda, Dad and the twins. A pretend cookbook, made with HTML and CSS.</p>
+    <p>Hungry for more? <a href="https://simple.wikipedia.org/wiki/Cooking">Read about cooking on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

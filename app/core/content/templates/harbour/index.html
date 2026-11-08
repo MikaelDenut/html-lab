@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Port of Brindlewick</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="wrap top-inner">
+        <a class="logo" href="index.html">
+          <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+            <rect class="logo-box rust" x="2" y="29" width="19" height="13" rx="2"/>
+            <rect class="logo-box cobalt" x="23" y="29" width="19" height="13" rx="2"/>
+            <rect class="logo-box lifted" x="8" y="14" width="28" height="13" rx="2"/>
+          </svg>
+          <span>Brindlewick<small>Port and container terminal</small></span>
+        </a>
+        <nav aria-label="Main menu">
+          <ul class="menu">
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="ships.html">Ships today</a></li>
+            <li><a href="work.html">How a box moves</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap hero-inner">
+          <div>
+            <h1>Every box finds its way</h1>
+            <p class="hero-lead">At the Port of Brindlewick, big ships meet trucks and trains. Our cranes lift boxes day and night, all year round.</p>
+            <a class="button" href="ships.html">Track a ship</a>
+            <a class="button ghost" href="work.html">See how a box moves</a>
+          </div>
+          <figure class="ship-scene" role="img" aria-label="A drawing of a container ship with three layers of coloured boxes, floating on the water">
+            <div class="ship">
+              <div class="stack">
+                <div class="tier top"><span class="box white"></span><span class="box long kelp"></span><span class="box rust"></span></div>
+                <div class="tier"><span class="box long cobalt"></span><span class="box sodium"></span><span class="box rust"></span><span class="box long white"></span></div>
+                <div class="tier"><span class="box rust"></span><span class="box kelp"></span><span class="box long sodium"></span><span class="box cobalt"></span><span class="box rust"></span></div>
+              </div>
+              <div class="bridge"></div>
+              <div class="hull"></div>
+            </div>
+            <div class="water"></div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="wrap section">
+        <div class="split">
+          <div>
+            <h2>The box that changed the world</h2>
+            <p>Toys, bikes and shoes in your home came across the sea in a steel box. Every box has the same strong corners, so cranes, ships, trucks and trains all over the world can carry it.</p>
+            <p>Ports count boxes in TEU. That means "twenty-foot equivalent unit": one short box. A long 40-foot box counts as 2 TEU.</p>
+            <p>Every box has its own code, painted on its door:</p>
+            <p class="code-plate">BRWU 204613 3</p>
+            <p>In this pretend code, three letters say who owns it. U means it is a box for goods. Then come six numbers, and the last number is a check number. It catches typing mistakes.</p>
+          </div>
+          <figure class="box-drawing">
+            <svg viewBox="0 0 520 330" role="img" aria-label="A drawing of a 20-foot box, 6.1 metres long and 2.59 metres high, and two short boxes next to one long box">
+              <rect class="box-side" x="20" y="20" width="400" height="170" rx="4"/>
+              <path class="box-ribs" d="M60 26V184M100 26V184M140 26V184M180 26V184M220 26V184M260 26V184M300 26V184M340 26V184M380 26V184"/>
+              <path class="measure" d="M20 212H420M20 204V220M420 204V220M442 20V190M434 20H450M434 190H450"/>
+              <text class="measure-text" x="180" y="240">6.1 m long</text>
+              <text class="measure-text" x="455" y="110" text-anchor="middle" transform="rotate(90 460 110)">2.59 m high</text>
+              <rect class="box-small" x="20" y="270" width="96" height="40" rx="3"/>
+              <rect class="box-small" x="122" y="270" width="96" height="40" rx="3"/>
+              <rect class="box-big" x="262" y="270" width="198" height="40" rx="3"/>
+              <text class="measure-text" x="68" y="297" text-anchor="middle">1 TEU</text>
+              <text class="measure-text" x="170" y="297" text-anchor="middle">1 TEU</text>
+              <text class="measure-text" x="240" y="297" text-anchor="middle">=</text>
+              <text class="measure-text" x="361" y="297" text-anchor="middle">2 TEU</text>
+            </svg>
+            <figcaption>A 20-foot box is 6.1 m long, 2.44 m wide and 2.59 m high. Two of them are as long as one 40-foot box.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="wrap section">
+        <div class="split">
+          <figure class="port-photo">
+            <img src="harbour-cranes.jpg" width="1000" height="750" alt="Tall yellow container cranes standing in a row along a quay">
+            <figcaption>Our ship-to-shore cranes wait for the next ship.</figcaption>
+          </figure>
+          <div>
+            <h2>A port that never sleeps</h2>
+            <p>Each ship ties up at a berth, its parking place at the quay. Ships cost a lot of money for every hour they wait, so we work in three shifts. When one team goes home, the next team climbs into the cranes.</p>
+            <dl class="port-card">
+              <dt>Berths for big ships</dt><dd>9</dd>
+              <dt>Ship-to-shore cranes</dt><dd>14</dd>
+              <dt>Open</dt><dd>24 h, every day</dd>
+              <dt>Boxes last year</dt><dd>1.2 million TEU</dd>
+            </dl>
+            <a class="button" href="work.html">See how a box moves</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="call-band">
+        <div class="wrap">
+          <h2>Waiting for a ship?</h2>
+          <a class="button" href="ships.html">Track a ship</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bottom">
+      <div class="wrap">
+        <p>Port of Brindlewick, Quay Road 1. A pretend port, made with HTML and CSS.</p>
+        <p>Want to know more? <a href="https://en.wikipedia.org/wiki/Intermodal_container">Read about shipping containers on Wikipedia</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

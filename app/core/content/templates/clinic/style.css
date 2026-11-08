@@ -1,0 +1,584 @@
+/* Puddlefern Animal Clinic: one style file for all three pages. */
+
+/* A village vet on a rainy lane: a plum door and yellow rain boots. Change a line here and the whole clinic changes! */
+:root {
+  --plum: #3d2242;
+  --plum-dark: #2a1530;
+  --plum-soft: #6e5272;
+  --boot: #f4c430;
+  --boot-light: #fff4cc;
+  --mist: #f6f1f7;
+  --line: #e2d5e4;
+  --field-line: #8c7590;
+  --fern: #e5eedf;
+  --wood: #b98a5e;
+  --red: #b3261e;
+  --red-light: #fdeceb;
+  --title-font: Optima, "Avenir Next", sans-serif;
+  --text-font: "Avenir Next", "Helvetica Neue", sans-serif;
+  --text-s: 16px;
+  --text-m: 20px;
+  --text-l: 25px;
+  --text-xl: 31px;
+  --text-2xl: 39px;
+  --text-3xl: 49px;
+  --text-4xl: 61px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 88px;
+  --round: 20px;
+  --shadow: 0 12px 28px rgba(61, 34, 66, 0.14);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--plum);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: 700;
+  line-height: 1.15;
+}
+h1 { font-size: var(--text-4xl); max-width: 13ch; }
+h2 { font-size: var(--text-2xl); max-width: 26ch; }
+h3 { font-size: var(--text-l); }
+
+/* Lines stay short, so your eyes find the next line easily. */
+p, li { max-width: 70ch; }
+a { color: var(--plum); }
+
+/* A plum ring shows where the keyboard is. */
+a:focus-visible, button:focus-visible, input:focus, select:focus, textarea:focus {
+  outline: 3px solid var(--plum);
+  outline-offset: 3px;
+}
+
+/* The white bar at the top of every page. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-l);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  font-weight: 700;
+  line-height: 1.05;
+  text-decoration: none;
+}
+.logo small {
+  display: block;
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--plum-soft);
+}
+.logo-mark { width: 48px; height: 48px; }
+.logo-mark circle { fill: var(--plum); }
+.logo-mark path { fill: var(--boot); }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--mist); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a thick plum line under it. */
+.menu a[aria-current="page"] { box-shadow: inset 0 -4px 0 var(--plum); border-radius: 0; }
+.menu .menu-button { background: var(--boot); }
+.menu .menu-button:hover { background: #ffd457; }
+.menu .menu-button[aria-current="page"] { border-radius: 999px; box-shadow: inset 0 0 0 2px var(--plum); }
+
+/* The calm top of the home page: words on the left, a photo on the right. */
+.hero {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  gap: var(--space-l);
+  padding: var(--space-l);
+  background: var(--mist);
+}
+.lead { margin: var(--space-s) 0; font-size: var(--text-l); line-height: 1.4; color: var(--plum-soft); }
+
+.buttons { display: flex; flex-wrap: wrap; gap: var(--space-s); margin: var(--space-m) 0; }
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 11px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--plum);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--text-m);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+.button.light { background: var(--boot); color: var(--plum); }
+.button:hover { transform: translateY(-3px); background: var(--plum-dark); }
+.button.light:hover { background: #ffd457; }
+
+/* A quiet button: only a plum line around it. */
+.button.ghost { background: transparent; color: var(--plum); box-shadow: inset 0 0 0 2px var(--plum); }
+.button.ghost:hover { background: #fff; }
+.button:active { transform: translateY(1px); }
+.button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Little ticks, drawn with two borders and turned. */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+.trust li::before, .checklist li::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  margin-right: var(--space-s);
+  border: solid var(--plum);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) translateY(-3px);
+}
+
+/* The photo gets a round top, like the clinic's plum door. A yellow sun hides behind it. */
+.hero-photo { position: relative; justify-self: center; width: 100%; max-width: 360px; margin: 0; }
+.hero-photo::before {
+  content: "";
+  position: absolute;
+  top: -6%;
+  right: -8%;
+  width: 46%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: var(--boot);
+}
+.hero-photo img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50% 50% var(--round) var(--round);
+  box-shadow: var(--shadow);
+}
+
+/* A little note on the photo. When the page opens, it settles down. */
+.note {
+  position: absolute;
+  left: -24px;
+  bottom: var(--space-m);
+  max-width: 270px;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 16px 16px 16px 4px;
+  background: #fff;
+  font-size: var(--text-s);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transform: rotate(-3deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .note { animation: settle 1.4s var(--ease) both; }
+}
+@keyframes settle {
+  from { transform: translateY(-14px) rotate(-6deg); }
+  to { transform: rotate(-3deg) scale(1); }
+}
+
+.section { max-width: 1140px; margin: 0 auto; padding: var(--space-xl) var(--space-m) 0; }
+.services { padding-top: var(--space-l); }
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+.intro { margin: 0 auto var(--space-m); text-align: center; color: var(--plum-soft); }
+
+/* A vet's services are separate things, each with its own price, so each one gets a card.
+   Check-ups come first and get a big card: most visits start with one. */
+.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-m); }
+.service-card { padding: var(--space-m); border-radius: var(--round); background: var(--mist); }
+.service-card p { margin: 0 0 var(--space-s); }
+.service-card.big { grid-column: span 2; grid-row: span 2; background: var(--boot-light); }
+.service-card.big h3 { font-size: var(--text-xl); }
+.service-card.big .checklist { margin-bottom: var(--space-m); }
+.service-card.big .icon { width: 96px; height: 96px; }
+.service-card.big .button { margin-top: var(--space-m); }
+
+/* The icons are drawn with lines. CSS picks the colour and thickness. */
+.icon, .pet-icon {
+  fill: none;
+  stroke: var(--plum);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon {
+  width: 72px;
+  height: 72px;
+  margin-bottom: var(--space-s);
+  padding: var(--space-s);
+  border-radius: 50%;
+  background: #fff;
+  transition: background 0.3s var(--ease);
+}
+
+/* The icon turns yellow when your mouse is on the card. */
+.service-card:hover .icon { background: var(--boot); }
+.price {
+  display: inline-block;
+  padding: 2px var(--space-s);
+  border-radius: 999px;
+  background: #fff;
+  font-size: var(--text-s);
+  font-weight: 700;
+}
+
+/* "What to bring": a clipboard and a photo, side by side. */
+.bring { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; }
+.clipboard {
+  position: relative;
+  padding: var(--space-l) var(--space-l) var(--space-m);
+  border: 12px solid var(--wood);
+  border-radius: var(--round);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+/* The metal clip at the top of the clipboard. */
+.clipboard::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  width: 120px;
+  height: 36px;
+  margin-left: -60px;
+  border-radius: 10px;
+  background: linear-gradient(#a8a2ab, #75707a);
+}
+.checklist { margin: 0; padding: 0; list-style: none; }
+.checklist li { padding: var(--space-s) 0; border-bottom: 2px dotted var(--line); }
+.bring-photo { margin: 0; }
+.bring-photo img { border-radius: var(--round); }
+.bring-photo figcaption { margin: var(--space-s) auto 0; font-size: var(--text-s); text-align: center; color: var(--plum-soft); }
+
+/* The title box on the other pages. */
+.page-title { margin: 0 0 var(--space-l); padding: var(--space-l); border-radius: var(--round); background: var(--mist); }
+.page-title h1 { font-size: var(--text-3xl); max-width: none; }
+.page-title p { margin: 0; font-size: var(--text-l); color: var(--plum-soft); }
+
+/* Team cards with faces drawn in SVG, not photos. */
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-m); }
+.team-card { padding: var(--space-m); border-radius: var(--round); background: var(--mist); text-align: center; }
+.team-card p { margin: 0 auto var(--space-xs); font-size: var(--text-s); }
+.role { font-weight: 700; color: var(--plum-soft); }
+.avatar {
+  width: 120px;
+  height: 120px;
+  margin-bottom: var(--space-s);
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease);
+}
+
+/* The face tilts hello when your mouse is on the card. */
+.team-card:hover .avatar { transform: rotate(-8deg) scale(1.06); }
+
+/* Biscuit the cat gets a wide card of her own, across the whole row. */
+.cat-card {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  text-align: left;
+  background: var(--boot-light);
+}
+.cat-card .avatar { flex: none; margin: 0; }
+.cat-card p { margin-left: 0; }
+
+/* Each drawing part takes its colour from a class. */
+.avatar-bg { fill: #fff; }
+.team-card:nth-child(2) .avatar-bg { fill: var(--boot-light); }
+.team-card:nth-child(3) .avatar-bg { fill: var(--fern); }
+.team-card:nth-child(4) .avatar-bg { fill: #fde4dc; }
+.coat { fill: #fff; stroke: var(--line); stroke-width: 2; }
+.coat.nurse { fill: #6f8fae; stroke: none; }
+.coat.desk { fill: var(--boot); stroke: none; }
+.skin.light { fill: #f3cfb3; }
+.skin.medium { fill: #d9a07a; }
+.skin.dark { fill: #8a5a3c; }
+.hair.brown { fill: #6b4226; }
+.hair.black { fill: #222; }
+.hair.red { fill: #b5532a; }
+.hair.blond { fill: #e2b04a; }
+.eye { fill: var(--plum-dark); }
+.smile { fill: none; stroke: var(--plum-dark); stroke-width: 2.5; stroke-linecap: round; }
+.glasses { fill: none; stroke: #222; stroke-width: 3; }
+.stethoscope { fill: none; stroke: var(--plum); stroke-width: 4; stroke-linecap: round; }
+.cat { fill: #e8a25c; }
+.cat-face { fill: none; stroke: #5a3a1e; stroke-width: 3; stroke-linecap: round; }
+
+/* Opening hours: a table with soft stripes. */
+.hours-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-l);
+  margin-top: var(--space-xl);
+  align-items: end;
+}
+.hours { width: 100%; border-collapse: collapse; }
+.hours th, .hours td { padding: var(--space-s) var(--space-m); text-align: left; }
+.hours thead th { background: var(--plum); color: #fff; }
+.hours thead th:first-child { border-radius: 12px 0 0 12px; }
+.hours thead th:last-child { border-radius: 0 12px 12px 0; }
+
+/* The day names are headings for their row, but they look like normal text. */
+.hours tbody th { font-weight: 600; color: inherit; background: none; }
+.hours tbody tr:nth-child(even) { background: var(--mist); }
+.closed th, .closed td { color: var(--red); font-weight: 700; }
+.hours-note { margin: var(--space-s) 0 0; font-size: var(--text-s); color: var(--plum-soft); }
+.find-us { padding: var(--space-m); border-radius: var(--round); background: var(--boot-light); }
+.find-us h2 { font-size: var(--text-xl); }
+.find-us p { margin: 0 0 var(--space-s); }
+
+/* The booking page: the form on the left, help on the right. */
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-l);
+  align-items: start;
+}
+.booking-form { grid-column: 1; grid-row: 1; }
+
+/* The help box sticks to the top while you scroll the form. */
+.side { grid-column: 2; grid-row: 1; position: sticky; top: var(--space-m); }
+.side h2 { font-size: var(--text-l); }
+.emergency {
+  margin-bottom: var(--space-m);
+  padding: var(--space-m);
+  border: 2px solid var(--red);
+  border-radius: var(--round);
+  background: var(--red-light);
+}
+.emergency h2 { color: var(--red); }
+.emergency p { margin: 0; }
+.alert-icon {
+  width: 44px;
+  height: 44px;
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.next-steps { padding: var(--space-m); border-radius: var(--round); background: var(--mist); }
+.next-steps ol { margin: 0; padding-left: var(--space-m); }
+.next-steps li { margin-bottom: var(--space-xs); }
+
+/* Each part of the form is a box with a number. */
+fieldset {
+  margin: 0 0 var(--space-m);
+  padding: var(--space-m) var(--space-l) var(--space-l);
+  border: 0;
+  border-radius: var(--round);
+  background: var(--mist);
+}
+
+/* The title floats, so it sits inside the box. */
+legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--space-xs);
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  font-weight: 700;
+}
+.step {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: var(--space-xs);
+  border-radius: 50%;
+  background: var(--plum);
+  color: var(--boot);
+  line-height: 40px;
+  text-align: center;
+}
+label { display: block; margin: var(--space-m) 0 var(--space-xs); font-weight: 600; clear: both; }
+input, select, textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 2px solid var(--field-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--plum);
+  font-family: inherit;
+  font-size: var(--text-m);
+}
+input:focus, select:focus, textarea:focus { border-color: var(--plum); }
+
+/* The grey example text inside a box, and the empty date. We make them darker, so they are easy to read. */
+::placeholder { color: var(--plum-soft); opacity: 1; }
+input::-webkit-datetime-edit-day-field,
+input::-webkit-datetime-edit-month-field,
+input::-webkit-datetime-edit-year-field {
+  color: var(--plum-soft);
+  -webkit-text-fill-color: var(--plum-soft);
+  opacity: 1;
+}
+
+/* The select box loses its Mac look, so it is as tall as the others. The arrow is two little gradients. */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--plum) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--plum) 50%);
+  background-position: right 22px center, right 16px center;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* The box turns red when the e-mail is wrong, but only after you typed something. */
+input:not(:placeholder-shown):invalid { border-color: var(--red); background: var(--red-light); }
+.hint, .form-note { margin: var(--space-xs) 0 0; font-size: var(--text-s); color: var(--plum-soft); }
+
+/* A group of choices inside a box: no extra box around it. */
+.choices { margin: var(--space-m) 0 0; padding: 0; clear: both; }
+.choices legend { font-family: var(--text-font); font-size: var(--text-m); font-weight: 600; }
+.choice-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: var(--space-s);
+  clear: both;
+}
+
+/* Radio buttons dressed up as cards. The real round button is hidden, but it still works with a click or the keyboard. */
+.choice { position: relative; margin: 0; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; min-height: 0; }
+.choice span {
+  display: block;
+  padding: var(--space-s);
+  border: 2px solid var(--field-line);
+  border-radius: 14px;
+  background: #fff;
+  text-align: center;
+  cursor: pointer;
+}
+.choice small { display: block; font-size: var(--text-s); font-weight: 400; color: var(--plum-soft); }
+.pet-icon { display: block; width: 40px; height: 40px; margin: 0 auto var(--space-xs); }
+.choice span:hover { border-color: var(--plum); }
+
+/* :checked finds the chosen card and paints it yellow, with a drawn tick. */
+.choice input:checked + span { border-color: var(--plum); background: var(--boot-light); }
+.choice input:checked + span::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 6px;
+  height: 12px;
+  border: solid var(--plum);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.choice input:focus-visible + span { outline: 3px solid var(--plum); outline-offset: 3px; }
+
+/* A choice you cannot pick right now looks faded. */
+.choice input:disabled + span { opacity: 0.5; cursor: not-allowed; border-style: dashed; }
+
+/* Our own tick box. When it is checked, it fills up with plum. */
+.check { display: flex; align-items: center; gap: var(--space-s); font-weight: 400; }
+.check input {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.check input:checked { border-color: var(--plum); background: var(--plum); box-shadow: inset 0 0 0 4px #fff; }
+
+.bottom {
+  margin-top: var(--space-xl);
+  padding: var(--space-l) var(--space-m);
+  background: var(--plum);
+  color: #e9dcea;
+  text-align: center;
+  font-size: var(--text-s);
+}
+.bottom p { margin: var(--space-xs) auto; }
+.bottom a { color: var(--boot); font-weight: 700; }
+
+/* On the dark footer the keyboard ring turns yellow, so you can still see it. */
+.bottom a:focus-visible { outline-color: var(--boot); }
+
+/* On a tablet, two columns become one. */
+@media (max-width: 900px) {
+  .hero, .bring, .hours-layout, .booking-layout { grid-template-columns: 1fr; }
+  .service-grid, .team-grid { grid-template-columns: 1fr 1fr; }
+  .service-card.big { grid-column: auto; grid-row: auto; }
+  .hero { padding: var(--space-l) var(--space-m); }
+  .side { grid-column: 1; position: static; }
+  .booking-form { grid-row: 2; }
+}
+
+/* On a phone, the menu goes under the logo and big words get smaller. */
+@media (max-width: 600px) {
+  h1, .page-title h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+  .top-bar { justify-content: center; padding: var(--space-s); }
+  .menu ul { justify-content: center; }
+  .section { padding: var(--space-l) var(--space-s) 0; }
+  .page-title, .clipboard { padding: var(--space-m); }
+  fieldset { padding: var(--space-s) var(--space-m) var(--space-m); }
+  .note { left: 0; }
+  .button { width: 100%; text-align: center; }
+  .menu a { padding: 9px 12px; }
+  .service-grid, .team-grid { grid-template-columns: 1fr; }
+  .hours { font-size: var(--text-s); }
+  .hours th, .hours td { padding: var(--space-xs) var(--space-s); }
+  .cat-card { flex-direction: column; text-align: center; }
+}

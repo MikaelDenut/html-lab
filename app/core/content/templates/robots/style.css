@@ -1,0 +1,429 @@
+/* Nutbolt Lane Robot Club: one style sheet for all three pages. */
+
+/* Colours, letters and spaces live here. Change one line and the whole site changes. */
+:root {
+  --page: #eaf1f8;
+  --panel: #ffffff;
+  --ink: #1b2a4a;
+  --soft-ink: #4b5d7d;
+  --sky: #cfe2f5;
+  --metal: #b4c3d6;
+  --metal-dark: #6d819c;
+  --orange: #c2410c;
+  --orange-light: #f59a4a;
+  --orange-dark: #9a330a;
+  --mat: #2e7a59;
+  --cardboard: #c98b4f;
+  --yellow: #f5c518;
+  --red: #d33a2e;
+  --green: #35b36b;
+  --blue: #2f6fd6;
+
+  --font-display: Futura, "Trebuchet MS", sans-serif;
+  --font-body: "Gill Sans", "Helvetica Neue", sans-serif;
+  --font-code: Menlo, Monaco, monospace;
+
+  /* Each size is 1.25 times the one before it. */
+  --size-1: 18px;
+  --size-2: 23px;
+  --size-3: 29px;
+  --size-4: 37px;
+  --size-5: 47px;
+  --size-6: 59px;
+
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 56px;
+
+  --radius: 14px;
+  --shadow: 0 6px 18px rgba(27, 42, 74, 0.14);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--size-1);
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 var(--space-m);
+  max-width: 24ch;
+}
+h1 { font-size: var(--size-6); }
+h2 { font-size: var(--size-4); }
+h3 { font-size: var(--size-3); }
+p { margin: 0 0 var(--space-m); max-width: 70ch; }
+a { color: var(--orange); }
+a:hover { color: var(--ink); }
+/* A ring shows where the keyboard is. Press Tab to try it! */
+a:focus-visible, input:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+/* On the dark navy parts, a yellow ring shows up better. */
+.top a:focus-visible, .bottom a:focus-visible, .more-steps a:focus-visible { outline-color: var(--yellow); }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 var(--space-m); }
+.symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* The top bar is dark navy, like the case of a robot. */
+.top { background: var(--ink); color: #fff; }
+.top-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding-top: var(--space-m);
+  padding-bottom: var(--space-m);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--size-2);
+  text-decoration: none;
+}
+.logo:hover { color: var(--yellow); }
+.logo-head { fill: var(--metal); }
+.logo-line { stroke: var(--yellow); stroke-width: 3; stroke-linecap: round; }
+.logo-eyes { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-s); margin: 0; padding: 0; list-style: none; }
+/* min-height: 44px makes each link big enough for a finger. */
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.menu a:active { background: rgba(255, 255, 255, 0.24); }
+/* The page you are on gets a yellow button, like a light that is switched on. */
+.menu a[aria-current="page"] { background: var(--yellow); color: var(--ink); }
+
+/* A link that looks like a big push button. It moves up a little under your mouse. */
+.button {
+  display: inline-block;
+  padding: 10px var(--space-l);
+  border: 2px solid var(--orange);
+  border-radius: 10px;
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: var(--size-1);
+  text-decoration: none;
+  box-shadow: 0 6px 14px rgba(124, 45, 10, 0.3);
+}
+.button:hover { color: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(124, 45, 10, 0.32); }
+.button:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(124, 45, 10, 0.3); }
+.button.plain { background: var(--panel); color: var(--ink); border-color: var(--ink); box-shadow: 0 6px 14px rgba(27, 42, 74, 0.16); }
+
+/* ---------- Home page ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-l);
+  align-items: center;
+  padding: var(--space-xl) 0 var(--space-l);
+}
+.lead { font-size: var(--size-2); }
+.hero-links { display: flex; flex-wrap: wrap; gap: var(--space-m); margin-top: var(--space-l); }
+.robot-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-m);
+  margin: 0;
+  padding: var(--space-l) var(--space-m);
+  border-radius: 24px;
+  background: var(--sky);
+  box-shadow: var(--shadow);
+}
+.robot { width: 100%; max-width: 240px; height: auto; overflow: visible; }
+
+/* Boltwick's parts: each class paints one kind of part. */
+.metal, .hand { fill: var(--metal); stroke: var(--ink); stroke-width: 3; }
+.metal-line { stroke: var(--ink); stroke-width: 4; }
+.bulb { fill: var(--red); stroke: var(--ink); stroke-width: 3; }
+.arm { fill: none; stroke: var(--metal-dark); stroke-width: 10; stroke-linecap: round; }
+.screen { fill: var(--ink); }
+.eye { fill: var(--yellow); }
+.mouth { fill: none; stroke: var(--yellow); stroke-width: 4; stroke-linecap: round; }
+.body { fill: var(--orange-light); stroke: var(--ink); stroke-width: 3; }
+.light-red, .light-yellow, .light-green { stroke: var(--ink); stroke-width: 2; }
+.light-red { fill: var(--red); }
+.light-yellow { fill: var(--yellow); }
+.light-green { fill: var(--green); }
+.chest-panel { fill: var(--panel); stroke: var(--ink); stroke-width: 2; }
+.foot { fill: var(--ink); }
+
+/* The speech bubble. Its little point is a box border with three see-through sides. */
+.speech {
+  position: relative;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 16px;
+  background: var(--panel);
+  font-family: var(--font-display);
+  font-size: var(--size-2);
+  box-shadow: 0 4px 12px rgba(27, 42, 74, 0.12);
+}
+.speech::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  margin-left: -12px;
+  border: 12px solid transparent;
+  border-top: 0;
+  border-bottom-color: var(--panel);
+}
+
+/* The eyes blink: the two eyes squash flat for a moment, then open again. */
+.eyes { transform-box: fill-box; transform-origin: center; }
+/* The arm turns round its shoulder, which is at 160, 162 in the drawing. */
+.wave-arm { transform-origin: 160px 162px; }
+@media (prefers-reduced-motion: no-preference) {
+  .eyes { animation: blink 5s infinite; }
+  .button { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+  .wave-arm { transition: transform 0.6s var(--ease); }
+  .robot-box:hover .wave-arm { transform: rotate(-24deg); }
+}
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+/* The first robot on the home page: three steps and a tray of parts. */
+.first-robot { padding: var(--space-l) 0; }
+.tray-list { margin: 0; padding-left: var(--space-m); }
+.tray-list li { margin-bottom: var(--space-xs); }
+/* The last box is dark, so it looks different from the steps. */
+.more-steps {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-l);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: #fff;
+  font-size: var(--size-2);
+}
+
+/* Lines and shapes in the small drawings. */
+.scribble { fill: none; stroke: var(--blue); stroke-width: 4; stroke-linecap: round; }
+.cup { fill: #e9f2fb; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.pen-1, .pen-2, .pen-3 { fill: none; stroke-width: 6; stroke-linecap: round; }
+.pen-1 { stroke: var(--red); }
+.pen-2 { stroke: var(--yellow); }
+.pen-3 { stroke: var(--blue); }
+.motor { fill: var(--metal-dark); stroke: var(--ink); stroke-width: 2; }
+.shaft { stroke: var(--ink); stroke-width: 3; }
+
+.meeting {
+  display: flex;
+  gap: var(--space-l);
+  align-items: flex-start;
+  margin: var(--space-l) 0 var(--space-xl);
+  padding: var(--space-l);
+  border-radius: var(--radius);
+  background: var(--yellow);
+  box-shadow: var(--shadow);
+}
+/* On the yellow card a yellow pen would vanish, so this one is green. */
+.bring-art { flex: none; margin-left: auto; align-self: center; }
+.bring-art .pen-2 { stroke: var(--green); }
+.calendar { flex: none; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+/* A two-column list: the word on the left, the answer on the right. */
+.meeting-list { display: grid; grid-template-columns: auto 1fr; gap: var(--space-s) var(--space-l); margin: 0; }
+.meeting-list dt { font-family: var(--font-display); font-weight: 700; }
+.meeting-list dd { margin: 0; }
+
+/* ---------- Build page ---------- */
+
+.page-head { padding: var(--space-xl) 0 var(--space-l); }
+.page-head p { font-size: var(--size-2); }
+
+/* Two columns: the steps, and the parts list on the right. */
+.build-layout {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  gap: var(--space-l);
+  align-items: start;
+  padding-bottom: var(--space-xl);
+}
+.steps { grid-column: 1; grid-row: 1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); counter-reset: step; }
+
+/* The parts list sticks to the top of the window while you scroll past the steps. */
+.parts-list {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  top: var(--space-m);
+  padding: var(--space-l) var(--space-m) var(--space-m);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+.parts-list h2 { font-size: var(--size-3); }
+.check-list { margin: 0 0 var(--space-m); padding: 0; list-style: none; }
+.check-list label { display: flex; align-items: center; gap: var(--space-s); min-height: 44px; cursor: pointer; }
+.check-list input { flex: none; width: 22px; height: 22px; margin: 0; accent-color: var(--mat); }
+/* A ticked part gets a line through it. The + means "the span right after the box". */
+.check-list input:checked + span { color: var(--soft-ink); text-decoration: line-through; }
+
+.step, .fact {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+/* The drawings sit on a green cutting mat, where real robots get built. */
+.step-art { display: block; width: 100%; height: auto; background: var(--mat); }
+.step-text { padding: var(--space-m) var(--space-l) var(--space-l); }
+.step h2, .step h3 { display: flex; align-items: center; gap: var(--space-m); font-size: var(--size-3); }
+
+/* A counter numbers the steps for us: step 1, 2, 3... Add a step and the numbers follow. */
+.step h2::before, .step h3::before {
+  counter-increment: step;
+  content: counter(step);
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  font-size: var(--size-4);
+}
+.tape { fill: none; stroke: #f4f7fb; stroke-width: 7; opacity: 0.85; }
+.cork { fill: var(--cardboard); stroke: var(--ink); stroke-width: 2; }
+.holder { fill: var(--ink); }
+.cell { stroke: var(--yellow); stroke-width: 5; stroke-linecap: round; }
+.tape-roll { fill: none; stroke: #f4f7fb; stroke-width: 10; }
+.googly { fill: #fff; stroke: var(--ink); stroke-width: 2; }
+.pupil { fill: var(--ink); }
+.move { fill: none; stroke: var(--yellow); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.wire-red, .wire-black { fill: none; stroke-width: 3; stroke-linecap: round; }
+.wire-red { stroke: var(--red); }
+.wire-black { stroke: var(--ink); }
+
+/* The wire step needs a grown-up, so it gets a red frame and a red note. */
+.step.grown-up { border: 3px solid var(--red); }
+.helper {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-m);
+  border-radius: 999px;
+  background: #fde3e1;
+  color: #8f1d14;
+  font-weight: 600;
+}
+
+/* The fact box is yellow and has no number, because it is not a step. */
+.fact { padding: var(--space-l); background: var(--yellow); }
+.fact h2 { font-size: var(--size-3); }
+.fact-icon { margin-bottom: var(--space-m); fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+
+/* The last step goes across both columns: the robot draws on white paper. */
+.step.finish { grid-column: 1 / -1; display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; }
+.step-art.paper { background: #fff; border-right: 2px solid var(--sky); }
+
+/* ---------- Parts page ---------- */
+
+.parts-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.parts-table th, .parts-table td { padding: var(--space-m); border-bottom: 1px solid var(--sky); text-align: left; vertical-align: middle; }
+.parts-table thead th { background: var(--ink); color: #fff; font-family: var(--font-display); }
+.parts-table tbody th { white-space: nowrap; font-family: var(--font-display); }
+.parts-table tbody tr:hover { background: #f3f8fd; }
+.part-icon { display: inline-block; margin-right: var(--space-s); vertical-align: middle; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* Part codes are data, so they get the typewriter-style font Menlo. */
+.code { font-family: var(--font-code); font-size: 16px; white-space: nowrap; }
+.count { font-family: var(--font-code); }
+.parts-table .count, .parts-table thead th:last-child { text-align: right; }
+
+.parts-bottom { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-l); align-items: start; margin: var(--space-xl) 0; }
+.safety {
+  padding: var(--space-l);
+  border: 3px solid var(--orange);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+.safety h2 { display: flex; align-items: center; gap: var(--space-m); max-width: none; font-size: var(--size-3); }
+.safety-icon { flex: none; fill: none; stroke: var(--orange); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.safety-list { margin: 0; padding-left: var(--space-l); }
+.safety-list li { margin-bottom: var(--space-s); }
+.battery-maths { margin: 0; padding: var(--space-l); border-radius: var(--radius); background: var(--sky); box-shadow: var(--shadow); }
+.battery-maths svg { display: block; width: 100%; height: auto; margin-bottom: var(--space-m); }
+.cell-body { fill: var(--ink); }
+.cell-tip { fill: var(--metal); }
+.cell-label { fill: #fff; font-family: var(--font-code); font-size: 15px; text-anchor: middle; }
+.cell-line { fill: none; stroke: var(--orange); stroke-width: 3; stroke-linecap: round; }
+.sum-label { fill: var(--orange-dark); font-family: var(--font-code); font-size: 16px; font-weight: 700; text-anchor: middle; }
+
+.bottom { padding: var(--space-l) 0; background: var(--ink); color: #dbe4f0; }
+.bottom a { color: var(--yellow); }
+.bottom a:hover { color: #fff; }
+
+/* ---------- Narrow windows ---------- */
+
+/* On a tablet the steps make one column, and the parts list still sticks. */
+@media (max-width: 900px) {
+  .hero, .parts-bottom { grid-template-columns: 1fr; }
+  .build-layout { grid-template-columns: 1fr 230px; }
+  .steps, .step.finish { grid-template-columns: 1fr; }
+  .step.finish { display: flex; }
+  .step-art.paper { border-right: 0; }
+  h1 { font-size: var(--size-5); }
+}
+
+/* On a small screen the parts list comes first and stops sticking. */
+@media (max-width: 700px) {
+  .build-layout { grid-template-columns: 1fr; }
+  .steps, .parts-list { grid-column: auto; grid-row: auto; }
+  .parts-list { position: static; }
+  .check-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-l); }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: var(--size-4); }
+  h2 { font-size: var(--size-3); }
+  .check-list { grid-template-columns: 1fr; }
+  .meeting { flex-direction: column; }
+  .bring-art { margin-left: 0; align-self: flex-start; }
+  /* The table rows become cards: every cell gets its own line. */
+  /* The heading row hides from your eyes, but a screen reader can still read it out. */
+  .parts-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .parts-table, .parts-table tbody, .parts-table tr, .parts-table th, .parts-table td { display: block; }
+  .parts-table tr { padding: var(--space-m); border-bottom: 2px solid var(--sky); }
+  .parts-table th, .parts-table td { padding: var(--space-xs) 0; border: 0; text-align: left; }
+  .parts-table .count { text-align: left; }
+  /* ::before writes a label in front of the cell, because the heading row is hidden. */
+  .code::before { content: "Code: "; font-family: var(--font-body); }
+  .count::before { content: "In the box: "; font-family: var(--font-body); }
+}

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotel Brinewhistle - Rooms</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle class="logo-sun" cx="24" cy="20" r="11"></circle>
+        <path class="logo-wave" d="M2 32 Q8 27 14 32 T26 32 T38 32 T50 32"></path>
+        <path class="logo-wave" d="M2 40 Q8 35 14 40 T26 40 T38 40 T50 40"></path>
+      </svg>
+      <span>Hotel Brinewhistle<small>Saltmere Bay</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="rooms.html" aria-current="page">Rooms</a></li>
+        <li><a href="area.html">The area</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="banner sunset">
+      <div class="panel">
+        <h1>Our rooms</h1>
+        <p>Every room has a soft bed, a big window and a little sea salt in the air.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Pick your room</h2>
+      <div class="room-row">
+        <article class="room-card">
+          <div class="window view-dunes"></div>
+          <div class="room-text">
+            <h3>Dune Room</h3>
+            <p class="room-price">89 euros a night</p>
+            <p>A cosy room on the garden side. You see the dunes and hear the birds.</p>
+            <a class="button" href="#booking">Book the Dune Room</a>
+          </div>
+        </article>
+        <article class="room-card loved">
+          <div class="window view-sea"></div>
+          <div class="room-text">
+            <h3>Sea Room</h3>
+            <p class="room-price">119 euros a night</p>
+            <p>Sit on your own balcony and watch the sun go down over the water.</p>
+            <a class="button" href="#booking">Book the Sea Room</a>
+          </div>
+        </article>
+        <article class="room-card">
+          <div class="window view-lighthouse"></div>
+          <div class="room-text">
+            <h3>Lighthouse Loft</h3>
+            <p class="room-price">159 euros a night</p>
+            <p>Room for the whole family, right under the roof. At night you see the lighthouse blink.</p>
+            <a class="button" href="#booking">Book the Lighthouse Loft</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Compare the rooms</h2>
+      <div class="table-wrap">
+        <table class="compare">
+          <colgroup>
+            <col>
+            <col>
+            <col class="loved-column">
+            <col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>What you get</th>
+              <th>Dune Room</th>
+              <th>Sea Room <span class="badge">Most loved</span></th>
+              <th>Lighthouse Loft</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th>Sea view</th><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Own balcony</th><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th>Bath tub</th><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+            <tr><th>Bunk beds for kids</th><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+            <tr><th>Dogs welcome</th><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td></tr>
+            <tr><th>Breakfast</th><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Guests</th><td>1 or 2</td><td>2</td><td>Up to 4</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><th>A night</th><td>89 euros</td><td>119 euros</td><td>159 euros</td></tr>
+          </tfoot>
+        </table>
+      </div>
+      <p class="small-print">Prices are for the whole room, with breakfast for everyone in it.</p>
+    </section>
+
+    <section class="section">
+      <h2>Book your room</h2>
+      <form class="booking-bar room-booking" id="booking">
+        <div class="field">
+          <label for="room">Room</label>
+          <select id="room">
+            <option>Dune Room</option>
+            <option selected>Sea Room</option>
+            <option>Lighthouse Loft</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="arrive">Arrive</label>
+          <input id="arrive" type="date">
+        </div>
+        <div class="field">
+          <label for="leave">Leave</label>
+          <input id="leave" type="date">
+        </div>
+        <div class="field">
+          <label for="guests">Guests</label>
+          <select id="guests">
+            <option>1 guest</option>
+            <option selected>2 guests</option>
+            <option>3 guests</option>
+            <option>4 guests</option>
+          </select>
+        </div>
+        <button class="button" type="submit">Check dates</button>
+        <p class="form-note">A practice form: HTML Lab does not send it.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Hotel Brinewhistle</b>, 3 Pebblewhirl Promenade, Saltmere Bay. A pretend hotel, made with HTML and CSS.</p>
+    <p>How does a lighthouse work? <a href="https://simple.wikipedia.org/wiki/Lighthouse">Read about lighthouses on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

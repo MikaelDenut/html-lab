@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prices - Homeworm</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-worm" viewBox="0 0 120 80" aria-hidden="true">
+        <symbol id="worm" viewBox="0 0 120 80">
+          <path d="M12 62 C24 40 40 40 50 58 S76 76 86 52" fill="none" stroke="#3cc98f" stroke-width="18" stroke-linecap="round"/>
+          <circle cx="94" cy="34" r="22" fill="#3cc98f"/>
+          <circle cx="86" cy="30" r="7" fill="white" stroke="#23252b" stroke-width="3"/>
+          <circle cx="104" cy="30" r="7" fill="white" stroke="#23252b" stroke-width="3"/>
+          <circle cx="87" cy="31" r="3" fill="#23252b"/>
+          <circle cx="105" cy="31" r="3" fill="#23252b"/>
+          <path d="M93 30 h4 M86 44 q8 7 16 0" fill="none" stroke="#23252b" stroke-width="3" stroke-linecap="round"/>
+        </symbol>
+        <use href="#worm"/>
+      </svg>
+      Homeworm
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pricing.html" aria-current="page">Prices</a></li>
+        <li><a href="help.html">Help</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="page-top">
+      <h1>Simple prices for every family</h1>
+      <p class="lead">Start free. Change or stop your plan at any time.</p>
+    </section>
+
+    <!-- Two hidden round buttons. The labels below are the switch you click. -->
+    <section class="pricing">
+      <input class="switch-input" type="radio" name="billing" id="monthly" checked>
+      <input class="switch-input" type="radio" name="billing" id="yearly">
+      <p class="switch">
+        <label for="monthly">Pay monthly</label>
+        <label for="yearly">Pay yearly <b>save 20%</b></label>
+      </p>
+
+      <h2 class="for-readers">Our three plans</h2>
+      <div class="plans">
+        <article class="plan">
+          <h3>Seedling</h3>
+          <p class="for">For one child</p>
+          <p class="price">€0 <small>forever</small></p>
+          <ul class="plan-list">
+            <li>1 child</li>
+            <li>Homework list and stars</li>
+            <li>1 reminder a day</li>
+          </ul>
+          <a class="button ghost" href="help.html#contact">Ask for the free plan</a>
+        </article>
+        <article class="plan best">
+          <h3>Family</h3>
+          <p class="sticker">Most loved</p>
+          <p class="for">For the whole family</p>
+          <p class="price"><span class="per-month">€4 <small>a month</small></span><span class="per-year">€38 <small>a year</small></span></p>
+          <ul class="plan-list">
+            <li>Up to 4 children</li>
+            <li>Family view for grown-ups</li>
+            <li>Rewards and focus timer</li>
+          </ul>
+          <a class="button" href="help.html#contact">Ask about Family</a>
+        </article>
+        <article class="plan">
+          <h3>Classroom</h3>
+          <p class="for">For one teacher</p>
+          <p class="price"><span class="per-month">€12 <small>a month</small></span><span class="per-year">€115 <small>a year</small></span></p>
+          <ul class="plan-list">
+            <li>Up to 30 pupils</li>
+            <li>Send homework to the class</li>
+            <li>Weekly class report</li>
+          </ul>
+          <a class="button ghost" href="help.html#contact">Ask about Classroom</a>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Compare the plans</h2>
+      <!-- If the table is too wide for a phone, it scrolls inside its box.
+           tabindex="0" lets the Tab key stop here, so arrow keys can scroll the table. -->
+      <div class="table-box" tabindex="0" role="region" aria-label="Compare the plans">
+        <table class="compare">
+          <colgroup>
+            <col>
+            <col>
+            <col class="best-column">
+            <col>
+          </colgroup>
+          <thead>
+            <tr><th scope="col">What you get</th><th scope="col">Seedling</th><th scope="col">Family</th><th scope="col">Classroom</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Homework list</th><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th scope="row">Stars and rewards</th><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th scope="row">Reminders</th><td>1 a day</td><td>As many as you like</td><td>As many as you like</td></tr>
+            <tr><th scope="row">Focus timer</th><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th scope="row">Family view</th><td class="no">No</td><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th scope="row">Class report</th><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+            <tr><th scope="row">Children or pupils</th><td>1</td><td>4</td><td>30</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">All prices include tax. Questions? Look at the <a href="help.html">help page</a>.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><b>Homeworm</b> is a make-believe app. Make it your own!</p>
+    <p>Want to know how apps work? Read about <a href="https://simple.wikipedia.org/wiki/Mobile_app">mobile apps on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

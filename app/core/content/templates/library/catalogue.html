@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thimbleford Library - Catalogue</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M8 44 V22 A16 16 0 0 1 40 22 V44 Z M8 31 H40 M8 38 H40 M15 31 V24 M20 31 V22 M26 31 V25 M14 38 V33 M30 38 V33"></path>
+      </svg>
+      <span>Thimbleford Library <small>in the old fire station</small></span>
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html">Shelves</a></li>
+        <li><a href="catalogue.html" aria-current="page">Catalogue</a></li>
+        <li><a href="visit.html">Visit us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="page-title">
+      <h1>The catalogue</h1>
+      <p class="lead">Every book on our three shelves, where it lives and if it is on the shelf today. Pick a shelf mark below, and that book lights up in yellow.</p>
+    </section>
+
+    <section class="catalogue">
+      <input class="show-switch" type="radio" name="show" id="show-all" aria-describedby="show-word" checked>
+      <input class="show-switch" type="radio" name="show" id="show-in" aria-describedby="show-word">
+      <input class="show-switch" type="radio" name="show" id="show-out" aria-describedby="show-word">
+      <p class="show-labels">
+        <span id="show-word">Show:</span>
+        <label for="show-all">All books</label>
+        <label for="show-in">On the shelf</label>
+        <label for="show-out">Borrowed</label>
+      </p>
+      <nav class="finder" aria-label="Find a book by its shelf mark">
+        <p>Jump to a book:</p>
+        <ul>
+          <li><a href="#a1">A1</a></li>
+          <li><a href="#a2">A2</a></li>
+          <li><a href="#a3">A3</a></li>
+          <li><a href="#a4">A4</a></li>
+          <li><a href="#a5">A5</a></li>
+          <li><a href="#a6">A6</a></li>
+          <li><a href="#a7">A7</a></li>
+          <li><a href="#a8">A8</a></li>
+          <li><a href="#b1">B1</a></li>
+          <li><a href="#b2">B2</a></li>
+          <li><a href="#b3">B3</a></li>
+          <li><a href="#b4">B4</a></li>
+          <li><a href="#b5">B5</a></li>
+          <li><a href="#b6">B6</a></li>
+          <li><a href="#b7">B7</a></li>
+          <li><a href="#c1">C1</a></li>
+          <li><a href="#c2">C2</a></li>
+          <li><a href="#c3">C3</a></li>
+          <li><a href="#c4">C4</a></li>
+          <li><a href="#c5">C5</a></li>
+          <li><a href="#c6">C6</a></li>
+          <li><a href="#c7">C7</a></li>
+        </ul>
+      </nav>
+      <table class="book-table">
+        <caption>Our 22 books (pick a filter above)</caption>
+        <thead>
+          <tr><th scope="col">Title</th><th scope="col">Author</th><th scope="col">Shelf</th><th scope="col">Today</th></tr>
+        </thead>
+        <tbody>
+          <tr id="a1" class="in"><th scope="row">Treasure Island</th><td data-label="Author">Robert Louis Stevenson</td><td data-label="Shelf">A1</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="a2" class="in"><th scope="row">Kidnapped</th><td data-label="Author">Robert Louis Stevenson</td><td data-label="Shelf">A2</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="a3" class="in"><th scope="row">Twenty Thousand Leagues Under the Seas</th><td data-label="Author">Jules Verne</td><td data-label="Shelf">A3</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="a4" class="out"><th scope="row">Around the World in Eighty Days</th><td data-label="Author">Jules Verne</td><td data-label="Shelf">A4</td><td><span class="badge out">Borrowed</span></td></tr>
+          <tr id="a5" class="in"><th scope="row">Journey to the Centre of the Earth</th><td data-label="Author">Jules Verne</td><td data-label="Shelf">A5</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="a6" class="in"><th scope="row">Heidi</th><td data-label="Author">Johanna Spyri</td><td data-label="Shelf">A6</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="a7" class="in"><th scope="row">The Railway Children</th><td data-label="Author">E. Nesbit</td><td data-label="Shelf">A7</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="a8" class="in"><th scope="row">Robinson Crusoe</th><td data-label="Author">Daniel Defoe</td><td data-label="Shelf">A8</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="b1" class="in"><th scope="row">The Wind in the Willows</th><td data-label="Author">Kenneth Grahame</td><td data-label="Shelf">B1</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="b2" class="out"><th scope="row">Black Beauty</th><td data-label="Author">Anna Sewell</td><td data-label="Shelf">B2</td><td><span class="badge out">Borrowed</span></td></tr>
+          <tr id="b3" class="in"><th scope="row">Just So Stories</th><td data-label="Author">Rudyard Kipling</td><td data-label="Shelf">B3</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="b4" class="in"><th scope="row">Aesop's Fables</th><td data-label="Author">Aesop</td><td data-label="Shelf">B4</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="b5" class="in"><th scope="row">The Call of the Wild</th><td data-label="Author">Jack London</td><td data-label="Shelf">B5</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="b6" class="in"><th scope="row">White Fang</th><td data-label="Author">Jack London</td><td data-label="Shelf">B6</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="b7" class="in"><th scope="row">Twelve Socks for a Dragon</th><td data-label="Author">Tomas Ferrow</td><td data-label="Shelf">B7</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="c1" class="in"><th scope="row">Alice's Adventures in Wonderland</th><td data-label="Author">Lewis Carroll</td><td data-label="Shelf">C1</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="c2" class="in"><th scope="row">Through the Looking-Glass</th><td data-label="Author">Lewis Carroll</td><td data-label="Shelf">C2</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="c3" class="in"><th scope="row">Five Children and It</th><td data-label="Author">E. Nesbit</td><td data-label="Shelf">C3</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="c4" class="in"><th scope="row">The Phoenix and the Carpet</th><td data-label="Author">E. Nesbit</td><td data-label="Shelf">C4</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="c5" class="out"><th scope="row">The Secret Garden</th><td data-label="Author">Frances Hodgson Burnett</td><td data-label="Shelf">C5</td><td><span class="badge out">Borrowed</span></td></tr>
+          <tr id="c6" class="in"><th scope="row">Grimms' Fairy Tales</th><td data-label="Author">Jacob and Wilhelm Grimm</td><td data-label="Shelf">C6</td><td><span class="badge in">On the shelf</span></td></tr>
+          <tr id="c7" class="in"><th scope="row">The Lighthouse That Hiccupped</th><td data-label="Author">Ida Wrenfold</td><td data-label="Shelf">C7</td><td><span class="badge in">On the shelf</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="help">
+      <div class="shelf-mark-key">
+        <h2>How to read a shelf mark</h2>
+        <p class="mark-big" aria-hidden="true"><b>C</b><span>4</span></p>
+        <p>The letter is the shelf. The number counts books from the left. So C4 is the fourth book on shelf C, Magic. Every book wears its mark on a little label at the bottom of its spine.</p>
+      </div>
+      <div class="faq">
+        <h2>Borrowing questions</h2>
+        <details>
+          <summary>How long can I keep a book?</summary>
+          <p>Three weeks. If nobody is waiting for it, we can give you three more.</p>
+        </details>
+        <details>
+          <summary>How many books can I take home?</summary>
+          <p>Up to eight at once, with your own library card.</p>
+        </details>
+        <details>
+          <summary>The book I want is borrowed. What now?</summary>
+          <p>Ask at the desk. When it comes back, we keep it for you for one week.</p>
+        </details>
+        <p class="buttons"><a class="button" href="visit.html">Get a library card</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Thimbleford Library</b>, 1 Hosereel Square, Thimbleford. A pretend library, made with HTML and CSS.</p>
+    <p>What is a library, really? <a href="https://simple.wikipedia.org/wiki/Library">Read about libraries on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

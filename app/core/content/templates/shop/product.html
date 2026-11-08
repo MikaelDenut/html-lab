@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wooden rocking horse - Wobbleplum Toys</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="28" r="17" fill="#6b2d6f"/>
+        <circle cx="17" cy="22" r="4" fill="#ecdcf0" opacity="0.5"/>
+        <path d="M24 12 V6" stroke="#4a1a4f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M25 9 Q31 1 39 5 Q33 13 25 9 Z" fill="#2f7d57"/>
+      </svg>
+      <span>Wobbleplum <small>Wooden toys</small></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Shop</a></li>
+        <li><a href="product.html" aria-current="page">Toy of the month</a></li>
+        <li>
+          <a href="basket.html">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            Basket
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <nav class="crumbs" aria-label="Where you are"><a href="index.html">All toys</a> / Wooden rocking horse</nav>
+
+    <div class="product">
+      <!-- Three hidden radio buttons. The thumbnails are their labels,
+           and the one that is checked decides where the big picture zooms. -->
+      <div class="gallery">
+        <input type="radio" name="view" id="view-whole" checked>
+        <input type="radio" name="view" id="view-head">
+        <input type="radio" name="view" id="view-wheels">
+        <div class="big-frame">
+          <img src="shop-horse.svg" width="960" height="720" alt="A drawing of a wooden rocking horse with a red saddle, on steel rockers with small wheels">
+        </div>
+        <div class="thumbs">
+          <label class="thumb whole" for="view-whole"><img src="shop-horse.svg" width="960" height="720" alt="Show the whole horse"></label>
+          <label class="thumb head" for="view-head"><img src="shop-horse.svg" width="960" height="720" alt="Zoom in on the head"></label>
+          <label class="thumb wheels" for="view-wheels"><img src="shop-horse.svg" width="960" height="720" alt="Zoom in on the wheels"></label>
+        </div>
+      </div>
+
+      <section class="buy">
+        <h1>Wooden rocking horse</h1>
+        <p class="rating">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>
+          Loved by 38 families
+        </p>
+        <p class="big-price">€149</p>
+        <p class="stock">In stock, ready in 3 days</p>
+        <p>Ride it, rock it, roll it. Fold the little wheels down and the horse turns into a ride you can push across the room.</p>
+
+        <fieldset class="options">
+          <legend>Size</legend>
+          <label class="option"><input type="radio" name="size" checked><span><b>Small</b> <small>age 2 to 4</small></span></label>
+          <label class="option"><input type="radio" name="size"><span><b>Big</b> <small>age 4 to 7, + €30</small></span></label>
+        </fieldset>
+        <fieldset class="options">
+          <legend>Saddle colour</legend>
+          <label class="option"><input type="radio" name="saddle" checked><span><span class="dot red"></span> Red</span></label>
+          <label class="option"><input type="radio" name="saddle"><span><span class="dot blue"></span> Blue</span></label>
+          <label class="option"><input type="radio" name="saddle" disabled><span><span class="dot moss"></span> Moss, sold out</span></label>
+        </fieldset>
+
+        <a class="button" href="basket.html">Add to basket</a>
+
+        <ul class="promises">
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6h11v10H2z M13 9h4l4 4v3h-8"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></svg> Free delivery, because it costs more than €50</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h11a5 5 0 0 1 0 10H9 M8 5L4 9l4 4"/></svg> 30 days to change your mind</li>
+          <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg> Made by hand in our workshop</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="details">
+      <h2>Details</h2>
+      <table class="spec">
+        <tr><th scope="row">Body</th><td>Beech wood, painted and oiled</td></tr>
+        <tr><th scope="row">Rockers</th><td>Steel, with four wheels that fold down</td></tr>
+        <tr><th scope="row">Small size</th><td>70 cm long, seat 45 cm high</td></tr>
+        <tr><th scope="row">Big size</th><td>95 cm long, seat 60 cm high</td></tr>
+        <tr><th scope="row">Weight</th><td>9 kg (small) or 13 kg (big)</td></tr>
+        <tr><th scope="row">Best for</th><td>Riders from 2 years old</td></tr>
+      </table>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><b>Wobbleplum Toys</b>, 9 Toffeemoss Lane. A make-believe shop: make it your own!</p>
+    <p>A beech tree has smooth, light grey bark. Read about <a href="https://simple.wikipedia.org/wiki/Beech">beech trees on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "title": "Bakery cafe",
+  "name": "my-bakery-cafe",
+  "blurb": "A cosy bakery cafe with specials, a menu and a street map",
+  "category": "professional",
+  "layout": "Split-screen hero, menu with dotted price lines",
+  "shows": [
+    "A split screen: photo left, words right",
+    "Dotted lines between each dish and its price",
+    "A chalkboard with cards pinned at an angle",
+    "An SVG street map with a pin that drops",
+    "One fern picture used twice as a background"
+  ],
+  "accent": "#2f5d46"
+}

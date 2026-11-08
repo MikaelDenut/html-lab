@@ -1,0 +1,18 @@
+[package]
+authors = ["Mikael Denut + Claude AI"]
+name = "htmllab_core"
+version = "0.1.0"
+edition = "2021"
+description = "The pure Rust core of HTML Lab: kinds, names, folder scan, file saving, content, preferences."
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dunce = "1"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[dev-dependencies]
+tempfile = "3"

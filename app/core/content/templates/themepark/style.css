@@ -1,0 +1,555 @@
+/* Fizzwhirl Park: one style file for all three pages. */
+
+/* Change one colour here and the whole park changes! */
+:root {
+  --page: #f4f0ff;
+  --ink: #241447;
+  --grape: #2d1660;
+  --violet: #6a3fc9;
+  --path: #ddd3f2;
+  --white: #ffffff;
+  --cream: #fff4c7;
+  --pink: #ff6b9a;
+  --lemon: #ffd23f;
+  --mint: #2ec4a0;
+  --sky: #5cc2f7;
+  --orange: #ff8c42;
+  --red: #d42a44;
+  --red-dark: #b81f38;
+  --fun-font: Phosphate, "Arial Rounded MT Bold", fantasy;
+  --text-font: "Avenir Next", "Helvetica Neue", sans-serif;
+  --label-font: "DIN Condensed", "Avenir Next Condensed", sans-serif;
+  /* Each size is 1.25 times the one before it. */
+  --size-m: 18px;
+  --size-l: 23px;
+  --size-xl: 29px;
+  --size-2xl: 37px;
+  --size-3xl: 47px;
+  --size-4xl: 59px;
+  /* Space: small inside a box, big between boxes. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 64px;
+  --round: 18px;
+  --shadow: 0 10px 24px rgba(36, 20, 71, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.6;
+}
+
+/* Phosphate has only capital letters, so the headings stay short. */
+h1, h2, h3 { font-family: var(--fun-font); font-weight: normal; line-height: 1.1; margin: 0 0 var(--space-s); }
+p { max-width: 70ch; }
+a { color: var(--grape); }
+img { display: block; max-width: 100%; height: auto; }
+
+/* A thick ring shows where the keyboard is. Press Tab to try it! */
+a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visible,
+input:focus-visible, input:focus-visible + .ticket-body {
+  outline: 4px solid var(--grape);
+  outline-offset: 3px;
+}
+
+/* A screen reader reads this text out, but your eyes do not see it. */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* The page sits in the middle and never gets too wide. */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 var(--space-m); }
+.symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* The purple bar at the top of every page. */
+.top { background: var(--grape); }
+.top-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--white);
+  text-decoration: none;
+  font-family: var(--fun-font);
+  font-size: var(--size-xl);
+}
+.logo-wheel { fill: var(--lemon); }
+.logo-spokes { fill: none; stroke: var(--grape); stroke-width: 2.5; stroke-linecap: round; }
+
+/* On the purple parts, a lemon ring is easier to see. */
+.top a:focus-visible, .bottom a:focus-visible { outline-color: var(--lemon); }
+
+/* The menu is a list. Flex puts the links side by side. */
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+
+/* min-height: 44px makes each link big enough for a finger. */
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px var(--space-m);
+  border-radius: 999px;
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+}
+.menu a:hover { background: rgba(255, 255, 255, 0.15); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a lemon button. */
+.menu a[aria-current="page"] { background: var(--lemon); color: var(--ink); }
+
+/* The top of the home page: big words and a big ticket. */
+.hero {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  gap: var(--space-l);
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-l);
+}
+.hero h1 { max-width: 16ch; font-size: var(--size-4xl); color: var(--grape); }
+.hero p { margin: 0; font-size: var(--size-l); }
+
+/* The ticket. Its shadow follows its shape, round bites and all. */
+.big-ticket {
+  display: flex;
+  justify-self: center;
+  color: var(--ink);
+  text-decoration: none;
+  filter: drop-shadow(0 12px 18px rgba(36, 20, 71, 0.25));
+  transform: rotate(-4deg);
+}
+.ticket-main, .ticket-stub {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-l) var(--space-m);
+  background: var(--lemon);
+}
+.ticket-main { --side: right; border-radius: var(--round) 0 0 var(--round); }
+.ticket-main b { font-family: var(--fun-font); font-size: var(--size-2xl); font-weight: normal; }
+.ticket-stub {
+  --side: left;
+  border-left: 4px dashed var(--ink);
+  border-radius: 0 var(--round) var(--round) 0;
+  text-align: center;
+  font-weight: 700;
+}
+.ticket-stub b { font-family: var(--label-font); font-size: var(--size-3xl); line-height: 1; }
+
+/* A mask cuts two round bites where you tear the ticket. Where the mask
+   is see-through, the ticket is gone. --side says where the bites go. */
+.ticket-main, .ticket-stub {
+  -webkit-mask:
+    radial-gradient(circle at var(--side) top, transparent 14px, #000 15px) top / 100% 51% no-repeat,
+    radial-gradient(circle at var(--side) bottom, transparent 14px, #000 15px) bottom / 100% 51% no-repeat;
+}
+
+/* The ticket stands up straight and grows when your mouse is on it. */
+.big-ticket:hover { transform: rotate(0) scale(1.04); }
+.big-ticket:active { transform: rotate(0) scale(0.98); }
+@media (prefers-reduced-motion: no-preference) {
+  .big-ticket { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+
+/* The park map. The gaps between the zones are the paths you walk on. */
+.park h2 { font-size: var(--size-3xl); color: var(--grape); }
+.park-help { margin: 0 0 var(--space-m); }
+.park-map {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "thrill thrill sky    sky"
+    "splash square square woods"
+    "meadow gate   gate   woods";
+  gap: var(--space-m);
+  padding: var(--space-m);
+  border: 6px solid var(--grape);
+  border-radius: 32px;
+  background: var(--path);
+}
+.peaks { grid-area: thrill; background: var(--orange); }
+.sky { grid-area: sky; background: var(--lemon); }
+.splash { grid-area: splash; background: var(--sky); }
+.square { grid-area: square; background: var(--white); }
+.woods { grid-area: woods; background: var(--mint); }
+.meadow { grid-area: meadow; background: var(--pink); }
+.gate { grid-area: gate; background: var(--grape); color: var(--white); text-align: center; }
+
+.zone { padding: var(--space-m); border-radius: var(--round); }
+.zone h3 { font-size: var(--size-xl); }
+.zone p { margin: 0 auto; }
+.zone-art { display: block; width: 100%; max-width: 320px; height: auto; margin: var(--space-s) 0; }
+.track { fill: none; stroke: var(--grape); stroke-width: 5; stroke-linecap: round; }
+.legs { stroke: var(--grape); stroke-width: 2; opacity: 0.5; }
+.waves { fill: none; stroke: var(--white); stroke-width: 4; stroke-linecap: round; }
+
+/* Ride links look like little signs on the map. */
+.ride-list, .services, .map-key { margin: 0; padding: 0; list-style: none; }
+.ride-list a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  margin-top: var(--space-s);
+  padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
+  border-radius: 22px;
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(36, 20, 71, 0.2);
+}
+.square .ride-list a { background: var(--lemon); }
+.ride-list a:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(36, 20, 71, 0.25); }
+.ride-list a:active { transform: translateY(1px); box-shadow: none; }
+
+/* All icons share one stroke width, so they look like one family. */
+.icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ride-list .icon { color: var(--red); }
+.square .ride-list .icon { color: var(--grape); }
+.services { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-m); margin-top: var(--space-m); }
+.services li, .map-key li { display: flex; align-items: center; gap: var(--space-xs); }
+.map-key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s) var(--space-l);
+  margin: var(--space-m) 0 var(--space-xl);
+}
+
+/* The big wheel: a circle, six spokes, and a box at the end of each spoke. */
+.wheel { position: relative; width: 150px; margin: var(--space-s) auto; }
+.rim { position: relative; aspect-ratio: 1; border: 6px solid var(--grape); border-radius: 50%; }
+.spokes { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--grape); stroke-width: 3; }
+.car {
+  position: absolute;
+  width: 26px;
+  height: 20px;
+  margin: -10px 0 0 -13px;
+  border: 2px solid var(--grape);
+  border-radius: 4px 4px 10px 10px;
+  background: var(--red);
+}
+.c1 { left: 50%; top: 0; }
+.c2 { left: 93%; top: 25%; }
+.c3 { left: 93%; top: 75%; }
+.c4 { left: 50%; top: 100%; }
+.c5 { left: 7%; top: 75%; }
+.c6 { left: 7%; top: 25%; }
+@media (prefers-reduced-motion: no-preference) {
+  .rim { animation: turn 24s linear infinite; }
+  .car { animation: turn 24s linear infinite reverse; }
+}
+@keyframes turn {
+  to { transform: rotate(360deg); }
+}
+
+/* The title at the top of the rides and tickets pages. */
+.page-head { padding: var(--space-xl) 0 var(--space-l); }
+.page-head h1 { max-width: 18ch; font-size: var(--size-4xl); color: var(--grape); }
+.page-head p { margin: 0; font-size: var(--size-l); }
+
+/* Chips: links that jump to a group of rides on this page. */
+.chips ul { display: flex; flex-wrap: wrap; gap: var(--space-s); margin: 0 0 var(--space-l); padding: 0; list-style: none; }
+.chips a {
+  display: block;
+  min-height: 44px;
+  padding: var(--space-s) var(--space-m);
+  border: 3px solid var(--grape);
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.chips a:hover { background: var(--grape); color: var(--white); }
+.chips a:active { transform: translateY(1px); }
+
+/* :target is the group you jumped to. It lights up. */
+.ride-group { margin: 0 calc(-1 * var(--space-m)) var(--space-l); padding: var(--space-m); border-radius: 28px; }
+.ride-group, .ride-card { scroll-margin-top: var(--space-m); }
+.ride-group:target { background: var(--white); box-shadow: var(--shadow); }
+.ride-group h2 { font-size: var(--size-3xl); color: var(--grape); }
+.ride-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-l); }
+
+/* A ride card: white, with round corners and a soft shadow. */
+.ride-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--round);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* The ride you jumped to gets a grape frame. */
+.ride-card:target { outline: 4px solid var(--grape); outline-offset: 4px; }
+
+/* The big ride covers two columns and two rows. Its drawing grows to fill:
+   the sky gets taller, and the coaster stays on the ground. */
+.feature { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; }
+.feature .ride-art { flex: 1; }
+.ride-art { display: block; width: 100%; height: auto; background: var(--sky); }
+.night { background: var(--grape); }
+.ride-photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.ride-info { padding: var(--space-m) var(--space-m) var(--space-l); }
+.ride-info h3 { padding-right: 80px; font-size: var(--size-xl); }
+.ride-info p { margin: 0 0 var(--space-s); }
+.zone-name { font-weight: 700; color: var(--violet); }
+
+/* "You must be this tall": a measuring stick. */
+.height-badge {
+  position: absolute;
+  top: var(--space-m);
+  right: var(--space-m);
+  width: 70px;
+  margin: 0;
+  padding: var(--space-s) 0 var(--space-s) 10px;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+  background-color: var(--lemon);
+  /* A gradient that is ink for 2px, then see-through, repeats every 8px
+     down the left side. That draws the marks of a measuring stick.
+     The lines stay because a real measuring stick has them. */
+  background-image: linear-gradient(var(--ink) 2px, transparent 2px);
+  background-size: 8px 8px;
+  background-repeat: repeat-y;
+  font-family: var(--label-font);
+  font-size: var(--size-m);
+  line-height: 1;
+  text-align: center;
+}
+.tall { display: block; font-size: var(--size-xl); }
+
+/* The thrill meter: a rainbow bar. A dark cover hides the empty part.
+   Each meter in rides.html sets --level, and the cover starts there. */
+.thrill { display: flex; align-items: center; gap: var(--space-s); font-weight: 700; }
+.meter {
+  position: relative;
+  overflow: hidden;
+  width: 120px;
+  height: 14px;
+  border-radius: 7px;
+  background: linear-gradient(90deg, var(--mint), var(--lemon), var(--orange), var(--red));
+}
+.meter::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: var(--level);
+  background: var(--grape);
+}
+
+/* The drawing colours inside the ride cards. */
+.art-line { fill: none; stroke: var(--grape); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.art-thin { fill: none; stroke: var(--grape); stroke-width: 2; opacity: 0.6; }
+.night .art-line { stroke: var(--lemon); }
+.art-water { fill: none; stroke: var(--white); stroke-width: 6; stroke-linecap: round; }
+.fill-red { fill: var(--red); }
+.fill-orange { fill: var(--orange); }
+.fill-lemon { fill: var(--lemon); }
+.fill-mint { fill: var(--mint); }
+.fill-white { fill: var(--white); }
+.fill-ink { fill: var(--ink); }
+.fill-pink { fill: var(--pink); }
+
+/* A picture with a story underneath. */
+.fact {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: var(--space-l);
+  margin: 0;
+  padding: var(--space-m);
+  border-radius: var(--round);
+  background: var(--grape);
+  color: var(--white);
+  font-size: var(--size-l);
+}
+.fact img { border-radius: 10px; }
+.fact figcaption { max-width: 40ch; }
+
+/* The tickets are radio buttons. The real button hides, the label shows. */
+.ticket-choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-l); margin: 0; padding: 0; border: 0; }
+.ticket-choices legend { margin-bottom: var(--space-m); font: var(--size-2xl) var(--fun-font); color: var(--grape); }
+.ticket { position: relative; display: block; cursor: pointer; }
+.ticket input { position: absolute; opacity: 0; }
+.ticket-body {
+  position: relative;
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-l) var(--space-m);
+  border: 5px solid transparent;
+  border-radius: var(--round);
+  background: var(--tint);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.child { --tint: var(--sky); }
+.family { --tint: var(--lemon); }
+.grown-up { --tint: var(--pink); }
+.ticket-name { font-family: var(--fun-font); font-size: var(--size-2xl); }
+/* The dashed line is where the ticket gets torn at the gate. */
+.ticket-price {
+  margin-top: var(--space-s);
+  padding-top: var(--space-m);
+  border-top: 3px dashed var(--ink);
+  font-family: var(--label-font);
+  font-size: var(--size-4xl);
+  line-height: 1;
+}
+
+/* The ticket you pick jumps up and gets a thick border. */
+.ticket:hover .ticket-body { transform: translateY(-4px); }
+.ticket input:checked + .ticket-body {
+  transform: translateY(-10px) rotate(-2deg);
+  border-color: var(--grape);
+  box-shadow: 0 18px 30px rgba(36, 20, 71, 0.3);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ticket-body { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+
+.ticket-form { padding-bottom: var(--space-xl); }
+.practice { margin: var(--space-s) 0 0; color: var(--violet); font-size: 16px; font-weight: 600; }
+.visit-day { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-m); margin-top: var(--space-l); }
+.visit-day label { display: grid; gap: var(--space-xs); font-weight: 700; }
+
+/* The select box loses its Mac look. Its arrow is two little triangles. */
+.visit-day select {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 240px;
+  min-height: 48px;
+  padding: 0 44px 0 var(--space-m);
+  border: 3px solid var(--grape);
+  border-radius: 12px;
+  background-color: var(--white);
+  background-image: linear-gradient(45deg, transparent 50%, var(--grape) 50%), linear-gradient(135deg, var(--grape) 50%, transparent 50%);
+  background-position: right 24px center, right 16px center;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font: inherit;
+}
+
+/* A big, round button. It moves down a little when you press it. */
+.button {
+  min-height: 48px;
+  padding: var(--space-s) var(--space-l);
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--white);
+  font: 700 var(--size-m) var(--text-font);
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(212, 42, 68, 0.35);
+}
+.button:hover { background: var(--red-dark); }
+.button:active { transform: translateY(2px); box-shadow: none; }
+
+/* The day planner: a table where some cells cover two columns. */
+.planner, .faq { margin-bottom: var(--space-xl); }
+.planner h2, .faq h2 { font-size: var(--size-3xl); color: var(--grape); }
+/* The padding leaves room for the table's shadow inside the scroll box. */
+.table-scroll { overflow-x: auto; margin: 0 calc(-1 * var(--space-m)); padding: 0 var(--space-m) var(--space-l); }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--round);
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+th, td { padding: var(--space-s) var(--space-m); text-align: left; vertical-align: top; }
+th { font-family: var(--label-font); font-size: var(--size-l); font-weight: normal; }
+thead th { background: var(--grape); color: var(--white); }
+tbody th { color: var(--red); }
+tbody tr + tr { border-top: 2px solid var(--path); }
+.together { background: var(--cream); text-align: center; font-weight: 700; }
+
+/* Questions that open and close with a click. */
+details { margin-bottom: var(--space-s); border-radius: var(--round); background: var(--white); box-shadow: var(--shadow); }
+summary {
+  position: relative;
+  min-height: 44px;
+  padding: var(--space-m) 60px var(--space-m) var(--space-m);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary:hover { color: var(--violet); }
+details p { margin: 0; padding: 0 var(--space-m) var(--space-m); }
+
+/* A plus sign made of two bars. One bar is turned a quarter round.
+   When the answer is open, both turn a bit more and make a cross. */
+summary::before, summary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  width: 18px;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 2px;
+  background: var(--red);
+}
+summary::after { transform: rotate(90deg); }
+details[open] summary::before { transform: rotate(45deg); }
+details[open] summary::after { transform: rotate(135deg); }
+
+/* The bottom of every page. */
+.bottom { padding: var(--space-l) 0; background: var(--grape); color: var(--white); }
+.bottom p { margin: var(--space-xs) 0; }
+.bottom a { color: var(--lemon); }
+
+/* On a tablet, the hero, the map and the tickets get fewer columns. */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .park-map {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "thrill thrill"
+      "sky    sky"
+      "splash woods"
+      "square square"
+      "meadow gate";
+  }
+  .ticket-choices { grid-template-columns: 1fr 1fr; }
+}
+
+/* On a phone, the park map is one long column of zones. */
+@media (max-width: 640px) {
+  .park-map { grid-template-columns: 1fr; grid-template-areas: "thrill" "sky" "splash" "square" "woods" "meadow" "gate"; }
+  .hero h1, .page-head h1 { font-size: var(--size-3xl); }
+  .ticket-choices { grid-template-columns: 1fr; }
+  .feature { grid-column: auto; grid-row: auto; }
+  .fact { grid-template-columns: 1fr; }
+  th, td { padding: var(--space-s); }
+  .top-inner { justify-content: center; }
+}

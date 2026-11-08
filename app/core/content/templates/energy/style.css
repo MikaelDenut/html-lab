@@ -1,0 +1,465 @@
+/* Sunwhirl Energy: one style file for all three pages.
+   The look: white turbines on a windy grey-blue hill, with red
+   warning stripes like the tips of real turbine blades. */
+
+/* Change one line here and the whole website changes! */
+:root {
+  --slate: #1d2b36;
+  --storm: #4a6070;
+  --calm: #6f8796;
+  --mist: #edf1f3;
+  --mist-dark: #e1e7ea;
+  --white: #ffffff;
+  --signal: #c8412a;
+  --signal-dark: #a3321f;
+  --sun: #f0a830;
+  --sun-pale: #fdf1db;
+  --sun-ink: #8a5a00;
+  --tape-paper: #fff4dc;
+  --breeze: #8fb8cc;
+  --sky-top: #9fd6ea;
+  --sky-low: #eef8fb;
+  --title-font: Futura, "Avenir Next", sans-serif;
+  --text-font: Charter, Georgia, serif;
+  --size-s: 16px;
+  --size-m: 20px;
+  --size-l: 25px;
+  --size-xl: 31px;
+  --size-2xl: 39px;
+  --size-3xl: 49px;
+  --size-4xl: 61px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 88px;
+  --round: 10px;
+  --shadow: 0 10px 28px rgba(29, 43, 54, 0.18);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--slate);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.6;
+}
+
+/* Headings: more space above them than below. */
+h1, h2, h3 { max-width: 22ch; margin: 0 0 var(--space-s); font-family: var(--title-font); line-height: 1.15; }
+h1 { font-size: var(--size-4xl); }
+h2 { font-size: var(--size-2xl); }
+h3 { font-size: var(--size-l); }
+p, li { max-width: 70ch; }
+p { margin: 0 0 var(--space-s); }
+a { color: var(--signal-dark); }
+a:hover { color: var(--slate); }
+
+/* Press Tab: a thick ring shows where you are.
+   A dark ring on light parts, an orange ring on dark parts, so you always see it. */
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--slate); outline-offset: 3px; }
+.top-bar a:focus-visible, .hero a:focus-visible, .call-band a:focus-visible, .bottom a:focus-visible {
+  outline-color: var(--sun);
+}
+
+/* The page sits in the middle and never gets too wide. */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-m); }
+
+/* The dark bar at the top, with the logo and the menu. */
+.top-bar { background: var(--slate); }
+.top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+/* The logo stays white under the mouse. Without this, a:hover makes it dark slate,
+   the same colour as the bar, and the name disappears. */
+.logo:hover { color: var(--white); }
+.logo small { display: block; color: var(--breeze); font-size: var(--size-s); font-weight: 500; }
+.logo-sun { fill: var(--signal); }
+.logo-blade { fill: var(--white); }
+.logo-hub { fill: var(--slate); }
+
+/* Put your mouse on the logo, and the little blades turn. */
+.logo-blades { transform-origin: 22px 22px; }
+.logo:hover .logo-blades { transform: rotate(120deg); }
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 10px var(--space-s);
+  border-radius: var(--round);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--size-s);
+  text-decoration: none;
+}
+.menu a:hover { color: var(--white); background: rgba(255, 255, 255, 0.12); }
+.menu a:active { background: rgba(255, 255, 255, 0.24); }
+
+/* The page you are on gets a sunny line under it. */
+.menu a[aria-current="page"] { box-shadow: inset 0 -4px 0 var(--sun); }
+
+/* The big photo at the top. A dark fade on the left keeps the text easy to read. */
+.hero {
+  background-image: linear-gradient(90deg, rgba(29, 43, 54, 0.92), rgba(29, 43, 54, 0.55) 55%, rgba(29, 43, 54, 0)), url(energy-hero.jpg);
+  background-size: cover;
+  background-position: center 55%;
+  color: var(--white);
+  padding: var(--space-xl) 0;
+}
+.hero h1 { max-width: 16ch; }
+.hero-lead { font-size: var(--size-l); max-width: 30ch; margin-bottom: var(--space-m); }
+
+.button {
+  display: inline-block;
+  min-height: 48px;
+  margin: 0 var(--space-s) var(--space-s) 0;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 999px;
+  background: var(--signal);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--size-s);
+  font-weight: 700;
+  text-decoration: none;
+}
+.button.ghost { background: transparent; box-shadow: inset 0 0 0 2px var(--white); }
+
+/* Buttons jump up a little when your mouse is on them, and press down when you click. */
+.button:hover { color: var(--white); background: var(--signal-dark); transform: translateY(-3px); }
+.button:active { transform: translateY(1px); }
+
+/* The wind band: a ruler for wind, cut into four coloured parts. */
+.wind-band { background: var(--slate); color: var(--mist); padding: var(--space-l) 0; }
+.wind-band h2 { color: var(--white); margin-bottom: var(--space-m); }
+.wind-scale {
+  display: grid;
+  grid-template-columns: minmax(150px, 3fr) 9fr 13fr minmax(170px, 5fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each part of the bar gets its own colour. */
+.calm { --part: var(--calm); }
+.breeze { --part: var(--breeze); }
+.strong { --part: var(--sun); }
+.storm { --part: var(--signal); }
+.wind-scale li { padding-right: var(--space-m); }
+.wind-scale li::before {
+  content: "";
+  display: block;
+  height: 14px;
+  margin-bottom: var(--space-s);
+  background: var(--part);
+}
+.wind-scale li:first-child::before { border-radius: 7px 0 0 7px; }
+.wind-scale li:last-child::before { border-radius: 0 7px 7px 0; }
+.wind-scale p { font-size: var(--size-s); color: var(--mist); }
+.wind-scale b { color: var(--white); }
+
+/* The big number sits right where its part of the bar begins. */
+.speed {
+  display: block;
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--size-3xl);
+  font-weight: 700;
+  line-height: 1.1;
+}
+.speed small { font-size: var(--size-m); font-weight: 500; color: var(--breeze); }
+.wind-note { margin: var(--space-m) 0 0; font-size: var(--size-s); color: var(--breeze); }
+
+.section-title { margin-top: var(--space-xl); margin-bottom: var(--space-m); }
+.rows .section-title { margin-bottom: var(--space-l); }
+
+/* Each row has two halves: a picture and some text. */
+.row { display: grid; grid-template-columns: 1fr 1fr; }
+.row-picture { width: 100%; height: 100%; min-height: 380px; object-fit: cover; }
+.row-text { align-self: center; max-width: 540px; padding: var(--space-l); }
+.row-text h3 { max-width: 18ch; }
+
+/* Every second row swaps sides: the picture moves to the right. */
+.row:nth-of-type(even) .row-picture { order: 2; }
+.row:nth-of-type(even) { background: var(--mist); }
+.row:nth-of-type(even) .row-text { justify-self: end; }
+
+/* The little arrow is a square with only two sides drawn, turned round.
+   border-width goes round the clock: top, right, bottom, left. */
+.more { font-family: var(--title-font); font-size: var(--size-s); font-weight: 700; }
+.more::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 8px;
+  border-style: solid;
+  border-color: currentColor;
+  border-width: 3px 3px 0 0;
+  transform: rotate(45deg);
+}
+.more:hover::after { transform: translateX(5px) rotate(45deg); }
+
+/* The visitor centre drawing gets its colours from the top of this file. */
+.draw-sky { fill: var(--mist); }
+.draw-sun { fill: var(--sun); }
+.draw-hill { fill: var(--breeze); }
+.draw-wall { fill: var(--white); }
+.draw-glass { fill: var(--storm); }
+.draw-panel, .draw-hub { fill: var(--slate); }
+.draw-tower, .draw-blade { fill: var(--white); stroke: var(--storm); }
+
+.call-band {
+  padding: var(--space-xl) 0;
+  background: var(--signal-dark);
+  color: var(--white);
+  text-align: center;
+}
+.call-band h2 { margin: 0 auto var(--space-s); }
+.call-band p { margin: 0 auto var(--space-m); }
+.call-band .button { background: var(--white); color: var(--signal-dark); }
+
+/* The title box at the top of the other pages. */
+.page-title { background: var(--slate); color: var(--white); padding: var(--space-xl) 0 var(--space-l); }
+.page-title p { font-size: var(--size-l); max-width: 36ch; }
+.visit-banner {
+  background-image: linear-gradient(90deg, rgba(29, 43, 54, 0.95), rgba(29, 43, 54, 0.3)), url(energy-hero.jpg);
+  background-size: cover;
+  background-position: center 40%;
+}
+
+/* The big drawing: hills, turbines, wires and a house. */
+.scene { margin: 0; background: var(--mist); }
+.scene svg { display: block; width: 100%; height: auto; }
+.sky-top { stop-color: var(--sky-top); }
+.sky-low { stop-color: var(--sky-low); }
+.sun, .window { fill: var(--sun); }
+.gust { fill: none; stroke: var(--white); stroke-width: 5; stroke-linecap: round; }
+.hill-back { fill: var(--breeze); }
+.hill { fill: var(--storm); }
+.tower, .blade { fill: var(--white); stroke: var(--storm); stroke-width: 1.5; }
+.hub { fill: var(--signal); }
+.wire { fill: none; stroke: var(--slate); stroke-width: 2.5; }
+.pole, .door { fill: var(--slate); }
+.roof { fill: var(--signal); }
+.wall { fill: var(--white); }
+
+/* The blades spin round point 0 0, the middle of the hub. */
+.blades { transform-origin: 0 0; }
+
+/* Only two things move by themselves: the two sets of blades. */
+@media (prefers-reduced-motion: no-preference) {
+  .blades { animation: spin 7s linear infinite; }
+  .blades.far { animation-duration: 10s; }
+  .logo-blades, .button, .more::after, summary::after { transition: transform 0.5s var(--ease); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.intro { font-size: var(--size-l); max-width: 40ch; }
+
+/* The journey: boxes in a row, with an arrow between them. */
+.process {
+  display: flex;
+  gap: var(--space-l);
+  margin: var(--space-l) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  position: relative;
+  flex: 1;
+  padding: var(--space-m) var(--space-s) var(--space-s);
+  border-radius: var(--round);
+  background: var(--mist);
+  text-align: center;
+}
+.step h3 { font-size: var(--size-m); margin: var(--space-s) auto var(--space-xs); }
+.step p { font-size: var(--size-s); margin: 0 auto; }
+.step-icon {
+  width: 56px;
+  height: 56px;
+  fill: none;
+  stroke: var(--storm);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The arrow between two boxes is made by CSS, from two borders. */
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -32px;
+  width: 14px;
+  height: 14px;
+  border-style: solid;
+  border-color: var(--signal);
+  border-width: 4px 4px 0 0;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* The sun path gets sunny colours. */
+.sun-path .step { background: var(--sun-pale); }
+.sun-path .step-icon { stroke: var(--sun-ink); }
+
+.fact-box {
+  margin-top: var(--space-xl);
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--round);
+  background: var(--slate);
+  color: var(--mist);
+}
+.fact-box h2 { color: var(--white); font-size: var(--size-xl); }
+
+/* Two boxes side by side on the Visit page. */
+.visit-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-l);
+  padding-top: var(--space-xl);
+}
+.visit-grid .section-title { margin-top: 0; }
+
+/* A table with stripes: every second row is misty grey. */
+.tours { width: 100%; border-collapse: collapse; box-shadow: var(--shadow); }
+.tours caption { padding-bottom: var(--space-s); text-align: left; font-size: var(--size-s); }
+.tours th, .tours td { padding: var(--space-s); text-align: left; }
+.tours th {
+  background: var(--slate);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--size-s);
+}
+.tours tbody tr:nth-child(even) { background: var(--mist); }
+.note { margin-top: var(--space-m); }
+
+/* Yellow and black stripes, like real warning tape.
+   They are allowed here because a safety sign really looks like this. */
+.safety-box {
+  align-self: start;
+  padding: var(--space-l) var(--space-m) var(--space-s);
+  border-radius: var(--round);
+  background: repeating-linear-gradient(-45deg, var(--sun) 0 14px, var(--slate) 14px 28px) top / 100% 18px no-repeat, var(--tape-paper);
+  box-shadow: var(--shadow);
+}
+.safety-box h2 { font-size: var(--size-xl); }
+.safety-list { margin: 0; padding-left: var(--space-m); }
+.safety-list li { margin-bottom: var(--space-s); }
+
+/* Questions that open and close when you click them. */
+.questions .section-title { margin-bottom: var(--space-m); }
+details { margin-bottom: var(--space-s); border-radius: var(--round); background: var(--mist); }
+summary {
+  position: relative;
+  min-height: 48px;
+  padding: var(--space-s) 64px var(--space-s) var(--space-m);
+  border-radius: var(--round);
+  font-family: var(--title-font);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary:hover { color: var(--signal-dark); }
+summary:active { background: var(--mist-dark); }
+details p { margin: 0; padding: 0 var(--space-m) var(--space-m); }
+
+/* A plus sign drawn with two lines. It turns into a cross when the answer is open. */
+summary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-m);
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  background: linear-gradient(var(--signal), var(--signal)) center / 18px 4px no-repeat, linear-gradient(var(--signal), var(--signal)) center / 4px 18px no-repeat;
+}
+details[open] summary::after { transform: rotate(45deg); }
+
+/* Space under the page, before the footer. */
+main { padding-bottom: var(--space-xl); }
+
+/* :has() asks "is there a red band in main?". If yes, the band touches the footer. */
+main:has(.call-band) { padding-bottom: 0; }
+
+/* The bottom of every page. */
+.bottom { padding: var(--space-l) 0; background: var(--slate); color: var(--mist); font-size: var(--size-s); }
+.bottom p { margin: var(--space-xs) 0; }
+.bottom a { color: var(--sun); }
+.bottom a:hover { color: var(--white); }
+
+/* On a narrower screen the arrows point down and the boxes stack. */
+@media (max-width: 900px) {
+  .process { flex-direction: column; max-width: 480px; }
+  .step:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%) rotate(135deg);
+  }
+  .visit-grid { grid-template-columns: 1fr; }
+}
+
+/* On a tablet or phone each row is one column, picture on top.
+   aspect-ratio keeps the picture's shape, so the drawing always shows whole. */
+@media (max-width: 760px) {
+  .row { grid-template-columns: 1fr; }
+  .row:nth-of-type(even) .row-picture { order: 0; }
+  .row:nth-of-type(even) .row-text { justify-self: start; }
+  .row-picture { min-height: 0; height: auto; aspect-ratio: 16 / 9; }
+  .row-drawing { aspect-ratio: 4 / 3; }
+  .row-text { padding: var(--space-m) var(--space-m) var(--space-l); }
+  .wind-scale { grid-template-columns: 1fr 1fr; row-gap: var(--space-m); }
+  .wind-scale li:nth-child(2)::before { border-radius: 0 7px 7px 0; }
+  .wind-scale li:nth-child(3)::before { border-radius: 7px 0 0 7px; }
+  .hero { padding: var(--space-l) 0; background-image: linear-gradient(rgba(29, 43, 54, 0.78), rgba(29, 43, 54, 0.78)), url(energy-hero.jpg); }
+  h1 { font-size: var(--size-3xl); }
+}
+
+/* On a phone the text gets a bit smaller and the sides get thinner. */
+@media (max-width: 480px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  h1 { font-size: var(--size-2xl); }
+  h2 { font-size: var(--size-xl); }
+  .hero-lead, .intro, .page-title p { font-size: var(--size-m); }
+  .speed { font-size: var(--size-2xl); }
+  .menu a { padding: 10px 8px; }
+  .fact-box { padding: var(--space-m); }
+
+  /* The drawing gets taller and its right side is cut off, so the turbines stay big. */
+  .scene svg { min-height: 240px; }
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help - Homeworm</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-worm" viewBox="0 0 120 80" aria-hidden="true">
+        <symbol id="worm" viewBox="0 0 120 80">
+          <path d="M12 62 C24 40 40 40 50 58 S76 76 86 52" fill="none" stroke="#3cc98f" stroke-width="18" stroke-linecap="round"/>
+          <circle cx="94" cy="34" r="22" fill="#3cc98f"/>
+          <circle cx="86" cy="30" r="7" fill="white" stroke="#23252b" stroke-width="3"/>
+          <circle cx="104" cy="30" r="7" fill="white" stroke="#23252b" stroke-width="3"/>
+          <circle cx="87" cy="31" r="3" fill="#23252b"/>
+          <circle cx="105" cy="31" r="3" fill="#23252b"/>
+          <path d="M93 30 h4 M86 44 q8 7 16 0" fill="none" stroke="#23252b" stroke-width="3" stroke-linecap="round"/>
+        </symbol>
+        <use href="#worm"/>
+      </svg>
+      Homeworm
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pricing.html">Prices</a></li>
+        <li><a href="help.html" aria-current="page">Help</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="page-top">
+      <h1>Questions and answers</h1>
+      <p class="lead">Click a question to open the answer. Still stuck? Write to us.</p>
+    </section>
+
+    <div class="help-layout">
+      <section class="faq">
+        <h2>Often asked</h2>
+        <!-- details and summary open and close by themselves. No script! -->
+        <details open>
+          <summary>Is Homeworm free?</summary>
+          <p>Yes. The Seedling plan is free for one child, for as long as you like. Bigger plans cost a little each month.</p>
+        </details>
+        <details>
+          <summary>What age is it for?</summary>
+          <p>Kids from about 7 to 12 years old. The buttons are big and the words are short.</p>
+        </details>
+        <details>
+          <summary>Can grandma see the plan too?</summary>
+          <p>Yes, on the Family plan. Up to four grown-ups can see the plan on their own phones.</p>
+        </details>
+        <details>
+          <summary>What can I get for my stars?</summary>
+          <p>Your family picks the treats together. A walk to the park, a film night or pancakes on Sunday.</p>
+        </details>
+        <details>
+          <summary>Does it work without the internet?</summary>
+          <p>Yes. Your list is saved on the phone. The family view updates when you are online again.</p>
+        </details>
+        <details>
+          <summary>How do I stop my plan?</summary>
+          <p>Open Settings, then Plan, then Stop. Your lists stay safe on the free plan.</p>
+        </details>
+      </section>
+
+      <section class="contact" id="contact">
+        <h2>Write to us</h2>
+        <p>We answer in one school day.</p>
+        <!-- A form with no action does not send anything. It is here for the look. -->
+        <form class="contact-form">
+          <label for="name">Your name</label>
+          <input id="name" type="text" placeholder="Mia">
+          <label for="mail">Your e-mail</label>
+          <input id="mail" type="email" placeholder="mia@example.com">
+          <label for="who">I am a</label>
+          <select id="who">
+            <option>Kid</option>
+            <option>Grown-up</option>
+            <option>Teacher</option>
+          </select>
+          <label for="message">Your question</label>
+          <textarea id="message" rows="4" placeholder="Hi Homeworm team..."></textarea>
+          <label class="check"><input type="checkbox" checked> Send me a copy</label>
+          <button class="button" type="submit">Send my question</button>
+          <p class="form-note">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><b>Homeworm</b> is a make-believe app. Make it your own!</p>
+    <p>A calendar shows the days, weeks and months of a year. Read about <a href="https://simple.wikipedia.org/wiki/Calendar">calendars on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

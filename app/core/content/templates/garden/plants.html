@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kettlemoss Garden Club - Our plants</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg class="icon-defs" aria-hidden="true">
+    <symbol id="plant" viewBox="0 0 24 24"><path d="M12 21 V11 M12 14 C8 14 5 11 5 7 C9 7 12 10 12 14 M12 11 C12 7 15 4 19 4 C19 8 16 11 12 11 M5 21 H19"></path></symbol>
+    <symbol id="sun" viewBox="0 0 24 24"><path d="M12 8 A4 4 0 1 1 12 16 A4 4 0 1 1 12 8 Z M12 2 V4 M12 20 V22 M2 12 H4 M20 12 H22 M5 5 L6.5 6.5 M17.5 17.5 L19 19 M5 19 L6.5 17.5 M17.5 6.5 L19 5"></path></symbol>
+    <symbol id="drop" viewBox="0 0 24 24"><path d="M12 3 C16 9 18 12 18 15 A6 6 0 0 1 6 15 C6 12 8 9 12 3 Z"></path></symbol>
+  </svg>
+
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#plant"></use></svg>
+      <span>Kettlemoss<small>School Garden Club</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Garden year</a></li>
+        <li><a href="plants.html" aria-current="page">Plants</a></li>
+        <li><a href="club.html">Join the club</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-title">
+      <h1>Our plants</h1>
+      <p class="lead">A seed packet tells you how much sun and water a plant wants. Our plant cards look like seed packets, so you can read them the same way.</p>
+      <dl class="key">
+        <dt><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon" href="#sun" x="48" width="24" height="24"></use></svg>Full sun</dt>
+        <dd>Sun for most of the day.</dd>
+        <dt><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon" href="#drop" x="48" width="24" height="24"></use></svg>Water often</dt>
+        <dd>Keep the soil damp. One drop means: water only when it has not rained for a long time.</dd>
+      </dl>
+    </section>
+
+    <div class="packets">
+      <article class="packet peas">
+        <svg class="packet-picture" viewBox="0 0 120 100" aria-hidden="true">
+          <path class="pod" d="M8 52 C30 22 90 22 112 52 C90 72 30 72 8 52 Z"></path>
+          <circle class="pea" cx="30" cy="50" r="9"></circle><circle class="pea" cx="50" cy="47" r="10"></circle><circle class="pea" cx="71" cy="47" r="10"></circle><circle class="pea" cx="91" cy="50" r="9"></circle>
+          <path class="stem" d="M110 48 C118 40 114 28 104 30"></path>
+        </svg>
+        <div class="packet-label">
+          <h2>Peas</h2>
+          <p>Peas like cool weather, so they can go in early. They climb with tiny curly tendrils.</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon" href="#sun" x="48" width="24" height="24"></use></svg>Full sun</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon off" href="#drop" x="48" width="24" height="24"></use></svg>Water when dry</p>
+        </div>
+      </article>
+
+      <article class="packet potatoes">
+        <svg class="packet-picture" viewBox="0 0 120 100" aria-hidden="true">
+          <path class="potato" d="M14 62 C14 42 40 36 58 44 C74 52 70 78 48 82 C28 86 14 78 14 62 Z"></path>
+          <path class="potato" d="M62 66 C62 50 84 44 100 52 C114 60 108 84 88 86 C72 88 62 80 62 66 Z"></path>
+          <circle class="eye" cx="34" cy="58" r="3"></circle><circle class="eye" cx="48" cy="68" r="3"></circle><circle class="eye" cx="86" cy="64" r="3"></circle><circle class="eye" cx="96" cy="74" r="3"></circle>
+          <path class="stem" d="M34 46 C32 34 38 26 46 24"></path>
+        </svg>
+        <div class="packet-label">
+          <h2>Potatoes</h2>
+          <p>Plant one small potato and many new ones grow under the ground. Never eat the leaves or green potatoes.</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon" href="#sun" x="48" width="24" height="24"></use></svg>Full sun</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon off" href="#drop" x="48" width="24" height="24"></use></svg>Water when dry</p>
+        </div>
+      </article>
+
+      <article class="packet berries">
+        <svg class="packet-picture" viewBox="0 0 120 100" aria-hidden="true">
+          <path class="berry" d="M60 94 C36 82 26 62 30 46 C34 34 48 32 60 38 C72 32 86 34 90 46 C94 62 84 82 60 94 Z"></path>
+          <path class="leaf" d="M60 40 L44 28 L55 31 L60 18 L65 31 L76 28 Z"></path>
+          <circle class="seed" cx="46" cy="52" r="2"></circle><circle class="seed" cx="62" cy="54" r="2"></circle><circle class="seed" cx="76" cy="52" r="2"></circle><circle class="seed" cx="52" cy="68" r="2"></circle><circle class="seed" cx="69" cy="69" r="2"></circle><circle class="seed" cx="60" cy="82" r="2"></circle>
+        </svg>
+        <div class="packet-label">
+          <h2>Strawberries</h2>
+          <p>The plants send out long runners that grow into new baby plants. The seeds are on the outside!</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon" href="#sun" x="48" width="24" height="24"></use></svg>Full sun</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon off" href="#drop" x="48" width="24" height="24"></use></svg>Water when dry</p>
+        </div>
+      </article>
+
+      <article class="packet lettuce">
+        <svg class="packet-picture" viewBox="0 0 120 100" aria-hidden="true">
+          <circle class="leaf-light" cx="60" cy="58" r="36"></circle>
+          <path class="leaf" d="M24 58 C24 30 50 22 60 34 C70 22 96 30 96 58 C84 46 72 48 60 60 C48 48 36 46 24 58 Z"></path>
+          <path class="stem" d="M60 62 V90 M60 74 L46 64 M60 74 L74 64"></path>
+        </svg>
+        <div class="packet-label">
+          <h2>Lettuce</h2>
+          <p>Lettuce is happy in a little shade. In hot weather it grows tall and flowers, and then the leaves taste bitter.</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon off" href="#sun" x="48" width="24" height="24"></use></svg>Sun or a little shade</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon" href="#drop" x="48" width="24" height="24"></use></svg>Water often</p>
+        </div>
+      </article>
+
+      <article class="packet sunflower">
+        <svg class="packet-picture" viewBox="0 0 120 100" aria-hidden="true">
+          <path class="stem" d="M60 98 V70"></path>
+          <path class="leaf" d="M60 90 C46 90 38 82 36 72 C50 72 58 80 60 90 Z"></path>
+          <polygon class="petals" points="60,8 65,22 77,13 75,27 89,25 80,37 94,42 80,47 89,59 75,57 77,71 65,62 60,76 55,62 43,71 45,57 31,59 40,47 26,42 40,37 31,25 45,27 43,13 55,22"></polygon>
+          <circle class="flower-middle" cx="60" cy="42" r="15"></circle>
+        </svg>
+        <div class="packet-label">
+          <h2>Sunflowers</h2>
+          <p>Young sunflowers turn to follow the sun across the sky. When they are older, the flowers face east.</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon" href="#sun" x="48" width="24" height="24"></use></svg>Full sun</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon off" href="#drop" x="48" width="24" height="24"></use></svg>Water when dry</p>
+        </div>
+      </article>
+
+      <article class="packet thyme">
+        <svg class="packet-picture" viewBox="0 0 120 100" aria-hidden="true">
+          <path class="stem" d="M44 98 C44 72 48 52 52 32 M76 98 C76 74 72 54 68 36 M60 98 C60 76 61 56 60 24"></path>
+          <circle class="flower" cx="52" cy="28" r="6"></circle><circle class="flower" cx="68" cy="32" r="6"></circle><circle class="flower" cx="60" cy="20" r="6"></circle>
+          <g class="tiny-leaves"><circle cx="40" cy="80" r="4"></circle><circle cx="50" cy="62" r="4"></circle><circle cx="43" cy="50" r="4"></circle><circle cx="80" cy="82" r="4"></circle><circle cx="70" cy="64" r="4"></circle><circle cx="78" cy="52" r="4"></circle><circle cx="55" cy="74" r="4"></circle><circle cx="65" cy="46" r="4"></circle></g>
+        </svg>
+        <div class="packet-label">
+          <h2>Thyme</h2>
+          <p>Thyme is a herb that likes dry, sunny places. Bees love its tiny flowers. Rub a leaf and smell it!</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="sun-icon" href="#sun" width="24" height="24"></use><use class="sun-icon" href="#sun" x="24" width="24" height="24"></use><use class="sun-icon" href="#sun" x="48" width="24" height="24"></use></svg>Full sun</p>
+          <p class="need"><svg class="rating" viewBox="0 0 72 24" aria-hidden="true"><use class="drop-icon" href="#drop" width="24" height="24"></use><use class="drop-icon off" href="#drop" x="24" width="24" height="24"></use><use class="drop-icon off" href="#drop" x="48" width="24" height="24"></use></svg>Water a little</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Kettlemoss School Garden Club</b> is a pretend club, made with HTML and CSS. The garden facts are real.</p>
+    <p>Want to grow things too? <a href="https://simple.wikipedia.org/wiki/Gardening">Read about gardening on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

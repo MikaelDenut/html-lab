@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How it works - Nova Newt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <span class="hero-pixels tiny"></span>
+      Nova Newt
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Coin hunt</a></li>
+        <li><a href="doors.html">Pick a door</a></li>
+        <li><a href="how-it-works.html" aria-current="page">How it works</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page narrow">
+    <h1 class="page-title">How it works</h1>
+    <p class="lead">Is this a real game, or just a website? It is both! There is no JavaScript here, only HTML and CSS. These are the tricks, with the important lines from style.css.</p>
+
+    <section>
+      <h2>A label clicks its checkbox</h2>
+      <p>Every coin is a checkbox. The box itself is hidden. What you see is its label, drawn to look like a coin. When you click a label, the browser clicks its checkbox for you. They belong together because <code>for="coin-1"</code> and <code>id="coin-1"</code> match.</p>
+      <pre><code>&lt;input class="coin-box" type="checkbox" id="coin-1"&gt;
+&lt;label class="coin" for="coin-1"&gt;
+  &lt;span class="hidden-text"&gt;Coin 1&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+      <p>Try it here. This checkbox is not hidden, so you can watch it:</p>
+      <p class="try-it">
+        <input type="checkbox" id="try-box">
+        <label for="try-box">Click these words, and look at the box!</label>
+      </p>
+    </section>
+
+    <section>
+      <h2><code>:checked</code> changes the look</h2>
+      <p><code>:checked</code> means "this checkbox has a tick". The <code>+</code> means "the label right after it". So when a coin box gets a tick, its coin fades away, and the mouse can not click it again. In style.css the coin also does a little jump first.</p>
+      <pre><code>.coin-box:checked + .coin {
+  opacity: 0;
+  pointer-events: none;
+}</code></pre>
+    </section>
+
+    <section>
+      <h2><code>counter-increment</code> counts</h2>
+      <p>CSS can count! <code>counter-reset</code> starts a counter at 0. Every box with a tick adds 1. Then <code>content</code> writes the number on the screen.</p>
+      <pre><code>.game { counter-reset: coins; }
+.coin-box:checked { counter-increment: coins; }
+.score::before {
+  content: "Coins: " counter(coins) " of 8";
+}</code></pre>
+      <p>CSS counts from the top of the page to the bottom. That is why the score comes after all 8 coins in index.html.</p>
+    </section>
+
+    <section>
+      <h2><code>:has()</code> and <code>:target</code> ask questions</h2>
+      <p><code>:has()</code> looks inside a box. This rule asks: "Does the game have a coin box with no tick?" <code>:not()</code> turns the question around. When no coin is left, the Level clear banner shows.</p>
+      <pre><code>.game:not(:has(.coin-box:not(:checked))) .level-clear {
+  display: grid;
+}</code></pre>
+      <p><code>:target</code> is the part of the page whose id is at the end of the address. The doors are links like <code>href="#door-2"</code>. Click one, and the box with <code>id="door-2"</code> becomes the target, so it shows.</p>
+      <pre><code>.result { display: none; }
+.result:target { display: grid; }</code></pre>
+    </section>
+
+    <section class="pixel-box">
+      <h2>Do real game sites work like this?</h2>
+      <p>Not often. Most games on the web use JavaScript, a programming language that runs in the browser. It can move a hero with the arrow keys, play sounds and save your best score. This site has no JavaScript. It shows how far HTML and CSS can go on their own.</p>
+      <p>Try it yourself:</p>
+      <ul>
+        <li>Move a coin: change <code>left</code> and <code>top</code> in <code>.spot-1</code> in style.css.</li>
+        <li>Paint the coins: change <code>--coin</code> in <code>:root</code>.</li>
+        <li>Add a 9th coin: copy a coin in index.html and change its numbers to 9. Add a <code>.spot-9</code> place in style.css, and change "of 8" to "of 9". Then change the 8 at the top of index.html and in the Level clear words.</li>
+      </ul>
+      <p><a href="https://en.wikipedia.org/wiki/JavaScript">Read about JavaScript on Wikipedia</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Nova Newt is a made-up game, built with HTML and CSS. Make up your own!</p>
+    <p><a href="https://en.wikipedia.org/wiki/Pixel_art">Read about pixel art on Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "title": "Dinosaur Museum",
+  "name": "My dinosaur museum",
+  "blurb": "A natural history museum with giant dinosaurs and old paintings",
+  "category": "fun",
+  "layout": "Named grid areas, lightbox gallery, vertical timeline",
+  "shows": [
+    "A page cut into named boxes with grid areas",
+    "Click a picture to see it big, no script",
+    "Pictures that zoom when your mouse is on them",
+    "A timeline drawn with lines and dots",
+    "A striped table and questions that open"
+  ],
+  "accent": "#b5522a"
+}

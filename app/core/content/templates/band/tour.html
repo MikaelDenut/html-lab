@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tour - The Thunder Pancakes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <ellipse cx="20" cy="31" rx="17" ry="6" fill="#c8742a"/>
+        <ellipse cx="20" cy="25" rx="16" ry="6" fill="#e0943f"/>
+        <ellipse cx="20" cy="19" rx="15" ry="6" fill="#f2b45a"/>
+        <path d="M22 1 L13 17 L20 17 L16 30 L28 12 L21 12 Z" fill="#ffd84d" stroke="#19143a" stroke-width="1.5"/>
+      </svg>
+      The Thunder Pancakes
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="music.html">Music</a></li>
+        <li><a href="tour.html" aria-current="page">Tour</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="tour-top">
+      <h1 class="page-title">The Syrup Storm Tour</h1>
+      <!-- The tour bus, drawn with SVG. -->
+      <svg class="bus" viewBox="0 0 200 100" role="img" aria-label="The band's tour bus">
+        <rect x="6" y="14" width="186" height="66" rx="14" fill="#ff5c8a"/>
+        <rect x="6" y="52" width="186" height="10" fill="#ffd84d"/>
+        <rect x="22" y="24" width="30" height="22" rx="4" fill="#fff4dc"/>
+        <rect x="60" y="24" width="30" height="22" rx="4" fill="#fff4dc"/>
+        <rect x="98" y="24" width="30" height="22" rx="4" fill="#fff4dc"/>
+        <rect x="150" y="24" width="32" height="40" rx="4" fill="#fff4dc"/>
+        <circle cx="50" cy="82" r="14" fill="#19143a"/><circle cx="50" cy="82" r="5" fill="#cccccc"/>
+        <circle cx="152" cy="82" r="14" fill="#19143a"/><circle cx="152" cy="82" r="5" fill="#cccccc"/>
+      </svg>
+    </div>
+    <p class="intro">Seven towns, one bus and a lot of pancakes. Come and sing with us!</p>
+
+    <!-- The tour list. Each show has a date block on the left.
+         time tells the browser it is a date: datetime="03-14" means 14 March. -->
+    <section>
+      <h2>Shows</h2>
+      <ol class="tour-list">
+        <li class="gig">
+          <time class="date" datetime="03-14"><span class="month">Mar</span> <span class="day">14</span></time>
+          <div class="gig-info"><h3>Helsinki</h3><p>The Pancake Tent, by the sea</p></div>
+          <p class="stamp">Sold out</p>
+        </li>
+        <li class="gig">
+          <time class="date" datetime="03-21"><span class="month">Mar</span> <span class="day">21</span></time>
+          <div class="gig-info"><h3>Tallinn</h3><p>Old Town Park Stage</p></div>
+          <p class="stamp">Sold out</p>
+        </li>
+        <li class="gig">
+          <time class="date" datetime="04-04"><span class="month">Apr</span> <span class="day">04</span></time>
+          <div class="gig-info"><h3>Stockholm</h3><p>The Big Red Barn</p></div>
+          <a class="ticket" href="#tickets">Get tickets</a>
+        </li>
+        <li class="gig">
+          <time class="date" datetime="04-11"><span class="month">Apr</span> <span class="day">11</span></time>
+          <div class="gig-info"><h3>Oslo</h3><p>Snowy Hill School Hall</p></div>
+          <a class="ticket" href="#tickets">Get tickets</a>
+        </li>
+        <li class="gig">
+          <time class="date" datetime="04-25"><span class="month">Apr</span> <span class="day">25</span></time>
+          <div class="gig-info"><h3>Copenhagen</h3><p>Bicycle Square, outdoors</p></div>
+          <p class="stamp">Sold out</p>
+        </li>
+        <li class="gig">
+          <time class="date" datetime="05-09"><span class="month">May</span> <span class="day">09</span></time>
+          <div class="gig-info"><h3>Budapest</h3><p>A big boat on the Danube</p></div>
+          <a class="ticket" href="#tickets">Get tickets</a>
+        </li>
+        <li class="gig">
+          <time class="date" datetime="05-16"><span class="month">May</span> <span class="day">16</span></time>
+          <div class="gig-info"><h3>Vienna</h3><p>The last show, with fireworks</p></div>
+          <a class="ticket" href="#tickets">Get tickets</a>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Questions and answers. Click a question to open it. No script!
+         The ticket question starts open (open), so the Get tickets buttons land on the answer. -->
+    <section class="faq">
+      <h2>Questions</h2>
+      <details id="tickets" open>
+        <summary>How do I get tickets?</summary>
+        <p>Ask a grown-up to buy them at the door. Kids up to 12 pay half price.</p>
+      </details>
+      <details>
+        <summary>Is it very loud?</summary>
+        <p>Rock music is loud, and loud sound can hurt your ears. We give free ear plugs to everyone at the door.</p>
+      </details>
+      <details>
+        <summary>Are there really pancakes?</summary>
+        <p>Yes! After every show, Max makes pancakes for the first 50 fans.</p>
+      </details>
+      <details>
+        <summary>Can I play with the band?</summary>
+        <p>At every show, one fan comes up and plays the cowbell in "Big Stack Boogie".</p>
+      </details>
+    </section>
+
+    <aside class="fact-box">
+      <h2>Why ear plugs?</h2>
+      <p>Deep inside your ear are tiny hair cells. They turn sound into signals for your brain. Very loud sound can harm them, and they do not grow back.</p>
+      <a class="button" href="https://simple.wikipedia.org/wiki/Ear">Ears on Wikipedia</a>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Thunder Pancakes are made up, and this site is made with HTML and CSS.</p>
+  </footer>
+</body>
+</html>

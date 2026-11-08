@@ -1,0 +1,33 @@
+{
+  "projectName": "My new page",
+  "projects": {
+    "inline": [
+      {
+        "name": "my-page.html",
+        "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My new page</title>\n  </head>\n  <body>\n    <h1 style=\"color: teal;\">My new page</h1>\n    <p>Write something here.</p>\n  </body>\n</html>\n",
+        "hidden": false
+      }
+    ],
+    "file": [
+      {
+        "name": "my-page.html",
+        "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My new page</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>My new page</h1>\n    <p>Write something here.</p>\n  </body>\n</html>\n",
+        "hidden": false
+      },
+      {
+        "name": "style.css",
+        "code": "h1 {\n  color: teal;\n}\n",
+        "hidden": false
+      }
+    ]
+  },
+  "kinds": {
+    "html": {
+      "text": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>{{title}}</title>\n{{link}}  </head>\n  <body>\n    <h1>{{title}}</h1>\n    <p>Write something here.</p>\n  </body>\n</html>\n",
+      "link": "    <link rel=\"stylesheet\" href=\"{{css}}\">\n"
+    },
+    "css": {
+      "text": "h1 {\n  color: teal;\n}\n"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kettle and Key - Homes for sale in Ambleford</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap top-bar">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#b8352a"/><circle cx="16" cy="22" r="7" fill="none" stroke="#ffffff" stroke-width="3"/><path d="M23 22 H36 M31 22 V28 M35 22 V27" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/></svg>
+      Kettle and Key
+    </a>
+    <nav aria-label="Main menu">
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Homes for sale</a></li>
+        <li><a href="house.html">Featured home</a></li>
+        <li><a href="sell.html">Sell your home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div class="page-top">
+      <h1>Homes for sale in Ambleford</h1>
+      <p class="lead">Cottages, flats and one very old oak tree, all a short walk from the sea.</p>
+    </div>
+
+    <form class="search" aria-label="Search for a home">
+      <div>
+        <label for="place">Street or area</label>
+        <input id="place" type="text" placeholder="For example: Harbour Lane">
+      </div>
+      <div>
+        <label for="type">Type of home</label>
+        <div class="select-box"><select id="type"><option>Any</option><option>House</option><option>Flat</option><option>Plot of land</option></select></div>
+      </div>
+      <div>
+        <label for="rooms">Bedrooms</label>
+        <div class="select-box"><select id="rooms"><option>Any</option><option>1 or more</option><option>2 or more</option><option>3 or more</option></select></div>
+      </div>
+      <div>
+        <label for="price">Highest price</label>
+        <div class="select-box"><select id="price"><option>Any</option><option>&euro;200,000</option><option>&euro;300,000</option><option>&euro;400,000</option></select></div>
+      </div>
+      <button class="button" type="button">Search homes</button>
+    </form>
+    <p class="practice">A practice form: HTML Lab does not send it.</p>
+
+    <!-- These three radio buttons are the filter. They must come before the list. -->
+    <input class="filter-radio" type="radio" name="show" id="show-all" checked>
+    <input class="filter-radio" type="radio" name="show" id="show-houses">
+    <input class="filter-radio" type="radio" name="show" id="show-new">
+    <div class="filters">
+      <strong>Show:</strong>
+      <label for="show-all">All homes</label>
+      <label for="show-houses">Houses only</label>
+      <label for="show-new">New this week</label>
+    </div>
+
+    <!-- The name of each home comes first. CSS moves the photo and the price above it. -->
+    <ul class="listings">
+      <li class="card featured">
+        <h2><a href="house.html">Robin Cottage: see inside</a></h2>
+        <div class="card-photo">
+          <img src="houses-white-house.jpg" width="800" height="531" alt="A white wooden house with a red door, a picket fence and yellow autumn trees">
+          <span class="ribbon">New</span>
+        </div>
+        <p class="price">&euro;345,000</p>
+        <p class="address">7 Harbour Lane, Ambleford</p>
+        <ul class="card-facts"><li>3 bedrooms</li><li>1 bathroom</li><li>112 m&sup2;</li><li>Garden</li></ul>
+      </li>
+
+      <li class="card not-new">
+        <h2>Thatch End</h2>
+        <div class="card-photo">
+          <img src="houses-cottage.jpg" width="760" height="549" alt="An old stone cottage with a thick straw roof and small windows">
+        </div>
+        <p class="price">&euro;420,000</p>
+        <p class="address">2 Mill Row, Ambleford</p>
+        <ul class="card-facts"><li>4 bedrooms</li><li>2 bathrooms</li><li>140 m&sup2;</li></ul>
+      </li>
+
+      <li class="card">
+        <h2>The Lookout</h2>
+        <div class="card-photo">
+          <img src="houses-bungalow.jpg" width="760" height="506" alt="A low white house with a green lawn under an orange evening sky">
+          <span class="ribbon">New</span>
+        </div>
+        <p class="price">&euro;298,000</p>
+        <p class="address">15 Cliff Road, Ambleford</p>
+        <ul class="card-facts"><li>2 bedrooms</li><li>1 bathroom</li><li>86 m&sup2;</li></ul>
+      </li>
+
+      <li class="card not-house not-new">
+        <h2>Building plot by the oak</h2>
+        <div class="card-photo">
+          <img src="tree.jpg" width="320" height="240" alt="One big oak tree in a misty field at sunrise">
+        </div>
+        <p class="price">&euro;95,000</p>
+        <p class="address">Meadow Way, Ambleford</p>
+        <ul class="card-facts"><li>1,200 m&sup2; of land</li><li>Build your own home</li></ul>
+      </li>
+
+      <li class="card not-house">
+        <h2>Top-floor flat with a sea view</h2>
+        <div class="card-photo">
+          <img src="sun.jpg" width="320" height="240" alt="The sun setting over the sea, the view from the flat">
+          <span class="ribbon">New</span>
+        </div>
+        <p class="price">&euro;210,000</p>
+        <p class="address">4 Quay Street, Ambleford</p>
+        <ul class="card-facts"><li>2 bedrooms</li><li>68 m&sup2;</li><li>Balcony</li></ul>
+      </li>
+
+      <li class="sell-card">
+        <h2>Selling a home in Ambleford?</h2>
+        <p>See what homes like yours sell for, and how Maya helps you sell.</p>
+        <a class="button" href="sell.html#estimate">See home prices</a>
+      </li>
+    </ul>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>Kettle and Key, Ambleford and its homes are made up for this website.</p>
+      <p>What is a house made of? <a href="https://simple.wikipedia.org/wiki/House">House (Simple English Wikipedia)</a></p>
+    </div>
+  </footer>
+</body>
+</html>

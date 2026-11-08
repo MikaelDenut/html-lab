@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hover playground - Cards</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="logo"><a href="index.html">Hover playground</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html" aria-current="page">Cards</a></li>
+        <li><a href="buttons.html">Buttons</a></li>
+        <li><a href="pictures.html">Pictures</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Cards that play</h1>
+      <p>Put your mouse on a card and watch it. No mouse? Press <kbd>Tab</kbd> to jump from card to card.</p>
+      <p>Every trick is one small block in <code>style.css</code>. Find its name in capital letters, copy the block and try it on your own page!</p>
+    </section>
+
+    <!-- Each group is a section with its own heading inside it.
+         tabindex="0" lets the Tab key stop on a card, so the keyboard can play it too. -->
+    <section class="group">
+      <h2 class="group-title">Move it!</h2>
+      <div class="grid">
+        <article class="card grow" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Grow</h3>
+          <p><code>scale(1.3)</code> makes it 1.3 times as big.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article class="card shrink" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Shrink</h3>
+          <p><code>scale(0.6)</code> makes it smaller.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article class="card lift" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Lift up</h3>
+          <p><code>translateY</code> moves it up, a soft <code>box-shadow</code> sits under it.</p>
+          <p class="help">Help: Hover effects</p>
+        </article>
+        <article class="card tilt" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Tilt</h3>
+          <p><code>rotate(-12deg)</code> leans it a little.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article class="card turn" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Turn around</h3>
+          <p><code>rotate(360deg)</code> is one whole turn.</p>
+          <p class="help">Help: Spin and pulse</p>
+        </article>
+        <article class="card slide" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Slide</h3>
+          <p><code>translateX(44px)</code> moves it to the right.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article class="card jelly" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Jelly squish</h3>
+          <p><code>@keyframes</code> make it flat, then tall, then fine again.</p>
+          <p class="help">Help: Bounce, shake and wobble</p>
+        </article>
+        <article class="card wiggle" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Wiggle</h3>
+          <p><code>rotate</code> left and right, three times.</p>
+          <p class="help">Help: Bounce, shake and wobble</p>
+        </article>
+        <article class="card flip" tabindex="0">
+          <div class="demo">
+            <span class="flip-box"><span class="thing"></span><span class="flip-back">Hi!</span></span>
+          </div>
+          <h3>Flip</h3>
+          <p><code>rotateY(180deg)</code> turns it round to show the back.</p>
+          <p class="help">Help: 3D flip cards</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="group">
+      <h2 class="group-title">Colours and lines</h2>
+      <div class="grid">
+        <article class="card swap" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Colour swap</h3>
+          <p><code>transition</code> brings the new colour slowly.</p>
+          <p class="help">Help: Slow and smooth changes</p>
+        </article>
+        <article class="card fade" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Fade away</h3>
+          <p><code>opacity: 0.15</code> makes it almost see-through.</p>
+          <p class="help">Help: Fade in and out</p>
+        </article>
+        <article class="card glow" tabindex="0">
+          <div class="demo"><span class="thing"></span></div>
+          <h3>Glow</h3>
+          <p>A big soft <code>box-shadow</code> in a bright colour.</p>
+          <p class="help">Help: Glow and neon</p>
+        </article>
+        <article class="card underline" tabindex="0">
+          <div class="demo"><span class="word">Hello!</span></div>
+          <h3>Underline</h3>
+          <p>A line grows under the word with <code>scaleX</code>.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </article>
+        <article class="card draw" tabindex="0">
+          <div class="demo"><span class="frame">Draw me</span></div>
+          <h3>Draw a border</h3>
+          <p>Two hidden boxes grow, one after the other.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </article>
+        <article class="card fill" tabindex="0">
+          <div class="demo"><span class="fill-word">Fill me</span></div>
+          <h3>Fill up</h3>
+          <p>A yellow box grows from the left with <code>scaleX</code>.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, this site stops moving. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Cascading_Style_Sheets">What is CSS? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

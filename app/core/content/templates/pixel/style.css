@@ -1,0 +1,591 @@
+/* NOVA NEWT: a pixel game made with HTML and CSS only. */
+
+/* Change one line here, and every page changes! */
+:root {
+  --night: #120f2b;
+  --panel: #1f1a47;
+  --edge: #463b96;
+  --text: #f3f1ff;
+  --soft: #c2bcec;
+  --gold: #ffcf33;
+  --gold-dark: #b37a00;
+  --pink: #ff3ea5;
+  --cyan: #45e4e8;
+
+  /* The coins. Try --coin: #45e4e8; for blue coins! */
+  --coin: #ffcf33;
+  --coin-edge: #4a2e00;
+
+  --sky-top: #1a1550;
+  --sky-mid: #251c68;
+  --sky-low: #3b2d8a;
+  --grass: #4cc35a;
+  --leaf: #2f9e50;
+  --dirt: #7a4b24;
+  --brick: #c9622f;
+  --brick-dark: #7d3412;
+  --cloud: #d9d4ff;
+  --moon: #fff1b8;
+
+  --title-font: Phosphate, Impact, sans-serif;
+  --text-font: "Avenir Next", "Gill Sans", sans-serif;
+  --code-font: Menlo, Monaco, monospace;
+
+  --space-s: 8px;
+  --space-gap: 12px;
+  --space-m: 16px;
+  --space-side: 24px;
+  --space-l: 32px;
+  --space-xl: 56px;
+
+  /* Shapes for clip-path. Each pair of numbers is one corner. */
+  --blob: polygon(20% 0, 80% 0, 80% 20%, 100% 20%, 100% 80%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0 80%, 0 20%, 20% 20%);
+  --steps: polygon(0 100%, 0 55%, 15% 55%, 15% 25%, 35% 25%, 35% 0, 65% 0, 65% 30%, 85% 30%, 85% 60%, 100% 60%, 100% 100%);
+  --arch: polygon(0 100%, 0 14%, 8% 14%, 8% 7%, 18% 7%, 18% 2%, 32% 2%, 32% 0, 68% 0, 68% 2%, 82% 2%, 82% 7%, 92% 7%, 92% 14%, 100% 14%, 100% 100%);
+
+  /* Nova's colours. Try --skin: #7cff6b; for a green newt! */
+  --glass: #7df9ff;
+  --shine: #ffffff;
+  --skin: #ff8a3d;
+  --eyes: #1a1033;
+  --spots: #ffd23f;
+  --mouth: #c2185b;
+  --suit: #e9e6ff;
+  --badge: #ff3ea5;
+  --boots: #7b61ff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--text-font);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--night);
+}
+
+a { color: var(--cyan); }
+a:hover { color: var(--gold); }
+
+/* A cyan ring shows where the keyboard is. */
+a:focus-visible, button:focus-visible { outline: 3px solid var(--cyan); outline-offset: 5px; }
+
+/* Pixel corners: four hard shadows cut the corners off.
+   --line is the frame colour. A box can set its own --line. */
+.menu a, .button, .score, .pixel-box, pre, .result, .clear-card, .coin::before {
+  --line: var(--edge);
+  box-shadow: 4px 0 0 var(--line), -4px 0 0 var(--line), 0 4px 0 var(--line), 0 -4px 0 var(--line);
+}
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-m) var(--space-side);
+  border-bottom: 4px solid var(--edge);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-gap);
+  min-height: 44px;
+  font-family: var(--title-font);
+  font-size: 25px;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+/* The menu is a list. Flex puts the links side by side. */
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* min-height: 44px: big enough for a finger. */
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 16px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--panel);
+}
+
+.menu a:hover { --line: var(--cyan); }
+.menu a:active { transform: translateY(2px); }
+.menu a[aria-current="page"] { --line: var(--gold); color: var(--night); background: var(--gold); }
+
+.page { max-width: 1040px; margin: 0 auto; padding: var(--space-l) var(--space-side) var(--space-xl); }
+.narrow { max-width: 760px; }
+p, li { max-width: 70ch; }
+
+/* Titles with a hard pink shadow.
+   clamp(smallest, grows with the window, biggest) */
+.page-title, .clear-title {
+  max-width: 18ch;
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-size: clamp(31px, 6vw, 49px);
+  font-weight: normal;
+  line-height: 1.1;
+  color: var(--gold);
+  text-shadow: 3px 3px 0 var(--pink);
+}
+
+.lead { margin: 0 0 var(--space-l); font-size: 20px; color: var(--soft); }
+
+h2 {
+  max-width: 24ch;
+  margin: var(--space-xl) 0 var(--space-s);
+  font-family: var(--title-font);
+  font-size: 25px;
+  font-weight: normal;
+  line-height: 1.2;
+  color: var(--gold);
+}
+
+h2 code { font-size: 0.8em; }
+
+/* content: "" makes an empty box to paint. absolute places it anywhere. */
+.tree::before, .tree::after, .door-face::after, .slime::before,
+.slime::after, .slime-mouth, .chest::before, .chest::after { content: ""; position: absolute; }
+
+/* A screen reader reads the page out loud. These words are only for it. */
+.hidden-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* LEVEL 1. counter-reset starts the count at 0. */
+.game { max-width: 880px; margin: 0 auto; counter-reset: coins; }
+
+/* A night sky in three bands of colour. */
+.screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 6px solid var(--edge);
+  background: linear-gradient(var(--sky-top) 30%, var(--sky-mid) 30% 55%, var(--sky-low) 55%);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Places are in % of the screen. */
+.scenery { position: absolute; inset: 0; }
+.scenery span { position: absolute; display: block; }
+
+/* Stars: one tiny square, copied with box-shadow. */
+.stars {
+  left: 6%;
+  top: 12%;
+  width: 4px;
+  height: 4px;
+  background: var(--cloud);
+  box-shadow: 90px 30px var(--cloud), 240px 44px var(--moon), 430px 8px var(--cloud), 610px 52px var(--cloud);
+}
+
+.moon { right: 6%; top: 9%; width: 8%; aspect-ratio: 1; background: var(--moon); }
+
+/* clip-path cuts a box into a blob shape. */
+.cloud, .bush, .moon, .tree::after { -webkit-clip-path: var(--blob); clip-path: var(--blob); }
+.cloud { height: 9%; background: var(--cloud); }
+.cloud-1 { left: 16%; top: 13%; width: 15%; }
+.cloud-2 { left: 50%; top: 8%; width: 12%; }
+.hill { bottom: 14%; -webkit-clip-path: var(--steps); clip-path: var(--steps); }
+.hill-1 { left: -4%; width: 50%; height: 34%; background: #2a2368; }
+.hill-2 { right: -6%; width: 62%; height: 24%; background: #352c7c; }
+
+.ground {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14%;
+  background: var(--dirt);
+  border-top: 8px solid var(--grass);
+}
+
+/* A trunk (::before) and leaves (::after). */
+.tree { left: 4%; bottom: 14%; width: 16%; height: 46%; }
+.tree::before { left: 40%; bottom: 0; width: 20%; height: 50%; background: #6b3f1f; }
+.tree::after { left: 0; top: 0; width: 100%; height: 66%; background: var(--leaf); }
+.bush { left: 69%; bottom: 14%; width: 12%; height: 11%; background: var(--leaf); }
+
+/* background-size: 33.4% repeats one brick 3 times. */
+.block {
+  height: 7%;
+  background-image: linear-gradient(90deg, var(--brick) 92%, var(--brick-dark) 92%);
+  background-size: 33.4% 100%;
+  border-top: 4px solid #f08a4b;
+  border-bottom: 4px solid var(--brick-dark);
+}
+
+.block-1 { left: 30%; top: 54%; width: 15%; }
+.block-2 { left: 55%; top: 40%; width: 12%; }
+.block-3 { left: 80%; top: 62%; width: 14%; }
+
+/* Nova stands on the grass. Make font-size bigger and she grows! */
+.scenery .player { left: 21%; bottom: 14%; font-size: 6px; }
+
+/* translate(-50%, -50%) moves a coin back by half its size. */
+.spot { position: absolute; z-index: 3; width: 48px; height: 48px; transform: translate(-50%, -50%); }
+
+.spot-1 { left: 12%; top: 52%; }
+.spot-2 { left: 26%; top: 22%; }
+.spot-3 { left: 37%; top: 45%; }
+.spot-4 { left: 48%; top: 77%; }
+.spot-5 { left: 61%; top: 30%; }
+.spot-6 { left: 75%; top: 80%; }
+.spot-7 { left: 79%; top: 16%; }
+.spot-8 { left: 87%; top: 52%; }
+
+/* opacity: 0 hides the box. display: none would stop the counter! */
+.coin-box { position: absolute; left: 50%; top: 50%; width: 1px; height: 1px; margin: 0; opacity: 0; }
+
+/* The coin is the label. Clicking it clicks the checkbox. */
+.coin { display: grid; place-items: center; width: 100%; height: 100%; cursor: pointer; }
+
+.coin::before {
+  --line: var(--coin-edge);
+  content: "";
+  width: 24px;
+  height: 28px;
+  background: linear-gradient(90deg, var(--coin) 40%, #fff2a8 40% 60%, var(--coin) 60%);
+}
+
+.coin:hover { transform: translateY(-4px); }
+.coin:active { transform: scale(0.85); }
+.coin-box:focus-visible + .coin { outline: 4px solid var(--text); outline-offset: 2px; }
+
+/* Every ticked box adds 1 to the counter. Tab skips it now. */
+.coin-box:checked { counter-increment: coins; visibility: hidden; }
+
+/* + means "the label just after it". A picked coin fades away,
+   and the mouse can not click it again. */
+.coin-box:checked + .coin {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The score comes AFTER the coins, so all are counted. */
+.score {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 6;
+  margin: 0;
+  padding: 2px 12px;
+  font-family: var(--code-font);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--gold);
+  background: var(--night);
+}
+
+.score::before {
+  content: "Coins: " counter(coins) " of 8";
+}
+
+/* The banner shows when no coin is left. */
+.level-clear {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: none;
+  place-items: center;
+  padding: var(--space-m);
+  background: rgba(18, 15, 43, 0.8);
+}
+
+.game:not(:has(.coin-box:not(:checked))) .level-clear {
+  display: grid;
+}
+
+.clear-card { --line: var(--gold); max-width: 420px; padding: var(--space-l); text-align: center; background: var(--panel); }
+.clear-title { margin: 0 auto var(--space-s); text-transform: uppercase; }
+.clear-card p, .result p { margin: 0 0 var(--space-m); }
+
+.game-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  margin-top: var(--space-m);
+}
+
+.how-to { margin: 0; color: var(--soft); }
+.hall + .how-to { margin-top: var(--space-m); }
+
+/* A gold button that moves down when pressed. */
+.button {
+  --line: var(--gold-dark);
+  display: inline-block;
+  min-height: 44px;
+  padding: var(--space-s) 20px;
+  border: 0;
+  font-family: var(--text-font);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--night);
+  text-decoration: none;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+.button:hover { color: var(--night); background: #ffe07a; }
+.button:active { transform: translateY(2px); }
+
+.about { display: grid; grid-template-columns: 2fr 1fr; align-items: start; gap: var(--space-l); }
+
+.about > section { padding-top: var(--space-l); }
+
+.pixel-box { margin: var(--space-xl) 4px 0; padding: var(--space-l) var(--space-side); background: var(--panel); }
+.pixel-box h2, .result h2 { margin-top: 0; }
+
+/* LEVEL 2. Doors and rooms share one grid cell. */
+.hall {
+  display: grid;
+  padding: var(--space-l) var(--space-m);
+  border: 6px solid var(--edge);
+  background: linear-gradient(#251f5c 80%, #3a2f7a 80%);
+}
+
+.hall > * { grid-area: 1 / 1; }
+
+.doors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-m);
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.door { display: block; padding: var(--space-s); color: var(--text); text-align: center; text-decoration: none; }
+.door-red { --door: #c8402f; }
+.door-teal { --door: #23877a; }
+.door-purple { --door: #7d48c7; }
+
+/* A doorway with a pixel arch. */
+.door-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 5;
+  background: #0b0920;
+  -webkit-clip-path: var(--arch);
+  clip-path: var(--arch);
+}
+
+.door-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(90deg, transparent 32%, rgba(0, 0, 0, 0.25) 32% 35%, transparent 35% 65%, rgba(0, 0, 0, 0.25) 65% 68%, transparent 68%), var(--door);
+  transform-origin: left;
+}
+
+.door-face::after { right: 12%; top: 56%; width: 12%; aspect-ratio: 1; background: var(--gold); }
+
+.door-plate {
+  padding: 0 12px;
+  font-family: var(--title-font);
+  font-size: 39px;
+  line-height: 1.3;
+  color: var(--gold);
+  background: var(--night);
+}
+
+.door-name { display: block; margin-top: var(--space-s); font-weight: 600; }
+
+/* rotateY swings a door open. */
+.door:hover .door-face, .door:focus-visible .door-face { transform: perspective(500px) rotateY(-32deg); }
+.door:active .door-face { transform: perspective(500px) rotateY(-55deg); }
+
+/* :target shows the room whose id ends the address. */
+.result {
+  position: relative;
+  z-index: 1;
+  display: none;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-l);
+  margin: 4px;
+  padding: var(--space-l);
+  background: var(--panel);
+}
+
+.result:target { display: grid; }
+
+/* While a room shows, Tab skips the doors. */
+.hall:has(.result:target) .doors { visibility: hidden; }
+
+/* A slime: eyes (::before), pupils (::after), a mouth. */
+.slime {
+  position: relative;
+  width: 160px;
+  height: 120px;
+  background: var(--slime, #5fd35f);
+  -webkit-clip-path: var(--arch);
+  clip-path: var(--arch);
+}
+
+.slime-pink { --slime: #ff8cc6; }
+.slime::before { left: 42px; top: 40px; width: 22px; height: 26px; background: #fff; box-shadow: 54px 0 0 #fff; }
+.slime::after { left: 48px; top: 50px; width: 14px; height: 14px; background: var(--eyes); box-shadow: 54px 0 0 var(--eyes); }
+.slime-mouth { left: 66px; top: 82px; width: 28px; height: 8px; background: var(--eyes); }
+
+/* The chest: lid, band and box in one gradient. */
+.chest {
+  position: relative;
+  width: 170px;
+  height: 120px;
+  margin-top: 28px;
+  background: linear-gradient(#7a3f17 38%, var(--gold) 38% 46%, #8f4c1c 46%);
+}
+
+.chest::before {
+  left: 20%;
+  top: -20px;
+  width: 16px;
+  height: 16px;
+  background: var(--gold);
+  box-shadow: 24px -8px 0 var(--gold), 48px 0 0 #fff2a8, 72px -10px 0 var(--gold), 96px -2px 0 var(--gold);
+}
+
+.chest::after { left: 41%; top: 30%; width: 18%; height: 26%; background: #fff2a8; border: 4px solid var(--gold-dark); }
+
+/* overflow-x: auto lets a long code line scroll. */
+pre {
+  overflow-x: auto;
+  margin: var(--space-m) 4px var(--space-l);
+  padding: var(--space-m);
+  font-family: var(--code-font);
+  font-size: 15px;
+  line-height: 1.5;
+  color: #e6e3ff;
+  background: #0b0920;
+}
+
+code { font-family: var(--code-font); font-size: 0.9em; color: var(--gold); }
+pre code { font-size: inherit; color: inherit; }
+
+/* A checkbox you CAN see. */
+.try-it { display: flex; align-items: center; gap: var(--space-gap); min-height: 44px; }
+.try-it input { width: 24px; height: 24px; margin: 0; accent-color: var(--gold); }
+.try-it label { cursor: pointer; }
+
+.footer { padding: var(--space-l) var(--space-side); border-top: 4px solid var(--edge); color: var(--soft); text-align: center; }
+.footer p { margin: 4px auto; }
+
+/* NOVA is ONE tiny square, 1em big. Each shadow is one more pixel:
+   across, down, colour. Make font-size bigger and Nova grows! */
+.hero-pixels {
+  display: inline-block;
+  vertical-align: top;
+  width: 1em;
+  height: 1em;
+  margin: 0 15em 14em 0;
+  font-size: 6px;
+  box-shadow:
+  /* The glass helmet and its shine */
+  4em 0 var(--glass), 5em 0 var(--glass), 6em 0 var(--glass), 7em 0 var(--glass),
+  8em 0 var(--glass), 9em 0 var(--glass), 10em 0 var(--glass), 11em 0 var(--glass),
+  2em 1em var(--glass), 3em 1em var(--glass), 12em 1em var(--glass), 13em 1em var(--glass),
+  1em 2em var(--glass), 14em 2em var(--glass), 1em 3em var(--glass), 14em 3em var(--glass),
+  1em 4em var(--glass), 14em 4em var(--glass), 1em 5em var(--glass), 14em 5em var(--glass),
+  1em 6em var(--glass), 14em 6em var(--glass), 1em 7em var(--glass), 14em 7em var(--glass),
+  2em 8em var(--glass), 13em 8em var(--glass), 3em 9em var(--glass), 4em 9em var(--glass),
+  5em 9em var(--glass), 6em 9em var(--glass), 7em 9em var(--glass), 8em 9em var(--glass),
+  9em 9em var(--glass), 10em 9em var(--glass), 11em 9em var(--glass), 12em 9em var(--glass),
+  4em 1em var(--shine), 5em 1em var(--shine), 2em 2em var(--shine),
+  /* Skin */
+  4em 2em var(--skin), 5em 2em var(--skin), 10em 2em var(--skin), 11em 2em var(--skin),
+  3em 3em var(--skin), 6em 3em var(--skin), 7em 3em var(--skin), 8em 3em var(--skin),
+  9em 3em var(--skin), 12em 3em var(--skin), 3em 4em var(--skin), 6em 4em var(--skin),
+  7em 4em var(--skin), 8em 4em var(--skin), 9em 4em var(--skin), 12em 4em var(--skin),
+  3em 5em var(--skin), 5em 5em var(--skin), 6em 5em var(--skin), 7em 5em var(--skin),
+  8em 5em var(--skin), 9em 5em var(--skin), 10em 5em var(--skin), 12em 5em var(--skin),
+  3em 6em var(--skin), 5em 6em var(--skin), 6em 6em var(--skin), 7em 6em var(--skin),
+  8em 6em var(--skin), 9em 6em var(--skin), 10em 6em var(--skin), 12em 6em var(--skin),
+  4em 7em var(--skin), 11em 7em var(--skin), 5em 8em var(--skin), 6em 8em var(--skin),
+  7em 8em var(--skin), 8em 8em var(--skin), 9em 8em var(--skin), 10em 8em var(--skin),
+  2em 11em var(--skin), 13em 11em var(--skin), 13em 12em var(--skin), 14em 12em var(--skin),
+  14em 13em var(--skin),
+  /* Eyes, cheeks and the big smile */
+  4em 3em var(--shine), 10em 3em var(--shine),
+  5em 3em var(--eyes), 11em 3em var(--eyes), 4em 4em var(--eyes), 5em 4em var(--eyes),
+  10em 4em var(--eyes), 11em 4em var(--eyes),
+  4em 5em var(--spots), 11em 5em var(--spots),
+  4em 6em var(--mouth), 11em 6em var(--mouth), 5em 7em var(--mouth), 6em 7em var(--mouth),
+  7em 7em var(--mouth), 8em 7em var(--mouth), 9em 7em var(--mouth), 10em 7em var(--mouth),
+  /* The space suit, its badge and the boots */
+  3em 10em var(--suit), 4em 10em var(--suit), 5em 10em var(--suit), 6em 10em var(--suit),
+  7em 10em var(--suit), 8em 10em var(--suit), 9em 10em var(--suit), 10em 10em var(--suit),
+  11em 10em var(--suit), 12em 10em var(--suit), 3em 11em var(--suit), 4em 11em var(--suit),
+  5em 11em var(--suit), 6em 11em var(--suit), 9em 11em var(--suit), 10em 11em var(--suit),
+  11em 11em var(--suit), 12em 11em var(--suit), 4em 12em var(--suit), 5em 12em var(--suit),
+  6em 12em var(--suit), 7em 12em var(--suit), 8em 12em var(--suit), 9em 12em var(--suit),
+  10em 12em var(--suit), 11em 12em var(--suit), 4em 13em var(--suit), 5em 13em var(--suit),
+  6em 13em var(--suit), 9em 13em var(--suit), 10em 13em var(--suit), 11em 13em var(--suit),
+  7em 11em var(--badge), 8em 11em var(--badge),
+  3em 14em var(--boots), 4em 14em var(--boots), 5em 14em var(--boots), 6em 14em var(--boots),
+  9em 14em var(--boots), 10em 14em var(--boots), 11em 14em var(--boots), 12em 14em var(--boots);
+}
+
+.logo .tiny { font-size: 2px; }
+
+/* For people who like moving things. */
+@media (prefers-reduced-motion: no-preference) {
+  .coin { transition: transform 0.15s; }
+  .coin-box:checked + .coin { animation: coin-pop 0.5s ease-out; }
+  .game:not(:has(.coin-box:not(:checked))) .player { animation: hop 0.6s steps(1) 3; }
+  .game:not(:has(.coin-box:not(:checked))) .clear-card, .result:target { animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .door-face { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+
+@keyframes coin-pop {
+  0% { opacity: 1; transform: none; }
+  40% { opacity: 1; transform: translateY(-20px) scale(1.3); }
+  100% { opacity: 0; transform: translateY(-44px) scale(0.5); }
+}
+
+/* Nova hops in two steps, like an old game. */
+@keyframes hop { 50% { transform: translateY(-6em); } }
+@keyframes slide-in { from { opacity: 0; transform: translateY(-24px); } }
+
+/* Narrower window: boxes stack. */
+@media (max-width: 760px) {
+  .about { grid-template-columns: 1fr; gap: 0; }
+  .about > section { padding-top: 0; }
+  .result { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+}
+
+/* A phone: a square game screen. Long code lines wrap. */
+@media (max-width: 560px) {
+  .top-bar { justify-content: center; padding: var(--space-gap) var(--space-m); }
+  .menu ul { justify-content: center; }
+  .menu a { padding: 9px 12px; font-size: 16px; }
+  .page { padding: var(--space-side) var(--space-m) var(--space-l); }
+  .screen { aspect-ratio: 1 / 1; border-width: 4px; }
+  .spot { width: 44px; height: 44px; }
+  .scenery .player { font-size: 4px; }
+  .score { left: 8px; top: 8px; }
+  .hall { padding: var(--space-m) var(--space-s); border-width: 4px; }
+  .doors { gap: var(--space-s); }
+  .door { padding: 4px; }
+  .door-plate { font-size: 25px; }
+  .door-name { font-size: 16px; }
+  .result { padding: var(--space-l) var(--space-m); }
+  .pixel-box { padding: var(--space-m); }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+}

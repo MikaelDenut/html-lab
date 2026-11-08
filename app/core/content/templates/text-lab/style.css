@@ -1,0 +1,326 @@
+/* TEXT LAB: one style file for all three pages.
+   It looks like a printer's specimen sheet: black ink, red ink
+   and a yellow highlighter on white paper. */
+
+/* The colours, fonts, sizes and spaces of the whole site.
+   Change one line here and every page changes.
+   Each size is at least 1.25 times the one before it. */
+:root {
+  --paper: #ffffff;
+  --table: #e6e8ed;
+  --ink: #17171c;
+  --ink-soft: #55555f;
+  --red: #d42a17;
+  --red-dark: #7d1609;
+  --yellow: #ffe94a;
+  --card: #cfd5df;
+  --card-dark: #525c6e;
+  --display: Didot, "Bodoni 72", serif;
+  --text: "Avenir Next", "Helvetica Neue", sans-serif;
+  --code: Menlo, Monaco, monospace;
+  --size-s: 16px;
+  --size-m: 20px;
+  --size-l: 25px;
+  --size-xl: 31px;
+  --size-2xl: 39px;
+  --size-3xl: 49px;
+  --size-4xl: 62px;
+  --size-5xl: 95px;
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 40px;
+  --space-xl: 72px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--table);
+  color: var(--ink);
+  font: var(--size-m)/1.55 var(--text);
+}
+
+h1, h2 { margin: 0; line-height: 1.1; }
+p { max-width: 70ch; margin: 0 0 var(--space-s); }
+a { color: var(--red); font-weight: 600; }
+code, kbd { font-family: var(--code); font-size: 0.9em; }
+kbd { padding: 0 6px; border: 1px solid var(--ink); border-radius: 4px; }
+
+/* A red ring shows where the keyboard is. */
+a:focus-visible,
+[tabindex]:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+
+/* position and z-index lift the box you Tab to above its neighbours,
+   so the whole ring shows and is not hidden under the next box. */
+[tabindex]:focus-visible { position: relative; z-index: 2; }
+
+/* The bar at the top: the name on the left, the menu on the right. */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-m) var(--space-s) var(--space-s);
+}
+.logo { display: flex; align-items: center; gap: var(--space-s); color: var(--ink); font: 700 var(--size-xl) var(--display); text-decoration: none; }
+
+/* The round mark with a cross: printers use it to line up their inks. */
+.logo-mark { width: 36px; height: 36px; fill: none; stroke: var(--ink); stroke-width: 2; }
+
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a { display: block; min-height: 44px; padding: 9px 18px; border-radius: 999px; color: var(--ink); text-decoration: none; }
+.menu a:hover { background: var(--paper); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on is printed in black ink. */
+.menu a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+
+/* The white sheet of paper lies on a grey table, with a soft shadow under it. */
+.sheet {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-l);
+  background: var(--paper);
+  box-shadow: 0 16px 40px rgba(23, 23, 28, 0.12);
+}
+.sheet-head { display: grid; grid-template-columns: 3fr 2fr; gap: var(--space-l); align-items: end; margin-bottom: var(--space-xl); }
+.sheet-head.single { display: block; }
+.sheet-head h1 { max-width: 12ch; margin-bottom: var(--space-m); font: 400 var(--size-4xl)/1 var(--display); }
+.lead { font-size: var(--size-l); line-height: 1.45; }
+
+/* Three big letters: the three fonts of this site, like the top of a real specimen. */
+.glyphs { display: flex; gap: var(--space-m); margin: 0; padding: 0; list-style: none; }
+.glyph { flex: 1; font-size: var(--size-5xl); line-height: 1; text-align: center; }
+.glyph small { display: block; margin-top: var(--space-s); padding-top: var(--space-xs); border-top: 1px solid var(--ink); font: 600 var(--size-s) var(--text); }
+.glyph.display { color: var(--red); font-family: var(--display); }
+.glyph.code { font-family: var(--code); }
+
+/* The boxes sit on a grid of 6 columns. The gap is 1px, and the black
+   background shows through it: so every box gets a thin printed line. */
+.specimens { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; border: 1px solid var(--ink); background: var(--ink); }
+.cell { padding: var(--space-m) var(--space-m) var(--space-l); background: var(--paper); }
+.cell h2 { margin-bottom: var(--space-m); font-size: var(--size-m); font-weight: 600; }
+.sample { margin-bottom: var(--space-m); line-height: 1.05; }
+.how { margin: 0; color: var(--ink-soft); font-size: var(--size-s); }
+.how code { color: var(--ink); }
+
+/* span means: take this many of the 6 columns. tall takes 2 rows. */
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+.span-4 { grid-column: span 4; }
+.tall { grid-row: span 2; }
+
+/* OUTLINE LETTERS: -webkit-text-stroke draws a line round every letter.
+   color: transparent leaves the inside empty. Point at it: red ink pours in. */
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+  font: 800 var(--size-5xl)/1 var(--text);
+  text-transform: uppercase;
+  transition: color 0.6s var(--ease);
+}
+.cell-outline:hover .outline,
+.cell-outline:focus-visible .outline { color: var(--red); }
+
+/* WRITING DOWNWARDS: writing-mode: vertical-rl turns the line,
+   so it runs from top to bottom. text-orientation: upright stands
+   each letter up straight, like the sign on a tall building. */
+.down-samples { display: flex; gap: var(--space-m); margin-bottom: var(--space-m); }
+.upright,
+.sideways { margin: 0; -webkit-writing-mode: vertical-rl; writing-mode: vertical-rl; }
+.upright { -webkit-text-orientation: upright; text-orientation: upright; color: var(--red); font: 800 var(--size-3xl)/1 var(--text); }
+.sideways { font: var(--size-l)/1.3 var(--display); }
+
+/* 3D LETTERS: eight text-shadows, each one 1px further right and down.
+   Stacked up, they look like the side of a thick block.
+   Point at it: the block is pressed down into the paper. */
+.pop {
+  color: var(--red);
+  font: 800 var(--size-5xl)/1 var(--text);
+  text-shadow: 1px 1px 0 var(--red-dark), 2px 2px 0 var(--red-dark), 3px 3px 0 var(--red-dark), 4px 4px 0 var(--red-dark),
+    5px 5px 0 var(--red-dark), 6px 6px 0 var(--red-dark), 7px 7px 0 var(--red-dark), 8px 8px 0 var(--red-dark);
+  transition: transform 0.3s var(--ease), text-shadow 0.3s var(--ease);
+}
+.cell-pop:hover .pop,
+.cell-pop:focus-visible .pop { transform: translate(6px, 6px); text-shadow: 1px 1px 0 var(--red-dark), 2px 2px 0 var(--red-dark); }
+
+/* LETTERS THAT BREATHE: letter-spacing puts air between the letters.
+   The transition opens the space slowly when your mouse comes. */
+.breathe { font: var(--size-4xl)/1 var(--display); transition: letter-spacing 0.7s var(--ease); }
+.cell-air:hover .breathe,
+.cell-air:focus-visible .breathe { letter-spacing: 0.3em; }
+
+/* DROP CAP: ::first-letter picks only the first letter of the text.
+   float: left lets the next lines flow round it, like water round a rock. */
+.story::first-letter { float: left; margin: 0.08em 0.08em 0 0; color: var(--red); font: 4.3em/0.8 var(--display); }
+
+/* HIGHLIGHTER PEN: the yellow is a background made with a gradient:
+   see-through at the top, yellow below. Point at it: the yellow grows
+   from 0% to 100% wide, like a pen moving across. The second mark waits.
+   box-decoration-break: clone gives each line its own piece of yellow. */
+.marked { font-size: var(--size-l); line-height: 1.4; }
+mark {
+  padding: 0 0.05em;
+  background: linear-gradient(transparent 50%, var(--yellow) 50% 92%, transparent 92%) no-repeat 0 0 / 100% 100%;
+  color: inherit;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cell-pen:hover mark,
+  .cell-pen:focus-visible mark { animation: pen 1s var(--ease) both; }
+  .cell-pen:hover mark:nth-of-type(2),
+  .cell-pen:focus-visible mark:nth-of-type(2) { animation-delay: 0.7s; }
+}
+@keyframes pen {
+  from { background-size: 0% 100%; }
+}
+
+/* ===== TRICKS PAGE ===== */
+
+/* PRESSED INTO PAPER: a printing press pushes inked metal letters into
+   the paper. On thick card it can leave a dent.
+   Two text-shadows copy the dent: a dark edge 1px up, a light edge 1px down.
+   Point at it: the press comes down harder. */
+.card { background: var(--card); }
+.pressed {
+  color: var(--card-dark);
+  font: 800 var(--size-5xl)/1 var(--text);
+  text-shadow: 0 -1px 0 var(--ink), 0 1px 0 #ffffff;
+  transition: text-shadow 0.3s var(--ease);
+}
+.cell-press:hover .pressed,
+.cell-press:focus-visible .pressed { text-shadow: 0 -2px 1px var(--ink), 0 2px 1px #ffffff; }
+
+/* FANCY UNDERLINES: text-decoration draws a line under the words.
+   You choose its style, its colour, how fat it is and how far down it sits. */
+.lines { font: 600 var(--size-2xl)/1.5 var(--display); }
+.lines span {
+  display: inline-block;
+  margin-right: 0.3em;
+  text-decoration-line: underline;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+}
+.wavy { text-decoration-style: wavy; }
+.double { text-decoration-style: double; }
+.thick {
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.12em;
+}
+
+/* CUT SHORT: -webkit-line-clamp stops the text after 3 lines and puts
+   ... at the end. It only works with the two -webkit-box lines beside it.
+   Point at it: the clamp goes away and you can read it all. */
+.short {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font: var(--size-l)/1.4 var(--display);
+}
+.cell-short:hover .short,
+.cell-short:focus-visible .short { -webkit-line-clamp: 20; }
+
+/* LETTERS CUT FROM A PICTURE: background-clip: text cuts the picture
+   to the shape of the letters. The letters are see-through, so the picture shows.
+   Point at it: the paper slides up behind the letters. */
+.marble {
+  background: url(text-lab-marble.jpg) center top / cover;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font: 800 var(--size-5xl)/1 var(--text);
+  transition: background-position 1.5s var(--ease);
+}
+.cell-marble:hover .marble,
+.cell-marble:focus-visible .marble { background-position: center bottom; }
+
+/* ===== FONT PAIRS PAGE ===== */
+
+/* Each pair is a row: the names on the left, a sample on the right. */
+.pairs { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.pair { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-l); padding: var(--space-l) 0; border-bottom: 1px solid var(--ink); }
+.pair h2 { margin-bottom: var(--space-s); font-size: var(--size-l); }
+.pair-info code { display: block; margin-top: var(--space-xs); color: var(--ink-soft); font-size: var(--size-s); }
+
+/* The sample uses four variables. Each pair below sets them:
+   the title font, the text font, the background and the text colour. */
+.pair-sample { padding: var(--space-l); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.pair-title { margin-bottom: var(--space-s); font: 700 var(--size-3xl)/1.05 var(--title); }
+.pair-sample p:last-child { margin: 0; font: var(--size-m)/1.5 var(--body); }
+
+.fashion { --title: Didot, serif; --body: "Avenir Next", sans-serif; --bg: #fbe3e8; --fg: #3a1020; }
+.workshop { --title: Rockwell, serif; --body: "Gill Sans", sans-serif; --bg: #24323d; --fg: #f2f5f7; }
+.train { --title: Futura, sans-serif; --body: Baskerville, serif; --bg: #10233f; --fg: #eef3ff; }
+.circus { --title: Superclarendon, serif; --body: Futura, sans-serif; --bg: #b8231a; --fg: #fff3c4; }
+.invite { --title: Copperplate, serif; --body: "Hoefler Text", serif; --bg: #183d32; --fg: #f1e3b5; }
+.icecream { --title: Phosphate, fantasy; --body: "Chalkboard SE", sans-serif; --bg: #c9f2e3; --fg: #0d4a3a; }
+.detective { --title: "American Typewriter", serif; --body: Verdana, sans-serif; --bg: #e6edf5; --fg: #1c2a3a; }
+.sports { --title: "DIN Condensed", sans-serif; --body: Georgia, serif; --bg: #1d6636; --fg: #ffffff; }
+
+/* The pair that does not work gets a red dashed line round it. */
+.twins { --title: Didot, serif; --body: "Bodoni 72", serif; --bg: var(--paper); --fg: var(--ink); }
+.twins .pair-sample { border: 2px dashed var(--red); }
+
+.bottom { max-width: 1180px; margin: 0 auto; padding: var(--space-l) var(--space-s); text-align: center; font-size: var(--size-s); }
+.bottom p { margin: var(--space-xs) auto; }
+
+/* The grey table is darker than the paper, so the link there uses the dark red. */
+.bottom a { color: var(--red-dark); }
+
+/* Less motion: the slow changes on hover happen at once. */
+@media (prefers-reduced-motion: reduce) {
+  .outline,
+  .pop,
+  .breathe,
+  .pressed,
+  .marble { transition: none; }
+}
+
+/* A narrow desktop: the marble word gets smaller, so all six letters fit. */
+@media (max-width: 1140px) {
+  .marble { font-size: var(--size-4xl); }
+}
+
+/* A tablet: the top part gets one column, the boxes two. */
+@media (max-width: 900px) {
+  .sheet { padding: var(--space-l) var(--space-m); }
+  .sheet-head,
+  .pair { grid-template-columns: 1fr; gap: var(--space-m); }
+  .specimens { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .span-2 { grid-column: span 1; }
+  .span-3,
+  .span-4 { grid-column: span 2; }
+
+  /* The underline box on the Tricks page has no partner here, so it takes the whole row. */
+  .cell-lines { grid-column: span 2; }
+  .pop { font-size: var(--size-4xl); }
+  .cell-air:hover .breathe,
+  .cell-air:focus-visible .breathe { letter-spacing: 0.15em; }
+}
+
+/* A phone: one column, and the giant letters get smaller. */
+@media (max-width: 600px) {
+  .top { justify-content: center; }
+  .menu ul { justify-content: center; }
+  .menu a { padding: 10px 12px; font-size: var(--size-s); }
+  .sheet { padding: var(--space-l) var(--space-s); }
+  .sheet-head h1 { font-size: var(--size-2xl); }
+  .specimens { grid-template-columns: 1fr; }
+  .cell { grid-column: auto; grid-row: auto; padding: var(--space-m) var(--space-s); }
+  .glyph,
+  .outline,
+  .pop,
+  .pressed,
+  .marble { font-size: var(--size-4xl); }
+  .breathe,
+  .pair-title { font-size: var(--size-2xl); }
+  .pair-sample { padding: var(--space-m); }
+}

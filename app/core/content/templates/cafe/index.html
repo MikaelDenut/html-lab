@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Honeyfern Bakery and Cafe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <!-- A fern leaf and a drop of honey, drawn with SVG. -->
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="23" fill="#1f3f30"/>
+        <path d="M24 38 V12 M24 30 l-8 -5 M24 30 l8 -5 M24 23 l-7 -5 M24 23 l7 -5 M24 16 l-5 -4 M24 16 l5 -4" stroke="#cfe3d5" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M35 8 q4 6 0 8 q-4 -2 0 -8 z" fill="#f2b134"/>
+      </svg>
+      <span>Honeyfern <small>Bakery and Cafe</small></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="visit.html">Visit us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Split screen: the photo is one half, the words are the other half. -->
+    <section class="split-hero">
+      <img class="hero-photo" src="cafe-hero.jpg" width="820" height="820" alt="Baskets full of fresh bread and long loaves on an old wooden table">
+      <div class="hero-words">
+        <h1>Fresh bread and a warm hello</h1>
+        <p class="lead">We bake everything here, from five in the morning. Come in, have a cup of something warm and stay a while.</p>
+        <p class="open-now">Open Tuesday to Sunday</p>
+        <p class="buttons">
+          <a class="button" href="menu.html">See the menu</a>
+          <a class="button outline" href="visit.html">Book a table</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- A dark green board, like the chalkboard in a real cafe. -->
+    <section class="board">
+      <div class="wrap">
+        <h2 class="chalk">Today's specials</h2>
+        <p class="key">
+          <span><abbr class="diet vegan" title="Vegan">VG</abbr> vegan</span>
+          <span><abbr class="diet" title="Vegetarian">V</abbr> vegetarian</span>
+        </p>
+        <div class="specials">
+          <article class="special">
+            <img src="cafe-cappuccino.jpg" width="600" height="450" alt="A white cup of cappuccino with cinnamon on top, and a croissant behind it">
+            <div class="special-text">
+              <h3>Cinnamon cappuccino</h3>
+              <p>Milky coffee with a snowfall of cinnamon. Try it with a croissant.</p>
+              <p class="price-tag">€3.90</p>
+            </div>
+          </article>
+          <article class="special">
+            <img src="cafe-buns.jpg" width="600" height="450" alt="Two shiny fruit buns with a cross of icing, next to croissants in a glass counter">
+            <div class="special-text">
+              <h3>Fruit buns <abbr class="diet" title="Vegetarian">V</abbr></h3>
+              <p>Soft buns with raisins and a cross of icing. Only on Fridays, so be quick!</p>
+              <p class="price-tag">€2.80</p>
+            </div>
+          </article>
+          <article class="special">
+            <img src="cafe-bread.jpg" width="600" height="450" alt="A round loaf with a crust of seeds, with more bread and yellow flowers around it">
+            <div class="special-text">
+              <h3>Seed loaf <abbr class="diet vegan" title="Vegan">VG</abbr></h3>
+              <p>A big round loaf, rolled in seeds before it goes in the oven. Still warm at 8:00.</p>
+              <p class="price-tag">€5.40</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap story">
+      <!-- A little bakery shop drawn with SVG shapes. -->
+      <svg class="shop-drawing" viewBox="0 0 300 220" role="img" aria-label="A drawing of the Honeyfern shop with a striped roof">
+        <rect x="30" y="70" width="240" height="140" rx="6" fill="#ffffff" stroke="#1f3f30" stroke-width="4"/>
+        <path d="M20 70 L40 30 H260 L280 70 Z" fill="#2f5d46" stroke="#1f3f30" stroke-width="4"/>
+        <path d="M70 30 L60 70 M110 30 L105 70 M150 30 V70 M190 30 L195 70 M230 30 L240 70" stroke="#ffffff" stroke-width="10"/>
+        <rect x="50" y="108" width="110" height="66" rx="4" fill="#f6d79a" stroke="#1f3f30" stroke-width="4"/>
+        <circle cx="80" cy="156" r="13" fill="#c98a3a"/>
+        <circle cx="110" cy="158" r="11" fill="#f2b134"/>
+        <ellipse cx="136" cy="159" rx="16" ry="9" fill="#a8672a"/>
+        <rect x="185" y="108" width="65" height="102" rx="4" fill="#b23a48" stroke="#1f3f30" stroke-width="4"/>
+        <circle cx="238" cy="158" r="5" fill="#f2b134"/>
+        <text x="150" y="96" text-anchor="middle" fill="#1f3f30" font-size="17" font-weight="bold" letter-spacing="3">HONEYFERN</text>
+      </svg>
+      <div>
+        <h2>Baked by Rosa and Benny</h2>
+        <p>Rosa makes the bread. Benny makes the cakes, and the jokes. Every night the dough rests, and every morning the whole street smells of cinnamon.</p>
+        <ul class="promises">
+          <li>Baked here, every morning</li>
+          <li>Flour from a mill down the river</li>
+          <li>Bread left at closing time goes to people who need food</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><b>Honeyfern Bakery and Cafe</b>, 12 Quillmoss Street. A make-believe cafe: make it your own!</p>
+    <p>People have baked bread for thousands of years. Read about <a href="https://simple.wikipedia.org/wiki/Bread">bread on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

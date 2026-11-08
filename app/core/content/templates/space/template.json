@@ -1,0 +1,15 @@
+{
+  "title": "Space Mission",
+  "name": "space-mission",
+  "blurb": "A mission website with twinkling stars, planets and a crew",
+  "category": "fun",
+  "layout": "Big hero, 3-column cards, a launch timeline",
+  "shows": [
+    "Stars that twinkle, made with CSS",
+    "A title filled with rocket-fire colours",
+    "Planet cards that light up in their colour",
+    "A floating rocket drawn with SVG",
+    "Cards in 3 columns that stack on a phone"
+  ],
+  "accent": "#ff8a3d"
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coin hunt - Nova Newt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <span class="hero-pixels tiny"></span>
+      Nova Newt
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Coin hunt</a></li>
+        <li><a href="doors.html">Pick a door</a></li>
+        <li><a href="how-it-works.html">How it works</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <h1 class="page-title">Level 1: Coin hunt</h1>
+    <p class="lead">Nova lost 8 gold coins in the night. Can you find them all?</p>
+
+    <!-- The game is a form, so the Play again button can reset it. No script! -->
+    <form class="game">
+      <div class="screen">
+        <!-- The scenery is drawn in style.css. It is only for looks. -->
+        <div class="scenery" aria-hidden="true">
+          <span class="stars"></span>
+          <span class="moon"></span>
+          <span class="cloud cloud-1"></span>
+          <span class="cloud cloud-2"></span>
+          <span class="hill hill-1"></span>
+          <span class="hill hill-2"></span>
+          <span class="ground"></span>
+          <span class="tree"></span>
+          <span class="bush"></span>
+          <span class="block block-1"></span>
+          <span class="block block-2"></span>
+          <span class="block block-3"></span>
+          <span class="hero-pixels player"></span>
+        </div>
+
+        <!-- 8 coins. Each coin is a hidden checkbox and its label. -->
+        <span class="spot spot-1">
+          <input class="coin-box" type="checkbox" id="coin-1">
+          <label class="coin" for="coin-1"><span class="hidden-text">Coin 1</span></label>
+        </span>
+        <span class="spot spot-2">
+          <input class="coin-box" type="checkbox" id="coin-2">
+          <label class="coin" for="coin-2"><span class="hidden-text">Coin 2</span></label>
+        </span>
+        <span class="spot spot-3">
+          <input class="coin-box" type="checkbox" id="coin-3">
+          <label class="coin" for="coin-3"><span class="hidden-text">Coin 3</span></label>
+        </span>
+        <span class="spot spot-4">
+          <input class="coin-box" type="checkbox" id="coin-4">
+          <label class="coin" for="coin-4"><span class="hidden-text">Coin 4</span></label>
+        </span>
+        <span class="spot spot-5">
+          <input class="coin-box" type="checkbox" id="coin-5">
+          <label class="coin" for="coin-5"><span class="hidden-text">Coin 5</span></label>
+        </span>
+        <span class="spot spot-6">
+          <input class="coin-box" type="checkbox" id="coin-6">
+          <label class="coin" for="coin-6"><span class="hidden-text">Coin 6</span></label>
+        </span>
+        <span class="spot spot-7">
+          <input class="coin-box" type="checkbox" id="coin-7">
+          <label class="coin" for="coin-7"><span class="hidden-text">Coin 7</span></label>
+        </span>
+        <span class="spot spot-8">
+          <input class="coin-box" type="checkbox" id="coin-8">
+          <label class="coin" for="coin-8"><span class="hidden-text">Coin 8</span></label>
+        </span>
+
+        <!-- The score comes AFTER the coins. CSS writes the words in it. -->
+        <p class="score"></p>
+
+        <!-- This banner shows when every coin is picked. -->
+        <div class="level-clear">
+          <div class="clear-card">
+            <p class="clear-title">Level clear!</p>
+            <p>You found all 8 coins. Nova is so happy!</p>
+            <a class="button" href="doors.html">Go to level 2</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="game-bar">
+        <p class="how-to">Click or tap a gold coin to pick it up.</p>
+        <button class="button" type="reset">Play again</button>
+      </div>
+    </form>
+
+    <div class="about">
+      <section>
+        <h2>Yes, you can really play it</h2>
+        <p>This page has no JavaScript at all. Every coin is a checkbox, its label draws the coin, and CSS keeps the score. Even the Play again button is plain HTML: it resets the form.</p>
+        <p><a href="how-it-works.html">See how the tricks work</a></p>
+      </section>
+      <aside class="pixel-box">
+        <h2>What is pixel art?</h2>
+        <p>A pixel is one tiny square of colour on a screen. Old games had big pixels, so everything looked like little blocks. People still draw like that on purpose, and it is called pixel art.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Nova Newt is a made-up game, built with HTML and CSS. Make up your own!</p>
+    <p><a href="https://en.wikipedia.org/wiki/Pixel_art">Read about pixel art on Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hover playground - Pictures</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="logo"><a href="index.html">Hover playground</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Cards</a></li>
+        <li><a href="buttons.html">Buttons</a></li>
+        <li><a href="pictures.html" aria-current="page">Pictures</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Pictures that play</h1>
+      <p>These pictures are drawn with SVG: a <code>rect</code> is a box, a <code>circle</code> is a circle, a <code>path</code> is any shape. Change a <code>fill</code> colour and see!</p>
+    </section>
+
+    <section class="group">
+      <h2 class="group-title">Point at a picture</h2>
+      <div class="grid">
+        <article class="card zoom" tabindex="0">
+          <figure class="pic-frame">
+            <svg viewBox="0 0 160 100" role="img" aria-label="Green hills under a yellow sun">
+              <rect width="160" height="100" fill="#8fd3ff"/><circle cx="122" cy="30" r="15" fill="#ffd23f"/>
+              <ellipse cx="40" cy="108" rx="84" ry="44" fill="#5cc96b"/><ellipse cx="132" cy="112" rx="80" ry="40" fill="#2f9e55"/>
+            </svg>
+          </figure>
+          <h3>Zoom in</h3>
+          <p>The picture grows with <code>scale</code>, the frame cuts off the edges.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article class="card grey" tabindex="0">
+          <figure class="pic-frame">
+            <svg viewBox="0 0 160 100" role="img" aria-label="An orange house with a red roof and a blue door">
+              <rect width="160" height="100" fill="#ffd6e7"/><rect y="78" width="160" height="22" fill="#5cc96b"/>
+              <rect x="52" y="44" width="56" height="40" fill="#ff8a3d"/><path d="M44 46 L80 18 L116 46 Z" fill="#d81b60"/>
+              <rect x="72" y="60" width="16" height="24" fill="#3478f6"/><rect x="58" y="52" width="10" height="10" fill="#ffd23f"/><rect x="92" y="52" width="10" height="10" fill="#ffd23f"/>
+            </svg>
+          </figure>
+          <h3>Grey to colour</h3>
+          <p><code>filter: grayscale(1)</code> takes the colours away.</p>
+          <p class="help">Help: Blur and color filters</p>
+        </article>
+        <article class="card caption" tabindex="0">
+          <figure class="pic-frame">
+            <svg viewBox="0 0 160 100" role="img" aria-label="An orange fish in the blue sea">
+              <rect width="160" height="100" fill="#2f8fe0"/><path d="M0 84 Q40 76 80 84 T160 84 V100 H0 Z" fill="#f3d58a"/>
+              <ellipse cx="78" cy="48" rx="28" ry="17" fill="#ff8a3d"/><path d="M104 48 L124 34 L124 62 Z" fill="#ff8a3d"/>
+              <circle cx="64" cy="44" r="4" fill="#fff"/><circle cx="63" cy="44" r="2" fill="#2a2140"/><circle cx="40" cy="30" r="4" fill="none" stroke="#bfe6ff" stroke-width="2"/>
+            </svg>
+            <figcaption>Blub! says the fish.</figcaption>
+          </figure>
+          <h3>Caption slides up</h3>
+          <p>The words wait below the frame, then <code>translateY(0)</code> brings them in.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </article>
+        <article class="card blur" tabindex="0">
+          <figure class="pic-frame">
+            <svg viewBox="0 0 160 100" role="img" aria-label="A pink flower with a yellow middle">
+              <rect width="160" height="100" fill="#d9f2ff"/><rect x="78" y="50" width="4" height="50" fill="#2f9e55"/>
+              <g fill="#ff4f81"><circle cx="80" cy="28" r="12"/><circle cx="96" cy="40" r="12"/><circle cx="90" cy="58" r="12"/><circle cx="70" cy="58" r="12"/><circle cx="64" cy="40" r="12"/></g>
+              <circle cx="80" cy="44" r="10" fill="#ffd23f"/>
+            </svg>
+          </figure>
+          <h3>Blur to sharp</h3>
+          <p><code>filter: blur(5px)</code> makes it foggy, <code>blur(0)</code> makes it sharp.</p>
+          <p class="help">Help: Blur and color filters</p>
+        </article>
+        <article class="card postcard" tabindex="0">
+          <figure class="pic-frame">
+            <svg viewBox="0 0 160 100" role="img" aria-label="A sailing boat on the sea at sunset">
+              <rect width="160" height="100" fill="#ffe7b3"/><circle cx="40" cy="34" r="14" fill="#ff8a3d"/><rect y="66" width="160" height="34" fill="#2f8fe0"/>
+              <path d="M60 66 H120 L110 78 H70 Z" fill="#8a4b2a"/><path d="M90 20 V62 H64 Z" fill="#fff"/><rect x="89" y="20" width="2" height="46" fill="#5a3a20"/>
+            </svg>
+          </figure>
+          <h3>Postcard</h3>
+          <p>A white frame that tilts and lifts, like a card on a table.</p>
+          <p class="help">Help: Hover effects</p>
+        </article>
+        <article class="card day-night" tabindex="0">
+          <figure class="pic-frame">
+            <div class="strip">
+              <svg viewBox="0 0 160 100" role="img" aria-label="Hills on a sunny day">
+                <rect width="160" height="100" fill="#8fd3ff"/><circle cx="122" cy="30" r="15" fill="#ffd23f"/>
+                <ellipse cx="40" cy="108" rx="84" ry="44" fill="#5cc96b"/><ellipse cx="132" cy="112" rx="80" ry="40" fill="#2f9e55"/>
+              </svg>
+              <svg viewBox="0 0 160 100" role="img" aria-label="The same hills at night, with the moon">
+                <rect width="160" height="100" fill="#1d2350"/><circle cx="120" cy="28" r="13" fill="#fff6c9"/><circle cx="126" cy="24" r="12" fill="#1d2350"/>
+                <circle cx="30" cy="20" r="1.5" fill="#fff"/><circle cx="64" cy="34" r="1.5" fill="#fff"/><circle cx="90" cy="14" r="1.5" fill="#fff"/>
+                <ellipse cx="40" cy="108" rx="84" ry="44" fill="#21533a"/><ellipse cx="132" cy="112" rx="80" ry="40" fill="#163d2a"/>
+              </svg>
+            </div>
+          </figure>
+          <h3>Day and night</h3>
+          <p>Two pictures side by side. <code>translateX(-50%)</code> slides to the second.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article class="card reveal" tabindex="0">
+          <figure class="pic-frame">
+            <span class="secret" aria-hidden="true">?</span>
+            <svg viewBox="0 0 160 100" role="img" aria-label="A red hot air balloon between white clouds">
+              <rect width="160" height="100" fill="#8fd3ff"/><ellipse cx="34" cy="70" rx="20" ry="8" fill="#fff"/><ellipse cx="128" cy="24" rx="18" ry="7" fill="#fff"/>
+              <ellipse cx="80" cy="38" rx="22" ry="26" fill="#d81b60"/><path d="M66 56 L76 74 H84 L94 56 Z" fill="#a8124a"/><rect x="74" y="74" width="12" height="10" fill="#8a4b2a"/>
+            </svg>
+          </figure>
+          <h3>Magic peephole</h3>
+          <p><code>clip-path: circle()</code> grows from a dot to the whole picture.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </article>
+        <article class="card cover-card" tabindex="0">
+          <figure class="pic-frame">
+            <svg viewBox="0 0 160 100" role="img" aria-label="Grey mountains with snow on top">
+              <rect width="160" height="100" fill="#cfe9ff"/><path d="M0 100 L50 30 L80 70 L110 24 L160 100 Z" fill="#6b7a99"/>
+              <path d="M50 30 L60 44 L40 44 Z M110 24 L122 42 L98 42 Z" fill="#fff"/>
+            </svg>
+            <span class="cover">Brr! It is cold up here.</span>
+          </figure>
+          <h3>Colour cover</h3>
+          <p>A coloured layer fades in from <code>opacity: 0</code> to 1.</p>
+          <p class="help">Help: Fade in and out</p>
+        </article>
+        <article class="card wide">
+          <!-- tabindex="0" lets the Tab key stop on each picture, so the keyboard can play this too. -->
+          <ul class="gallery">
+            <li tabindex="0"><svg viewBox="0 0 60 60" role="img" aria-label="Sun"><rect width="60" height="60" fill="#ffe7b3"/><circle cx="30" cy="30" r="14" fill="#ff8a3d"/></svg></li>
+            <li tabindex="0"><svg viewBox="0 0 60 60" role="img" aria-label="Moon"><rect width="60" height="60" fill="#1d2350"/><circle cx="30" cy="30" r="13" fill="#fff6c9"/><circle cx="36" cy="25" r="12" fill="#1d2350"/></svg></li>
+            <li tabindex="0"><svg viewBox="0 0 60 60" role="img" aria-label="Tree"><rect width="60" height="60" fill="#d9f2ff"/><rect x="27" y="36" width="6" height="16" fill="#8a4b2a"/><circle cx="30" cy="28" r="14" fill="#2f9e55"/></svg></li>
+            <li tabindex="0"><svg viewBox="0 0 60 60" role="img" aria-label="Star"><rect width="60" height="60" fill="#f3e8ff"/><path d="M30 12 L35 25 L49 25 L38 34 L42 48 L30 40 L18 48 L22 34 L11 25 L25 25 Z" fill="#8b5cf6"/></svg></li>
+          </ul>
+          <h3>Pick one, the others fade</h3>
+          <p><code>.gallery:hover li:not(:hover)</code> means: the mouse is on the gallery, but not on this picture.</p>
+          <p class="help">Help: Hover effects</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, this site stops moving. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Cascading_Style_Sheets">What is CSS? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,476 @@
+/* Thistlecombe Young Naturalists: one style file for the whole field guide. */
+
+/* Black ink, white paper and one bold blue. The yellow is pollen: it lights up the letter you jump to. */
+:root {
+  --paper: #ffffff;
+  --ink: #1d2433;
+  --ink-soft: #4a5368;
+  --faint: #6b7385;
+  --rule: #d9dde6;
+  --mist: #f1f4f9;
+  --cobalt: #2747c4;
+  --cobalt-dark: #1b3290;
+  --cobalt-light: #e6ebfa;
+  --pollen: #f6c433;
+  --pollen-light: #fff3c4;
+  /* Colours for the insect drawings. */
+  --bug-red: #d1302a;
+  --bug-rust: #9a3d1f;
+  --bug-yellow: #f2bd1d;
+  --bug-black: #1d2433;
+  --bug-green: #5c9a3a;
+  --bug-green-dark: #3d6e25;
+  --bug-brown: #7a4a2a;
+  --bug-tan: #b9875a;
+  --bug-teal: #1f8a8a;
+  --bug-blue: #2f5fb3;
+  --bug-orange: #e9782c;
+  --bug-grey: #a39684;
+  --bug-grey-dark: #5f564b;
+  --wing: #d4e3f6;
+  --wing-line: #7d93bd;
+  --water: #3f86c6;
+  /* One colour for each part of the insect body. */
+  --part-head: #2747c4;
+  --part-thorax: #b85a12;
+  --part-abdomen: #267a4a;
+  --title-font: Baskerville, "Hoefler Text", Georgia, serif;
+  --letter-font: Futura, "Avenir Next", sans-serif;
+  /* Each text size is 1.25 times the one before it. */
+  --text-s: 16px;
+  --text-m: 20px;
+  --text-l: 25px;
+  --text-xl: 31px;
+  --text-2xl: 39px;
+  --text-3xl: 49px;
+  --text-4xl: 61px;
+  /* Spaces, from small to huge. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --round: 12px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img, svg { display: block; max-width: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--title-font);
+  font-size: var(--text-m);
+  line-height: 1.5;
+}
+
+h1, h2, h3 { margin: 0 0 var(--space-s); font-family: var(--title-font); font-weight: 700; line-height: 1.15; }
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+p { margin: 0 0 var(--space-s); }
+a { color: var(--cobalt-dark); }
+a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+
+/* The top bar: the club badge on the left, the menu on the right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  padding: var(--space-s) var(--space-l);
+  border-bottom: 1px solid var(--rule);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--ink);
+  font-size: var(--text-l);
+  font-weight: 700;
+  line-height: 1.1;
+  text-decoration: none;
+}
+.logo small { display: block; color: var(--ink-soft); font-family: var(--letter-font); font-size: var(--text-s); font-weight: 500; }
+.logo-mark { width: 48px; height: 48px; }
+.logo-ring { fill: var(--cobalt); }
+.logo-bug { fill: var(--pollen); stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-m);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: var(--letter-font);
+  font-weight: 500;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--cobalt-light); }
+
+/* Links and the switch push down a little when you click them. */
+.menu a:active, .az a:active, .quiz-switch:active { transform: translateY(1px); }
+.menu a[aria-current="page"] { background: var(--cobalt); color: var(--paper); }
+
+.intro, .page-title, .section { max-width: 1120px; margin: 0 auto; padding: var(--space-l) var(--space-m) var(--space-m); }
+.lead { max-width: 38em; color: var(--ink-soft); font-size: var(--text-l); }
+
+/* The field guide: a thin index column on the left, the insects on the right. */
+.guide {
+  display: grid;
+  grid-template-columns: 208px 1fr;
+  gap: var(--space-l);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-m) var(--space-xl);
+}
+
+/* position: sticky lets the index scroll with the page until it reaches the top. Then it stays put! */
+.az {
+  position: sticky;
+  top: var(--space-m);
+  align-self: start;
+  padding: var(--space-m) var(--space-s);
+  border: 1px solid var(--rule);
+  border-radius: var(--round);
+  background: var(--paper);
+}
+.az-title { font-family: var(--letter-font); font-size: var(--text-s); font-weight: 700; }
+.az-note { margin: var(--space-s) 0 0; color: var(--ink-soft); font-size: var(--text-s); line-height: 1.35; }
+.az ol {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.az li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  font-family: var(--letter-font);
+  font-size: var(--text-m);
+}
+.az .no { color: var(--faint); }
+.az a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  border-radius: 8px;
+  background: var(--cobalt-light);
+  color: var(--cobalt-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+.az a:hover { background: var(--cobalt); color: var(--paper); }
+
+/* One section for each letter. scroll-margin-top leaves a gap above it when you jump there. */
+.letter {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-s) var(--space-s);
+  border-top: 2px solid var(--ink);
+  scroll-margin-top: var(--space-m);
+}
+.letter h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  color: var(--cobalt);
+  font-family: var(--letter-font);
+  font-size: var(--text-3xl);
+  line-height: 1;
+}
+
+/* :target means "the section whose id is in the address". It is the letter you just jumped to. */
+.letter:target { background: linear-gradient(90deg, var(--pollen-light), var(--paper) 75%); }
+.letter:target h2 { background: var(--pollen); color: var(--ink); }
+
+/* :has() asks the guide which letter is the target, and lights up the same letter in the index too. */
+.guide:has(#letter-a:target) [href="#letter-a"],
+.guide:has(#letter-b:target) [href="#letter-b"],
+.guide:has(#letter-d:target) [href="#letter-d"],
+.guide:has(#letter-e:target) [href="#letter-e"],
+.guide:has(#letter-g:target) [href="#letter-g"],
+.guide:has(#letter-h:target) [href="#letter-h"],
+.guide:has(#letter-l:target) [href="#letter-l"],
+.guide:has(#letter-m:target) [href="#letter-m"],
+.guide:has(#letter-p:target) [href="#letter-p"],
+.guide:has(#letter-w:target) [href="#letter-w"] { background: var(--pollen); color: var(--ink); }
+
+/* Each insect: the drawing on the left, the words on the right. */
+.entry { display: grid; grid-template-columns: 168px 1fr; column-gap: var(--space-m); align-items: start; padding-bottom: var(--space-m); }
+.entry + .entry { padding-top: var(--space-m); border-top: 1px solid var(--rule); }
+.letter > .entry { grid-column: 2; }
+.entry h3 { margin-bottom: var(--space-xs); }
+.bug {
+  grid-row: 1 / span 4;
+  width: 168px;
+  height: 112px;
+  padding: var(--space-xs);
+  border-radius: var(--round);
+  background: var(--mist);
+}
+.where { color: var(--ink-soft); font-size: var(--text-s); }
+.where b { color: var(--ink); font-family: var(--letter-font); font-weight: 500; }
+.stings {
+  justify-self: start;
+  padding: 2px var(--space-s);
+  border-radius: 999px;
+  background: var(--pollen);
+  font-family: var(--letter-font);
+  font-size: var(--text-s);
+  font-weight: 500;
+}
+
+/* The drawings take their colours from these class names. */
+.bug .red { fill: var(--bug-red); }
+.bug .rust { fill: var(--bug-rust); }
+.bug .yellow { fill: var(--bug-yellow); }
+.bug .black { fill: var(--bug-black); }
+.bug .green { fill: var(--bug-green); }
+.bug .brown { fill: var(--bug-brown); }
+.bug .tan { fill: var(--bug-tan); }
+.bug .teal { fill: var(--bug-teal); }
+.bug .blue { fill: var(--bug-blue); }
+.bug .orange { fill: var(--bug-orange); }
+.bug .grey { fill: var(--bug-grey); }
+.bug .grey-dark { fill: var(--bug-grey-dark); }
+.bug .wing { fill: var(--wing); fill-opacity: 0.75; stroke: var(--wing-line); stroke-width: 1.5; }
+.bug .legs { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.bug .band { stroke: var(--bug-black); stroke-width: 4; }
+.bug .seam { fill: none; stroke: var(--bug-black); stroke-width: 2; }
+.bug .pincer { fill: none; stroke: var(--bug-brown); stroke-width: 4; stroke-linecap: round; }
+.bug .hindleg { fill: none; stroke: var(--bug-green-dark); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.bug .ripple { fill: none; stroke: var(--water); stroke-width: 1.5; }
+
+/* The insect body page: the big drawing and the list of parts side by side. */
+.body-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-l);
+  align-items: start;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--space-m) var(--space-m);
+}
+.diagram { margin: 0; padding: var(--space-m); border: 1px solid var(--rule); border-radius: var(--round); }
+.diagram svg { width: 100%; height: auto; margin: var(--space-m) 0; }
+.diagram figcaption { color: var(--ink-soft); font-size: var(--text-s); }
+.quiz-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  padding: 0 var(--space-m);
+  border-radius: 999px;
+  background: var(--cobalt-light);
+  color: var(--cobalt-dark);
+  font-family: var(--letter-font);
+  font-weight: 500;
+  cursor: pointer;
+}
+.quiz-switch:hover { background: #d6dff7; }
+.quiz-switch input { width: 22px; height: 22px; margin: 0; accent-color: var(--cobalt); }
+.d-head { fill: var(--part-head); }
+.d-thorax { fill: var(--part-thorax); }
+.d-abdomen { fill: var(--part-abdomen); }
+.d-eye { fill: var(--ink); }
+.d-stripes { fill: none; stroke: #1b5a36; stroke-width: 5; stroke-linecap: round; }
+.d-legs, .d-antenna { fill: none; stroke: var(--ink); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.d-antenna { stroke-width: 5; }
+.d-wing { fill: var(--wing); fill-opacity: 0.6; stroke: var(--wing-line); stroke-width: 2.5; }
+.tag path { stroke: var(--ink); stroke-width: 2.5; }
+.tag circle { fill: var(--ink); }
+.tag text { fill: var(--ink); font-family: var(--letter-font); font-size: 36px; font-weight: 500; }
+.tag-head text { fill: var(--part-head); }
+.tag-thorax text { fill: var(--part-thorax); }
+.tag-abdomen text { fill: var(--part-abdomen); }
+
+/* :has() asks the drawing: is the box ticked? If it is, the labels fade away and you can test yourself. */
+.diagram:has(#hide-tags:checked) .tags { opacity: 0; }
+
+.parts { margin: 0; }
+.part { padding: var(--space-s) 0; border-bottom: 1px solid var(--rule); }
+.part dt { display: flex; align-items: center; gap: var(--space-s); font-size: var(--text-l); font-weight: 700; }
+.part dt::before { content: ""; width: 16px; height: 16px; border-radius: 50%; background: var(--dot); }
+.part dd { margin: 0 0 0 28px; color: var(--ink-soft); }
+.head { --dot: var(--part-head); }
+.thorax { --dot: var(--part-thorax); }
+.abdomen { --dot: var(--part-abdomen); }
+.shell { --dot: var(--ink); }
+
+.quiz details { max-width: 40em; border-bottom: 1px solid var(--rule); }
+.quiz summary {
+  position: relative;
+  min-height: 44px;
+  padding: var(--space-s) 40px var(--space-s) 0;
+  font-size: var(--text-l);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.quiz summary::-webkit-details-marker { display: none; }
+
+/* A little arrow drawn with two borders. It turns when the answer opens. */
+.quiz summary::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -8px;
+  border: solid var(--cobalt);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.quiz details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.quiz summary:hover { color: var(--cobalt-dark); }
+.quiz details p { padding-left: var(--space-m); }
+
+/* The spotting page: four places to look, in two columns like a printed guide. The picture hangs on the left. */
+.spots { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-l); }
+.spot {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  column-gap: var(--space-m);
+  padding: var(--space-m) 0;
+  border-top: 1px solid var(--rule);
+}
+.spot h3 { font-size: var(--text-l); }
+.spot p { color: var(--ink-soft); font-size: var(--text-s); }
+.spot-icon { grid-row: span 2; width: 64px; height: 64px; }
+.i-grass { fill: none; stroke: var(--bug-green-dark); stroke-width: 3; stroke-linecap: round; }
+.i-wood { fill: var(--bug-brown); }
+.i-cut { fill: var(--bug-tan); }
+.i-ring { fill: none; stroke: var(--bug-brown); stroke-width: 2; }
+.i-petal { fill: var(--bug-orange); }
+.i-centre { fill: var(--bug-yellow); }
+.i-water { fill: var(--water); }
+.i-ripple { fill: none; stroke: var(--paper); stroke-width: 2; stroke-linecap: round; }
+
+.watch-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-l); align-items: start; }
+.rules ul { margin: 0; padding: 0; list-style: none; }
+.rules li { padding: var(--space-s) 0; border-bottom: 1px solid var(--rule); }
+.warning { padding: var(--space-m); border-radius: var(--round); background: var(--pollen-light); }
+.warning h2 { font-size: var(--text-xl); }
+.warning-icon { width: 72px; height: 72px; margin-bottom: var(--space-s); }
+.w-ring { fill: var(--pollen); stroke: var(--ink); stroke-width: 3; }
+.w-wing { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.w-body { fill: var(--bug-yellow); stroke: var(--ink); stroke-width: 2; }
+.w-band { stroke: var(--ink); stroke-width: 4; }
+.w-head { fill: var(--ink); }
+.w-leg { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+
+/* The tally table. Each tally line is a stripe, and --n says how many stripes to draw. */
+.tally-table { width: 100%; max-width: 720px; border-collapse: collapse; }
+.tally-table caption { margin-bottom: var(--space-s); color: var(--ink-soft); font-size: var(--text-s); text-align: left; }
+.tally-table th, .tally-table td { padding: var(--space-s); border-bottom: 1px solid var(--rule); text-align: left; }
+.tally-table thead th { font-family: var(--letter-font); font-size: var(--text-s); font-weight: 700; }
+.tally-table td:last-child { width: 4em; font-family: var(--letter-font); font-weight: 700; text-align: right; }
+.tally-table tfoot th, .tally-table tfoot td { border-bottom: 0; border-top: 2px solid var(--ink); }
+.tally { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+.tally .mark {
+  --n: 1;
+  position: relative;
+  width: calc(var(--n) * 9px - 5px);
+  height: 30px;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 4px, transparent 4px 9px);
+}
+/* A gate is four lines with a fifth line across them. */
+.tally .gate { --n: 4; }
+.tally .gate::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: -6px;
+  width: 43px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--cobalt);
+  transform: rotate(-28deg);
+}
+
+.bottom {
+  padding: var(--space-l) var(--space-m);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: var(--text-s);
+  text-align: center;
+}
+.bottom a { color: var(--pollen); }
+.bottom a:focus-visible { outline-color: var(--pollen); }
+
+/* Movement only for people who are happy to see it. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .bug, .tags { transition: transform 0.4s var(--ease), opacity 0.3s ease; }
+  .entry:hover .bug { transform: rotate(-4deg) scale(1.04); }
+  .letter:target h2 { animation: pop 0.7s var(--ease); }
+}
+@keyframes pop {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+/* A narrower window: the letter sits on top of its insects. */
+@media (max-width: 1000px) {
+  .guide { grid-template-columns: 196px 1fr; gap: var(--space-m); }
+  .letter { grid-template-columns: 1fr; gap: var(--space-s); }
+  .letter > .entry { grid-column: 1; }
+  .body-grid, .watch-grid { grid-template-columns: 1fr; }
+}
+
+/* A phone: the index turns into a strip of letters that sticks to the top of the screen. */
+@media (max-width: 700px) {
+  .top-bar { padding: var(--space-s) 16px; }
+  .intro, .page-title, .section { padding: var(--space-m) 16px var(--space-s); }
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+  .lead { font-size: var(--text-m); }
+  .guide { grid-template-columns: 1fr; gap: 0; padding: 0 16px var(--space-l); }
+  .az {
+    top: 0;
+    z-index: 2;
+    margin: 0 -16px;
+    padding: var(--space-xs) 16px;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    border-radius: 0;
+  }
+  .az-title, .az-note, .az .no { display: none; }
+  .az ol { display: flex; gap: 3px; }
+  .az li { flex: 1; }
+  .letter { padding: var(--space-m) 0 var(--space-s); scroll-margin-top: 64px; }
+  .letter h2 { width: 60px; height: 60px; font-size: var(--text-2xl); }
+  .entry { grid-template-columns: 1fr; }
+  .bug { grid-row: auto; margin-bottom: var(--space-s); }
+  .body-grid { padding: 0 16px var(--space-s); }
+  .diagram { padding: var(--space-s); }
+  .spots { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .menu { width: 100%; }
+  .menu ul { justify-content: space-between; flex-wrap: nowrap; }
+  .menu a { padding: 0 10px; font-size: var(--text-s); }
+}

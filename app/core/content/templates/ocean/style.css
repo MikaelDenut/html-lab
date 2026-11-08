@@ -1,0 +1,433 @@
+/* Fathomwick Ocean Club: a dive from the surface to the deepest trench. */
+
+/* All colours, fonts and sizes live here. Each zone of the sea has its own colour. */
+:root {
+  --surface: #e4f2ea;
+  --sunlight: #bfe0cf;
+  --twilight: #2e6a64;
+  --midnight: #173c45;
+  --abyss: #0d2028;
+  --trench: #05090c;
+  --ink: #0f2524;
+  --quiet-ink: #3d5c57;
+  --light: #eef6f1;
+  --quiet-light: #a9c7bd;
+  --rope: #ff7a3d;
+  --glow: #d4ff7a;
+  --card: #ffffff;
+  --error: #b3261e;
+  --text-font: "Charter", "Georgia", serif;
+  --number-font: "DIN Alternate", "Avenir Next", sans-serif;
+  /* Every text size is 1.25 times the one before it. */
+  --text-s: 15px;
+  --text-m: 19px;
+  --text-l: 24px;
+  --text-xl: 30px;
+  --text-2xl: 37px;
+  --text-3xl: 47px;
+  --text-4xl: 59px;
+  --text-5xl: 74px;
+  /* The spaces between things, from tiny to huge. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --round: 16px;
+  --shadow: 0 10px 28px rgba(5, 20, 22, 0.2);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.6;
+}
+
+img, svg { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { margin: 0 0 var(--space-s); line-height: 1.15; }
+h1 { max-width: 16ch; font-size: var(--text-4xl); }
+h2 { max-width: 22ch; font-size: var(--text-2xl); }
+h3 { font-size: var(--text-l); }
+p { max-width: 70ch; margin: 0 0 var(--space-m); }
+a { color: inherit; text-decoration-color: var(--rope); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { color: var(--twilight); }
+
+/* A thick dark ring shows where the keyboard is. On dark water it turns lime green. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.reveal:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.dark a:focus-visible, .footer a:focus-visible { outline-color: var(--glow); }
+
+/* TOP BAR: the club name on the left, the menu on the right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-m) 5%;
+}
+
+.logo { font-size: var(--text-l); font-weight: bold; text-decoration: none; }
+.logo span { color: var(--twilight); }
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-m);
+  border-radius: 22px;
+  text-decoration: none;
+}
+
+.menu a:hover { background: var(--sunlight); color: var(--ink); }
+.menu a:active { transform: translateY(1px); }
+.menu a[aria-current="page"] { background: var(--ink); color: var(--light); }
+
+/* A button is a link that looks like a big round label. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 var(--space-l);
+  border: 0;
+  border-radius: 24px;
+  background: var(--rope);
+  color: var(--ink);
+  font: bold var(--text-m) var(--text-font);
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(5, 20, 22, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.button:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(5, 20, 22, 0.25); }
+.button:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(5, 20, 22, 0.2); }
+
+/* THE SURFACE: the top of the page, where the dive starts. */
+.surface {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+  padding: var(--space-2xl) 5% var(--space-3xl);
+}
+
+.surface > div { flex: 1 1 420px; }
+.surface p { color: var(--quiet-ink); font-size: var(--text-l); }
+/* margin: auto puts the submarine in the middle when it is alone on its line. */
+.sub { flex: 0 1 340px; margin: 0 auto; }
+
+/* The club submarine is drawn with SVG. Change the colours here. */
+.hull { fill: var(--rope); stroke: var(--ink); stroke-width: 3; }
+.window { fill: var(--sunlight); stroke: var(--ink); stroke-width: 3; }
+.line { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.sea { fill: none; stroke: var(--twilight); stroke-width: 3; stroke-linecap: round; }
+
+/* The one thing that moves: the submarine bobs on the waves. */
+@media (prefers-reduced-motion: no-preference) {
+  .bob { animation: bob 4s ease-in-out infinite; }
+}
+
+@keyframes bob {
+  50% { transform: translateY(8px) rotate(-2deg); }
+}
+
+/* THE DIVE: every zone has a narrow gauge column on the left and the story on the right. */
+.zone {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  min-height: min(100vh, 800px);
+}
+
+.sunlight { background: var(--sunlight); }
+.twilight { background: var(--twilight); }
+.midnight { background: var(--midnight); }
+.abyss { background: var(--abyss); }
+.trench { background: var(--trench); }
+
+/* In the dark zones the words turn light, and quiet words are a tint of the water. */
+.dark { color: var(--light); }
+.dark .story p { color: var(--quiet-light); }
+.dark a:hover { color: var(--glow); }
+
+/* The rope is a sounding line, the old way to measure how deep the sea is.
+   It has a mark every 48px, like the knots on a real line, so the stripes are real. */
+.gauge { position: relative; }
+
+.gauge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 10px);
+  width: 20px;
+  background:
+    linear-gradient(90deg, transparent 8px, var(--rope) 8px 12px, transparent 12px),
+    repeating-linear-gradient(transparent 0 44px, var(--rope) 44px 48px);
+}
+
+/* position: sticky keeps the depth tag on screen while you read its zone. */
+.depth {
+  position: sticky;
+  top: var(--space-l);
+  z-index: 1;
+  margin: var(--space-2xl) var(--space-m) 0;
+  padding: var(--space-s);
+  border-radius: 12px;
+  background: var(--rope);
+  color: var(--ink);
+  font-family: var(--number-font);
+  font-size: var(--text-s);
+  line-height: 1.2;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.depth b { display: block; font-size: var(--text-xl); }
+
+.story { padding: var(--space-2xl) 6% var(--space-3xl) var(--space-xl); }
+
+/* DIVE LOG: two readings for every zone. dt is the name, dd is the reading. */
+.log { display: flex; flex-wrap: wrap; gap: var(--space-m) var(--space-2xl); margin: var(--space-l) 0 0; }
+.log dt { color: var(--quiet-ink); font: var(--text-s) var(--number-font); }
+.log dd { margin: 0; font: var(--text-l) var(--number-font); }
+.dark .log dt { color: var(--quiet-light); }
+
+/* CREATURE CARDS: flex-wrap puts them side by side and wraps them on a small screen. */
+.finds { display: flex; flex-wrap: wrap; gap: var(--space-l); margin-top: var(--space-xl); }
+
+.find {
+  flex: 1 1 250px;
+  max-width: 360px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--round);
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.find img, .find svg { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.find figcaption { padding: var(--space-m) var(--space-l) var(--space-s); }
+.find p { color: var(--quiet-ink); font-size: var(--text-m); }
+
+/* Cards in the dark zones are dark too, like a window in the water. */
+.dark .find { background: rgba(255, 255, 255, 0.08); color: var(--light); }
+.dark .find p { color: var(--quiet-light); }
+
+/* The twilight water is still quite light, so its quiet words use the full light colour. */
+.twilight .story p, .twilight .log dt, .twilight .find p { color: var(--light); }
+
+/* DEEP SEA DRAWINGS: the bodies are dark, the lights glow lime green. */
+.body { fill: #3f6c73; stroke: var(--quiet-light); stroke-width: 3; }
+.pale { fill: #e6cbd3; stroke: var(--quiet-light); stroke-width: 3; }
+.warm { fill: #f0a35e; stroke: var(--quiet-light); stroke-width: 3; stroke-linejoin: round; }
+.eye { fill: var(--light); }
+.lights circle, .lure { fill: var(--glow); }
+.stroke { fill: none; stroke: var(--light); stroke-width: 3; stroke-linecap: round; }
+.nubs { fill: none; stroke: #e6cbd3; stroke-width: 10; stroke-linecap: round; }
+
+/* The sea star is drawn twice. A fat stroke with round corners makes its arms soft and thick. */
+.star-edge { fill: var(--quiet-light); stroke: var(--quiet-light); stroke-width: 24; stroke-linejoin: round; }
+.star { fill: #f0a35e; stroke: #f0a35e; stroke-width: 18; stroke-linejoin: round; }
+.bumps circle { fill: #c8642a; }
+
+/* CREATURES PAGE: a grid where some cards are twice as big. */
+.page-top { padding: var(--space-xl) 5% var(--space-l); }
+.page-top p { color: var(--quiet-ink); font-size: var(--text-l); }
+
+.reef {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-auto-rows: 250px;
+  grid-auto-flow: dense;
+  gap: var(--space-m);
+  padding: 0 5% var(--space-3xl);
+}
+
+.wide { grid-column: span 2; }
+.tall { grid-row: span 2; }
+
+/* A card hides its secret fact below the bottom edge. overflow: hidden cuts it off. */
+.reveal {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--round);
+  background: var(--midnight);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.3s var(--ease);
+}
+
+.reveal:active { transform: scale(0.98); }
+.reveal img, .reveal svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* z-index: 1 keeps the name on top, so the fact slides up behind it. */
+.reveal h2 {
+  position: absolute;
+  z-index: 1;
+  bottom: var(--space-m);
+  left: var(--space-m);
+  margin: 0;
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: var(--text-l);
+}
+
+/* A small badge tells how deep the animal lives. */
+.zone-badge {
+  position: absolute;
+  top: var(--space-m);
+  right: var(--space-m);
+  margin: 0;
+  padding: 2px var(--space-s);
+  border-radius: 12px;
+  background: var(--rope);
+  color: var(--ink);
+  font: var(--text-s) var(--number-font);
+}
+
+/* On hover or focus, transform slides the fact up into the card. */
+.fact {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: none;
+  margin: 0;
+  padding: var(--space-l) var(--space-l) 68px;
+  background: var(--ink);
+  color: var(--light);
+  transform: translateY(101%);
+  transition: transform 0.45s var(--ease);
+}
+
+.reveal:hover .fact, .reveal:focus .fact { transform: translateY(0); }
+
+/* PROTECT PAGE: the words and the photo side by side, then the checklist and the pledge.
+   max-width: 640px keeps the photo at its real size, so it never looks blurry. */
+.photo-top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xl); padding-bottom: var(--space-2xl); }
+.photo-top > div { flex: 1 1 340px; }
+.top-photo { flex: 1 1 420px; max-width: 640px; margin: 0; }
+.top-photo img { width: 100%; border-radius: var(--round); box-shadow: var(--shadow); }
+.top-photo figcaption { margin-top: var(--space-s); color: var(--quiet-ink); font-size: var(--text-s); }
+
+.why { display: flex; flex-wrap: wrap; gap: var(--space-xl); padding: 0 5% var(--space-2xl); }
+.why > div { flex: 1 1 260px; }
+
+.help { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--space-xl); padding: var(--space-2xl) 5% var(--space-3xl); background: var(--sunlight); }
+.help > * { flex: 1 1 340px; }
+
+/* CHECKLIST: appearance: none hides the normal box, so we can draw our own. */
+.checklist { margin: 0; padding: 0; list-style: none; }
+.checklist li { display: flex; align-items: center; gap: var(--space-m); min-height: 52px; }
+
+.checklist input, .levels input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border: 3px solid var(--twilight);
+  border-radius: 8px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.checklist input:checked { background: var(--twilight); }
+
+/* The tick is a small box with only two borders, turned 45 degrees. */
+.checklist input:checked::before {
+  content: "";
+  width: 12px;
+  height: 6px;
+  border: solid var(--light);
+  border-width: 0 0 3px 3px;
+  transform: translate(0, -2px) rotate(-45deg);
+}
+
+.checklist input:checked + label { color: var(--quiet-ink); text-decoration: line-through; }
+.checklist label { cursor: pointer; }
+
+/* PLEDGE FORM: labels on top, big boxes to type in. */
+.pledge { padding: var(--space-xl); border-radius: var(--round); background: var(--card); box-shadow: var(--shadow); }
+.pledge label { display: block; margin: var(--space-m) 0 var(--space-xs); font-weight: bold; }
+.practice { margin: var(--space-s) 0 0; color: var(--quiet-ink); font-size: var(--text-s); }
+
+.pledge input[type="text"], .pledge textarea {
+  display: block;
+  width: 100%;
+  padding: var(--space-s) var(--space-m);
+  border: 2px solid var(--quiet-ink);
+  border-radius: 10px;
+  font: var(--text-m) var(--text-font);
+}
+
+.pledge input[type="text"]:hover, .pledge textarea:hover { border-color: var(--twilight); }
+
+/* The error only shows after you type something that is too short. */
+.error { display: none; margin: var(--space-xs) 0 0; color: var(--error); font-size: var(--text-s); }
+.pledge input:not(:placeholder-shown):invalid { border-color: var(--error); }
+.pledge input:not(:placeholder-shown):invalid + .error { display: block; }
+
+/* Round radio buttons: the dot inside is a smaller circle drawn with ::before. */
+.levels { margin: var(--space-m) 0; padding: 0; border: 0; }
+.levels legend { font-weight: bold; }
+.levels div { display: flex; align-items: center; gap: var(--space-s); }
+.levels input { border-radius: 50%; }
+.levels input:checked::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--twilight); }
+.levels label { margin: var(--space-s) 0; font-weight: normal; }
+
+/* A disabled choice is faded, and the mouse shows it cannot be picked. */
+.levels input:disabled, .levels input:disabled + label { opacity: 0.45; cursor: not-allowed; }
+
+.pledge .button { margin-top: var(--space-l); }
+
+.footer { padding: var(--space-xl) 5%; background: var(--trench); color: var(--quiet-light); }
+.footer a { color: var(--light); }
+.footer a:hover { color: var(--glow); }
+
+/* On a middle window the gauge gets thinner. */
+@media (max-width: 900px) {
+  .zone { grid-template-columns: 110px minmax(0, 1fr); }
+  .depth { margin: var(--space-xl) var(--space-s) 0; }
+}
+
+/* On a phone the gauge is thin, the type is smaller, and big cards are one column wide. */
+@media (max-width: 560px) {
+  body { font-size: 17px; }
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+  .surface p, .page-top p { font-size: var(--text-m); }
+  .top-bar { justify-content: center; padding: var(--space-s) var(--space-m); }
+  .surface, .page-top, .why, .help { padding-left: var(--space-m); padding-right: var(--space-m); }
+  .zone { grid-template-columns: 72px minmax(0, 1fr); }
+  .depth { margin: var(--space-xl) var(--space-xs) 0; padding: var(--space-xs); }
+  .depth b { font-size: var(--text-s); white-space: nowrap; }
+  .depth span { display: none; }
+  .story { padding: var(--space-xl) var(--space-m) var(--space-2xl) var(--space-s); }
+  .reef { grid-template-columns: 1fr; padding: 0 var(--space-m) var(--space-2xl); }
+  .wide { grid-column: auto; }
+  .pledge { padding: var(--space-l) var(--space-m); }
+}

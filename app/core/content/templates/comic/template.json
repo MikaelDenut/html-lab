@@ -1,0 +1,15 @@
+{
+  "title": "Comic Book Hero",
+  "name": "comic-book",
+  "blurb": "A comic book about Captain Puddlejump, a kind superhero",
+  "category": "fun",
+  "layout": "Comic panels of different sizes on a 6-column grid",
+  "shows": [
+    "Comic dots made with radial-gradient",
+    "A huge outlined title with a hard shadow",
+    "A POW! star cut out with clip-path",
+    "Speech bubbles in a grid of comic panels",
+    "Hero cards that tilt when your mouse is on"
+  ],
+  "accent": "#e63946"
+}

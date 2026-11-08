@@ -1,0 +1,24 @@
+node_modules/
+src-tauri/target/
+core/target/
+.DS_Store
+
+# The built-in photos are build inputs (include_bytes!), small and public domain or CC0.
+# The Cowork root ignores every *.jpg, so let these through.
+!core/content/pictures/*.jpg
+# The app icons Tauri builds with, and the drawing they are made from.
+!src-tauri/icons/*.png
+!src-tauri/app-icon.png
+# Template pictures and the packed gallery are build inputs too. Without them no commit can
+# rebuild the app that was tested and shipped.
+!core/content/templates/*/*.jpg
+!core/content/templates/*/*.png
+!core/content/gallery/*/*.jpg
+!core/content/gallery/*/*.png
+!core/content/gallery/*/*.webp
+
+# One developer's machine names and signing values.
+scripts/local.json
+
+# Python caches from the scripts.
+__pycache__/

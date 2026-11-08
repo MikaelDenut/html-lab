@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mission Comet Kite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M6 34 L22 18" stroke="#3ed2ff" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="26" cy="14" r="9" fill="#ffc94d"/>
+      </svg>
+      Comet Kite
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="planets.html">Planets</a></li>
+        <li><a href="crew.html">Crew</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="twinkle"></div>
+      <img class="hero-earth" src="space-earth.jpg" alt="" width="520" height="520">
+      <div class="wrap two-columns hero-inner">
+        <div>
+          <h1 class="big-title fire-text">Mission<br>Comet Kite</h1>
+          <p class="lead">It is launch day! Three friends and one robot fly a small, fast spaceship to the Moon, Mars, Jupiter and Saturn.</p>
+          <div class="buttons">
+            <a class="button" href="planets.html">See the planets</a>
+            <a class="button button-ghost" href="crew.html">Meet the crew</a>
+          </div>
+        </div>
+        <div class="rocket-zone">
+          <!-- The rocket is drawn with shapes. Change a fill colour! -->
+          <svg class="rocket" viewBox="0 0 200 320" role="img" aria-label="A white and orange rocket flying up">
+            <defs>
+              <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffc94d"/>
+                <stop offset="1" stop-color="#ff8a3d" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M74 236 Q100 330 126 236 Z" fill="url(#flame)"/>
+            <path d="M88 236 Q100 290 112 236 Z" fill="#fff6c9"/>
+            <path d="M62 170 L28 246 L68 228 Z" fill="#ff8a3d"/>
+            <path d="M138 170 L172 246 L132 228 Z" fill="#ff8a3d"/>
+            <rect x="74" y="222" width="52" height="16" rx="4" fill="#8a93c4"/>
+            <path d="M100 18 C146 62 146 150 136 226 L64 226 C54 150 54 62 100 18 Z" fill="#eef1ff"/>
+            <path d="M100 18 C120 37 132 62 137 88 L63 88 C68 62 80 37 100 18 Z" fill="#ff8a3d"/>
+            <circle cx="100" cy="132" r="24" fill="#3ed2ff" stroke="#26336e" stroke-width="7"/>
+            <circle cx="92" cy="124" r="6" fill="#ffffff" opacity="0.7"/>
+            <path d="M100 186 L108 246 L92 246 Z" fill="#ff8a3d"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap two-columns">
+        <div>
+          <h2 class="section-title">Our mission story</h2>
+          <p>Comet Kite is a pretend mission, made up for this website. The planets are real, and so are the facts!</p>
+          <p>First our ship swings around the Moon. Then it zooms to Mars, the red planet. After that comes the long ride to giant Jupiter, and to Saturn with its shiny rings.</p>
+          <p>Real spaceships need years to fly that far. So the crew packs books, games and lots of space food.</p>
+          <p class="story-end">Four worlds, three friends and one robot. <a href="crew.html">Meet the whole crew</a>.</p>
+        </div>
+        <figure class="story-photo">
+          <img src="space-launch.jpg" alt="A tall white rocket lifts off in fire and smoke" width="720" height="900">
+          <figcaption>A real lift-off: Apollo 11 left Earth on 16 July 1969. Photo: NASA</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section launch">
+      <div class="wrap">
+        <h2 class="section-title">Launch day, step by step</h2>
+        <p class="clock-help">The mission clock counts hours, minutes and seconds. T-00:10:00 means 10 minutes before lift-off. T+00:02:00 means 2 minutes after lift-off.</p>
+        <ol class="countdown">
+          <li>
+            <span class="time">T-03:00:00</span>
+            <h3>Climb aboard</h3>
+            <p>The crew puts on spacesuits, climbs in and buckles up.</p>
+          </li>
+          <li>
+            <span class="time">T-00:10:00</span>
+            <h3>Final checks</h3>
+            <p>Mission control checks every part of the ship. Everyone says "Go!"</p>
+          </li>
+          <li>
+            <span class="time">T-00:00:10</span>
+            <h3>Countdown</h3>
+            <p>Ten, nine, eight, seven, six, five, four, three, two, one...</p>
+          </li>
+          <li class="lift-off">
+            <span class="time">T-00:00:00</span>
+            <h3>Lift-off!</h3>
+            <p>The engines roar and the rocket climbs into the sky.</p>
+          </li>
+          <li>
+            <span class="time">T+00:02:00</span>
+            <h3>Boosters drop away</h3>
+            <p>The empty side rockets fall off. The ship gets lighter and faster.</p>
+          </li>
+          <li>
+            <span class="time">T+00:09:00</span>
+            <h3>Hello, space!</h3>
+            <p>The engines stop. Comet Kite is in orbit, flying round and round the Earth, and the crew starts to float.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Mission Comet Kite is pretend. The planets are real!</p>
+    <p>Learn more at <a href="https://spaceplace.nasa.gov/planets/en/">NASA Space Place: All about the planets</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "intel": "user@older-intel-mac.local",
+  "mini": "user@current-mac.local",
+  "identity": "Developer ID Application: Your Name (TEAMID)",
+  "profile": "your-notarytool-keychain-profile"
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fernhollow Weather Station - Today</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>
+      Fernhollow Weather
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Today</a></li>
+        <li><a href="week.html">This week</a></li>
+        <li><a href="learn.html">Learn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <h1>Today at Fernhollow School</h1>
+      <p><span class="online">Station online</span> Our weather station sits on the roof of the science room. Class 4 reads it every morning. Last reading: 10:30.</p>
+    </section>
+
+    <section class="dashboard" aria-label="Weather right now">
+      <article class="tile now wide tall">
+        <h2>Right now</h2>
+        <span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>
+        <p class="reading">17&deg;</p>
+        <p>Sunny spells. A few fluffy clouds, and a light wind.</p>
+      </article>
+
+      <article class="tile tall">
+        <h2>Temperature</h2>
+        <div class="thermometer" aria-hidden="true">
+          <ul class="scale"><li>30&deg;</li><li>20&deg;</li><li>10&deg;</li><li>0&deg;</li></ul>
+          <div class="tube"><span class="mercury" style="height: 57%"></span></div>
+        </div>
+        <p class="reading">17 <small>&deg;C</small></p>
+        <p>Highest today 19&deg;, lowest 9&deg;</p>
+      </article>
+
+      <article class="tile">
+        <h2>Wind</h2>
+        <div class="compass" aria-hidden="true">
+          <span class="north">N</span><span class="east">E</span><span class="south">S</span><span class="west">W</span>
+          <span class="arrow"></span>
+        </div>
+        <p><b>14 km/h</b> from the south-west. The arrow points where the wind goes.</p>
+      </article>
+
+      <article class="tile">
+        <h2>Rain</h2>
+        <span class="icon rain falling" aria-hidden="true"><span class="cloud"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span></span>
+        <p class="reading">2 <small>mm</small></p>
+        <p>since midnight</p>
+      </article>
+
+      <article class="tile">
+        <h2>Humidity</h2>
+        <div class="ring" style="--wet: 64%"><b>64%</b></div>
+        <p>How full of water vapour the air is. 100% means it cannot hold any more.</p>
+      </article>
+
+      <article class="tile">
+        <h2>Air pressure</h2>
+        <div class="gauge" aria-hidden="true"><span class="needle"></span></div>
+        <p class="gauge-ends"><span>Low</span><span>High</span></p>
+        <p class="reading">1016 <small>hPa</small></p>
+        <p>hPa (hectopascal) is how air pressure is measured. High pressure often means calm, dry weather.</p>
+      </article>
+
+      <article class="tile wide">
+        <h2>The sun today</h2>
+        <div class="sun-path" aria-hidden="true"><span class="sun-arm"><span class="sun-dot"></span></span></div>
+        <div class="ground"></div>
+        <p class="times"><span>Sunrise 06:12</span><span>Sunset 20:04</span></p>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2>Hour by hour</h2>
+      <ol class="hours">
+        <li><b>09:00</b><span class="icon cloudy" aria-hidden="true"><span class="cloud"></span></span>13&deg;</li>
+        <li><b>11:00</b><span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>17&deg;</li>
+        <li><b>13:00</b><span class="icon sunny" aria-hidden="true"><span class="sun"></span></span>19&deg;</li>
+        <li><b>15:00</b><span class="icon sunny" aria-hidden="true"><span class="sun"></span></span>19&deg;</li>
+        <li><b>17:00</b><span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>16&deg;</li>
+        <li><b>19:00</b><span class="icon rain" aria-hidden="true"><span class="cloud"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span></span>12&deg;</li>
+      </ol>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Fernhollow School and its weather station are made up. The readings are pretend, but the weather science is real.</p>
+    <p>Want to learn more? Read about <a href="https://simple.wikipedia.org/wiki/Weather">weather on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

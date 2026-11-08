@@ -1,0 +1,15 @@
+{
+  "title": "Theme park",
+  "name": "my-theme-park",
+  "blurb": "A theme park with a big park map, wild rides and tickets",
+  "category": "fun",
+  "layout": "Park map, ride cards with height badges",
+  "shows": [
+    "Park zones that span rows and columns",
+    "A big wheel that turns, made with CSS",
+    "Height badges and a rainbow thrill meter",
+    "Chips that jump to a part of the page",
+    "Tickets you pick with a click, no script"
+  ],
+  "accent": "#ff6b9a"
+}

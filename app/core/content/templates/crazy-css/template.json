@@ -1,0 +1,15 @@
+{
+  "title": "Crazy CSS",
+  "name": "crazy-css",
+  "blurb": "A 3D cube, glitch text, a typewriter and a rocket on a dark stage",
+  "category": "effects",
+  "layout": "Dark stage with show-off pieces",
+  "shows": [
+    "A 3D cube that turns over",
+    "Glitch, rainbow and neon text",
+    "Typewriter text with a blinking cursor",
+    "A blob that changes shape and a card that flips",
+    "Twinkling stars and a rocket launch"
+  ],
+  "accent": "#ff3ec8"
+}

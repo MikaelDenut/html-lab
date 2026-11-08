@@ -1,0 +1,607 @@
+/* ANIMATION LAB: one style.css for all three pages.
+   Each test plays when the mouse is on its card (:hover)
+   or when the Tab key stops on it (:focus-visible). */
+
+/* The colours, fonts and sizes of the whole lab. Change one line, change every page! */
+:root {
+  --paper: #f2f7ff;
+  --ink: #13213c;
+  --soft: #46557a;
+  --card: #ffffff;
+  --line: #c9d8f2;
+  --blue: #2563eb;
+  --orange: #ff7a1a;
+  --yellow: #ffd23f;
+  --pink: #c2185b;
+  --red: #e0245e;
+  --grass: #1e7a43;
+  --road: #3b4a6b;
+  /* Rockwell has little feet on its letters, Avenir Next has none: easy to tell apart. */
+  --title-font: Rockwell, Georgia, serif;
+  --font: "Avenir Next", "Helvetica Neue", sans-serif;
+  --code-font: Menlo, Monaco, monospace;
+  /* Each text size is 1.25 times the one before. */
+  --step-0: 18px;
+  --step-1: 23px;
+  --step-2: 29px;
+  --step-3: 37px;
+  --step-5: 60px;
+  --small: 14.4px;
+  /* The space sizes. Bigger gaps between big parts, small gaps inside a card. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 48px;
+  --shadow: 0 8px 22px rgba(19, 33, 60, 0.12);
+  --focus: #13213c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: var(--step-0)/1.5 var(--font);
+}
+
+a { color: var(--blue); }
+a:active { color: var(--pink); }
+code, kbd, pre { font-family: var(--code-font); font-size: 0.85em; }
+code { padding: 1px 5px; border-radius: 5px; background: #e8efff; }
+kbd {
+  padding: 1px 6px;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  background: #fff;
+}
+
+/* The Tab key shows where it is with a thick dark ring. */
+a:focus-visible,
+[tabindex]:focus-visible { outline: 4px solid var(--focus); outline-offset: 4px; }
+/* On the dark bar the ring is orange, on the green track it is yellow, so you can always see it. */
+.top a:focus-visible { outline-color: var(--orange); }
+.race [tabindex]:focus-visible { outline-color: var(--yellow); }
+
+/* The dark bar at the top. flex puts the name and the menu in a row. */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: 10px var(--space-l);
+  background: var(--ink);
+}
+
+.logo { margin: 0; font: 700 var(--step-1) var(--title-font); }
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* A ball made with one radial-gradient: light in the top left, dark at the edge. */
+.logo-ball,
+.ball,
+.runner::before {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe0c2, var(--orange) 45%, #b8480a);
+}
+.logo-ball { width: 22px; height: 22px; }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: #2a3a5e; }
+.menu a:active { background: #0b1426; }
+
+/* The page you are on is orange, so you know where you are. */
+.menu a[aria-current="page"] { background: var(--orange); color: var(--ink); }
+
+.page { max-width: 1120px; margin: 0 auto; padding: 32px var(--space-l) var(--space-xl); }
+.intro p { max-width: 70ch; }
+h1 {
+  max-width: 14ch;
+  margin: 0 0 10px;
+  font: 700 clamp(var(--step-3), 7vw, var(--step-5))/1.1 var(--title-font);
+}
+
+/* The tests, one under the other, like lanes on a lab sheet. */
+.grid { display: grid; gap: var(--space-m); margin-top: 28px; }
+
+/* Each test is a long row: the test window on the left (220px),
+   and the words and the long timing track on the right (the rest). */
+.card {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  column-gap: var(--space-l);
+  padding: var(--space-m);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.card h2 { margin: var(--space-xs) var(--space-xs) 2px; font: 700 var(--step-1)/1.2 var(--title-font); }
+.card p { max-width: 70ch; margin: var(--space-xs); }
+.help { color: var(--soft); font-weight: 600; }
+
+/* The test window, where the thing in the test plays.
+   grid-row: 1 / -1 makes it fill the left side, from the first row to the last. */
+.demo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  grid-row: 1 / -1;
+  min-height: 160px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #e6efff;
+}
+
+/* The things in the tests: a ball, a box, a word, a wheel, a heart, a sign, a balloon. */
+.ball { width: 56px; height: 56px; }
+.box {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: var(--blue);
+  color: #fff;
+  font: 700 var(--step-1) var(--title-font);
+}
+.word {
+  padding: 6px 18px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font: 700 var(--step-2) var(--title-font);
+}
+
+/* The heart is a small SVG drawing. fill paints the inside. */
+.heart { width: 80px; height: 80px; fill: var(--red); }
+
+/* The wheel: conic-gradient paints colours around the middle, like pizza slices. */
+.wheel {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(var(--orange) 0 25%, var(--yellow) 0 50%, var(--orange) 0 75%, var(--yellow) 0);
+}
+
+/* The sign hangs on a string. ::before is the string, ::after is the nail. */
+.sign {
+  position: relative;
+  margin-top: 44px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: var(--pink);
+  color: #fff;
+  font: 700 var(--step-1) var(--title-font);
+}
+.sign::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 2px;
+  height: 40px;
+  background: var(--ink);
+}
+.sign::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 4px);
+  bottom: calc(100% + 38px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+/* The balloon: an egg shape with border-radius, and ::after for its string. */
+.balloon {
+  position: relative;
+  width: 60px;
+  height: 74px;
+  margin-bottom: 30px;
+  border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+  background: radial-gradient(circle at 35% 30%, #ffc2dc, #e83e8c 60%);
+}
+.balloon::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 34px;
+  background: var(--soft);
+}
+.dots span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+/* THE TIMING TRACK: a long bar that fills up while the test plays.
+   It uses the same --time as the test, and --repeat for how many times.
+   The little marks cut it into 10 equal parts, like a ruler. */
+.track {
+  position: relative;
+  align-self: end;
+  height: 16px;
+  margin: var(--space-m) var(--space-xs) 30px;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(10% - 2px), rgba(19, 33, 60, 0.35) calc(10% - 2px) 10%),
+    var(--line);
+}
+.track span {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.track::before,
+.track::after {
+  position: absolute;
+  top: 20px;
+  color: var(--soft);
+  font: var(--small) var(--code-font);
+}
+.track::before { content: "0s"; left: 0; }
+.track::after { content: attr(data-time); right: 0; }
+/* var(--repeat, 1) means: use --repeat, and if the card has none, play 1 time. */
+@keyframes fill-up { to { transform: scaleX(1); } }
+.card:hover .track span,
+.card:focus-visible .track span { animation: fill-up var(--time) linear var(--repeat, 1) both; }
+
+/* ===== FADES PAGE ===== */
+
+/* FADE IN: from gone (opacity 0) to all there (opacity 1). */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in { --time: 1s; }
+.fade-in:hover .ball,
+.fade-in:focus-visible .ball { animation: fade-in var(--time) both; }
+
+/* FADE OUT: the other way round. both keeps the last frame, so it stays gone. */
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.fade-out { --time: 1.2s; }
+.fade-out:hover .ball,
+.fade-out:focus-visible .ball { animation: fade-out var(--time) both; }
+
+/* FADE UP: it comes up from 30px lower while it fades in. */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { --time: 0.8s; }
+.fade-up:hover .word,
+.fade-up:focus-visible .word { animation: fade-up var(--time) ease-out both; }
+
+/* FROM THE SIDE: the same trick, but it comes in from the left. */
+@keyframes fade-side {
+  from { opacity: 0; transform: translateX(-80px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.fade-side { --time: 0.8s; }
+.fade-side:hover .box,
+.fade-side:focus-visible .box { animation: fade-side var(--time) ease-out both; }
+
+/* ZOOM IN: it starts tiny and grows to its real size. */
+@keyframes zoom-in {
+  from { opacity: 0; transform: scale(0.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+.zoom-in { --time: 0.6s; }
+.zoom-in:hover .ball,
+.zoom-in:focus-visible .ball { animation: zoom-in var(--time) ease-out both; }
+
+/* BLUR IN: it starts foggy and clears up. A filter is hard work for the Mac,
+   so use it on one small thing, and only on hover. */
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(12px); }
+  to { opacity: 1; filter: blur(0); }
+}
+.blur-in { --time: 1s; }
+.blur-in:hover .word,
+.blur-in:focus-visible .word { animation: blur-in var(--time) both; }
+
+/* ===== MOVES PAGE ===== */
+
+/* BOUNCE: ease-out going up, so it slows at the top.
+   ease-in coming down, so it falls faster. Squash when it lands! */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) scale(1.15, 0.85); animation-timing-function: ease-out; }
+  50% { transform: translateY(-50px); animation-timing-function: ease-in; }
+}
+.bounce { --time: 0.8s; --repeat: infinite; }
+.bounce .ball { transform-origin: bottom; }
+.bounce:hover .ball,
+.bounce:focus-visible .ball {
+  /* impeccable-disable-next-line bounce-easing -- this card teaches a bounce */
+  animation: bounce var(--time) var(--repeat);
+}
+
+/* SHAKE: left, right, left, right, fast. Like saying "no no no". */
+@keyframes shake {
+  20%, 60% { transform: translateX(-12px); }
+  40%, 80% { transform: translateX(12px); }
+}
+.shake { --time: 0.5s; --repeat: 2; }
+.shake:hover .box,
+.shake:focus-visible .box { animation: shake var(--time) var(--repeat); }
+
+/* WOBBLE: slide and lean, less and less, like jelly on a plate. */
+@keyframes wobble {
+  15% { transform: translateX(-24px) rotate(-6deg); }
+  30% { transform: translateX(18px) rotate(4deg); }
+  45% { transform: translateX(-12px) rotate(-3deg); }
+  60% { transform: translateX(8px) rotate(2deg); }
+  75% { transform: translateX(-4px) rotate(-1deg); }
+}
+.wobble { --time: 1s; }
+.wobble:hover .box,
+.wobble:focus-visible .box {
+  /* impeccable-disable-next-line bounce-easing -- this card teaches a wobble */
+  animation: wobble var(--time);
+}
+
+/* SWING: transform-origin moves the turning point up to the nail,
+   44px above the sign. Then rotate makes it swing. */
+@keyframes swing {
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(5deg); }
+  80% { transform: rotate(-5deg); }
+}
+.swing { --time: 1s; }
+.swing .sign { transform-origin: 50% -44px; }
+.swing:hover .sign,
+.swing:focus-visible .sign { animation: swing var(--time) ease-in-out; }
+
+/* SPIN: one whole turn, again and again. linear keeps the speed the same. */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { --time: 1s; --repeat: infinite; }
+.spin:hover .wheel,
+.spin:focus-visible .wheel { animation: spin var(--time) linear var(--repeat); }
+
+/* PULSE: a bit bigger in the middle, then back. Like breathing. */
+@keyframes pulse { 50% { transform: scale(1.2); } }
+.pulse { --time: 1s; --repeat: infinite; }
+.pulse:hover .ball,
+.pulse:focus-visible .ball { animation: pulse var(--time) ease-in-out var(--repeat); }
+
+/* HEARTBEAT: two quick beats, then a long rest. */
+@keyframes heartbeat {
+  0%, 28%, 70% { transform: scale(1); }
+  14%, 42% { transform: scale(1.3); }
+}
+.heartbeat { --time: 1.3s; --repeat: infinite; }
+.heartbeat:hover .heart,
+.heartbeat:focus-visible .heart { animation: heartbeat var(--time) var(--repeat); }
+
+/* FLOAT: this one moves BY ITSELF, with no mouse.
+   alternate plays it forward, then backward: up, down, up, down. */
+@keyframes float { to { transform: translateY(-16px); } }
+.float { --time: 2s; --repeat: infinite; }
+@media (prefers-reduced-motion: no-preference) {
+  .balloon { animation: float var(--time) ease-in-out infinite alternate; }
+}
+
+/* SLIDE IN: it starts outside the window on the left and slides into its place. */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-140px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.slide-in { --time: 0.7s; }
+.slide-in:hover .box,
+.slide-in:focus-visible .box { animation: slide-in var(--time) ease-out both; }
+
+/* ONE AFTER ANOTHER: every dot does the same jump.
+   animation-delay makes each dot wait for its own --wait first. */
+@keyframes jump {
+  30% { transform: translateY(-40px); }
+  60% { transform: translateY(0); }
+}
+.after { --time: 1s; --repeat: infinite; }
+.after:hover .dots span,
+.after:focus-visible .dots span {
+  animation: jump var(--time) ease-in-out var(--repeat);
+  animation-delay: var(--wait);
+}
+
+/* ===== TIMING PAGE ===== */
+
+/* The race track: green grass, and a white lane for each ball. */
+.race {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--grass);
+}
+.start-all {
+  margin: 0;
+  padding: 12px 16px;
+  border: 3px dashed #fff;
+  border-radius: 12px;
+  color: #fff;
+  font: 700 var(--step-1) var(--title-font);
+  text-align: center;
+}
+.lane {
+  display: grid;
+  grid-template-columns: 48px 300px 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: var(--card);
+}
+.lane-info h2 { margin: 0; font: 700 var(--step-1) var(--code-font); }
+.lane-info p { margin: 0; }
+
+/* The timing curve. Across is time, up is how far the ball got. */
+.curve { width: 48px; height: 68px; }
+.curve rect { fill: var(--paper); stroke: var(--line); }
+.curve path {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+/* The road: a dashed white middle line on grey. ::after is the black and white
+   finish line: a conic-gradient square, repeated every 12px. */
+.road {
+  position: relative;
+  overflow: hidden;
+  padding: 6px;
+  border-radius: 28px;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0 18px, transparent 18px 34px) center / 100% 3px no-repeat, var(--road);
+}
+.road::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 22px;
+  width: 12px;
+  background: conic-gradient(#fff 0 25%, var(--ink) 0 50%, #fff 0 75%, var(--ink) 0) 0 0 / 12px 12px;
+}
+
+/* The runner is as wide as the road, minus one ball (40px).
+   translateX(100%) moves it by its own width, so the ball ends at the far end.
+   transition: the move takes 2 seconds. Every lane below picks its own timing. */
+.runner {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: calc(100% - 40px);
+  transition: transform 2s;
+}
+.runner::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+.lane:hover .runner,
+.lane:focus-visible .runner,
+.start-all:hover ~ .lane .runner,
+.start-all:focus-visible ~ .lane .runner { transform: translateX(100%); }
+
+/* THE SEVEN TIMINGS, one line for each lane:
+   linear: the same speed from start to finish.
+   ease: quick start, soft stop. ease-in: slow start, fast finish.
+   ease-out: fast start, slow finish. ease-in-out: slow, fast, slow.
+   steps(5): 5 jumps and no gliding. */
+.linear .runner { transition-timing-function: linear; }
+.ease .runner { transition-timing-function: ease; }
+.ease-in .runner { transition-timing-function: ease-in; }
+.ease-out .runner { transition-timing-function: ease-out; }
+.ease-in-out .runner { transition-timing-function: ease-in-out; }
+.steps .runner { transition-timing-function: steps(5); }
+
+/* CUBIC-BEZIER: your own curve! A number under 0 backs up, over 1 runs too far. */
+/* impeccable-disable-next-line bounce-easing -- this lane teaches an overshooting curve */
+.boing .runner { transition-timing-function: cubic-bezier(0.5, -0.5, 0.5, 1.5); }
+
+/* The "How it works" box: code on one side, words on the other. */
+.how {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px 28px;
+  margin-top: 40px;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: #fff;
+}
+.how h2 { grid-column: 1 / -1; margin: 0; font: 700 var(--step-2) var(--title-font); }
+.how pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #0b1426;
+  color: #ffd8b8;
+  line-height: 1.6;
+}
+.how pre code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  font-size: 1em;
+}
+.how p { margin: 0 0 10px; }
+.how code { background: #2a3a5e; }
+/* The fact box: a lighter blue patch with round corners. */
+.fact { padding: 10px 14px; border-radius: 10px; background: #24365c; }
+
+.footer {
+  padding: var(--space-l);
+  background: #fff;
+  border-top: 2px solid var(--line);
+  text-align: center;
+}
+.footer p { max-width: 720px; margin: 6px auto; }
+.calm { color: var(--soft); }
+
+/* A tablet window: code above the words, and each road under its words. */
+@media (max-width: 900px) {
+  .how { grid-template-columns: minmax(0, 1fr); }
+  .lane { grid-template-columns: 48px 1fr; }
+  .road { grid-column: 1 / -1; }
+}
+
+/* A narrow window, like a phone: the test window goes above its words,
+   long code lines wrap, and there is less space around things. */
+@media (max-width: 640px) {
+  .top { justify-content: center; padding: 10px 16px; }
+  .page { padding: 24px 16px 40px; }
+  .card { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .demo { grid-row: auto; margin-bottom: var(--space-s); }
+  .how pre { white-space: pre-wrap; }
+  .race { padding: 10px; }
+}
+
+/* LESS MOTION: some people feel sick when things move.
+   Their Mac can ask for less motion. Then every test stops. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after { transition: none !important; animation: none !important; }
+}

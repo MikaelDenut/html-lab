@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book a time - Wobblenut Garage</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="wrap top-inner">
+        <a class="logo" href="index.html">
+          <svg width="46" height="46" viewBox="0 0 46 46" aria-hidden="true">
+            <polygon class="logo-nut" points="23,2 41,12.5 41,33.5 23,44 5,33.5 5,12.5"/>
+            <circle class="logo-hole" cx="23" cy="23" r="9"/>
+          </svg>
+          <span>Wobblenut<small>Garage</small></span>
+        </a>
+        <nav aria-label="Main menu">
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="prices.html">Prices</a></li>
+            <li><a href="book.html" aria-current="page">Book a time</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="intro-title">
+        <h1>Book a time in three steps</h1>
+        <p>No waiting on the phone. Fill in the form, and we send you a time.</p>
+      </section>
+
+      <ol class="booking-steps">
+        <li>
+          <h2>Pick a job</h2>
+          <p>Choose what your car needs. Not sure? Pick "Something sounds funny".</p>
+        </li>
+        <li>
+          <h2>Choose a day</h2>
+          <p>Tell us which day is best for you. We are open Monday to Friday.</p>
+        </li>
+        <li>
+          <h2>Bring your car</h2>
+          <p>Drop it off in the morning, or wait with a free cocoa.</p>
+        </li>
+      </ol>
+
+      <div class="book-grid">
+        <section class="checklist">
+          <h2>Check your car first</h2>
+          <p>Tick what works. Then tell us about the rest.</p>
+          <ul class="check-list">
+            <li><label><input type="checkbox"><span class="tick-box"></span><span class="check-text">All lamps light up</span></label></li>
+            <li><label><input type="checkbox"><span class="tick-box"></span><span class="check-text">Tyres look round and full</span></label></li>
+            <li><label><input type="checkbox"><span class="tick-box"></span><span class="check-text">Wipers clean the window</span></label></li>
+            <li><label><input type="checkbox"><span class="tick-box"></span><span class="check-text">The horn goes beep</span></label></li>
+            <li><label><input type="checkbox"><span class="tick-box"></span><span class="check-text">Seat belts click shut</span></label></li>
+            <li><label><input type="checkbox"><span class="tick-box"></span><span class="check-text">No warning light on the dashboard</span></label></li>
+          </ul>
+        </section>
+
+        <section class="form-box">
+          <h2>Your booking</h2>
+          <form class="booking-form">
+            <label for="name">Your name</label>
+            <input id="name" type="text" placeholder="Robin Gearson">
+            <label for="plate">Number plate</label>
+            <input id="plate" type="text" placeholder="MY CAR 1">
+            <label for="job">What does the car need?</label>
+            <select id="job">
+              <option>Oil change</option>
+              <option>New tyres or a tyre swap</option>
+              <option>Brakes</option>
+              <option>Free 10-point check</option>
+              <option>Something sounds funny</option>
+            </select>
+            <label for="day">Best day</label>
+            <input id="day" type="date">
+            <label for="note">Anything else?</label>
+            <textarea id="note" rows="3" placeholder="It goes clunk when I turn left."></textarea>
+            <button class="button" type="submit">Send my booking</button>
+            <p class="practice">A practice form: HTML Lab does not send it.</p>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer class="bottom">
+      <div class="wrap">
+        <p>Wobblenut Garage, Gearwheel Road 12. Monday to Friday 7:30 to 17:00. A pretend garage, made with HTML and CSS.</p>
+        <p>Want to know more? <a href="https://en.wikipedia.org/wiki/Auto_mechanic">Read about car mechanics on Wikipedia</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

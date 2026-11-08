@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotel Brinewhistle - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle class="logo-sun" cx="24" cy="20" r="11"></circle>
+        <path class="logo-wave" d="M2 32 Q8 27 14 32 T26 32 T38 32 T50 32"></path>
+        <path class="logo-wave" d="M2 40 Q8 35 14 40 T26 40 T38 40 T50 40"></path>
+      </svg>
+      <span>Hotel Brinewhistle<small>Saltmere Bay</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="rooms.html">Rooms</a></li>
+        <li><a href="area.html">The area</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="photo-section hero">
+      <img class="photo" src="hotel-beach.jpg" alt="Footprints in the sand on a beach, with the sun setting behind a cliff" width="1280" height="853">
+      <div class="panel">
+        <h1>A small hotel by a big sea</h1>
+        <p>Twelve rooms, one long sandy beach and the sound of the waves all night long.</p>
+        <a class="button" href="rooms.html">See the rooms</a>
+      </div>
+    </section>
+
+    <form class="booking-bar" id="booking">
+      <div class="field">
+        <label for="arrive">Arrive</label>
+        <input id="arrive" type="date">
+      </div>
+      <div class="field">
+        <label for="leave">Leave</label>
+        <input id="leave" type="date">
+      </div>
+      <div class="field">
+        <label for="guests">Guests</label>
+        <select id="guests">
+          <option>1 guest</option>
+          <option selected>2 guests</option>
+          <option>3 guests</option>
+          <option>4 guests</option>
+          <option disabled>5 guests or more (no room that big)</option>
+        </select>
+      </div>
+      <button class="button" type="submit">Check dates</button>
+      <p class="form-note">A practice form: HTML Lab does not send it.</p>
+    </form>
+
+    <section class="photo-section right">
+      <img class="photo" src="hotel-room.jpg" alt="A bright hotel room with a white bed, a lamp and long curtains by the window" width="1280" height="853">
+      <div class="panel">
+        <h2>Wake up to the sea</h2>
+        <p>Soft beds, bright rooms and long curtains for a slow morning. The beach is two minutes from the door. Breakfast is on the terrace until eleven.</p>
+        <a class="text-link" href="rooms.html">Compare the rooms</a>
+      </div>
+    </section>
+
+    <section class="photo-section">
+      <img class="photo" src="hotel-lighthouse.jpg" alt="A white lighthouse far away on the cliffs, with waves rolling in" width="1280" height="853">
+      <div class="panel">
+        <h2>Walk to the lighthouse</h2>
+        <p>A sandy path along the water takes you there in about forty minutes. Bring a jacket, it is windy at the top!</p>
+        <a class="text-link" href="area.html">Find things to do</a>
+      </div>
+    </section>
+
+    <section class="guest-quote">
+      <h2>What our guests say</h2>
+      <blockquote>
+        <p>We slept with the window open and heard the waves all night. In the morning there were pancakes. We are coming back!</p>
+      </blockquote>
+      <p class="quote-name">A family from the Lighthouse Loft</p>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Hotel Brinewhistle</b>, 3 Pebblewhirl Promenade, Saltmere Bay. A pretend hotel, made with HTML and CSS.</p>
+    <p>How does a lighthouse work? <a href="https://simple.wikipedia.org/wiki/Lighthouse">Read about lighthouses on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "title": "Toy shop",
+  "name": "my-toy-shop",
+  "blurb": "An online toy shop with filters, a toy page and a basket",
+  "category": "professional",
+  "layout": "Online shop: filter sidebar, product grid, basket",
+  "shows": [
+    "A sticky filter sidebar that hides toys",
+    "Add to basket buttons from hidden checkboxes",
+    "A basket that counts toys with a CSS counter",
+    "Thumbnails that zoom into the big picture",
+    "Basket lines laid out with grid areas"
+  ],
+  "accent": "#6b2d6f"
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Deep ocean dive",
+  "name": "my-ocean-dive",
+  "blurb": "An ocean club that dives from the sunny top to the deepest trench",
+  "category": "science",
+  "layout": "Depth sections with a sticky depth meter",
+  "shows": [
+    "Sections that get darker the deeper you go",
+    "A depth tag that sticks with position: sticky",
+    "Sea creatures drawn with SVG shapes",
+    "Cards that slide up a secret fact on hover",
+    "Tick boxes and radio dots drawn with CSS"
+  ],
+  "accent": "#2e6a64"
+}

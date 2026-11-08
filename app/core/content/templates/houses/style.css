@@ -1,0 +1,558 @@
+/* Kettle and Key, homes in Ambleford: one style sheet for all three pages.
+   Ambleford is a seaside town of white walls and bright red front doors. */
+
+/* Change a colour, a size or a space here and the whole site changes! */
+:root {
+  --wall: #ffffff;
+  --ink: #22303c;
+  --soft-ink: #56677a;
+  --line: #dde3e8;
+  --field-line: #7a8b9b;
+  --door: #b8352a;
+  --door-dark: #8f281f;
+  --glass: #e3f1ec;
+  --glass-ink: #2f5d50;
+  --brass: #e3a92b;
+  --title-font: "Superclarendon", "Rockwell", serif;
+  --text-font: "Avenir Next", "Helvetica Neue", sans-serif;
+  /* Each text size is 1.25 times the one before. */
+  --text-s: 14px;
+  --text-m: 17.5px;
+  --text-l: 22px;
+  --text-xl: 27.5px;
+  --text-2xl: 34.5px;
+  --text-3xl: 43px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 32px;
+  --space-xl: 52px;
+  --shadow: 0 8px 24px rgba(34, 48, 60, 0.12);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+figure { margin: 0; }
+a { color: var(--door); }
+a:hover { color: var(--door-dark); }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--wall);
+  /* font: size/line-height family. The number after the / is the space between lines. */
+  font: var(--text-m)/1.6 var(--text-font);
+}
+
+h1, h2, h3 { margin: 0 0 var(--space-s); font-family: var(--title-font); line-height: 1.15; }
+h1 { max-width: 22ch; font-size: var(--text-3xl); }
+h2 { font-size: var(--text-xl); }
+p { max-width: 70ch; }
+
+/* A thick dark ring shows where the keyboard is. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* On the dark footer the ring is brass, so you can still see it. */
+.footer a:focus-visible { outline-color: var(--brass); }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 var(--space-l); }
+
+/* The top bar: logo on the left, menu on the right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding-top: var(--space-m);
+  padding-bottom: var(--space-m);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--ink);
+  font: bold var(--text-l) var(--title-font);
+  text-decoration: none;
+}
+
+.logo svg { width: 44px; height: 44px; }
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.menu a:hover { background: var(--glass); color: var(--ink); }
+
+/* The page you are on is painted like a red front door. */
+.menu a[aria-current="page"] { color: var(--wall); background: var(--door); }
+
+.page-top { padding: var(--space-l) 0 var(--space-m); }
+.lead { margin: 0; color: var(--soft-ink); font-size: var(--text-l); }
+.practice { color: var(--soft-ink); font-size: var(--text-s); }
+
+/* The search bar: labels on top, boxes underneath, all in one row.
+   fr means a share of the free space: 2fr gets twice as much as 1fr. */
+.search {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  align-items: end;
+  gap: var(--space-m);
+  padding: var(--space-m);
+  border-radius: 18px;
+  background: var(--glass);
+}
+
+label { display: block; margin-bottom: var(--space-xs); font-weight: 600; }
+
+input, select, textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 2px solid var(--field-line);
+  border-radius: 12px;
+  color: var(--ink);
+  background: var(--wall);
+  font: inherit;
+}
+
+/* The grey hint text inside an empty box. */
+::placeholder { color: var(--soft-ink); opacity: 1; }
+
+/* appearance: none hides the Mac's own select box, so we can style it. */
+select { -webkit-appearance: none; appearance: none; padding-right: 40px; }
+
+/* The little arrow is a square corner, turned on its side. */
+.select-box { position: relative; }
+.select-box::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 20px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+input:hover, select:hover, textarea:hover { border-color: var(--soft-ink); }
+input:disabled, select:disabled { color: var(--soft-ink); background: var(--line); }
+
+/* A box turns red when what you typed is not allowed.
+   :not(:placeholder-shown) waits until you have typed something. */
+input:not(:placeholder-shown):invalid { border-color: var(--door); }
+
+/* The words under a red box stay hidden until the box turns red. */
+.hint { display: none; margin: var(--space-xs) 0 0; color: var(--door); font-weight: 600; }
+input:not(:placeholder-shown):invalid + .hint { display: block; }
+
+.button {
+  min-height: 48px;
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 12px;
+  color: var(--wall);
+  background: var(--door);
+  font: bold var(--text-m) var(--text-font);
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.button:hover { color: var(--wall); background: var(--door-dark); }
+.button:active { transform: translateY(2px); }
+
+/* Filter chips: real radio buttons hide behind the labels.
+   The radio is still there for the keyboard, just invisible.
+   min-height: 0 undoes the 48px from the input rule. */
+.filter-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-s);
+  margin: var(--space-l) 0 var(--space-m);
+}
+
+.filters label {
+  margin: 0;
+  padding: 10px 18px;
+  border: 2px solid var(--field-line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.filters label:hover { border-color: var(--ink); }
+
+/* ~ means "any later brother or sister": a box after the radio with the same
+   parent. That is why the radio buttons must come before the chips and the list. */
+
+/* The chip of the checked radio button turns dark. */
+#show-all:checked ~ .filters [for="show-all"],
+#show-houses:checked ~ .filters [for="show-houses"],
+#show-new:checked ~ .filters [for="show-new"] { color: var(--wall); background: var(--ink); border-color: var(--ink); }
+
+#show-all:focus-visible ~ .filters [for="show-all"],
+#show-houses:focus-visible ~ .filters [for="show-houses"],
+#show-new:focus-visible ~ .filters [for="show-new"] { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+/* The filter: when a chip is checked, the other homes are hidden. */
+#show-houses:checked ~ .listings .not-house,
+#show-new:checked ~ .listings .not-new { display: none; }
+
+/* The listing grid: 3 columns. The featured home takes 2 of them. */
+.listings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-l) var(--space-m);
+  margin: 0 0 var(--space-xl);
+  padding: 0;
+  list-style: none;
+}
+
+.featured { grid-column: span 2; grid-row: span 2; }
+
+/* In the code the name of the home comes first, for screen readers.
+   order moves the photo and the price above it on the screen. */
+.card { display: flex; flex-direction: column; }
+
+.card-photo {
+  order: -2;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.price {
+  order: -1;
+  color: var(--door);
+  font: bold var(--text-l) var(--title-font);
+}
+
+.card-photo img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* The "New" ribbon is a strip turned 45 degrees in the corner. */
+.ribbon {
+  position: absolute;
+  top: 22px;
+  right: -44px;
+  width: 160px;
+  padding: 4px 0;
+  color: var(--ink);
+  background: var(--brass);
+  font-weight: bold;
+  text-align: center;
+  transform: rotate(45deg);
+  box-shadow: 0 4px 10px rgba(34, 48, 60, 0.25);
+}
+
+.card h2 { margin: 0 0 2px; font-size: var(--text-l); }
+.card h2 a { color: var(--ink); text-decoration: none; }
+.card p { margin: 0; }
+.card .price { margin-top: var(--space-s); }
+.address { color: var(--soft-ink); }
+
+.card-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-m);
+  margin: var(--space-s) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card-facts li { font-weight: 600; }
+
+/* The photo of the featured home zooms in a little on hover. */
+.featured:hover .card-photo img { transform: scale(1.04); }
+.featured h2 a:hover { color: var(--door); }
+.featured h2 a:active { color: var(--door-dark); }
+.featured h2 { font-size: var(--text-xl); }
+.featured .card-photo img { aspect-ratio: 5 / 4; }
+
+/* The last box in the grid is not a home: it sends sellers to the sell page. */
+.sell-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-s);
+  padding: var(--space-l);
+  border-radius: 16px;
+  background: var(--glass);
+}
+
+.sell-card h2 { margin: 0; font-size: var(--text-l); }
+.sell-card p { margin: 0; }
+
+/* A link can wear the button style too. */
+a.button { display: inline-flex; align-items: center; align-self: start; text-decoration: none; }
+
+/* The photo strip scrolls sideways and stops at each photo: scroll-snap. */
+.strip {
+  display: flex;
+  gap: var(--space-m);
+  overflow-x: auto;
+  padding-bottom: var(--space-s);
+  scroll-snap-type: x mandatory;
+}
+
+.strip:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+.strip figure { flex: 0 0 62%; scroll-snap-align: start; }
+.strip img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 16px; }
+.strip figcaption { padding-top: var(--space-xs); color: var(--soft-ink); }
+
+.house-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--space-m);
+  padding: var(--space-l) 0 var(--space-m);
+}
+
+.big-price { margin: 0; color: var(--door); font: bold var(--text-2xl) var(--title-font); }
+
+/* Two columns: the house on the left, the viewing form on the right. */
+.house-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  align-items: start;
+  gap: var(--space-xl);
+  margin: var(--space-xl) 0;
+}
+
+.house-layout section + section { margin-top: var(--space-xl); }
+
+/* A table with a header cell (th) at the start of every row. */
+.facts { width: 100%; border-collapse: collapse; }
+.facts th, .facts td { padding: var(--space-s) 0; border-bottom: 1px solid var(--line); text-align: left; }
+.facts th { width: 45%; color: var(--soft-ink); font-weight: 600; }
+/* tabular-nums gives every digit the same width, so numbers line up. */
+.facts td { font-variant-numeric: tabular-nums; }
+
+/* Two floors side by side. On a phone the second one wraps underneath. */
+.plans { display: flex; flex-wrap: wrap; gap: var(--space-m); }
+.floor { flex: 1 1 260px; }
+.floor figcaption { margin-bottom: var(--space-xs); font-weight: 600; }
+.plan { display: block; width: 100%; height: auto; }
+.plan text { font: 14px var(--text-font); fill: var(--ink); }
+
+/* The form box stays on the screen while you scroll: sticky. */
+.viewing {
+  position: sticky;
+  top: var(--space-m);
+  padding: var(--space-l) var(--space-m);
+  border-radius: 18px;
+  background: var(--wall);
+  box-shadow: var(--shadow);
+}
+
+.viewing form > * + * { margin-top: var(--space-m); }
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-weight: normal;
+}
+
+.check input { width: 22px; min-height: 22px; }
+
+.agent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-bottom: var(--space-m);
+}
+
+.agent svg { flex: none; width: 64px; height: 64px; }
+.agent p { margin: 0; }
+
+.sell-steps { padding-top: var(--space-xl); border-top: 1px solid var(--line); }
+
+/* The steps to sell. The numbers matter here: the order is the order. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-m);
+  margin: var(--space-l) 0 var(--space-xl);
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li { position: relative; counter-increment: step; }
+.steps h3 { font-size: var(--text-l); }
+.steps p { margin: 0; color: var(--soft-ink); }
+
+/* counter() writes the step number into a red circle. */
+.steps li::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--space-m);
+  border-radius: 50%;
+  color: var(--wall);
+  background: var(--door);
+  font: bold var(--text-xl) var(--title-font);
+}
+
+/* A thin line joins one circle to the next. top: 27px is the middle of the 56px circle. */
+.steps li::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 64px;
+  right: -12px;
+  height: 2px;
+  background: var(--line);
+}
+
+.steps li:last-child::after { display: none; }
+
+.estimate {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.estimate form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-m);
+  align-content: start;
+}
+
+.estimate .practice, .estimate .button { grid-column: 1 / -1; }
+
+.result {
+  align-self: start;
+  padding: var(--space-l);
+  border-radius: 18px;
+  background: var(--glass);
+}
+
+.result-price { margin: var(--space-xs) 0 var(--space-m); font: bold var(--text-2xl)/1.1 var(--title-font); }
+
+/* The range bar: a white track with the price range painted on it. */
+.range {
+  position: relative;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--wall);
+}
+
+/* left: 40% and width: 20% paint the part from 300,000 to 400,000. */
+.range span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 40%;
+  width: 20%;
+  border-radius: 999px;
+  background: var(--glass-ink);
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  max-width: none;
+  color: var(--soft-ink);
+  font-size: var(--text-s);
+}
+
+.quote { margin: var(--space-xl) 0; padding: 0; }
+.quote p { max-width: 40ch; margin: 0 0 var(--space-s); font: var(--text-xl)/1.35 var(--title-font); }
+.quote footer { color: var(--soft-ink); }
+
+.footer { padding: var(--space-l) 0; color: var(--glass); background: var(--ink); }
+.footer p { margin: 4px 0; }
+.footer a { color: var(--wall); }
+
+/* Things move only if the computer says moving is OK. */
+@media (prefers-reduced-motion: no-preference) {
+  .featured .card-photo img { animation: settle 1.6s var(--ease-out); }
+}
+
+/* When the page opens, the big photo starts zoomed in and settles back. */
+@keyframes settle {
+  from { transform: scale(1.12); }
+}
+
+/* On a tablet: fewer columns, and the form goes under the house. */
+@media (max-width: 960px) {
+  .search { grid-template-columns: 1fr 1fr; }
+  .search .button { grid-column: 1 / -1; }
+  .listings { grid-template-columns: repeat(2, 1fr); }
+  .featured { grid-row: auto; }
+  .featured .card-photo img { aspect-ratio: 3 / 2; }
+  .sell-card { grid-column: 1 / -1; }
+  .strip figure { flex-basis: 78%; }
+  .house-layout, .estimate { grid-template-columns: 1fr; }
+  .viewing { position: static; }
+  .steps { grid-template-columns: 1fr; }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    column-gap: var(--space-m);
+  }
+
+  .steps li::before { grid-row: span 2; margin: 0; }
+
+  /* Now the line goes down. left: 27px puts it in the middle of the 56px circle. */
+  .steps li::after {
+    top: 60px;
+    bottom: -16px;
+    left: 27px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+}
+
+/* On a phone everything stands in one column. */
+@media (max-width: 600px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  h1 { font-size: var(--text-2xl); }
+  .search, .listings, .estimate form { grid-template-columns: 1fr; }
+  .featured { grid-column: auto; }
+  .strip figure { flex-basis: 88%; }
+  .result { padding: var(--space-m); }
+}

@@ -1,0 +1,522 @@
+/* Hotel Brinewhistle: one style file for all three pages. */
+
+/* The hotel at dusk: dark sea colours and a warm lamp. Change one line here and the whole hotel changes! */
+:root {
+  --sea-night: #0f1d1c;
+  --sea-deep: #182b29;
+  --sea-line: #2e4744;
+  --field-line: #6d8a85;
+  --foam: #efe9dd;
+  --mist: #aebfb9;
+  --lamp: #f0b35a;
+  --lamp-dark: #1f1606;
+  --signal: #c8423b;
+  --rock: #0b1716;
+  --title-font: Didot, "Bodoni 72", serif;
+  --text-font: "Avenir Next", "Helvetica Neue", sans-serif;
+  --text-s: 16px;
+  --text-m: 20px;
+  --text-l: 25px;
+  --text-xl: 31px;
+  --text-2xl: 39px;
+  --text-3xl: 49px;
+  --text-4xl: 61px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 96px;
+  --corner: 6px;
+  --shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+
+body {
+  margin: 0;
+  background: var(--sea-night);
+  color: var(--foam);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: 400;
+  line-height: 1.1;
+}
+h1 { font-size: var(--text-4xl); max-width: 12ch; }
+h2 { font-size: var(--text-2xl); max-width: 18ch; }
+h3 { font-size: var(--text-xl); }
+
+/* Lines stay short, so your eyes find the next line easily. */
+p, li { max-width: 70ch; }
+a { color: var(--lamp); }
+
+/* A warm ring shows where the keyboard is. */
+a:focus-visible, button:focus-visible, input:focus, select:focus {
+  outline: 3px solid var(--lamp);
+  outline-offset: 3px;
+}
+
+/* The menu floats on top of the first big picture. A dark shade behind it keeps the words easy to read. */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-m) var(--space-l) var(--space-l);
+  background: linear-gradient(rgba(8, 16, 15, 0.9), rgba(8, 16, 15, 0.8) 65%, rgba(8, 16, 15, 0));
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--foam);
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  line-height: 1.1;
+  text-decoration: none;
+}
+.logo small {
+  display: block;
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lamp);
+}
+.logo-mark { width: 48px; height: 48px; }
+.logo-sun { fill: var(--lamp); }
+.logo-wave { fill: none; stroke: var(--foam); stroke-width: 3; }
+
+.menu ul { display: flex; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 16px;
+  border-bottom: 2px solid transparent;
+  color: var(--foam);
+  text-decoration: none;
+}
+.menu a:hover { border-bottom-color: var(--mist); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a lamp-coloured line under it. */
+.menu a[aria-current="page"] { border-bottom-color: var(--lamp); color: var(--lamp); }
+
+/* A photo as big as the window, with a dark text box on top of it. */
+.photo-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 640px;
+  padding: var(--space-xl) var(--space-l);
+  overflow: hidden;
+}
+.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.panel {
+  position: relative;
+  max-width: 480px;
+  padding: var(--space-l);
+  border-radius: var(--corner);
+  background: rgba(15, 29, 28, 0.9);
+  box-shadow: var(--shadow);
+}
+.panel p { margin: 0 0 var(--space-m); color: #d9dfda; }
+.panel p:last-child { margin-bottom: 0; }
+
+/* .right puts the text box on the right side. */
+.right .panel { margin-left: auto; }
+.hero { min-height: 720px; padding-top: 160px; }
+
+/* When the page opens, the beach photo slowly settles into place. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero .photo { animation: settle 7s var(--ease) both; }
+}
+@keyframes settle {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 12px 28px;
+  border: 0;
+  border-radius: var(--corner);
+  background: var(--lamp);
+  color: var(--lamp-dark);
+  font-family: inherit;
+  font-size: var(--text-m);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+.button:hover { background: #ffc877; transform: translateY(-2px); }
+.button:active { transform: translateY(1px); }
+
+/* A button you cannot use right now looks faded. */
+.button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.text-link { font-weight: 600; text-underline-offset: 6px; }
+.text-link:hover { color: var(--foam); }
+
+/* The booking bar sits half on the photo, half below it. */
+.booking-bar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  align-items: end;
+  gap: var(--space-m);
+  max-width: 1040px;
+  margin: calc(var(--space-l) * -1) auto 0;
+  padding: var(--space-m);
+  border-radius: var(--corner);
+  background: var(--sea-deep);
+  box-shadow: var(--shadow);
+}
+
+/* On the Rooms page the bar has one more box, and sits under the table. */
+.booking-bar.room-booking { grid-template-columns: repeat(4, 1fr) auto; max-width: none; margin: 0; }
+.booking-bar label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--text-s);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.booking-bar input, .booking-bar select {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 2px solid var(--field-line);
+  border-radius: var(--corner);
+  background: var(--sea-night);
+  color: var(--foam);
+  font-family: inherit;
+  font-size: var(--text-m);
+  color-scheme: dark;
+}
+
+/* The select box loses its Mac look, so it is as tall as the others. The arrow is two little gradients. */
+.booking-bar select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--lamp) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--lamp) 50%);
+  background-position: right 22px center, right 16px center;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+.form-note { grid-column: 1 / -1; margin: 0; font-size: var(--text-s); color: var(--mist); }
+
+.section { max-width: 1160px; margin: 0 auto; padding: var(--space-xl) var(--space-m) 0; }
+
+/* One big quote in curly letters. */
+.guest-quote { max-width: 860px; margin: 0 auto; padding: var(--space-xl) var(--space-m) 0; text-align: center; }
+.guest-quote h2 { margin: 0 auto var(--space-m); font-size: var(--text-l); font-family: var(--text-font); color: var(--mist); }
+.guest-quote blockquote { margin: 0; }
+.guest-quote blockquote p {
+  max-width: 34ch;
+  margin: 0 auto;
+  font-family: var(--title-font);
+  font-size: var(--text-xl);
+  font-style: italic;
+  line-height: 1.35;
+}
+.quote-name { margin: var(--space-m) auto 0; color: var(--lamp); }
+
+/* Title boxes on Rooms and The area are drawn with CSS, no photo. */
+.banner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 480px;
+  padding: 160px var(--space-l) var(--space-l);
+  overflow: hidden;
+}
+.banner .panel { z-index: 2; }
+
+/* Sunset: a sky, a round sun, and the sea in front of it. */
+.sunset { background: linear-gradient(#5b3a55, #e0846a 55%, #f6c48b 66%); }
+.sunset::before {
+  content: "";
+  position: absolute;
+  right: 14%;
+  top: 46%;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: #ffe2a8;
+}
+.sunset::after, .night::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34%;
+  background: linear-gradient(#1d4a52, var(--sea-night));
+}
+
+/* Night: little stars made of tiny round gradients. The odd sizes stop them lining up. */
+.night { background: linear-gradient(#050b14, #13304a 66%); }
+.night::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 34% 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 131px 83px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70px 147px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 197px 21px, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 213px 172px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 41px 101px, #fff 50%, transparent 51%);
+  background-size: 237px 193px;
+}
+
+/* The lighthouse: a striped tower on a dark rock, with a lamp at the top. Real lighthouses wear stripes like these. */
+.lighthouse {
+  position: absolute;
+  z-index: 1;
+  right: 16%;
+  bottom: 33%;
+  width: 64px;
+  height: 158px;
+  background: radial-gradient(ellipse 50% 100% at 50% 100%, var(--rock) 98%, transparent 100%) bottom / 100% 16px no-repeat;
+}
+.lighthouse::before {
+  content: "";
+  position: absolute;
+  inset: 26px 10px 8px 10px;
+  background: repeating-linear-gradient(var(--foam) 0 24px, var(--signal) 24px 48px);
+  -webkit-clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+  clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+}
+.lighthouse::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 24px;
+  height: 26px;
+  border-radius: 12px 12px 0 0;
+  background: var(--lamp);
+}
+
+/* The light beam. A real lighthouse lamp turns round, so from the side you see the beam sweep
+   over the sea: long, then short, then long again. scaleX squashes the beams and flips them. */
+.beam {
+  position: absolute;
+  top: -207px;
+  left: -188px;
+  width: 440px;
+  height: 440px;
+  z-index: -1;
+  background: conic-gradient(
+    transparent 78deg,
+    rgba(255, 220, 150, 0.55) 78deg 102deg,
+    transparent 102deg 258deg,
+    rgba(255, 220, 150, 0.55) 258deg 282deg,
+    transparent 282deg
+  );
+  -webkit-mask-image: radial-gradient(closest-side, #000 20%, transparent);
+  mask-image: radial-gradient(closest-side, #000 20%, transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .beam { animation: sweep 6s ease-in-out infinite; }
+}
+@keyframes sweep {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(-1); }
+}
+
+/* Room cards. Each one shows the view from its window, drawn with gradients. */
+.room-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-m); }
+.room-card { overflow: hidden; border-radius: var(--corner); background: var(--sea-deep); }
+
+/* The room guests love most gets a lamp-coloured ring. */
+.room-card.loved { box-shadow: 0 0 0 2px var(--lamp); }
+.room-text { padding: var(--space-m); }
+.room-text p { margin: 0 0 var(--space-m); color: #d9dfda; }
+.room-text .room-price { margin-bottom: var(--space-s); font-family: var(--title-font); font-size: var(--text-l); color: var(--lamp); }
+.window { position: relative; aspect-ratio: 16 / 10; }
+.view-dunes {
+  background:
+    radial-gradient(ellipse 60% 40% at 25% 100%, #d9c48f 98%, transparent 100%), /* first dune */
+    radial-gradient(ellipse 50% 35% at 80% 100%, #c8b077 98%, transparent 100%), /* second dune */
+    linear-gradient(#9fd0e6, #dff1f7 70%); /* sky */
+}
+.view-sea {
+  background:
+    radial-gradient(circle at 70% 60%, #ffe2a8 0 34px, transparent 35px), /* sun */
+    linear-gradient(#e0846a, #f6c48b 60%, #1d4a52 60%, #102b30); /* sky, then sea */
+}
+.view-lighthouse { background: linear-gradient(#253f63, #7d6a8c 62%, #173b45 62%, #0f2a30); }
+
+/* The lighthouse in the loft window is a tall thin box with stripes, far away on the sea line. */
+.view-lighthouse::before {
+  content: "";
+  position: absolute;
+  left: 22%;
+  bottom: 38%;
+  width: 14px;
+  height: 70px;
+  background: repeating-linear-gradient(var(--foam) 0 10px, var(--signal) 10px 20px);
+}
+
+/* The window frame: one border and two crossing bars. */
+.window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 12px solid #e8e1d3;
+  background:
+    linear-gradient(#e8e1d3, #e8e1d3) center / 10px 100% no-repeat,
+    linear-gradient(#e8e1d3, #e8e1d3) center / 100% 10px no-repeat;
+}
+
+/* The comparison table. One column glows: the room guests love most. */
+.table-wrap { overflow-x: auto; }
+.compare { width: 100%; min-width: 560px; border-collapse: collapse; }
+.compare th, .compare td { padding: var(--space-s) var(--space-m); border-bottom: 1px solid var(--sea-line); text-align: left; }
+.compare thead th { font-family: var(--title-font); font-size: var(--text-l); font-weight: 400; vertical-align: bottom; }
+.compare tbody th, .compare tfoot th { font-weight: 400; color: var(--mist); }
+.compare tfoot td { font-family: var(--title-font); font-size: var(--text-l); color: var(--lamp); }
+.loved-column { background: rgba(240, 179, 90, 0.1); }
+.badge {
+  display: block;
+  margin-top: var(--space-xs);
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lamp);
+}
+
+/* A tick is a corner of two borders, turned. A cross is two thin bars. */
+.yes::before, .no::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: var(--space-s);
+  vertical-align: -2px;
+}
+.yes::before { width: 8px; border: solid var(--lamp); border-width: 0 3px 3px 0; transform: rotate(45deg) translateY(-3px); }
+.no::before {
+  background:
+    linear-gradient(45deg, transparent 43%, var(--mist) 43% 57%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, var(--mist) 43% 57%, transparent 57%);
+}
+.no { color: var(--mist); }
+.small-print { font-size: var(--text-s); color: var(--mist); }
+
+/* Pictures in a grid. The first one is twice as wide and twice as tall. */
+.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 220px; gap: var(--space-s); }
+.tile { position: relative; margin: 0; overflow: hidden; border-radius: var(--corner); }
+.tile.big { grid-column: span 2; grid-row: span 2; }
+.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+.tile:hover img { transform: scale(1.06); }
+
+/* The words sit on a dark shade, so they are easy to read on any photo. */
+.tile figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-l) var(--space-m) var(--space-m);
+  background: linear-gradient(rgba(15, 29, 28, 0), rgba(15, 29, 28, 0.8) 35%, rgba(15, 29, 28, 0.94));
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  line-height: 1.2;
+}
+.tile small { display: block; font-family: var(--text-font); font-size: var(--text-s); color: #d9dfda; }
+
+/* Tabs made with radio buttons. The round buttons are hidden, but still work.
+   When Summer is checked, ~ finds the summer panel further down and shows it. */
+.tabs { padding: var(--space-m); border-radius: var(--corner); background: var(--sea-deep); }
+.tabs input { position: absolute; opacity: 0; }
+.tabs label {
+  display: inline-block;
+  min-height: 44px;
+  margin-right: var(--space-xs);
+  padding: 9px 24px;
+  border: 2px solid var(--field-line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.tabs label:hover { border-color: var(--lamp); }
+.tabs input:checked + label { background: var(--lamp); border-color: var(--lamp); color: var(--lamp-dark); font-weight: 600; }
+.tabs input:focus-visible + label { outline: 3px solid var(--lamp); outline-offset: 3px; }
+.tab-panel { display: none; padding-top: var(--space-m); }
+#summer:checked ~ .summer-panel, #winter:checked ~ .winter-panel { display: block; }
+.tip-list { margin: 0; padding-left: var(--space-m); }
+.tip-list li { margin-bottom: var(--space-s); color: #d9dfda; }
+.tip-list b { color: var(--foam); }
+
+.bottom {
+  margin-top: var(--space-xl);
+  padding: var(--space-l) var(--space-m);
+  border-top: 1px solid var(--sea-line);
+  color: var(--mist);
+  text-align: center;
+  font-size: var(--text-s);
+}
+.bottom p { margin: var(--space-xs) auto; }
+.bottom a { font-weight: 600; }
+
+/* On a tablet the booking bar folds into two rows, and each room card lies on its side. */
+@media (max-width: 900px) {
+  .booking-bar, .booking-bar.room-booking { grid-template-columns: 1fr 1fr; margin-left: var(--space-m); margin-right: var(--space-m); }
+  .booking-bar.room-booking { margin: 0; }
+  .photo-grid { grid-template-columns: 1fr 1fr; }
+  .tile:last-child { grid-column: span 2; }
+  .room-row { grid-template-columns: 1fr; }
+  .room-card { display: grid; grid-template-columns: 2fr 3fr; }
+  .window { aspect-ratio: auto; min-height: 220px; }
+}
+
+/* On a phone the text box sits at the bottom of the photo, and things stack. */
+@media (max-width: 600px) {
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-xl); }
+  .top-bar { justify-content: center; padding: var(--space-s) var(--space-s) var(--space-l); }
+  .photo-section, .banner { align-items: flex-end; min-height: 560px; padding: 150px var(--space-s) var(--space-s); }
+  .hero { min-height: 640px; }
+  .panel { padding: var(--space-m); }
+  .booking-bar, .booking-bar.room-booking { grid-template-columns: 1fr; margin: var(--space-s); }
+  .booking-bar.room-booking { margin: 0; }
+  .section { padding: var(--space-l) var(--space-s) 0; }
+  .photo-grid { grid-template-columns: 1fr; }
+  .tile.big, .tile:last-child { grid-column: auto; grid-row: auto; }
+  .room-card { display: block; }
+  .window { aspect-ratio: 16 / 10; min-height: 0; }
+
+  /* The table gets smaller letters, so all four columns fit on a phone. */
+  .compare { min-width: 0; font-size: var(--text-s); }
+  .compare th, .compare td { padding: var(--space-s) var(--space-xs); }
+  .compare thead th, .compare tfoot td { font-size: var(--text-s); }
+  .compare tfoot td { white-space: nowrap; }
+  .yes::before, .no::before { margin-right: var(--space-xs); }
+
+  /* At night the sea comes higher, so the lighthouse stands on it, under the menu. */
+  .night::before { inset: 0 0 50% 0; }
+  .night::after { height: 50%; }
+  .lighthouse { right: 12%; bottom: 50%; height: 128px; }
+}

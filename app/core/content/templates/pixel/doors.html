@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pick a door - Nova Newt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <span class="hero-pixels tiny"></span>
+      Nova Newt
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Coin hunt</a></li>
+        <li><a href="doors.html" aria-current="page">Pick a door</a></li>
+        <li><a href="how-it-works.html">How it works</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <h1 class="page-title">Level 2: Pick a door</h1>
+    <p class="lead">One door hides the treasure. The other two hide a friendly slime. Which door will you open?</p>
+
+    <!-- The hall. Each door is a link to an id below it. -->
+    <div class="hall">
+      <ul class="doors" id="doors">
+        <li>
+          <a class="door door-red" href="#door-1">
+            <span class="door-frame" aria-hidden="true"><span class="door-face"><span class="door-plate">1</span></span></span>
+            <span class="door-name">Open door 1</span>
+          </a>
+        </li>
+        <li>
+          <a class="door door-teal" href="#door-2">
+            <span class="door-frame" aria-hidden="true"><span class="door-face"><span class="door-plate">2</span></span></span>
+            <span class="door-name">Open door 2</span>
+          </a>
+        </li>
+        <li>
+          <a class="door door-purple" href="#door-3">
+            <span class="door-frame" aria-hidden="true"><span class="door-face"><span class="door-plate">3</span></span></span>
+            <span class="door-name">Open door 3</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Behind door 1. It only shows when the address ends with #door-1. -->
+      <section class="result" id="door-1">
+        <div class="slime" role="img" aria-label="A friendly green slime">
+          <span class="slime-mouth"></span>
+        </div>
+        <div>
+          <h2>A slime!</h2>
+          <p>"Blub! Hello, friend. There is no treasure in here, only me. Try another door!"</p>
+          <a class="button" href="#doors">Back to the doors</a>
+        </div>
+      </section>
+
+      <!-- Behind door 2. Want the treasure somewhere else? Swap the insides. -->
+      <section class="result" id="door-2">
+        <div class="chest" role="img" aria-label="A treasure chest with gold coins on top"></div>
+        <div>
+          <h2>The treasure!</h2>
+          <p>You found it! A chest full of shiny gold. Nova does a happy dance.</p>
+          <p><a href="index.html">Play the coin hunt again</a></p>
+          <a class="button" href="#doors">Back to the doors</a>
+        </div>
+      </section>
+
+      <!-- Behind door 3. -->
+      <section class="result" id="door-3">
+        <div class="slime slime-pink" role="img" aria-label="A pink slime">
+          <span class="slime-mouth"></span>
+        </div>
+        <div>
+          <h2>A sleepy slime!</h2>
+          <p>"Yawn... You woke me up! The treasure is not here. Try another door."</p>
+          <a class="button" href="#doors">Back to the doors</a>
+        </div>
+      </section>
+    </div>
+
+    <p class="how-to">Click a door to open it. Then go back and try the others.</p>
+
+    <section class="pixel-box">
+      <h2>Change the game</h2>
+      <p>Each door is a link like <code>href="#door-2"</code>. It opens the box with <code>id="door-2"</code>. Want the treasure behind door 3? In doors.html, swap what is inside the door-2 box and the door-3 box.</p>
+      <p><a href="how-it-works.html">Read how :target works</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Nova Newt is a made-up game, built with HTML and CSS. Make up your own!</p>
+    <p><a href="https://en.wikipedia.org/wiki/Pixel_art">Read about pixel art on Wikipedia</a></p>
+  </footer>
+</body>
+</html>

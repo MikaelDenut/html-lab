@@ -1,0 +1,15 @@
+{
+  "title": "Small Art Gallery",
+  "name": "art-gallery",
+  "blurb": "Snail Lane Gallery: framed paintings, past shows and a floor plan",
+  "category": "creative",
+  "layout": "Paintings hung on a wall, framed",
+  "shows": [
+    "Gold frames made with gradients and shadows",
+    "Paintings hung at different heights",
+    "A painting swings on its nail on hover",
+    "A timeline drawn with a line and dots",
+    "A floor plan drawn with SVG"
+  ],
+  "accent": "#d8b25a"
+}

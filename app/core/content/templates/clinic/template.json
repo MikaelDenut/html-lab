@@ -1,0 +1,15 @@
+{
+  "title": "Animal Clinic",
+  "name": "My animal clinic",
+  "blurb": "A friendly vet clinic with services, a team and a booking form",
+  "category": "professional",
+  "layout": "Service cards, team grid, appointment form",
+  "shows": [
+    "Icons and faces drawn with SVG",
+    "Radio buttons that look like cards",
+    "A box turns red when the e-mail is wrong",
+    "A help box that sticks while you scroll",
+    "A clipboard drawn with a border and a clip"
+  ],
+  "accent": "#3d2242"
+}

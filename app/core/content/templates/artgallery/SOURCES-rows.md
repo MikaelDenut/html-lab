@@ -1,0 +1,5 @@
+| artgallery-hare.jpg | Young Hare, watercolour by Albrecht Dürer, 1502 | 74 | 543x600 | Albrecht Dürer | Public domain | https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer_-_Hare,_1502_-_Google_Art_Project.jpg |
+| artgallery-goldfinch.jpg | The Goldfinch, painting by Carel Fabritius, 1654 | 56 | 393x600 | Carel Fabritius | Public domain | https://commons.wikimedia.org/wiki/File:Carel_Fabritius_-_The_Goldfinch_-_605_-_Mauritshuis.jpg |
+| artgallery-sunflowers.jpg | Sunflowers, painting by Vincent van Gogh, 1888 | 63 | 471x600 | Vincent van Gogh | Public domain | https://commons.wikimedia.org/wiki/File:Vincent_van_Gogh_-_Sunflowers_(1888,_National_Gallery_London).jpg |
+| artgallery-sunrise.jpg | Impression, Sunrise, painting by Claude Monet, 1872 | 46 | 600x465 | Claude Monet | Public domain | https://commons.wikimedia.org/wiki/File:Monet_-_Impression,_Sunrise.jpg |
+| artgallery-surprised.jpg | Surprised! (tiger in a storm), painting by Henri Rousseau, 1891 | 74 | 600x480 | Henri Rousseau | Public domain | https://commons.wikimedia.org/wiki/File:Henri_Rousseau_-_Surprise!.jpg |

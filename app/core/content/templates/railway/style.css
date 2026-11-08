@@ -1,0 +1,505 @@
+/* Lantern light on a night-blue station. Change one line and the whole railway changes! */
+:root {
+  --night: #0f1a24;
+  --night-light: #1c2b3a;
+  --night-text: #c4d2e0;
+  --lamp: #ffc72c;
+  --page: #edf1f5;
+  --card: #ffffff;
+  --ink: #15202b;
+  --ink-soft: #4a5868;
+  --valley: #c8283c;
+  --hill: #1f5fbf;
+  --forest: #2b7a4b;
+  --ticket: #fff3d1;
+  --field-edge: #6b7a8c;
+
+  /* Three fonts: Futura for titles, Gill Sans for reading, Menlo for the board. */
+  --display: Futura, "Avenir Next", sans-serif;
+  --body: "Gill Sans", "Avenir Next", sans-serif;
+  --board: Menlo, monospace;
+
+  /* Each text size is 1.25 times the one below it. */
+  --step--1: 14px;
+  --step-0: 18px;
+  --step-1: 23px;
+  --step-2: 29px;
+  --step-3: 37px;
+  --step-4: 47px;
+  --step-5: 59px;
+
+  /* Spaces: small inside a group, big between groups. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 36px;
+  --space-xl: 64px;
+}
+
+/* Width and height include the border, for every box and every ::before and ::after. */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+/* Lines of text no longer than about 70 letters, so they are easy to read. */
+p { max-width: 70ch; }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { margin: 0 0 var(--space-s); font-family: var(--display); line-height: 1.1; }
+h1, h2 { max-width: 24ch; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-l);
+  padding: var(--space-xs) 24px;
+  background: var(--night);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: white;
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: bold;
+  text-decoration: none;
+}
+.logo b { color: var(--lamp); }
+.lantern { width: 30px; height: 42px; }
+
+.menu { display: flex; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a { display: block; padding: 12px 14px; color: white; font-weight: 600; text-decoration: none; }
+.menu a:hover { color: var(--lamp); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a lamp-coloured line under it. */
+.menu a[aria-current="page"] { color: var(--lamp); box-shadow: inset 0 -4px 0 var(--lamp); }
+
+/* Where the keyboard is, a bright ring shows up. */
+a:focus-visible, button:focus-visible {
+  outline: 3px solid var(--lamp);
+  outline-offset: 3px;
+}
+
+/* A dark ring on the light page, a lamp ring on the dark bands. */
+main :focus-visible { outline-color: var(--night); }
+.station :focus-visible, .facts :focus-visible { outline-color: var(--lamp); }
+
+/* A night photo of the tracks under a dark blue layer, so the white text is easy to read. */
+.station {
+  padding: var(--space-xl) 0;
+  color: white;
+  background:
+    linear-gradient(rgba(15, 26, 36, 0.94), rgba(15, 26, 36, 0.8)),
+    url(railway-forest.jpg) center 70% / cover;
+}
+
+.station h1 { max-width: 20ch; font-size: var(--step-5); }
+.intro { margin: 0; font-size: var(--step-1); }
+.station .intro { color: var(--night-text); }
+
+.board-row { display: flex; align-items: center; gap: var(--space-l); margin-top: 72px; }
+
+/* The board. Its dots are the little lights of a real light-up station sign, so the dot grid is earned. */
+.board {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-m);
+  border: 10px solid #2a3846;
+  border-radius: 14px;
+  background: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1.5px) 0 0 / 5px 5px, #080d12;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Two poles hold the board up, like a sign hanging from the station roof. */
+.board::before, .board::after {
+  content: "";
+  position: absolute;
+  top: -42px;
+  width: 10px;
+  height: 32px;
+  background: #2a3846;
+}
+
+.board::before { left: 18%; }
+.board::after { right: 18%; }
+
+/* Monospace is right here: a board is a timetable, and every letter lines up. */
+.board-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-s); }
+.board-head h2, .board-time { margin: 0; color: var(--lamp); font-family: var(--board); font-size: var(--step-1); text-transform: uppercase; }
+
+.table-box { overflow-x: auto; }
+.departures {
+  width: 100%;
+  margin-top: var(--space-s);
+  border-collapse: collapse;
+  color: var(--lamp);
+  font-family: var(--board);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.departures th { padding: 6px 8px; color: #c9a43a; font-size: var(--step--1); font-weight: normal; text-align: left; }
+.departures td { padding: 10px 8px; border-top: 1px solid #1f2b37; }
+.on-time { color: #86e3ad; }
+.late { color: #ff9a8a; }
+.boarding { color: white; font-weight: bold; }
+
+/* A small coloured square with the first letter of the line. */
+.line-badge { display: inline-block; width: 26px; padding: 2px 0; border-radius: 4px; color: white; font-weight: bold; text-align: center; text-decoration: none; }
+.line-badge.red { background: var(--valley); }
+.line-badge.blue { background: var(--hill); }
+
+.board-note { margin: var(--space-s) 0 0; color: #c9a43a; font-family: var(--board); }
+
+/* The clock face: a cone gradient draws 12 dark ticks, a white circle covers the middle. */
+.clock {
+  position: relative;
+  flex-shrink: 0;
+  width: 170px;
+  height: 170px;
+  border: 10px solid #2a3846;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle closest-side, white 0 78%, transparent 79%),
+    repeating-conic-gradient(from -2deg, var(--ink) 0 4deg, white 4deg 30deg);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Each hand turns around its bottom end. 30 degrees is one hour, 6 degrees one minute. */
+.hand { position: absolute; bottom: 50%; left: 50%; border-radius: 3px; background: var(--ink); transform-origin: 50% 100%; }
+.hour { width: 8px; height: 26%; margin-left: -4px; transform: rotate(321deg); }
+.minute { width: 6px; height: 38%; margin-left: -3px; transform: rotate(252deg); }
+.second { width: 2px; height: 40%; margin-left: -1px; background: var(--valley); }
+.clock::after { content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--valley); }
+
+.section-title { margin: var(--space-xl) 0 var(--space-m); font-size: var(--step-4); }
+
+.line-strip { --line: var(--valley); margin-bottom: var(--space-l); }
+.line-strip.blue { --line: var(--hill); }
+.line-strip h3 { font-size: var(--step-2); }
+.line-strip h3 span { margin-left: var(--space-s); color: var(--ink-soft); font-family: var(--body); font-size: var(--step-0); font-weight: normal; }
+
+/* A small line map: a coloured bar behind, and a ring for every stop. */
+.mini-stops { position: relative; display: flex; margin: var(--space-m) 0 0; padding: 0; list-style: none; }
+.mini-stops::before { content: ""; position: absolute; top: 8px; left: 10%; right: 10%; height: 8px; border-radius: 4px; background: var(--line); }
+.mini-stops li { position: relative; flex: 1; padding: 34px 4px 0; text-align: center; }
+.mini-stops li::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: calc(50% - 11px);
+  width: 22px;
+  height: 22px;
+  border: 5px solid var(--line);
+  border-radius: 50%;
+  background: white;
+}
+.mini-stops .change { font-weight: bold; }
+.mini-stops .change::before { top: -3px; left: calc(50% - 15px); width: 30px; height: 30px; border-color: var(--ink); }
+
+/* The button floats up a little when your mouse is on it, and presses down when you click. */
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--night);
+  color: white;
+  font-family: var(--display);
+  font-size: var(--step-0);
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(15, 26, 36, 0.25);
+}
+
+.button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(15, 26, 36, 0.3); }
+.button:active { transform: translateY(1px); box-shadow: 0 3px 8px rgba(15, 26, 36, 0.3); }
+
+.facts { margin-top: var(--space-xl); padding: 1px 0 var(--space-xl); background: var(--night-light); color: white; }
+.fact-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: var(--space-l); align-items: center; }
+.facts p { color: var(--night-text); }
+.facts a { color: var(--lamp); font-weight: bold; }
+.gauge-drawing { width: 100%; margin-top: var(--space-xl); }
+.gauge-drawing text { fill: white; font-family: var(--body); font-size: 15px; }
+
+.page-head { padding: var(--space-xl) 0 var(--space-l); }
+.page-head h1 { font-size: var(--step-5); }
+
+.map-row { display: grid; grid-template-columns: minmax(0, 600px) 1fr; gap: var(--space-l); align-items: start; }
+.map { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; background: var(--card); box-shadow: 0 10px 30px rgba(21, 32, 43, 0.1); }
+
+/* Under the lines: the river the Valley Line follows, and the sea at Snailwick. */
+.land { position: absolute; inset: 0; width: 100%; height: 100%; }
+.river { fill: none; stroke: #d4e6f6; stroke-width: 3; }
+.sea { fill: #e0eefa; }
+
+/* Each line is a list. The red one lies flat, the blue one stands up with flex-direction: column. */
+.line { position: absolute; display: flex; margin: 0; padding: 0; list-style: none; }
+.red-line { --line: var(--valley); top: calc(50% - 14px); left: 0; right: 0; height: 28px; }
+.blue-line { --line: var(--hill); top: 0; bottom: 0; left: calc(50% - 14px); width: 28px; flex-direction: column; }
+
+/* The coloured line runs from the first stop to the last stop. */
+.line::before { content: ""; position: absolute; border-radius: 6px; background: var(--line); }
+.red-line::before { top: 9px; left: 10%; right: 10%; height: 10px; }
+.blue-line::before { top: 10%; bottom: 10%; left: 9px; width: 10px; }
+
+.line li { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; }
+.line li::before {
+  content: "";
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 6px solid var(--line);
+  border-radius: 50%;
+  background: white;
+}
+.line .change::before { width: 40px; height: 40px; border: 7px solid var(--ink); }
+
+/* Station names on the red line lean over, so long names fit side by side. */
+.line span { position: absolute; z-index: 3; white-space: nowrap; }
+.red-line span { top: 30px; left: 50%; transform-origin: 0 0; transform: rotate(35deg); }
+.blue-line span { top: 50%; left: 38px; transform: translateY(-50%); }
+.red-line .change span {
+  top: auto;
+  bottom: 34px;
+  left: auto;
+  right: 50%;
+  width: 7em;
+  margin-right: 18px;
+  font-weight: bold;
+  text-align: right;
+  white-space: normal;
+  transform: none;
+}
+
+/* The red line already shows this name. We hide it from eyes, but screen readers still read it. */
+.blue-line .change span {
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+}
+
+/* The train rides in its own lane. The lane slides right, then back, carrying the train. */
+.train-track { position: absolute; top: calc(50% - 11px); left: 10%; right: 10%; z-index: 4; height: 22px; overflow: hidden; }
+.train-lane { width: 100%; height: 100%; }
+.train {
+  display: block;
+  width: 46px;
+  height: 22px;
+  border: 2px solid var(--night);
+  border-radius: 12px 5px 5px 12px;
+  /* Three dark windows in one gradient: dark, gap, dark, gap, dark. */
+  background: linear-gradient(90deg, var(--night) 0 23%, transparent 23% 38%, var(--night) 38% 62%, transparent 62% 77%, var(--night) 77%) 9px 5px / 26px 6px no-repeat, var(--lamp);
+}
+
+.map-key h2 { margin-top: var(--space-m); font-size: var(--step-2); }
+.key-list { margin: 0; padding: 0; list-style: none; }
+.key-list li { display: flex; align-items: center; gap: var(--space-s); margin-bottom: var(--space-xs); }
+.key { display: inline-block; width: 36px; height: 10px; border-radius: 5px; }
+.key.red { background: var(--valley); }
+.key.blue { background: var(--hill); }
+.key.stop, .key.change { width: 22px; height: 22px; border: 5px solid var(--ink-soft); border-radius: 50%; }
+.key.change { width: 30px; height: 30px; border: 6px solid var(--ink); }
+
+.times { width: 100%; border-collapse: collapse; background: var(--card); }
+.times th, .times td { padding: 8px 10px; border-bottom: 1px solid #d7dee6; text-align: left; }
+.times td:not(:first-child) { font-family: var(--board); }
+
+.trip { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; margin: var(--space-xl) 0; }
+.trip img { width: 100%; border-radius: 16px; }
+.trip h2 { font-size: var(--step-3); }
+
+.tickets { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l); }
+
+/* A ticket. The colour of the stripe on top changes with each kind of ticket. */
+.ticket {
+  --band: var(--hill);
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  border-radius: 12px;
+  background: linear-gradient(var(--band), var(--band)) top / 100% 10px no-repeat, var(--ticket);
+  box-shadow: 0 10px 24px rgba(21, 32, 43, 0.14);
+}
+
+.ticket.rover { --band: var(--valley); }
+.ticket.family { --band: var(--forest); }
+.ticket.bike { --band: var(--night); }
+
+/* Two round bites in the edge, at the tear line. They are circles in the page colour. */
+.ticket::before, .ticket::after { content: ""; position: absolute; right: 108px; width: 24px; height: 24px; border-radius: 50%; background: var(--page); }
+.ticket::before { top: -12px; }
+.ticket::after { bottom: -12px; }
+
+.ticket-main { padding: var(--space-l) var(--space-m) var(--space-m); }
+.ticket-main h2 { font-size: var(--step-3); }
+.ticket-main p { margin: 0; color: var(--ink-soft); }
+.ticket .route { margin-bottom: var(--space-xs); color: var(--ink); font-family: var(--display); font-size: var(--step-1); }
+.route span { color: var(--ink-soft); font-family: var(--body); font-size: var(--step-0); }
+
+/* The stub: a dashed tear line on the left, and two holes from the ticket punch. */
+.ticket-stub {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-s);
+  padding: var(--space-l) var(--space-s) var(--space-m);
+  background:
+    radial-gradient(circle, var(--page) 0 6px, transparent 6.5px) 30% 22px / 14px 14px no-repeat,
+    radial-gradient(circle, var(--page) 0 6px, transparent 6.5px) 70% 22px / 14px 14px no-repeat;
+  border-left: 2px dashed var(--ink-soft);
+}
+
+.price { margin: 0; font-family: var(--display); font-size: var(--step-4); font-weight: bold; line-height: 1; }
+
+/* A barcode: thin and thick black lines from one repeating gradient. */
+.barcode {
+  width: 80px;
+  height: 34px;
+  margin: 0;
+  background: repeating-linear-gradient(90deg,
+    var(--ink) 0 2px, transparent 2px 4px,
+    var(--ink) 4px 7px, transparent 7px 9px,
+    var(--ink) 9px 10px, transparent 10px 13px);
+}
+
+/* :target is the ticket whose #name is in the address. A link from the chooser picks it up and tilts it. */
+.ticket:target { transform: rotate(-1.5deg) translateY(-4px); box-shadow: 0 16px 30px rgba(21, 32, 43, 0.18); }
+
+.bike-sign {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  margin-top: var(--space-xl);
+  padding: var(--space-l);
+  border-radius: 16px;
+  background: var(--hill);
+  color: white;
+}
+.bike-sign h2 { font-size: var(--step-3); }
+
+/* The bike pictogram: white SVG lines in a white frame. */
+.bike-icon {
+  flex-shrink: 0;
+  width: 190px;
+  height: 130px;
+  padding: 14px;
+  border: 5px solid white;
+  border-radius: 16px;
+  fill: none;
+  stroke: white;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bike-steps { margin: 0; padding-left: 24px; color: #e2ecfa; }
+.bike-steps li { margin-bottom: var(--space-xs); }
+.bike-steps li::marker { color: #ffe27a; font-weight: bold; }
+
+.finder { margin: var(--space-xl) 0; }
+.finder h2 { font-size: var(--step-3); }
+.chooser { margin: 0; padding: 0; border: 0; }
+.chooser legend { margin-bottom: var(--space-s); padding: 0; font-weight: 600; }
+.choices { position: relative; display: flex; flex-wrap: wrap; gap: var(--space-s); }
+
+/* The round radio buttons are see-through. Each label is drawn as a big button instead. */
+.choices input { position: absolute; opacity: 0; }
+
+.choices label {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 2px solid var(--field-edge);
+  border-radius: 24px;
+  background: var(--card);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.choices label:hover { border-color: var(--night); }
+.choices label:active { transform: translateY(1px); }
+.choices input:focus-visible + label { outline: 3px solid var(--night); outline-offset: 3px; }
+
+/* :checked is the radio you picked. The label right after it (+) turns dark. */
+.choices input:checked + label { border-color: var(--night); background: var(--night); color: white; }
+
+/* Every answer hides, and only the one that matches the picked radio (~) shows. */
+.answer { display: none; flex-basis: 100%; margin: var(--space-s) 0 0; font-size: var(--step-1); }
+.answer a { color: var(--hill); font-weight: bold; }
+#trip-one:checked ~ .answer-one, #trip-day:checked ~ .answer-day,
+#trip-family:checked ~ .answer-family, #trip-bike:checked ~ .answer-bike { display: block; }
+
+.footer { padding: var(--space-l) 24px; background: var(--night); color: var(--night-text); text-align: center; }
+.footer p { margin: 0 auto; }
+
+/* Things move by themselves only if the computer says that is OK. */
+@media (prefers-reduced-motion: no-preference) {
+  .second { animation: tick 60s steps(60) infinite; }
+  .train-lane { animation: ride 9s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
+  .button, .ticket, .menu a, .choices label { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s; }
+}
+
+/* The second hand jumps 60 times in one minute, like a real station clock. */
+@keyframes tick {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ride {
+  to { transform: translateX(calc(100% - 46px)); }
+}
+
+/* Tablet: the map key goes under the map, the ticket list keeps two columns. */
+@media (max-width: 900px) {
+  .board-row { flex-direction: column; align-items: stretch; }
+  .clock { align-self: center; }
+  .map-row, .trip, .fact-row { grid-template-columns: 1fr; }
+  .gauge-drawing { max-width: 420px; margin-top: var(--space-l); }
+}
+
+/* Phone: smaller board letters, and the small line maps stand up straight. */
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .top-bar { padding: var(--space-xs) 16px; }
+  .menu { width: 100%; justify-content: space-between; }
+  .station h1, .page-head h1 { font-size: var(--step-4); }
+  .section-title { font-size: var(--step-3); }
+  .board { padding: var(--space-s); border-width: 6px; }
+  /* A phone board keeps Time, To and Status. 16px is the smallest size for reading. */
+  .departures { font-size: 16px; white-space: normal; }
+  .departures th, .departures td { padding: 8px 5px; }
+  .departures th:nth-child(3), .departures td:nth-child(3) { display: none; }
+  .departures th:nth-child(4), .departures td:nth-child(4), .board-key { display: none; }
+  .clock { width: 130px; height: 130px; }
+  .line-strip h3 span { display: block; margin: var(--space-xs) 0 0; }
+  .mini-stops { flex-direction: column; gap: var(--space-s); }
+  .mini-stops::before { top: 10%; bottom: 10%; left: 7px; right: auto; width: 8px; height: auto; }
+  .mini-stops li { padding: 0 0 0 40px; text-align: left; }
+  .mini-stops li::before { top: calc(50% - 11px); left: 0; }
+  .mini-stops .change::before { top: calc(50% - 15px); left: -4px; }
+  .line span { font-size: 14px; }
+  .red-line span { transform: rotate(58deg); }
+  .blue-line span { left: 32px; }
+  .tickets { grid-template-columns: 1fr; }
+  .bike-sign { flex-direction: column; align-items: flex-start; padding: var(--space-m); }
+}

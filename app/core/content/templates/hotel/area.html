@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotel Brinewhistle - The area</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle class="logo-sun" cx="24" cy="20" r="11"></circle>
+        <path class="logo-wave" d="M2 32 Q8 27 14 32 T26 32 T38 32 T50 32"></path>
+        <path class="logo-wave" d="M2 40 Q8 35 14 40 T26 40 T38 40 T50 40"></path>
+      </svg>
+      <span>Hotel Brinewhistle<small>Saltmere Bay</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="rooms.html">Rooms</a></li>
+        <li><a href="area.html" aria-current="page">The area</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="banner night">
+      <div class="lighthouse" aria-hidden="true"><span class="beam"></span></div>
+      <div class="panel">
+        <h1>The area</h1>
+        <p>Beaches, boats, forest paths and a lighthouse that blinks all night. Here is what to do.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Things to do</h2>
+      <div class="photo-grid">
+        <figure class="tile big">
+          <img src="hotel-lighthouse.jpg" alt="A white lighthouse on the cliffs by the sea" width="1280" height="853">
+          <figcaption>Lighthouse walk<small>40 minutes along the beach</small></figcaption>
+        </figure>
+        <figure class="tile">
+          <img src="boat.jpg" alt="A sailboat on calm, silver water under a grey sky" width="320" height="240">
+          <figcaption>Sailing trips<small>From the harbour, in summer</small></figcaption>
+        </figure>
+        <figure class="tile">
+          <img src="hotel-beach.jpg" alt="Footprints in the sand, with the sun setting behind a cliff" width="1280" height="853">
+          <figcaption>Sunset Point<small>5 minutes from the hotel</small></figcaption>
+        </figure>
+        <figure class="tile">
+          <img src="stars.jpg" alt="A night sky full of stars" width="900" height="328">
+          <figcaption>Star nights<small>No street lights on the beach</small></figcaption>
+        </figure>
+        <figure class="tile">
+          <img src="tree.jpg" alt="One big oak tree in a misty field at sunrise" width="320" height="240">
+          <figcaption>The old oak trail<small>An easy walk in the fields</small></figcaption>
+        </figure>
+        <figure class="tile">
+          <img src="hotel-winter.jpg" alt="A calm sea in winter with snow on the beach" width="800" height="533">
+          <figcaption>Snowy beach<small>Quiet and white in winter</small></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Summer or winter?</h2>
+      <div class="tabs">
+        <input type="radio" name="season" id="summer" checked>
+        <label for="summer">Summer</label>
+        <input type="radio" name="season" id="winter">
+        <label for="winter">Winter</label>
+
+        <div class="tab-panel summer-panel">
+          <h3>Long, light days</h3>
+          <ul class="tip-list">
+            <li><b>Swim.</b> The water is shallow and warm near the hotel.</li>
+            <li><b>Rent a kayak.</b> Paddle along the cliffs with a guide.</li>
+            <li><b>Catch crabs.</b> Borrow a bucket and a line at the front desk.</li>
+            <li><b>Ice cream.</b> The harbour kiosk has twenty flavours.</li>
+          </ul>
+        </div>
+        <div class="tab-panel winter-panel">
+          <h3>Short days, cosy nights</h3>
+          <ul class="tip-list">
+            <li><b>Storm watching.</b> See the big waves from the warm lounge.</li>
+            <li><b>Sauna.</b> Ours has a window that looks out over the sea.</li>
+            <li><b>Snow walks.</b> We lend you boots for the forest path.</li>
+            <li><b>Hot chocolate.</b> By the fire, with a good book.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Hotel Brinewhistle</b>, 3 Pebblewhirl Promenade, Saltmere Bay. A pretend hotel, made with HTML and CSS.</p>
+    <p>How does a lighthouse work? <a href="https://simple.wikipedia.org/wiki/Lighthouse">Read about lighthouses on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

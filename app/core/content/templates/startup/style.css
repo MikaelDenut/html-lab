@@ -1,0 +1,733 @@
+/* Pencil yellow, graphite grey, worm green. Change one line, change the whole site! */
+:root {
+  --paper: #ffffff;
+  --ink: #23252b;
+  --ink-soft: #50545e;
+  --pencil: #ffcf33;
+  --pencil-dark: #e6b000;
+  --pencil-text: #5a4300;
+  --pencil-light: #fff4cc;
+  --eraser: #ef6f8e;
+  --leaf: #3cc98f;
+  --leaf-dark: #17603e;
+  --line: #e7e8ec;
+  --mist: #f4f5f7;
+  --field-edge: #8a8e98;
+  --ink-tint: #d5d7dd;
+
+  /* Round Futura for titles, soft Seravek for reading. */
+  --title-font: Futura, "Avenir Next", sans-serif;
+  --text-font: Seravek, "Gill Sans", sans-serif;
+
+  /* Every size is 1.25 times the one before it. */
+  --size-s: 14px;
+  --size-m: 18px;
+  --size-l: 23px;
+  --size-xl: 29px;
+  --size-2xl: 37px;
+  --size-3xl: 47px;
+  --size-4xl: 59px;
+
+  /* The spaces we use, from tiny to huge. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+}
+
+* { box-sizing: border-box; }
+
+/* A #link jump stops below the sticky top bar. */
+html { scroll-padding-top: 90px; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-m);
+  font-family: var(--title-font);
+  font-weight: bold;
+  line-height: 1.1;
+}
+h1 { max-width: 12ch; font-size: var(--size-4xl); letter-spacing: -0.02em; }
+h2 { max-width: 30ch; margin-top: var(--space-2xl); font-size: var(--size-3xl); }
+h3 { font-size: var(--size-l); }
+
+/* Lines of text stay short, so your eyes do not get lost. */
+p { max-width: 70ch; }
+a { color: var(--ink); }
+
+/* Keyboard users see a thick dark ring where they are. */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* On dark boxes the ring turns yellow. */
+.call a:focus-visible, .footer a:focus-visible { outline-color: var(--pencil); }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-l); }
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-s) var(--space-l);
+  background: var(--pencil);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  font-family: var(--title-font);
+  font-size: var(--size-xl);
+  font-weight: bold;
+  text-decoration: none;
+}
+.logo-worm { width: 54px; height: 36px; }
+.menu {
+  display: flex;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--pencil-dark); }
+.menu a:active { transform: scale(0.97); }
+
+/* The page you are on gets a dark button. */
+.menu a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+
+/* The hero is pencil yellow from edge to edge. */
+.hero { background: var(--pencil); }
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: var(--space-xl);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-l) var(--space-3xl);
+}
+
+.lead { font-size: var(--size-l); }
+.hero .lead, .small-print { color: var(--pencil-text); }
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-m);
+  margin: var(--space-xl) 0 var(--space-m);
+}
+.small-print { margin: 0; }
+
+/* A big dark button. It jumps up under your mouse and goes down when you press it. */
+.button {
+  display: inline-block;
+  padding: 12px 26px;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(35, 37, 43, 0.25); }
+.button:active { transform: translateY(1px); box-shadow: none; }
+.ghost { background: transparent; color: var(--ink); }
+.yellow { border-color: var(--pencil); background: var(--pencil); color: var(--ink); }
+
+.hero-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--space-l) 0;
+}
+
+/* The phone: a dark box with round corners and a soft shadow. */
+.phone {
+  position: relative;
+  width: 270px;
+  max-width: 80%;
+  padding: 12px;
+  border-radius: 42px;
+  background: var(--ink);
+  box-shadow: 0 30px 50px rgba(90, 67, 0, 0.35);
+  transform: rotate(-4deg);
+}
+
+/* The camera bar. left: 50% puts its edge in the middle;
+   margin-left: -40px pulls it back by half its width. */
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 80px;
+  height: 18px;
+  margin-left: -40px;
+  border-radius: 10px;
+  background: var(--ink);
+}
+
+.screen { padding: 44px 18px 20px; border-radius: 32px; background: var(--paper); }
+.app-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: var(--size-s);
+}
+.app-top b { color: var(--ink); font-family: var(--title-font); font-size: var(--size-l); }
+
+/* A ring chart made with conic-gradient: 3 of 4 is 75 percent. */
+.ring {
+  display: grid;
+  place-items: center;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: conic-gradient(var(--leaf) 0 75%, var(--line) 75% 100%);
+}
+
+.ring b {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+.tasks { margin: 0; padding: 0; list-style: none; }
+.tasks li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--size-s);
+  font-weight: 600;
+}
+
+/* An empty box in front of every task. */
+.tasks li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+}
+.tasks .done { color: var(--ink-soft); }
+.tasks .done::before { border-color: var(--leaf-dark); background: var(--leaf-dark); }
+
+/* A tick drawn with two borders of a thin box, turned 45 degrees. */
+.tasks .done::after, .plan-list li::before, .yes::before {
+  content: "";
+  width: 6px;
+  height: 11px;
+  border: solid var(--leaf-dark);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.tasks .done::after {
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  margin-top: -8px;
+  border-color: var(--paper);
+}
+.app-stars {
+  margin: 12px 0 0;
+  color: var(--leaf-dark);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Little cards beside the phone. */
+.float-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 12px 24px rgba(90, 67, 0, 0.25);
+  font-size: var(--size-s);
+  font-weight: 700;
+}
+
+.card-one { top: 38%; left: 0; }
+.card-two { bottom: 18%; right: 0; }
+.hero-worm {
+  position: absolute;
+  bottom: 4px;
+  left: 8%;
+  width: 110px;
+  height: 74px;
+}
+
+/* Icons are drawn with lines: stroke is the pen colour, all 2 wide. */
+.icon, .mini-icon {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mini-icon { width: 20px; height: 20px; stroke: var(--leaf-dark); }
+.icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-s);
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--pencil);
+}
+
+/* One wide box, one tall box, and four small ones without a box. */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl) var(--space-l);
+  margin-top: var(--space-xl);
+}
+.feature p { margin: 0; color: var(--ink-soft); }
+.big-feature, .tall-feature { padding: var(--space-xl); border-radius: 24px; background: var(--mist); }
+.big-feature { grid-column: span 2; }
+.tall-feature {
+  display: flex;
+  flex-direction: column;
+  grid-row: span 3;
+  background: var(--pencil-light);
+}
+.big-feature h3, .tall-feature h3, .plan h3 { font-size: var(--size-xl); }
+
+/* A tiny week plan: a row of homework chips for each day. */
+.week { display: grid; gap: var(--space-s); margin-top: var(--space-l); }
+.week p {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.week b { width: 44px; font-family: var(--title-font); }
+.chip {
+  padding: 2px 12px;
+  border-radius: 20px;
+  background: var(--pencil);
+  font-size: var(--size-s);
+  font-weight: 700;
+}
+.read { background: #c8f0dd; }
+.art { background: #fbd3dd; }
+.star-jar {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  flex-grow: 1;
+  margin: var(--space-xl) auto;
+}
+
+.treats {
+  display: grid;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.treats li {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-s) var(--space-m);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.jar-star {
+  fill: var(--pencil);
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+/* The first quote is big. The other two sit beside it. */
+.quotes {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-l);
+  margin: var(--space-xl) 0 var(--space-3xl);
+}
+.quote {
+  margin: 0;
+  padding: var(--space-l);
+  border-radius: 20px;
+  background: var(--mist);
+}
+.quote blockquote { margin: 0 0 var(--space-m); font-size: var(--size-l); }
+.main-quote {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  background: var(--ink);
+  color: var(--paper);
+}
+.main-quote blockquote { font-family: var(--title-font); font-size: var(--size-2xl); line-height: 1.25; }
+.quote figcaption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  font-weight: 600;
+}
+
+/* border-radius: 50% makes a circle. */
+.face {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--pencil);
+  color: var(--ink);
+  font-weight: 800;
+}
+.face-two { background: var(--leaf); }
+.face-three { background: var(--eraser); }
+
+/* The last box: dark like a pencil lead. */
+.call {
+  padding: var(--space-2xl) var(--space-l);
+  background: var(--ink);
+  color: var(--paper);
+  text-align: center;
+}
+.call h2 { margin: 0 auto var(--space-m); }
+.call p { margin: 0 auto var(--space-l); color: var(--ink-tint); font-size: var(--size-l); }
+.footer {
+  padding: var(--space-xl) var(--space-l);
+  background: var(--ink);
+  color: var(--ink-tint);
+  text-align: center;
+}
+.footer p { margin: var(--space-xs) auto; }
+.footer a { color: var(--pencil); font-weight: 700; }
+.footer a:hover { color: var(--paper); }
+
+/* ----- The Prices page ----- */
+.page-top { padding: var(--space-2xl) 0 var(--space-s); text-align: center; }
+.page-top h1 { max-width: 22ch; margin: 0 auto var(--space-m); }
+.page-top .lead { margin: 0 auto; color: var(--ink-soft); }
+
+/* Hidden from the eyes, but a screen reader (a program that reads the page out loud) says it. */
+.for-readers {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* The real round buttons are hidden. We style their labels. */
+.switch-input { position: absolute; opacity: 0; }
+.switch {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  margin: var(--space-l) auto var(--space-xl);
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--mist);
+}
+.switch label {
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.switch label:hover { background: var(--pencil-light); }
+.switch b { color: var(--leaf-dark); }
+
+/* The checked label turns yellow with a dark edge. */
+#monthly:checked ~ .switch label[for="monthly"],
+#yearly:checked ~ .switch label[for="yearly"] {
+  background: var(--pencil);
+  box-shadow: inset 0 0 0 2px var(--ink), 0 4px 10px rgba(35, 37, 43, 0.15);
+}
+
+.switch-input:focus-visible ~ .switch { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* Yearly checked? Hide the month prices and show the year prices. */
+.per-year { display: none; }
+#yearly:checked ~ .plans .per-year { display: inline; }
+#yearly:checked ~ .plans .per-month { display: none; }
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: var(--space-l);
+}
+.plan {
+  position: relative;
+  padding: var(--space-xl) var(--space-l);
+  border: 2px solid var(--line);
+  border-radius: 24px;
+  background: var(--paper);
+  text-align: center;
+}
+.for { margin: 0 auto; color: var(--ink-soft); }
+.price {
+  margin: var(--space-m) auto var(--space-l);
+  font-family: var(--title-font);
+  font-size: var(--size-4xl);
+  font-weight: bold;
+  line-height: 1;
+}
+.price small {
+  color: var(--ink-soft);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  font-weight: 600;
+}
+.plan-list {
+  margin: 0 0 var(--space-l);
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.plan-list li {
+  position: relative;
+  padding: var(--space-s) 0 var(--space-s) 30px;
+  border-bottom: 1px solid var(--line);
+}
+.plan-list li::before { position: absolute; top: 12px; left: 6px; }
+.plan .button { display: block; }
+
+/* The middle plan is the star: yellow, bigger, with a shadow and no border. */
+.best {
+  padding: var(--space-2xl) var(--space-l);
+  border-color: transparent;
+  background: var(--pencil);
+  transform: scale(1.05);
+  box-shadow: 0 24px 40px rgba(90, 67, 0, 0.25);
+}
+.best .for, .best .price small { color: var(--pencil-text); }
+.best .plan-list li { border-color: rgba(90, 67, 0, 0.2); }
+
+/* A pink sticker, stuck on the corner and turned a little. */
+.sticker {
+  position: absolute;
+  top: -18px;
+  right: -10px;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--eraser);
+  color: var(--ink);
+  font-size: var(--size-s);
+  font-weight: 800;
+  transform: rotate(8deg);
+}
+
+/* Too wide for a phone? The table scrolls inside its box. */
+.table-box {
+  overflow-x: auto;
+  margin-top: var(--space-l);
+  border: 2px solid var(--line);
+  border-radius: 20px;
+}
+.table-box:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.compare { width: 100%; min-width: 560px; border-collapse: collapse; }
+.compare th, .compare td { padding: 14px var(--space-m); border-bottom: 1px solid var(--line); text-align: center; }
+.compare th:first-child { text-align: left; font-weight: 600; }
+.compare thead th { font-family: var(--title-font); font-size: var(--size-l); }
+.compare tbody tr:last-child > * { border-bottom: none; }
+
+/* One col tag colours a whole column. */
+.best-column { background: var(--pencil-light); }
+
+/* The row under your mouse lights up. */
+.compare tbody tr:hover { background: rgba(239, 111, 142, 0.12); }
+.yes { color: var(--leaf-dark); font-weight: 700; }
+.yes::before { display: inline-block; margin: 0 10px 2px 0; }
+.no { color: var(--ink-soft); }
+.note { margin: var(--space-m) 0 var(--space-3xl); color: var(--ink-soft); }
+
+/* ----- The Help page ----- */
+.help-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: start;
+  gap: var(--space-xl);
+  margin: var(--space-xl) 0 var(--space-3xl);
+}
+.faq h2, .contact h2 { margin-top: 0; font-size: var(--size-2xl); }
+.faq details { margin-bottom: var(--space-m); border-radius: 16px; background: var(--mist); }
+.faq summary {
+  position: relative;
+  padding: var(--space-m) 64px var(--space-m) var(--space-l);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary:hover { color: var(--leaf-dark); }
+.faq summary:active { color: var(--ink); }
+.faq details p { margin: 0; padding: 0 var(--space-l) var(--space-l); color: var(--ink-soft); }
+
+/* Hide the little arrow (Safari needs this line). */
+.faq summary::-webkit-details-marker { display: none; }
+
+/* A plus drawn with two thin gradients. It turns into an x when the answer is open. */
+.faq summary::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-m);
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--ink), var(--ink)) center / 14px 3px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) center / 3px 14px no-repeat,
+    var(--pencil);
+}
+
+.faq details[open] summary::after { transform: rotate(45deg); }
+
+/* The form card stays in view while you scroll. */
+.contact {
+  position: sticky;
+  top: 90px;
+  padding: var(--space-xl) var(--space-l);
+  border-radius: 24px;
+  background: var(--paper);
+  box-shadow: 0 14px 36px rgba(35, 37, 43, 0.12);
+}
+.contact-form { display: grid; gap: var(--space-xs); }
+.contact-form label { margin-top: var(--space-s); font-weight: 600; }
+
+.contact-form input, .contact-form select, .contact-form textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 2px solid var(--field-edge);
+  border-radius: 12px;
+  background: var(--mist);
+  color: var(--ink);
+  font: inherit;
+}
+
+/* Hint text dark enough to read. */
+.contact-form ::placeholder { color: var(--ink-soft); }
+
+/* Our own select box: two gradients draw the arrow. */
+.contact-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--ink) 50%);
+  background-position: right 24px center, right 18px center;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* The box you type in gets a dark edge. */
+.contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus {
+  border-color: var(--ink);
+  background-color: var(--paper);
+}
+.check { display: flex; align-items: center; gap: var(--space-s); }
+.contact-form .check input { width: 22px; min-height: 22px; accent-color: var(--ink); }
+.contact-form .button { margin-top: var(--space-m); }
+.form-note { margin: 0; font-size: var(--size-s); color: var(--ink-soft); }
+
+/* Things move only if the computer says moving is OK. */
+@media (prefers-reduced-motion: no-preference) {
+  .button { transition: transform 0.2s, box-shadow 0.2s; }
+  .faq summary::after { transition: transform 0.3s; }
+  .phone { animation: settle 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+}
+
+/* The one moving moment: the phone lands and tips over a little. */
+@keyframes settle {
+  from { transform: translateY(30px) rotate(4deg); }
+  to { transform: translateY(0) rotate(-4deg); }
+}
+
+/* Tablet: one or two columns. */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; padding-top: var(--space-xl); }
+  .hero-art { width: 100%; max-width: 480px; margin: 0 auto; }
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .tall-feature { grid-row: auto; grid-column: span 2; }
+  .plans {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .best { transform: none; }
+  .help-layout { grid-template-columns: 1fr; }
+  .contact { position: static; }
+}
+
+/* Phone: smaller titles, one column, menu buttons share the width. */
+@media (max-width: 560px) {
+  h1 { font-size: var(--size-3xl); }
+  h2 { font-size: var(--size-2xl); }
+  html { scroll-padding-top: var(--space-l); }
+  .top-bar { position: static; padding: var(--space-s) var(--space-m); }
+  nav, .menu { width: 100%; }
+  .menu li { flex: 1; }
+  .menu a { text-align: center; }
+  .wrap, .hero-inner { padding-right: var(--space-m); padding-left: var(--space-m); }
+  .feature-grid, .quotes { grid-template-columns: 1fr; }
+  .big-feature, .tall-feature { grid-column: auto; padding: var(--space-l); }
+  .main-quote { grid-row: auto; }
+  .main-quote blockquote { font-size: var(--size-xl); }
+  .switch label { padding: 10px 14px; }
+  .card-one { left: -4px; }
+  .card-two { right: -4px; }
+  .hero-worm { left: -8px; width: 80px; height: 54px; }
+}

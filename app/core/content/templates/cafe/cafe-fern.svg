@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 400">
+  <!-- A fern leaf in honey colour: one stem and pairs of small leaves. -->
+  <g fill="#f2b134">
+    <path d="M98 398 C96 300 100 180 118 14 L122 14 C106 180 104 300 104 398 Z"/>
+    <ellipse cx="68" cy="344" rx="36" ry="12" transform="rotate(30 68 344)"/>
+    <ellipse cx="134" cy="344" rx="36" ry="12" transform="rotate(-30 134 344)"/>
+    <ellipse cx="70" cy="316" rx="34" ry="11" transform="rotate(30 70 316)"/>
+    <ellipse cx="132" cy="316" rx="34" ry="11" transform="rotate(-30 132 316)"/>
+    <ellipse cx="73" cy="288" rx="31" ry="11" transform="rotate(30 73 288)"/>
+    <ellipse cx="130" cy="288" rx="31" ry="11" transform="rotate(-30 130 288)"/>
+    <ellipse cx="76" cy="260" rx="29" ry="10" transform="rotate(30 76 260)"/>
+    <ellipse cx="129" cy="260" rx="29" ry="10" transform="rotate(-30 129 260)"/>
+    <ellipse cx="79" cy="232" rx="26" ry="9" transform="rotate(30 79 232)"/>
+    <ellipse cx="127" cy="232" rx="26" ry="9" transform="rotate(-30 127 232)"/>
+    <ellipse cx="83" cy="204" rx="24" ry="8" transform="rotate(30 83 204)"/>
+    <ellipse cx="127" cy="204" rx="24" ry="8" transform="rotate(-30 127 204)"/>
+    <ellipse cx="87" cy="176" rx="21" ry="7" transform="rotate(30 87 176)"/>
+    <ellipse cx="126" cy="176" rx="21" ry="7" transform="rotate(-30 126 176)"/>
+    <ellipse cx="91" cy="148" rx="19" ry="6" transform="rotate(30 91 148)"/>
+    <ellipse cx="126" cy="148" rx="19" ry="6" transform="rotate(-30 126 148)"/>
+    <ellipse cx="95" cy="120" rx="16" ry="6" transform="rotate(30 95 120)"/>
+    <ellipse cx="126" cy="120" rx="16" ry="6" transform="rotate(-30 126 120)"/>
+    <ellipse cx="100" cy="92" rx="14" ry="5" transform="rotate(30 100 92)"/>
+    <ellipse cx="126" cy="92" rx="14" ry="5" transform="rotate(-30 126 92)"/>
+    <ellipse cx="105" cy="64" rx="11" ry="4" transform="rotate(30 105 64)"/>
+    <ellipse cx="126" cy="64" rx="11" ry="4" transform="rotate(-30 126 64)"/>
+    <ellipse cx="111" cy="36" rx="9" ry="3" transform="rotate(30 111 36)"/>
+    <ellipse cx="127" cy="36" rx="9" ry="3" transform="rotate(-30 127 36)"/>
+  </g>
+</svg>

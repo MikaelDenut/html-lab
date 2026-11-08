@@ -1,0 +1,15 @@
+{
+  "title": "Pixel coin hunt",
+  "name": "pixel-coin-hunt",
+  "blurb": "A pixel game you can really play: collect coins and open doors",
+  "category": "fun",
+  "layout": "A playable game screen with a CSS score counter",
+  "shows": [
+    "Coins you click to collect, with no script",
+    "A score kept by CSS counters",
+    "A Level clear! banner made with :has()",
+    "Doors that open with :target",
+    "A pixel hero made of box-shadows"
+  ],
+  "accent": "#ff3ea5"
+}

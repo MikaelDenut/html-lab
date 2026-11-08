@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music - The Thunder Pancakes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <ellipse cx="20" cy="31" rx="17" ry="6" fill="#c8742a"/>
+        <ellipse cx="20" cy="25" rx="16" ry="6" fill="#e0943f"/>
+        <ellipse cx="20" cy="19" rx="15" ry="6" fill="#f2b45a"/>
+        <path d="M22 1 L13 17 L20 17 L16 30 L28 12 L21 12 Z" fill="#ffd84d" stroke="#19143a" stroke-width="1.5"/>
+      </svg>
+      The Thunder Pancakes
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="music.html" aria-current="page">Music</a></li>
+        <li><a href="tour.html">Tour</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Our music</h1>
+    <p class="intro">Four albums, all made in Juno's garage. Put your mouse on an album and the record slides out.</p>
+
+    <!-- The album grid. Every cover is drawn with CSS, no photos.
+         Look for .cover-syrup, .cover-planet, .cover-flip and .cover-moon in style.css.
+         aria-hidden="true" tells screen readers to skip the drawing: the h3 says the name. -->
+    <section>
+      <h2>Albums</h2>
+      <ul class="album-grid">
+        <li class="album">
+          <div class="sleeve" aria-hidden="true">
+            <span class="disc"></span>
+            <div class="cover cover-syrup"><p class="cover-title">Syrup Storm</p></div>
+          </div>
+          <h3>Syrup Storm</h3>
+          <p>The new one. 8 songs.</p>
+        </li>
+        <li class="album">
+          <div class="sleeve" aria-hidden="true">
+            <span class="disc"></span>
+            <div class="cover cover-planet"><p class="cover-title">Pancake Planet</p></div>
+          </div>
+          <h3>Pancake Planet</h3>
+          <p>Songs about space. 10 songs.</p>
+        </li>
+        <li class="album">
+          <div class="sleeve" aria-hidden="true">
+            <span class="disc"></span>
+            <div class="cover cover-flip"><p class="cover-title">Flip Flip Hooray</p></div>
+          </div>
+          <h3>Flip Flip Hooray</h3>
+          <p>Our loudest album. 9 songs.</p>
+        </li>
+        <li class="album">
+          <div class="sleeve" aria-hidden="true">
+            <span class="disc"></span>
+            <div class="cover cover-moon"><p class="cover-title">Butter Moon</p></div>
+          </div>
+          <h3>Butter Moon</h3>
+          <p>Our first album. 7 songs.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- The songs on the new album. The numbers 01, 02, 03 are made by a CSS counter. -->
+    <section class="tracks">
+      <div class="cover cover-syrup big-cover" aria-hidden="true"><p class="cover-title">Syrup Storm</p></div>
+      <div>
+        <h2>Syrup Storm: the songs</h2>
+        <ol class="track-list">
+          <li><span class="track-name">Maple Lightning</span> <span class="time">3:12</span></li>
+          <li><span class="track-name">Too Many Pancakes</span> <span class="time">2:48</span></li>
+          <li><span class="track-name">Thunder in My Lunchbox</span> <span class="time">3:05</span></li>
+          <li><span class="track-name">Rainy Day Drums</span> <span class="time">4:01</span></li>
+          <li><span class="track-name">Big Stack Boogie</span> <span class="time">2:55</span></li>
+          <li><span class="track-name">The Fork Song</span> <span class="time">1:58</span></li>
+          <li><span class="track-name">Breakfast Rocket</span> <span class="time">3:30</span></li>
+          <li><span class="track-name">Goodnight, Syrup Storm</span> <span class="time">4:20</span></li>
+        </ol>
+        <p class="total">8 songs, 25 minutes 49 seconds</p>
+      </div>
+    </section>
+
+    <aside class="fact-box">
+      <h2>Want to start a band?</h2>
+      <p>Rock music started in the 1950s. Most rock bands have drums, a guitar, a bass guitar and a singer.</p>
+      <a class="button" href="https://simple.wikipedia.org/wiki/Rock_music">Rock music on Wikipedia</a>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Thunder Pancakes are made up, and this site is made with HTML and CSS.</p>
+  </footer>
+</body>
+</html>

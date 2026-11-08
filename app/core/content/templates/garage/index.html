@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wobblenut Garage</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="wrap top-inner">
+        <a class="logo" href="index.html">
+          <svg width="46" height="46" viewBox="0 0 46 46" aria-hidden="true">
+            <polygon class="logo-nut" points="23,2 41,12.5 41,33.5 23,44 5,33.5 5,12.5"/>
+            <circle class="logo-hole" cx="23" cy="23" r="9"/>
+          </svg>
+          <span>Wobblenut<small>Garage</small></span>
+        </a>
+        <nav aria-label="Main menu">
+          <ul class="menu">
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="prices.html">Prices</a></li>
+            <li><a href="book.html">Book a time</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="wrap hero-inner">
+          <div class="hero-text">
+            <h1>We find every wobbly nut</h1>
+            <p class="hero-lead">Oil, tyres, brakes or a funny noise. Bring your car to Gearwheel Road, and we fix it at a fair price.</p>
+            <a class="button" href="book.html">Book a time</a>
+            <a class="button light" href="prices.html">See all prices</a>
+            <ul class="quick-facts">
+              <li><b>Open</b> Monday to Friday, 7:30 to 17:00</li>
+              <li><b>Oil change</b> 89 €</li>
+              <li><b>Free check</b> every Friday</li>
+            </ul>
+          </div>
+          <figure class="hero-car">
+            <svg viewBox="0 0 520 230" role="img" aria-label="A drawing of an orange car on a road">
+              <path class="road" d="M0 226 H520"/>
+              <ellipse class="car-shadow" cx="262" cy="214" rx="230" ry="10"/>
+              <path class="car-body" d="M30 178 V150 Q30 128 60 124 L150 116 L200 74 Q212 64 230 64 H340 Q358 64 372 76 L420 116 L470 124 Q496 130 496 156 V178 H440 A52 52 0 0 0 336 178 H186 A52 52 0 0 0 82 178 Z"/>
+              <polygon class="car-glass" points="166,116 206,80 276,80 276,116"/>
+              <polygon class="car-glass" points="288,80 352,80 400,116 288,116"/>
+              <path class="car-line" d="M282 120 V172 M30 150 H496"/>
+              <rect class="car-handle" x="296" y="126" width="22" height="6" rx="3"/>
+              <ellipse class="car-lamp" cx="488" cy="138" rx="8" ry="7"/>
+              <rect class="car-rear-lamp" x="30" y="132" width="10" height="14" rx="3"/>
+              <g transform="translate(134 178)">
+                <g class="wheel">
+                  <circle class="tyre" r="40"/>
+                  <circle class="rim" r="22"/>
+                  <path class="spokes" d="M0 -22V22M-22 0H22M-15 -15 15 15M15 -15-15 15"/>
+                </g>
+              </g>
+              <g transform="translate(388 178)">
+                <g class="wheel">
+                  <circle class="tyre" r="40"/>
+                  <circle class="rim" r="22"/>
+                  <path class="spokes" d="M0 -22V22M-22 0H22M-15 -15 15 15M15 -15-15 15"/>
+                </g>
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <section class="wrap services">
+        <h2 class="section-title">What we fix</h2>
+        <div class="job-board">
+          <article class="lead-job">
+            <svg class="job-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5C17 16 11 23 11 30a13 13 0 0 0 26 0c0-7-6-14-13-25z"/></svg>
+            <h3>Oil change</h3>
+            <p>Our most booked job. Fresh oil keeps the engine parts sliding smoothly, and we change the oil filter too.</p>
+            <p class="from">89 €</p>
+            <a class="button" href="book.html">Book an oil change</a>
+          </article>
+          <ul class="job-list">
+            <li>
+              <svg class="job-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19"/><circle cx="24" cy="24" r="8"/><path d="M24 5v6M24 37v6M5 24h6M37 24h6"/></svg>
+              <div><h3>Tyres</h3><p>Summer tyres, winter tyres, and flat tyres made round again.</p></div>
+              <p class="from">from 25 €</p>
+            </li>
+            <li>
+              <svg class="job-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="26" r="17"/><circle cx="24" cy="26" r="5"/><path d="M30 4h10v14H30z"/></svg>
+              <div><h3>Brakes</h3><p>New brake pads and discs, so you stop when you want to.</p></div>
+              <p class="from">from 65 €</p>
+            </li>
+            <li>
+              <svg class="job-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="14" width="36" height="26" rx="3"/><path d="M13 14V9h6v5M29 14V9h6v5M12 27h8M28 27h8M32 23v8"/></svg>
+              <div><h3>Battery</h3><p>A free battery test, and a new one if yours is tired.</p></div>
+              <p class="from">Test free</p>
+            </li>
+            <li>
+              <svg class="job-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4v40M7 14l34 20M7 34l34-20M18 8l6 5 6-5M18 40l6-5 6 5"/></svg>
+              <div><h3>Air con</h3><p>Cool air on hot days, and no more foggy windows.</p></div>
+              <p class="from">95 €</p>
+            </li>
+            <li>
+              <svg class="job-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="8" width="28" height="34" rx="3"/><path d="M18 8V4h12v4M16 26l6 6 10-12"/></svg>
+              <div><h3>Yearly check</h3><p>We check 30 things, from the horn to the seat belts.</p></div>
+              <p class="from">69 €</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="why">
+        <div class="wrap why-inner">
+          <img class="why-picture" src="garage-tyre.jpg" width="800" height="600" alt="A close look at the deep grooves of a winter tyre">
+          <div>
+            <h2 class="section-title">Why choose us?</h2>
+            <ul class="why-list">
+              <li><b>We show you the old part.</b> You see what was broken.</li>
+              <li><b>The price first.</b> We tell you the price before we start.</li>
+              <li><b>Done in a day.</b> Most jobs are ready the same afternoon.</li>
+              <li><b>A corner for kids.</b> Comics, crayons and a toy car lift.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bottom">
+      <div class="wrap">
+        <p>Wobblenut Garage, Gearwheel Road 12. Monday to Friday 7:30 to 17:00. A pretend garage, made with HTML and CSS.</p>
+        <p>Want to know more? <a href="https://en.wikipedia.org/wiki/Car">Read about cars on Wikipedia</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

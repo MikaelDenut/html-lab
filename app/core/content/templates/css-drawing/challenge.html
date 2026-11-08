@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roundabox Studio - Your turn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="3" y="3" width="34" height="34" rx="2"></rect>
+        <circle cx="15" cy="16" r="5"></circle>
+        <path d="M8 31 L18 22 L24 27 L28 23 L33 31"></path>
+      </svg>
+      Roundabox Studio
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Drawings</a></li>
+        <li><a href="how.html">How it is made</a></li>
+        <li><a href="challenge.html" aria-current="page">Your turn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Draw your own face</h1>
+      <p class="lead">This face is waiting for you. Open <code>style.css</code> and find the block called YOUR FACE. It has four lines marked <code>LINE 1</code> to <code>LINE 4</code>. Change one, and look.</p>
+    </section>
+
+    <!-- The moods use :has(). It checks which round button is picked. -->
+    <div class="lab">
+      <div class="art face-art" role="img" aria-label="A round face with two eyes, pink cheeks and a mouth">
+        <div class="face"></div>
+        <div class="face-eye left"></div>
+        <div class="face-eye right"></div>
+        <!-- A third eye goes here. -->
+        <div class="face-cheeks"></div>
+        <div class="face-mouth"></div>
+      </div>
+
+      <div class="lab-side">
+        <fieldset class="moods">
+          <legend>Pick a mood</legend>
+          <label><input type="radio" name="mood" id="happy" checked> Happy</label>
+          <label><input type="radio" name="mood" id="sleepy"> Sleepy</label>
+          <label><input type="radio" name="mood" id="surprised"> Surprised</label>
+          <label><input type="radio" name="mood" id="grumpy"> Grumpy</label>
+        </fieldset>
+        <p>These are the four lines to change in <code>style.css</code>:</p>
+        <pre><code>.lab {
+  --skin: #ffd27a;   /* LINE 1 */
+  --eye: 2em;        /* LINE 2 */
+  --mouth: 0deg;     /* LINE 3 */
+  --cheeks: #ff8a6b; /* LINE 4 */
+}</code></pre>
+      </div>
+    </div>
+
+    <section class="ideas">
+      <h2>Things to try</h2>
+      <ol>
+        <li>Make a frog: change <code>LINE 1</code> to <code>#7bd35b</code>.</li>
+        <li>Give it huge eyes: change <code>LINE 2</code> to <code>3.5em</code>.</li>
+        <li>Turn the smile upside down: change <code>LINE 3</code> to <code>180deg</code>.</li>
+        <li>Make the cheeks blue: change <code>LINE 4</code> to <code>#6ab0ff</code>.</li>
+        <li>Hard one: add <code>&lt;div class="face-eye middle"&gt;&lt;/div&gt;</code> on a new line just under the <code>face-eye right</code> line in this page's HTML. Not inside the div called <code>face</code>! The CSS for a third eye is already waiting.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p>Roundabox Studio: a pretend drawing studio, drawn with HTML and CSS only.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Circle">Why is a circle round? Read about circles on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "title": "Kids fashion studio",
+  "name": "my-fashion-studio",
+  "blurb": "A kids' clothing studio with huge letters and clothes made of CSS",
+  "category": "creative",
+  "layout": "Huge type, split screens, sideways lookbook",
+  "shows": [
+    "Letters that swap colour in the middle",
+    "Clothes cut out of boxes with clip-path",
+    "Stripes, dots and checks made with gradients",
+    "A sideways row that snaps into place",
+    "Zig-zag steps that swap sides"
+  ],
+  "accent": "#3b1f6e"
+}

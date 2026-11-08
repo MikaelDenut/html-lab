@@ -1,0 +1,506 @@
+/* Gullwhistle Bay Pirate Club: one style file for all three pages. */
+
+/* Change one colour here and the whole map changes! */
+:root {
+  --table: #2b1b10;
+  --wood: #4a2f1b;
+  --parchment: #f2dfb4;
+  --paper: #fffaf0;
+  --ink: #3a2414;
+  --sea: #1f5f7a;
+  --sand: #edc771;
+  --leaf: #4d7c2a;
+  --coral: #e07a5f;
+  --red: #b3261e;
+  --gold: #e6a817;
+  --map-font: Luminari, "Apple Chancery", fantasy;
+  --hand-font: Noteworthy, "Marker Felt", cursive;
+  --text-font: "Avenir Next", "Gill Sans", sans-serif;
+  /* Each size is 1.25 times the one before it. */
+  --size-m: 18px;
+  --size-l: 23px;
+  --size-xl: 29px;
+  --size-2xl: 37px;
+  --size-3xl: 47px;
+  /* Space: small inside a box, big between boxes. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 56px;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--table);
+  color: var(--parchment);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.6;
+}
+
+h1, h2, h3 { font-family: var(--map-font); font-weight: normal; line-height: 1.2; margin: 0 0 var(--space-s); }
+p { max-width: 70ch; }
+a { color: var(--gold); }
+
+/* A dashed ring shows where the keyboard is. Press Tab to try it! */
+:focus-visible {
+  outline: 3px dashed var(--gold);
+  outline-offset: 4px;
+}
+/* On paper a gold ring is too pale, so in main it is ink. */
+main :focus-visible { outline-color: var(--ink); }
+
+/* The page sits in the middle and never gets too wide. */
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 var(--space-m); }
+.symbols { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* The wooden sign at the top of every page. */
+.top { background: var(--wood); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
+.top-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  padding-block: var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--parchment);
+  text-decoration: none;
+  font-family: var(--map-font);
+  font-size: var(--size-l);
+  line-height: 1.1;
+}
+.logo-sub { display: block; font-size: var(--size-m); color: var(--gold); }
+.pole { stroke: var(--parchment); stroke-width: 3; }
+.flag-x { stroke: var(--parchment); stroke-width: 3; stroke-linecap: round; }
+
+/* The menu is a list. Flex puts the links side by side. */
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+
+/* min-height: 44px makes each link big enough for a finger. */
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px var(--space-m);
+  border-radius: 999px;
+  color: var(--parchment);
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: rgba(242, 223, 180, 0.15); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a gold coin colour. */
+.menu a[aria-current="page"] { background: var(--gold); color: var(--ink); }
+
+/* A treasure map really is old paper, so these boxes may be parchment. */
+.map, .crew-card, .words, .scroll, .treasure-box, .join { background: var(--parchment); color: var(--ink); box-shadow: var(--shadow); }
+.map { margin: var(--space-l) 0; padding: var(--space-m); }
+.map a { color: var(--ink); }
+
+/* Real old maps have a double line all round the edge. */
+.neatline { border: 6px double var(--ink); padding: var(--space-l) var(--space-m); }
+
+/* The title box of a map is called a cartouche. */
+.cartouche { max-width: 34ch; margin: 0 auto var(--space-l); text-align: center; }
+.cartouche h1 { font-size: var(--size-3xl); }
+.cartouche p { margin: 0 auto; font-family: var(--hand-font); }
+
+/* The islands sit on a grid, like squares on a game board. */
+.islands {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "beach  whale  rock   ship"
+    "depth1 cove   depth2 reef"
+    "x      depth3 turtle compass";
+  gap: var(--space-m);
+}
+.beach { grid-area: beach; }
+.cove { grid-area: cove; }
+.rock { grid-area: rock; }
+.reef { grid-area: reef; }
+.turtle { grid-area: turtle; }
+.treasure { grid-area: x; }
+.compass { grid-area: compass; }
+.ship { grid-area: ship; }
+.whale { grid-area: whale; }
+.d1 { grid-area: depth1; }
+.d2 { grid-area: depth2; }
+.d3 { grid-area: depth3; }
+
+/* The path lies under the islands and stretches to fit.
+   vector-effect keeps the dots the same size. */
+.route { position: absolute; inset: 0; width: 100%; height: 100%; }
+.route-tall { display: none; }
+/* The rest sits on top of the path. */
+.island, .compass, .ship, .whale, .depths { position: relative; z-index: 1; }
+.trail { fill: none; stroke: var(--red); stroke-width: 3; stroke-dasharray: 2 9; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+
+/* Thin lines from the compass star. Sailors steered by them. */
+.rhumb { stroke: var(--ink); stroke-width: 1; opacity: 0.25; vector-effect: non-scaling-stroke; }
+
+/* Each island is a link. Its name sits on a patch of paper. */
+.island {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-s);
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+.island-art { width: 100%; max-width: 150px; height: auto; }
+.island h2, .island p, .whale p { background: var(--parchment); border-radius: 6px; padding: 0 var(--space-s); }
+.island h2 { font-size: var(--size-l); margin: var(--space-xs) 0 0; }
+.island p { margin: 0; font-family: var(--hand-font); line-height: 1.3; }
+.island:hover h2, .island:focus-visible h2 { color: var(--red); }
+
+/* The island rocks from side to side when your mouse is on it. */
+@media (prefers-reduced-motion: no-preference) {
+  .island:hover .island-art, .island:focus-visible .island-art { animation: sway 0.9s ease-in-out; }
+  .ship { animation: bob 3s ease-in-out infinite; }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-6deg) translateY(-4px); }
+  50% { transform: rotate(5deg) translateY(-4px); }
+  75% { transform: rotate(-3deg); }
+}
+
+/* The little ship goes up and down on the waves. */
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
+
+/* When you click, the island is pushed down a little. */
+.island:active .island-art { transform: scale(0.94); }
+
+/* The drawing colours. Change them at the top of the file. */
+/* One ink outline for most shapes, so the drawings match. */
+.land, .deck, .stone, .bubble, .sail, .star-light, .white-coat, .chef-hat,
+.skin, .ring, .whale-body, .spyglass, .smile, .glass { stroke: var(--ink); stroke-width: 2; }
+.ripple, .wave, .spout { fill: none; stroke: var(--sea); stroke-width: 1.5; stroke-linecap: round; }
+.land, .deck { fill: var(--sand); }
+.trunk { fill: none; stroke: var(--wood); stroke-width: 4; stroke-linecap: round; }
+.leaves, .shell, .green-coat, .green-cloth { fill: var(--leaf); }
+.flag, .start-flag, .roof, .red-coat { fill: var(--red); }
+.hut, .hull, .mast-top, .spyglass-ring, .moustache, .brown-hair { fill: var(--wood); }
+.eye, .star-dark, .hat, .dark-hair { fill: var(--ink); }
+.stone { fill: #9a9184; stroke-linejoin: round; }
+.crack, .shell-line, .mouth { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; }
+.coral { fill: var(--coral); stroke: var(--ink); stroke-width: 1.5; }
+.bubble, .sail, .star-light, .white-coat, .chef-hat { fill: var(--paper); }
+.bubble-text, .snore { fill: var(--ink); font: 15px var(--hand-font); text-anchor: middle; }
+.skin { fill: #9cc26b; }
+.x-mark { fill: none; stroke: var(--red); stroke-width: 6; stroke-linecap: round; }
+.ring, .smile, .glass { fill: none; }
+.north, .plan-label { fill: var(--ink); font: 700 15px var(--text-font); }
+.north, .middle { text-anchor: middle; }
+.mast { stroke: var(--ink); stroke-width: 3; }
+.whale-body { fill: #6f93a8; }
+
+.compass, .ship, .whale { place-self: center; }
+.compass, .ship { width: 100%; max-width: 120px; height: auto; }
+.whale { text-align: center; }
+.whale svg { width: 110px; height: auto; }
+.whale p { margin: 0; font-family: var(--hand-font); color: var(--sea); }
+
+/* Sea maps show how deep the water is with small numbers. */
+.depths { display: flex; justify-content: space-around; align-items: center; margin: 0; }
+/* The 2nd number moves down, like dots on a real sea map. */
+.depths span:nth-child(2) { transform: translateY(24px); }
+
+.map-bottom { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-l); margin-top: var(--space-xl); }
+.map-key h2, .next-hunt h2 { font-size: var(--size-xl); }
+.map-key ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-s) var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.map-key li { display: flex; align-items: center; gap: var(--space-s); }
+.map-key svg { flex: none; }
+.key-depth { width: 40px; text-align: center; }
+.depths, .key-depth { font-family: var(--hand-font); font-style: italic; color: var(--sea); }
+
+/* The scale bar: dark and light blocks, like on a real map. */
+.scale { display: flex; align-items: center; gap: var(--space-s); margin: var(--space-m) 0 0; font-family: var(--hand-font); }
+.scale-bar {
+  width: 160px;
+  height: 10px;
+  border: 2px solid var(--ink);
+  background: linear-gradient(90deg, var(--ink) 25%, transparent 25% 50%, var(--ink) 50% 75%, transparent 75%);
+}
+
+/* A paper note, pinned on the map with a red pin. */
+.next-hunt {
+  position: relative;
+  align-self: start;
+  padding: var(--space-l) var(--space-m) var(--space-m);
+  background: var(--paper);
+  box-shadow: 0 6px 16px rgba(58, 36, 20, 0.25);
+  transform: rotate(2deg);
+}
+.next-hunt::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.next-hunt p { margin: 0; }
+
+.page-head { margin: var(--space-xl) 0 var(--space-l); }
+.page-head h1 { font-size: var(--size-3xl); color: var(--gold); }
+.page-head p { margin: 0; font-size: var(--size-l); }
+
+/* The crew grid. The captain's card covers four squares. */
+.crew { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-l); }
+.captain { grid-column: span 2; grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
+.crew-card { padding: var(--space-l) var(--space-m) var(--space-m); text-align: center; transform: rotate(-1.5deg); }
+.crew-card:nth-child(even) { transform: rotate(1.5deg); }
+
+/* A card stands up straight when your mouse is on it. */
+.crew-card:hover { transform: rotate(0); }
+@media (prefers-reduced-motion: no-preference) {
+  .crew-card { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+.crew-card h2 { font-size: var(--size-xl); }
+.captain h2 { font-size: var(--size-2xl); }
+.crew-card p { margin: 0 auto var(--space-s); }
+.job { font-family: var(--hand-font); font-size: var(--size-l); color: var(--red); }
+
+/* The round frame is the svg box with round corners. */
+.portrait { display: block; width: 130px; height: auto; margin: 0 auto var(--space-m); border-radius: 50%; background: #a9d3df; }
+.captain .portrait { width: 280px; }
+.quote { font-family: var(--hand-font); font-size: var(--size-xl); line-height: 1.3; }
+
+.trim { fill: none; stroke: var(--gold); stroke-width: 3; }
+.cheek { fill: var(--coral); opacity: 0.5; }
+.smile, .glass { stroke-linecap: round; }
+.blue-coat, .blue-cloth { fill: var(--sea); }
+.gold-coat, .spyglass { fill: var(--gold); }
+.crest { fill: none; stroke: #3fa34d; stroke-width: 5; stroke-linecap: round; }
+
+/* The pirate words, on one big page with a drawing of a ship. */
+.words { margin-top: var(--space-xl); padding: var(--space-l); }
+.words h2, .scroll h2, .treasure-box h2, .join h2 { font-size: var(--size-2xl); }
+.ship-plan { display: block; width: 100%; max-width: 480px; height: auto; margin: var(--space-m) auto var(--space-l); }
+
+/* A list of words and what they mean, in two columns. */
+.word-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--space-l); margin: 0; }
+.word-list div, .clue-list li { border-bottom: 2px dotted rgba(58, 36, 20, 0.35); }
+.word-list div { padding: var(--space-s) 0; }
+.word-list dt { font-family: var(--map-font); font-size: var(--size-l); color: var(--red); }
+.word-list dd { margin: 0; }
+
+/* The rules are written on a paper scroll with a roll at each end. */
+.scroll { position: relative; max-width: 760px; margin: var(--space-xl) auto; padding: var(--space-xl) var(--space-l) var(--space-l); }
+.scroll::before, .scroll::after {
+  content: "";
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  height: 28px;
+  border-radius: 14px;
+  background: linear-gradient(#e2c58a, #fff3d6 45%, #c9a564);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+}
+.scroll::before { top: -14px; }
+.scroll::after { bottom: -14px; }
+.scroll h2 { text-align: center; }
+
+/* CSS counts the clues for us: 1, 2, 3 and on. */
+.clue-list { counter-reset: clue; list-style: none; margin: 0; padding: 0; }
+.clue-list li { counter-increment: clue; position: relative; padding: var(--space-m) 0 var(--space-m) 72px; }
+.clue-list li:last-child { border-bottom: 0; }
+
+/* Each number sits on a red wax seal. */
+.clue-list li::before {
+  content: counter(clue);
+  position: absolute;
+  left: 0;
+  top: var(--space-m);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--paper);
+  font-family: var(--map-font);
+  font-size: var(--size-xl);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+.clue-list h3 { font-size: var(--size-l); margin: 0 0 var(--space-xs); }
+.clue-list p { margin: 0; }
+
+.hunt-end { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: start; }
+.treasure-box, .join { padding: var(--space-l); }
+
+/* The chest is made of boxes. The lid turns round its corner. */
+.chest-details summary { list-style: none; cursor: pointer; text-align: center; padding: var(--space-m); border-radius: 10px; }
+.chest-details summary::-webkit-details-marker { display: none; }
+.chest { position: relative; display: block; width: 220px; height: 180px; margin: var(--space-xl) auto 0; }
+.box, .lid { position: absolute; left: 0; right: 0; background: var(--wood); border: 4px solid var(--ink); }
+.box { bottom: 0; height: 100px; border-radius: 6px; }
+/* Before the slash: how wide the round corners are. After it: how tall. */
+.lid { z-index: 2; bottom: 96px; height: 60px; border-radius: 50% 50% 4px 4px / 80% 80% 4px 4px; transform-origin: 0 100%; }
+.box::before, .box::after { content: ""; position: absolute; left: 50%; background: var(--gold); }
+.box::before { top: 0; bottom: 0; width: 24px; margin-left: -12px; }
+.box::after { top: 14px; width: 30px; height: 34px; margin-left: -15px; border: 3px solid var(--ink); border-radius: 6px; }
+.coin {
+  position: absolute;
+  z-index: 1;
+  bottom: 100px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid #b07d0c;
+}
+.coin:nth-child(1) { left: 50px; }
+.coin:nth-child(2) { left: 92px; }
+.coin:nth-child(3) { left: 134px; }
+
+/* Your mouse on the chest lifts the lid a little. A click opens it. */
+.chest-details summary:hover .lid { transform: rotate(-8deg); }
+.chest-details[open] .lid { transform: rotate(-28deg) translate(-8px, -4px); }
+.chest-details[open] .coin { transform: translateY(-40px); }
+.chest-details[open] .coin:nth-child(2) { transform: translateY(-60px); }
+@media (prefers-reduced-motion: no-preference) {
+  .lid, .coin { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+}
+
+.chest-button, .button {
+  display: inline-block;
+  min-height: 48px;
+  margin-top: var(--space-m);
+  padding: 10px var(--space-l);
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--paper);
+  font: 700 var(--size-m) var(--text-font);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.button:hover, summary:hover .chest-button { background: #8f1e17; }
+.button:active, summary:active .chest-button { transform: translateY(2px); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25); }
+/* An open chest shows the other text. */
+.close-text, .chest-details[open] .open-text { display: none; }
+.chest-details[open] .close-text { display: inline-block; }
+.chest-details p { margin: var(--space-m) auto 0; text-align: center; font-size: var(--size-l); }
+
+/* The form: every box has a label, so you know what to type. */
+.practice { margin: var(--space-s) 0 0; font-family: var(--hand-font); color: var(--sea); }
+.join-form { display: grid; gap: var(--space-xs); }
+.join-form label { margin-top: var(--space-s); font-weight: 600; }
+.join-form input[type="text"], .join-form select {
+  min-height: 44px;
+  padding: var(--space-s);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background-color: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+/* The example text is too pale on its own, so we darken it. */
+.join-form input::placeholder { color: #7a6450; }
+
+/* The select box loses its Mac look. Its arrow is two little triangles. */
+.join-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: right 22px center, right 14px center;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
+}
+.colours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-m);
+  margin: var(--space-s) 0 0;
+  padding: var(--space-xs) var(--space-m);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+}
+.colours legend { padding: 0 var(--space-xs); font-weight: 600; }
+.join-form .colours label, .join-form .promise {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  margin: 0;
+  font-weight: normal;
+}
+.join-form .promise { margin-top: var(--space-s); }
+input[type="radio"], input[type="checkbox"] { flex: none; width: 22px; height: 22px; accent-color: var(--red); }
+/* Each swatch gets its colour from a short style in hunt.html. */
+.swatch { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--ink); }
+
+/* A choice you cannot pick looks pale and crossed out. */
+.colours label:has(input:disabled) { opacity: 0.55; text-decoration: line-through; }
+.join-form .button { justify-self: start; }
+
+.bottom { padding: var(--space-l) 0; }
+.bottom p { margin: var(--space-xs) 0; }
+
+/* On a tablet or phone, the islands zig-zag down in two columns. */
+@media (max-width: 860px) {
+  .islands {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-areas:
+      "beach  compass"
+      "ship   cove"
+      "rock   depth1"
+      "depth2 reef"
+      "turtle whale"
+      "depth3 x";
+  }
+  .route-wide { display: none; }
+  .route-tall { display: block; }
+  .map-bottom, .hunt-end { grid-template-columns: 1fr; }
+  .crew { grid-template-columns: 1fr 1fr; }
+  .captain, .parrot-card { grid-column: span 2; grid-row: auto; }
+}
+
+/* On a phone: one column and less paper round the edge. */
+@media (max-width: 520px) {
+  .map { padding: var(--space-s); margin: var(--space-m) 0; }
+  .neatline { padding: var(--space-m) var(--space-s); border-width: 4px; }
+  .cartouche h1, .page-head h1 { font-size: var(--size-2xl); }
+  .island h2 { font-size: var(--size-m); }
+  .island p { font-size: 16px; }
+  .map-key ul, .word-list, .crew { grid-template-columns: 1fr; }
+  .captain, .parrot-card { grid-column: auto; }
+  .captain .portrait { width: 200px; }
+  .words, .scroll, .treasure-box, .join { padding-inline: var(--space-m); }
+  .clue-list li { padding-left: 64px; }
+  .scroll::before, .scroll::after { left: -8px; right: -8px; }
+  .top-inner { justify-content: center; }
+}

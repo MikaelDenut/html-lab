@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML Lab</title>
+<link rel="preload" href="fonts/atkinson-next.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/atkinson-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+
+<header id="toolbar" data-tauri-drag-region>
+  <div class="tb-left" data-tauri-drag-region>
+    <div class="tb-lights" data-tauri-drag-region></div>
+    <button id="btn-new" class="tb" type="button"><svg class="icon s24" aria-hidden="true"><use href="#i-new"></use></svg>New</button>
+    <button id="btn-open" class="tb" type="button"><svg class="icon s24" aria-hidden="true"><use href="#i-open"></use></svg>Open</button>
+    <button id="btn-save" class="tb" type="button" disabled><svg class="icon s24" aria-hidden="true"><use href="#i-save"></use></svg><span class="label">Save</span></button>
+  </div>
+  <div class="tb-right" data-tauri-drag-region>
+    <nav class="segs" aria-label="Right panel">
+      <button id="seg-page" class="seg" type="button" aria-pressed="true"><svg class="icon s22" aria-hidden="true"><use href="#i-my-page"></use></svg>My page</button>
+      <button id="seg-help" class="seg" type="button" aria-pressed="false"><svg class="icon s22" aria-hidden="true"><use href="#i-help"></use></svg>Help</button>
+    </nav>
+    <div class="brand" data-tauri-drag-region><svg class="icon s28" aria-hidden="true"><use href="#i-app"></use></svg>HTML Lab</div>
+  </div>
+</header>
+
+<main id="main">
+  <div id="left">
+
+    <section id="welcome-start" class="panel" aria-label="Start">
+      <div class="start-inner">
+        <svg class="icon s96" aria-hidden="true"><use href="#i-app"></use></svg>
+        <h1 class="start-title">Hi! Ready to make a web page?</h1>
+        <p class="start-line">Start a new page, or open one you made before.</p>
+        <button id="w-new" class="btn btn-primary btn-big" type="button"><svg class="icon s28" aria-hidden="true"><use href="#i-new"></use></svg>Make a new page</button>
+        <button id="w-open" class="btn btn-secondary btn-big" type="button"><svg class="icon s28 tk-brand" aria-hidden="true"><use href="#i-open"></use></svg>Open my page</button>
+        <button id="w-sample" class="link-big" type="button"><svg class="icon s24 tk-brand" aria-hidden="true"><use href="#i-sample-project"></use></svg>Look at a sample project</button>
+      </div>
+    </section>
+
+    <section id="code-panel" class="panel" aria-label="Code" hidden>
+      <div id="tabstrip">
+        <div id="tab-list"></div>
+        <button id="tab-add" class="ico" type="button" aria-label="Add a new file" title="Add a new file"><svg class="icon s18 tk-brand" aria-hidden="true"><use href="#i-plus-bold"></use></svg></button>
+      </div>
+      <div id="editor-host"></div>
+      <div id="statusline">
+        <div class="status-left">
+          <span id="status-mark" data-state="check" aria-hidden="true">
+            <svg class="icon s22 mark-check"><use href="#i-saved"></use></svg>
+            <svg class="icon s22 mark-bulb"><use href="#i-your-turn"></use></svg>
+            <span class="mark-dot"></span>
+          </span>
+          <span id="status-text"></span>
+        </div>
+        <div class="status-right">
+          <button id="btn-tidy" class="ico ico-word" type="button" title="Fix the indents in this file"><svg class="icon s18" aria-hidden="true"><use href="#i-text-indent-bold"></use></svg>Tidy</button>
+          <span class="size-label">Text size</span>
+          <span id="size-value" hidden></span>
+          <button id="size-minus" class="ico ico-size" type="button" aria-label="Make the code text smaller"><svg class="icon s16" aria-hidden="true"><use href="#i-minus-bold"></use></svg></button>
+          <button id="size-plus" class="ico ico-size" type="button" aria-label="Make the code text bigger"><svg class="icon s16" aria-hidden="true"><use href="#i-plus-bold"></use></svg></button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="divider" aria-hidden="true"><span class="grip"></span></div>
+
+  <div id="right">
+
+    <section id="welcome-how" class="panel" aria-label="How HTML Lab works">
+      <div class="panel-head">How HTML Lab works</div>
+      <div class="how-body">
+        <div class="how-pic">
+          <div class="how-write">
+            <div class="how-small">You write this</div>
+            <div class="how-code"><span class="c-tag">&lt;h1&gt;</span><span class="c-text">Hello!</span><span class="c-tag">&lt;/h1&gt;</span></div>
+          </div>
+          <div class="how-arrow" aria-hidden="true"><svg class="icon s24 tk-brand"><use href="#i-arrow-right-bold"></use></svg></div>
+          <div class="how-see">
+            <div class="how-small">You see this</div>
+            <div class="how-hello">Hello!</div>
+          </div>
+        </div>
+        <ol class="how-steps">
+          <li>
+            <span class="how-num" aria-hidden="true">1</span>
+            <div><div class="how-step-title">Write your code on the left</div><div class="how-step-line">Code is words that tell the computer what to show.</div></div>
+          </li>
+          <li>
+            <span class="how-num" aria-hidden="true">2</span>
+            <div><div class="how-step-title">Watch your page on the right</div><div class="how-step-line">It changes while you type. You do not need to press anything.</div></div>
+          </li>
+          <li>
+            <span class="how-num" aria-hidden="true">3</span>
+            <div><div class="how-step-title">Press Save to keep it</div><div class="how-step-line">Your page is a real file. You can open it again any time.</div></div>
+          </li>
+        </ol>
+        <div class="how-foot">
+          <svg class="icon s28 tk-brand" aria-hidden="true"><use href="#i-help"></use></svg>
+          <div class="how-foot-text">Not sure what to write? Help has examples you can try.</div>
+          <button id="w-open-help" class="link" type="button">Open Help</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-panel" class="panel" aria-label="Your page" hidden>
+      <div id="page-header">
+        <div class="page-title"><svg class="icon s24 tk-html" aria-hidden="true"><use href="#i-html-file"></use></svg><span id="page-label"></span></div>
+        <div id="page-hint"></div>
+        <div class="page-btns">
+          <button id="w-phone" class="ico ico-32" type="button" aria-pressed="false" aria-label="Phone size" title="Phone size"><svg class="icon s18" aria-hidden="true"><use href="#i-device-mobile-bold"></use></svg></button>
+          <button id="w-tablet" class="ico ico-32" type="button" aria-pressed="false" aria-label="Tablet size" title="Tablet size"><svg class="icon s18" aria-hidden="true"><use href="#i-device-tablet-bold"></use></svg></button>
+          <button id="w-full" class="ico ico-32" type="button" aria-pressed="true" aria-label="Full size" title="Full size"><svg class="icon s18" aria-hidden="true"><use href="#i-desktop-bold"></use></svg></button>
+          <button id="btn-safari" class="ico ico-32" type="button" aria-label="Open this page in Safari" title="Open this page in Safari"><svg class="icon s18" aria-hidden="true"><use href="#i-compass-bold"></use></svg></button>
+        </div>
+      </div>
+      <div id="page-frame-wrap">
+        <iframe id="preview" sandbox="allow-scripts" title="Your page"></iframe>
+        <div id="page-empty" hidden>
+          <p class="page-empty-text">Open or make an HTML page to see it here.</p>
+          <button id="page-empty-link" class="link" type="button">Start here</button>
+        </div>
+      </div>
+      <div id="practice-bar" hidden>
+        <svg class="icon s26 tk-brand" aria-hidden="true"><use href="#i-your-turn"></use></svg>
+        <div id="practice-text" class="practice-line"></div>
+        <button id="btn-back-help" class="btn-back" type="button"><svg class="icon s16" aria-hidden="true"><use href="#i-caret-left-bold"></use></svg>Back to Help</button>
+      </div>
+    </section>
+
+    <section id="help-panel" class="panel" aria-label="Help" hidden></section>
+
+  </div>
+</main>
+
+<div id="dialog-root" hidden></div>
+
+<div id="drop-overlay" hidden><div class="drop-card"><svg class="icon s42 tk-brand" aria-hidden="true"><use href="#i-open"></use></svg>Drop your file to open it</div></div>
+
+<div id="blank-panels" hidden><div class="panel"></div><div class="blank-gap"></div><div class="panel"></div></div>
+
+</body>
+</html>

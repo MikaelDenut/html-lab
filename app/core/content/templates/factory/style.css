@@ -1,0 +1,458 @@
+/* Racing green and cherry red: the paint on our bikes. Change one line and the whole factory changes! */
+:root {
+  --side: #123a2e;
+  --side-light: #1e5040;
+  --side-text: #c3dccf;
+  --page: #eef2f0;
+  --card: #ffffff;
+  --text: #18231f;
+  --soft-text: #4f5d57;
+  --cherry: #c62a3d;
+  --cherry-dark: #9c1f30;
+  --brass: #e8b64c;
+  --green: #1d7a4f;
+  --green-dark: #17633f;
+  --blue: #2a62c9;
+  --purple: #7440c2;
+  --amber: #e8a317;
+  --track: #dde5e1;
+  --field-edge: #6f8179;
+
+  /* Three fonts: tall narrow DIN for titles and numbers, round Avenir for reading, Menlo for order codes. */
+  --display: "DIN Condensed", "Avenir Next Condensed", sans-serif;
+  --body: "Avenir Next", "Gill Sans", sans-serif;
+  --code: Menlo, monospace;
+
+  /* Each text size is 1.25 times the one below it, or more. */
+  --step--1: 14px;
+  --step-0: 18px;
+  --step-1: 23px;
+  --step-2: 29px;
+  --step-3: 37px;
+  --step-4: 47px;
+  --step-5: 59px;
+
+  /* Spaces: small inside a box, big between boxes. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 32px;
+  --space-xl: 56px;
+}
+
+/* Width and height include the border, for every box and every ::before and ::after. */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Two columns: the menu on the left, the dashboard on the right. */
+body {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+
+/* Lines of text no longer than about 70 letters, so they are easy to read. */
+p { max-width: 70ch; }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { margin: 0; line-height: 1.1; }
+h1, h2 { max-width: 32ch; font-family: var(--display); font-weight: bold; letter-spacing: 0.01em; }
+
+/* The side menu stays on the screen while the page scrolls. */
+.side-menu {
+  grid-row: 1 / 3;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  padding: var(--space-m) 18px;
+  background: var(--side);
+  color: white;
+}
+
+.logo { display: flex; align-items: center; gap: var(--space-s); color: white; text-decoration: none; font-size: var(--step-0); font-weight: bold; line-height: 1.15; }
+.logo b { display: block; color: var(--brass); font-size: var(--step--1); letter-spacing: 2px; text-transform: uppercase; }
+.gear { flex-shrink: 0; width: 52px; height: 52px; }
+
+/* Put the mouse on the logo and the gear turns a quarter. */
+.logo:hover .gear { transform: rotate(90deg); }
+
+.menu { display: flex; flex-direction: column; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 48px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: var(--side-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Menu icons: SVG lines, all with the same stroke width. */
+.icon { flex-shrink: 0; width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.menu a:hover { background: var(--side-light); color: white; }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on: a lighter box and a brass icon. */
+.menu a[aria-current="page"] { background: var(--side-light); color: white; }
+.menu a[aria-current="page"] .icon { stroke: var(--brass); }
+
+/* Where the keyboard is, a bright ring shows up. Brass on the dark menu, cherry on the light page. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--cherry);
+  outline-offset: 3px;
+}
+.side-menu a:focus-visible, .footer a:focus-visible { outline-color: var(--brass); }
+
+/* margin-top: auto pushes the shift box down to the bottom. */
+.shift { margin: auto 0 0; padding: 14px; border-radius: 12px; background: var(--side-light); font-weight: 600; }
+.shift small { color: var(--side-text); font-size: var(--step--1); }
+
+/* A round dot, made from a square with border-radius. */
+.live-dot { display: inline-block; width: 12px; height: 12px; margin-right: 4px; border-radius: 50%; background: #3ddc84; }
+
+.board { min-width: 0; padding: var(--space-l) var(--space-l) var(--space-xl); }
+
+/* Space between the boxes: every box that comes after another box. */
+.board > * + * { margin-top: var(--space-l); }
+
+.board-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-s); }
+h1 { font-size: var(--step-4); }
+.status-pill { margin: 0; padding: 8px 16px; border-radius: 40px; background: #dcefe5; color: var(--green-dark); font-weight: bold; }
+
+.panel-title { margin-bottom: var(--space-s); font-size: var(--step-2); }
+
+/* A white box with a soft shadow that falls down a little. */
+.panel, .tile, .step {
+  padding: var(--space-m);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 6px 18px rgba(18, 58, 46, 0.09);
+}
+
+/* A dashboard shows numbers: that is its job. Grid fits as many tiles in a row as there is room for. */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-m); }
+
+/* A little coloured dot before each tile title. --dot picks the colour. */
+.tile h3 { display: flex; align-items: center; gap: 8px; color: var(--soft-text); font-size: var(--step--1); }
+.tile h3::before { content: ""; flex-shrink: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--dot, var(--cherry)); }
+.tile.blue { --dot: var(--blue); }
+.tile.purple { --dot: var(--purple); }
+.tile.green { --dot: var(--green); }
+.big-number { margin: var(--space-xs) 0 2px; font-family: var(--display); font-size: var(--step-5); line-height: 1; }
+.note { margin: 0; color: var(--soft-text); }
+.note.up { color: var(--green-dark); font-weight: bold; }
+
+/* A small triangle that points up, cut from a box with clip-path. */
+.note.up::before {
+  content: "";
+  display: inline-block;
+  width: 11px;
+  height: 9px;
+  margin-right: 6px;
+  background: currentColor;
+  -webkit-clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.two-panels { display: grid; grid-template-columns: 3fr 2fr; gap: var(--space-m); }
+
+.gauges { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-m); }
+.gauge { --gauge: var(--green); margin: 0; text-align: center; }
+.gauge.low { --gauge: var(--amber); }
+
+/* A gauge is half a circle. conic-gradient paints the coloured part.
+   --value in the HTML says how far round it goes: 100 is all the way. */
+.dial {
+  position: relative;
+  max-width: 170px;
+  aspect-ratio: 2 / 1;
+  margin: 0 auto var(--space-xs);
+  border-radius: 170px 170px 0 0;
+  background: conic-gradient(from -90deg at 50% 100%, var(--gauge) calc(var(--value) * 1.8deg), var(--track) 0 180deg, transparent 0);
+}
+
+/* A white half circle in the middle turns the gauge into a ring. */
+.dial::before { content: ""; position: absolute; top: 32%; left: 16%; right: 16%; bottom: 0; border-radius: 170px 170px 0 0; background: var(--card); }
+
+/* The needle turns with rotate. 0 points left, 100 points right. */
+.needle {
+  position: absolute;
+  left: calc(50% - 3px);
+  bottom: 0;
+  width: 6px;
+  height: 86%;
+  border-radius: 6px;
+  background: var(--text);
+  transform-origin: 50% 100%;
+  transform: rotate(calc(var(--value) * 1.8deg - 90deg));
+}
+
+.dial::after { content: ""; position: absolute; left: calc(50% - 9px); bottom: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--text); }
+.gauge figcaption { margin-top: 14px; color: var(--soft-text); font-size: var(--step--1); }
+.gauge b { display: block; color: var(--text); font-family: var(--display); font-size: var(--step-2); }
+
+/* Bar chart: each bar's height comes from --h in the HTML. */
+.bars { display: flex; align-items: flex-end; gap: var(--space-s); height: 190px; margin: 0; padding: 26px 0 0; list-style: none; }
+
+.bars li {
+  position: relative;
+  flex: 1;
+  height: var(--h);
+  padding-top: 4px;
+  border-radius: 8px 8px 0 0;
+  background: #3f7563;
+  color: white;
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+.bars li.today { background: var(--cherry); }
+.bars b { position: absolute; top: -26px; left: 0; right: 0; color: var(--text); font-family: var(--display); font-size: var(--step-0); }
+
+/* If the table is too wide, it scrolls inside its own box. */
+.table-box { overflow-x: auto; }
+.orders { width: 100%; border-collapse: collapse; white-space: nowrap; }
+.orders th { padding: 10px 12px; border-bottom: 2px solid var(--track); color: var(--soft-text); font-size: var(--step--1); text-align: left; text-transform: uppercase; }
+.orders td { padding: 12px; border-bottom: 1px solid var(--track); }
+
+/* Monospace is right for order codes: they are data, and the digits line up. */
+.orders td:first-child { font-family: var(--code); }
+.orders tbody tr:hover { background: #f3f7f5; }
+
+/* A little round paint pot shows each colour. */
+.swatch { display: inline-block; width: 16px; height: 16px; margin-right: 8px; border: 2px solid var(--track); border-radius: 50%; vertical-align: -2px; }
+.swatch.red { background: #d62839; }
+.swatch.blue { background: #4ea8de; }
+.swatch.yellow { background: #ffd23f; }
+.swatch.green { background: #2d6a4f; }
+.swatch.black { background: #1b1b1e; }
+
+/* Status badges: a pill shape and one colour for each status. */
+.badge { display: inline-block; padding: 3px 12px; white-space: nowrap; border-radius: 20px; color: white; font-size: var(--step--1); font-weight: bold; }
+.done { background: var(--green); }
+.building { background: var(--blue); }
+.painting { background: var(--purple); }
+.waiting { background: var(--amber); color: var(--text); }
+.testing { background: var(--cherry-dark); }
+
+.intro { margin: 0 0 var(--space-m); color: var(--soft-text); }
+
+/* The steps go like a snake: row 1 left to right, row 2 right to left. The order matters, so they are numbered. */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl) 64px; margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.step { position: relative; counter-increment: step; }
+
+/* CSS counts the steps and writes the number in a circle. */
+.step::before {
+  content: counter(step);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--space-s);
+  border-radius: 50%;
+  background: var(--side);
+  color: var(--brass);
+  font-family: var(--display);
+  font-size: var(--step-1);
+}
+
+.step h3 { font-size: var(--step-0); }
+.step p { margin: var(--space-xs) 0 0; color: var(--soft-text); }
+.step:nth-child(4) { grid-column: 3; grid-row: 2; }
+.step:nth-child(5) { grid-column: 2; grid-row: 2; }
+.step:nth-child(6) { grid-column: 1; grid-row: 2; }
+.step:nth-child(6)::before { background: var(--green); color: white; }
+
+/* An arrow cut out of a cherry square with clip-path. It points right. */
+.step::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 18px);
+  right: -50px;
+  width: 36px;
+  height: 36px;
+  background: var(--cherry);
+  -webkit-clip-path: polygon(0 32%, 55% 32%, 55% 0, 100% 50%, 55% 100%, 55% 68%, 0 68%);
+  clip-path: polygon(0 32%, 55% 32%, 55% 0, 100% 50%, 55% 100%, 55% 68%, 0 68%);
+}
+
+/* Turn the arrow: 90 degrees points down, 180 degrees points left. */
+.step:nth-child(3)::after { top: auto; right: auto; bottom: -48px; left: calc(50% - 18px); transform: rotate(90deg); }
+.step:nth-child(4)::after, .step:nth-child(5)::after { right: auto; left: -50px; transform: rotate(180deg); }
+.step:nth-child(6)::after { content: none; }
+
+.wheel-fact { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; }
+.wheel-fact img { width: 100%; border-radius: 12px; }
+.wheel-fact p { margin: 0 0 var(--space-s); }
+
+/* Lists of rows, with a thin line between rows. */
+.machine-list, .job-list { margin: 0; padding: 0; list-style: none; }
+.machine, .job { padding: var(--space-m) 0; border-top: 1px solid var(--track); }
+.machine:first-child, .job:first-child { padding-top: var(--space-xs); border-top: 0; }
+.machine { display: grid; grid-template-columns: 150px 1fr 240px; gap: var(--space-m); align-items: center; }
+.machine p, .job p { margin: var(--space-xs) 0 0; color: var(--soft-text); }
+
+/* A little light in front of the machine state. Green means running. */
+.machine .machine-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--green-dark);
+  font-size: var(--step--1);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.machine-state::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
+
+.specs { margin: 0; padding: 0; list-style: none; }
+.specs b { display: inline-block; min-width: 70px; color: var(--soft-text); }
+
+.job { display: flex; align-items: center; justify-content: space-between; gap: var(--space-m); }
+.tags { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: var(--space-s) 0 0; padding: 0; list-style: none; }
+.tags li { padding: 2px 10px; border-radius: 6px; background: #e3eee8; color: var(--green-dark); font-size: var(--step--1); font-weight: 600; }
+
+/* The button lifts a little when your mouse is on it, and presses down when you click. */
+.button {
+  display: inline-block;
+  flex-shrink: 0;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--side);
+  color: white;
+  font: inherit;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover { transform: translateY(-2px); background: var(--cherry-dark); box-shadow: 0 8px 18px rgba(18, 58, 46, 0.25); }
+.button:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(18, 58, 46, 0.25); }
+
+/* A real factory safety sign is green with a thin white line near its edge.
+   Two inset shadows with no blur paint the green edge and the white line inside the box. */
+.safety {
+  padding: var(--space-l);
+  border-radius: 16px;
+  background: var(--green-dark);
+  color: white;
+  box-shadow: inset 0 0 0 8px var(--green-dark), inset 0 0 0 12px white, 0 8px 20px rgba(18, 58, 46, 0.2);
+}
+
+.safety-rules { margin: 0; padding-left: 22px; }
+.safety-rules li { margin-bottom: var(--space-xs); }
+.safety-rules li::marker { color: white; }
+
+.ask-form { display: grid; gap: var(--space-xs); max-width: 520px; }
+.ask-form label { margin-top: var(--space-s); font-weight: 600; }
+.ask-form input, .ask-form select, .ask-form textarea {
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 2px solid var(--field-edge);
+  border-radius: 10px;
+  font: inherit;
+}
+
+/* The grey example text inside an empty box. */
+.ask-form ::placeholder { color: var(--soft-text); }
+.ask-form .button { justify-self: start; margin-top: var(--space-s); }
+.practice { margin: var(--space-s) 0 0; color: var(--soft-text); }
+
+/* Two tiny triangles side by side draw the arrow on the 'Which job?' drop-down list. */
+.ask-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--text) 50%) calc(100% - 22px) 50% / 7px 7px no-repeat,
+    linear-gradient(-45deg, transparent 50%, var(--text) 50%) calc(100% - 15px) 50% / 7px 7px no-repeat,
+    white;
+}
+
+/* A dark green banner with a bike drawn with SVG lines. */
+.join-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  padding: var(--space-m) var(--space-l);
+  border-radius: 16px;
+  background: var(--side);
+  color: white;
+}
+.join-banner h2 { font-size: var(--step-3); }
+.join-banner p { margin: var(--space-xs) 0 0; color: var(--side-text); }
+.bike { flex-shrink: 0; width: 190px; height: 114px; fill: none; stroke: var(--brass); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.bike .wheel { stroke: white; stroke-width: 5; }
+
+.footer { grid-column: 2; padding: var(--space-m) var(--space-l); background: var(--side); color: var(--side-text); }
+.footer p { margin: 0; }
+.footer a { color: var(--brass); font-weight: bold; }
+
+/* Things move only if the computer says moving things are OK. */
+@media (prefers-reduced-motion: no-preference) {
+  .gauge:hover .needle { animation: sweep 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .live-dot { animation: blink 1.6s ease-in-out infinite alternate; }
+  .button, .gear, .menu a { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s; }
+}
+
+/* Mouse on a gauge? Its needle swings up from 0 to its own number again. */
+@keyframes sweep {
+  from { transform: rotate(-90deg); }
+}
+
+@keyframes blink {
+  to { opacity: 0.3; }
+}
+
+/* Narrower window? The side menu moves to the top. */
+@media (max-width: 900px) {
+  body { display: block; }
+  .side-menu { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--space-s) var(--space-l); padding: 14px 16px; }
+  .menu { flex-direction: row; flex-wrap: wrap; }
+  .shift { display: none; }
+  .two-panels { grid-template-columns: 1fr; gap: var(--space-l); }
+  .machine { grid-template-columns: 130px 1fr; }
+  .machine .specs { grid-column: 2; }
+}
+
+/* A phone: one column, and the snake of steps goes straight down. */
+@media (max-width: 600px) {
+  .board { padding: var(--space-m) 16px var(--space-l); }
+  .footer { padding: var(--space-m) 16px; }
+  h1 { font-size: var(--step-3); }
+  .side-menu nav, .menu { width: 100%; }
+  .menu li { flex: 1; }
+  .menu a { flex-direction: column; gap: 2px; justify-content: center; padding: 6px 4px; font-size: var(--step-0); }
+  .tiles { grid-template-columns: 1fr 1fr; gap: var(--space-s); }
+  .tile { padding: 16px; }
+
+  /* On a phone the Colour column hides and the table wraps, so the status badges fit. */
+  .orders { white-space: normal; }
+  .orders th, .orders td { padding: 10px 6px; }
+  .orders th:nth-child(3), .orders td:nth-child(3) { display: none; }
+  .big-number { font-size: var(--step-4); }
+  .gauges { gap: var(--space-xs); }
+  .gauge b { font-size: var(--step-1); }
+  .wheel-fact { grid-template-columns: 1fr; gap: var(--space-m); }
+  .machine { grid-template-columns: 1fr; gap: var(--space-xs); }
+  .machine .specs { grid-column: auto; }
+  .job { flex-direction: column; align-items: flex-start; }
+  .join-banner { flex-direction: column; align-items: flex-start; padding: var(--space-m); }
+  .steps { grid-template-columns: 1fr; gap: var(--space-xl); }
+  .step:nth-child(n) { grid-column: auto; grid-row: auto; }
+  .step:nth-child(n)::after { top: auto; right: auto; bottom: -46px; left: calc(50% - 18px); transform: rotate(90deg); }
+  .step:nth-child(6)::after { content: none; }
+}

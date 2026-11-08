@@ -1,0 +1,578 @@
+/* Wobblestitch Studio: big letters, bold colour blocks and clothes cut out with CSS. */
+
+/* All colours, fonts and sizes live here. Change one line and the whole studio changes! */
+:root {
+  --sun: #ffd23f;
+  --plum: #3b1f6e;
+  --coral: #ff6f59;
+  /* A darker coral for words, so they are easy to read. */
+  --coral-text: #c8402b;
+  --mint: #5fd3a3;
+  --sky: #8ccaff;
+  --pale-sun: #fff1b8;
+  --margin-red: #ff8a8a;
+  --paper-line: #b9d4ee;
+  --page: #fbfaff;
+  --ink: #1d1530;
+  --quiet-ink: #5b5170;
+  --white: #ffffff;
+  --display-font: "Didot", "Bodoni 72", serif;
+  --body-font: "Avenir Next", "Avenir", sans-serif;
+  /* Every text size is about 1.25 times the one before it. */
+  --text-s: 14px;
+  --text-m: 18px;
+  --text-l: 23px;
+  --text-xl: 29px;
+  --text-2xl: 37px;
+  --text-3xl: 47px;
+  --text-4xl: 59px;
+  --text-5xl: 74px;
+  --text-6xl: 93px;
+  /* The spaces between things, from tiny to huge. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --shadow: 0 10px 24px rgba(29, 21, 48, 0.18);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: var(--text-m);
+  line-height: 1.6;
+}
+
+/* Headings use the fashion letters: Didot, with thick and very thin lines. */
+h1, h2, h3 {
+  margin: 0 0 var(--space-m);
+  font-family: var(--display-font);
+  font-weight: bold;
+  line-height: 1.05;
+}
+
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+p { max-width: 70ch; margin: 0 0 var(--space-m); }
+em { font-style: italic; font-weight: normal; }
+
+/* A thick dark ring shows where the keyboard is. On the dark footer it turns yellow. */
+a:focus-visible, .lookbook:focus-visible {
+  outline: 4px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.footer a:focus-visible { outline-color: var(--sun); }
+
+/* The top bar: the name on the left, the menu on the right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-m) 5%;
+}
+
+.logo {
+  color: var(--ink);
+  font-family: var(--display-font);
+  font-size: var(--text-xl);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.logo em { color: var(--coral-text); }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-m);
+  border-radius: 99px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.menu a:hover { background: var(--sun); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a plum pill. */
+.menu a[aria-current="page"] { background: var(--plum); color: var(--white); }
+
+/* Split screen: ONE gradient with a hard middle line paints two colour blocks. */
+.split-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  min-height: min(86vh, 720px);
+  padding-bottom: var(--space-xl);
+  background: linear-gradient(90deg, var(--sun) 50%, var(--plum) 50%);
+  overflow: hidden;
+}
+
+.huge-title {
+  position: relative;
+  grid-column: 1 / -1;
+  align-self: start;
+  margin: 0;
+  padding: var(--space-xl) 4% 0;
+  color: var(--plum);
+  font-size: var(--text-6xl);
+  text-align: center;
+}
+
+/* The title is written twice. The copy on top is sun yellow and cut in half with clip-path,
+   so the letters swap colour on the middle line. */
+.title-copy {
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  color: var(--sun);
+  -webkit-clip-path: inset(0 0 0 50%);
+  clip-path: inset(0 0 0 50%);
+}
+
+/* A piece of clothing on a hanger. It swings when your mouse is on it. */
+.hanging {
+  width: 64%;
+  max-width: 260px;
+  margin: var(--space-xl) auto 0;
+  color: var(--ink);
+  transform-origin: 50% 0;
+  transition: transform 0.6s var(--ease);
+}
+
+.hanging:hover { transform: rotate(5deg); }
+.on-plum { color: var(--sun); }
+.hanger { display: block; width: 60%; margin: 0 auto -4%; }
+
+/* Every drawn line has the same thickness, however big the drawing is. */
+.line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.dashed { stroke-dasharray: 8 6; }
+
+/* box-shadow would make a square shadow. drop-shadow follows the cut-out shape of the clothes. */
+.hanging, .outfit { filter: drop-shadow(0 14px 10px rgba(29, 21, 48, 0.3)); }
+
+/* When the page opens, the two clothes swing once and stop. */
+@media (prefers-reduced-motion: no-preference) {
+  .split-hero .hanging { animation: settle 1.4s var(--ease); }
+  .split-hero .on-plum { animation-delay: 0.15s; }
+}
+
+@keyframes settle {
+  from { transform: rotate(9deg); }
+  40% { transform: rotate(-4deg); }
+}
+
+/* A paper tag with a round hole, like in a real shop. */
+.tag {
+  width: max-content;
+  margin: var(--space-m) auto 0;
+  padding: var(--space-xs) var(--space-m) var(--space-xs) 26px;
+  border-radius: 6px;
+  background: var(--white) radial-gradient(circle at 12px 50%, var(--ink) 4px, transparent 5px);
+  color: var(--ink);
+  font-size: var(--text-s);
+  font-weight: 600;
+  transform: rotate(-4deg);
+}
+
+/* A round sticker sits on the middle line. Its words run along a circle in the SVG. */
+.sticker {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  width: 120px;
+  margin: -60px 0 0 -60px;
+  fill: var(--ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  transform: rotate(-12deg);
+}
+
+.sticker circle { fill: var(--coral); }
+
+.motto {
+  max-width: none;
+  margin: 0;
+  padding: var(--space-l) 5%;
+  background: var(--ink);
+  color: var(--sun);
+  font-family: var(--display-font);
+  font-size: var(--text-xl);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Each piece of clothing is a box, cut into shape with clip-path polygon. */
+.tee {
+  aspect-ratio: 1 / 1;
+  -webkit-clip-path: polygon(32% 0, 42% 7%, 58% 7%, 68% 0, 100% 20%, 88% 40%, 78% 34%, 78% 100%, 22% 100%, 22% 34%, 12% 40%, 0 20%);
+  clip-path: polygon(32% 0, 42% 7%, 58% 7%, 68% 0, 100% 20%, 88% 40%, 78% 34%, 78% 100%, 22% 100%, 22% 34%, 12% 40%, 0 20%);
+}
+
+.hoodie {
+  aspect-ratio: 1 / 1;
+  -webkit-clip-path: polygon(30% 3%, 40% 0, 60% 0, 70% 3%, 92% 16%, 100% 88%, 86% 90%, 78% 40%, 78% 100%, 22% 100%, 22% 40%, 14% 90%, 0 88%, 8% 16%);
+  clip-path: polygon(30% 3%, 40% 0, 60% 0, 70% 3%, 92% 16%, 100% 88%, 86% 90%, 78% 40%, 78% 100%, 22% 100%, 22% 40%, 14% 90%, 0 88%, 8% 16%);
+}
+
+.dress {
+  aspect-ratio: 4 / 5;
+  -webkit-clip-path: polygon(33% 0, 43% 6%, 57% 6%, 67% 0, 70% 34%, 97% 100%, 3% 100%, 30% 34%);
+  clip-path: polygon(33% 0, 43% 6%, 57% 6%, 67% 0, 70% 34%, 97% 100%, 3% 100%, 30% 34%);
+}
+
+.trousers {
+  aspect-ratio: 4 / 5;
+  -webkit-clip-path: polygon(12% 0, 88% 0, 98% 100%, 56% 100%, 50% 26%, 44% 100%, 2% 100%);
+  clip-path: polygon(12% 0, 88% 0, 98% 100%, 56% 100%, 50% 26%, 44% 100%, 2% 100%);
+}
+
+.shorts {
+  aspect-ratio: 2 / 1;
+  -webkit-clip-path: polygon(10% 0, 90% 0, 100% 100%, 56% 100%, 50% 40%, 44% 100%, 0 100%);
+  clip-path: polygon(10% 0, 90% 0, 100% 100%, 56% 100%, 50% 40%, 44% 100%, 0 100%);
+}
+
+.skirt {
+  aspect-ratio: 2 / 1;
+  -webkit-clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+}
+
+/* A colour class paints the fabric. */
+.sun { background-color: var(--sun); }
+.plum { background-color: var(--plum); }
+.coral { background-color: var(--coral); }
+.mint { background-color: var(--mint); }
+.sky { background-color: var(--sky); }
+
+/* A pattern class prints white shapes on the fabric. Mix any colour with any pattern!
+   These stripes are real: they are the print on the cloth. */
+.stripes { background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0 12px, transparent 12px 26px); }
+.diagonal { background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.85) 0 8px, transparent 8px 20px); }
+
+/* Polka dots: one small circle, repeated like tiles on a wall. */
+.dots {
+  background-image: radial-gradient(circle, var(--white) 22%, transparent 24%);
+  background-size: 26px 26px;
+}
+
+/* Gingham: two see-through stripe patterns cross each other and make checks. */
+.gingham {
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.5) 50%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.5) 50%, transparent 50%);
+  background-size: 28px 28px;
+}
+
+.section { padding: var(--space-2xl) 5%; }
+.section-title { margin-bottom: var(--space-xl); font-size: var(--text-5xl); }
+
+/* FABRIC STRIP: four fabric samples fanned out on a table.
+   A minus margin pulls each sample over the one before it. */
+.fabric-strip {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: var(--space-m) 0 var(--space-xl);
+  list-style: none;
+}
+
+/* A dashed outline inside the edge looks like stitches. */
+.swatch {
+  display: flex;
+  flex: 0 1 280px;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  padding: var(--space-l) var(--space-s);
+  border-radius: 12px;
+  outline: 3px dashed rgba(255, 255, 255, 0.9);
+  outline-offset: -12px;
+  box-shadow: var(--shadow);
+  transform: rotate(-4deg);
+}
+
+.swatch + .swatch { margin-left: -40px; }
+
+/* Every second sample leans the other way. */
+.swatch:nth-child(even) { transform: rotate(3deg) translateY(12px); }
+
+.strip-note {
+  margin: 0 auto;
+  color: var(--quiet-ink);
+  text-align: center;
+}
+
+.crew-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-l);
+}
+
+/* A second split screen: two boxes side by side, each one fills half. */
+.split-band { display: grid; grid-template-columns: 1fr 1fr; }
+.split-band > div { padding: var(--space-2xl) 10%; }
+.split-band .plum { color: var(--white); }
+
+.big-words {
+  margin: 0;
+  color: var(--sun);
+  font-family: var(--display-font);
+  font-size: var(--text-5xl);
+  font-style: italic;
+  line-height: 1;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin: var(--space-s) var(--space-s) 0 0;
+  padding: 0 var(--space-l);
+  border-radius: 99px;
+  background: var(--plum);
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+/* The button lifts up under your mouse and sinks in when you press it. */
+.button:hover { transform: translateY(-3px); box-shadow: 0 16px 28px rgba(29, 21, 48, 0.24); }
+.button:active { transform: translateY(1px); box-shadow: 0 4px 10px rgba(29, 21, 48, 0.2); }
+
+.page-top { padding: var(--space-xl) 5% var(--space-m); }
+.page-top h1 { max-width: 20ch; font-size: var(--text-6xl); }
+.hint { color: var(--quiet-ink); font-weight: 600; }
+
+/* The look book row scrolls sideways. scroll-snap stops each card neatly at the edge. */
+.lookbook {
+  display: flex;
+  gap: var(--space-l);
+  margin: 0;
+  padding: var(--space-m) 5% var(--space-xl);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 5%;
+  list-style: none;
+}
+
+.look {
+  flex: 0 0 300px;
+  padding: var(--space-l);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  scroll-snap-align: start;
+}
+
+.look p { margin: 0; }
+
+/* Big numbers, used only where order matters:
+   looks walk out at a show in this order, and the six studio steps happen in this order. */
+.look-number {
+  color: var(--coral-text);
+  font-family: var(--display-font);
+  font-size: var(--text-5xl);
+  font-style: italic;
+  line-height: 1;
+}
+
+.outfit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 5;
+  margin: var(--space-s) 0 var(--space-m);
+}
+
+.outfit .tee, .outfit .hoodie { width: 70%; }
+.outfit .dress { width: 76%; }
+.outfit .trousers, .outfit .shorts, .outfit .skirt { width: 42%; margin-top: -3px; }
+
+/* The size table has a strong top row and soft stripes on every second line. */
+.size-table { width: 100%; max-width: 640px; border-collapse: collapse; }
+
+.size-table th {
+  background: var(--plum);
+  color: var(--white);
+  text-align: left;
+}
+
+.size-table th, .size-table td { padding: var(--space-s) var(--space-m); }
+.size-table tr:nth-child(even) td { background: var(--pale-sun); }
+
+/* Zig-zag: every step is a row with a picture and words. */
+.zigzag {
+  display: grid;
+  gap: var(--space-2xl);
+  margin: 0;
+  padding: var(--space-l) 5% var(--space-2xl);
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+/* Every second step swaps sides. row-reverse puts the picture on the right. */
+.step:nth-child(even) { flex-direction: row-reverse; }
+.step-picture, .step-text { flex: 1 1 0; }
+
+.step-picture {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: 24px;
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  transform: rotate(-2deg);
+}
+
+.step:nth-child(even) .step-picture { transform: rotate(2deg); }
+.step-picture svg { width: 62%; }
+.step-picture > .tee, .step-picture > .hanging { width: 46%; margin: 0; }
+
+.step-picture .scissors {
+  position: absolute;
+  right: 8%;
+  bottom: 8%;
+  width: 18%;
+}
+
+/* Lined paper: thin lines that repeat, and one red line for the margin. */
+.paper {
+  background-color: var(--white);
+  background-image:
+    linear-gradient(90deg, transparent 15%, var(--margin-red) 15%, var(--margin-red) calc(15% + 2px), transparent calc(15% + 2px)),
+    repeating-linear-gradient(transparent 0 27px, var(--paper-line) 27px 29px);
+}
+
+/* Two pieces of fabric meet in the middle: one gradient with a hard line again. */
+.two-fabrics { background: linear-gradient(var(--coral) 50%, var(--sky) 50%); color: var(--white); }
+
+/* A colour wheel, made with conic-gradient. */
+.colour-wheel {
+  width: 52%;
+  aspect-ratio: 1 / 1;
+  border: 6px solid var(--white);
+  border-radius: 50%;
+  background: conic-gradient(#ff4d4d, #ffd23f, #6bd66b, #39b8ff, #6a4cff, #ff4dc4, #ff4d4d);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  margin-bottom: var(--space-m);
+  border-radius: 50%;
+  font-family: var(--display-font);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  box-shadow: var(--shadow);
+}
+
+.crew-card {
+  padding: var(--space-l);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.crew-card p { margin: 0; }
+.role { color: var(--quiet-ink); font-weight: 700; }
+
+.footer {
+  padding: var(--space-xl) 5%;
+  background: var(--ink);
+  color: var(--white);
+}
+
+.footer p { margin: 0 0 var(--space-s); }
+.footer a { color: var(--sun); font-weight: 700; }
+.footer a:hover { color: var(--white); }
+
+/* On a middle window the letters get one step smaller. */
+@media (max-width: 900px) {
+  .huge-title, .page-top h1 { font-size: var(--text-5xl); }
+  .section-title, .big-words { font-size: var(--text-4xl); }
+}
+
+/* On a narrow window things stack up. */
+@media (max-width: 760px) {
+  .split-band { grid-template-columns: 1fr; }
+  .split-band > div { padding: var(--space-xl) 5%; }
+  .step, .step:nth-child(even) { flex-direction: column; gap: var(--space-l); }
+  .step-picture { width: 100%; }
+  .swatch + .swatch { margin-left: -24px; }
+}
+
+/* On a phone everything gets smaller again. */
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  h2 { font-size: var(--text-xl); }
+  h3 { font-size: var(--text-l); }
+  .top-bar { justify-content: center; padding: var(--space-s) var(--space-m); }
+  .menu a { padding: 0 12px; }
+  .huge-title, .page-top h1 { font-size: var(--text-3xl); }
+  .section-title, .big-words { font-size: var(--text-3xl); }
+  .split-hero { min-height: 0; padding-bottom: var(--space-l); }
+  .huge-title { padding-top: var(--space-l); }
+  .hanging { width: 78%; margin-top: var(--space-l); }
+  .tag { padding: 2px var(--space-s) 2px 22px; }
+  /* On a phone the four samples make two rows of two. */
+  .fabric-strip { flex-wrap: wrap; }
+  .swatch { flex-basis: 52%; padding: var(--space-m) var(--space-xs); }
+  .swatch + .swatch { margin-left: 0; }
+  .swatch:nth-child(even) { margin-left: -4%; }
+
+  .sticker {
+    top: 50%;
+    width: 64px;
+    margin: -32px 0 0 -32px;
+  }
+
+  .motto { font-size: var(--text-l); }
+  .section, .split-band > div { padding: var(--space-xl) var(--space-m); }
+  .page-top, .lookbook { padding-left: var(--space-m); padding-right: var(--space-m); }
+  .look { flex-basis: 78%; }
+  .zigzag { padding: var(--space-m) var(--space-m) var(--space-xl); gap: var(--space-xl); }
+  .size-table th, .size-table td { padding: var(--space-s); }
+}

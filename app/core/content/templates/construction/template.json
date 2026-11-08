@@ -1,0 +1,15 @@
+{
+  "title": "Building company",
+  "name": "my-building-company",
+  "blurb": "A building company with a crane, projects and a step timeline",
+  "category": "industrial",
+  "layout": "Hazard stripes, project grid, build timeline",
+  "shows": [
+    "Danger stripes made with one gradient",
+    "A crane drawn in SVG with a swinging load",
+    "Progress bars that turn green when done",
+    "A timeline with hexagon numbers",
+    "Questions that open when you click, no script"
+  ],
+  "accent": "#b5432a"
+}

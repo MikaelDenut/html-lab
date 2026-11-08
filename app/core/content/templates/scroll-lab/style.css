@@ -1,0 +1,437 @@
+/* PEBBLEWHISTLE TRAIL: one style file for all three pages.
+   It looks like a walk up a mountain: snow, grey rock,
+   pine green and the yellow signs that show the way. */
+
+/* The colours, fonts, sizes and spaces of the whole site.
+   Change one line here and every page changes. */
+:root {
+  --snow: #f3f7fa;
+  --white: #ffffff;
+  --rock: #1d2a31;
+  --rock-soft: #4b5c66;
+  --line: #c9d5dd;
+  --sign: #ffcd1c;
+  --pine: #2e5e4e;
+  --sky: #bfdcec;
+  --display: "DIN Condensed", Futura, sans-serif;
+  --text: Charter, Georgia, serif;
+  --code: Menlo, Monaco, monospace;
+  --size-s: 16px;
+  --size-m: 20px;
+  --size-l: 25px;
+  --size-xl: 31px;
+  --size-2xl: 39px;
+  --size-3xl: 49px;
+  --size-4xl: 62px;
+  --size-5xl: 95px;
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 40px;
+  --space-xl: 72px;
+  --sign-h: 48px;
+  --scene-h: 110px;
+  --page: 1120px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--snow);
+  color: var(--rock);
+  font: var(--size-m)/1.6 var(--text);
+}
+
+h1, h2 { margin: 0; font-family: var(--display); font-weight: 700; line-height: 1; }
+p { max-width: 64ch; margin: 0 0 var(--space-s); }
+a { color: var(--pine); font-weight: 700; }
+code { padding: 1px 5px; border-radius: 4px; background: #e2e9ee; font-family: var(--code); font-size: 0.8em; }
+
+/* A thick dark ring shows where the keyboard is. */
+a:focus-visible,
+[tabindex]:focus-visible { outline: 3px solid var(--rock); outline-offset: 3px; }
+
+/* The bar at the top: the name on the left, the menu on the right. */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: var(--space-m) var(--space-s);
+}
+.logo { display: flex; align-items: center; gap: var(--space-xs); color: var(--rock); font: 700 var(--size-xl)/1 var(--display); text-decoration: none; }
+.logo-mark { width: 40px; height: 40px; fill: none; stroke: var(--rock); stroke-width: 2.5; stroke-linejoin: round; }
+
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a { display: block; min-height: 44px; padding: 10px 18px; border-radius: 999px; color: var(--rock); font-family: var(--text); text-decoration: none; }
+.menu a:hover { background: var(--white); }
+.menu a:active { transform: translateY(1px); }
+.menu a[aria-current="page"] { background: var(--rock); color: var(--snow); }
+
+/* Every block sits in the middle and is never wider than --page. */
+.intro, .demo, .times, .trail { max-width: var(--page); margin: 0 auto; padding: 0 var(--space-s); }
+.intro { padding-top: var(--space-l); padding-bottom: var(--space-xl); }
+.intro h1 { max-width: 15ch; margin-bottom: var(--space-m); font-size: var(--size-5xl); line-height: 0.95; }
+.lead { font-size: var(--size-l); line-height: 1.5; }
+.demo, .times { margin-bottom: var(--space-xl); }
+.times { margin-top: var(--space-xl); }
+.demo h2, .times h2 { margin-bottom: var(--space-s); font-size: var(--size-2xl); }
+.how { margin-top: var(--space-s); color: var(--rock-soft); font-size: var(--size-s); }
+
+/* STICKY SIGNS
+   position: sticky makes a sign scroll like normal, until it reaches
+   its top value. Then it stops and waits there.
+   Each sign has its own number --n, so sign 0 stops at 0px,
+   sign 1 at 48px, sign 2 at 96px... and they stack up. */
+.sign {
+  position: sticky;
+  top: calc(var(--n) * var(--sign-h));
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--sign-h);
+  padding: 0 var(--space-s);
+  border-bottom: 1px solid var(--line);
+  background: var(--snow);
+  font-size: var(--size-l);
+}
+
+/* The yellow plate has a pointed end, cut out with clip-path.
+   The polygon goes round the corners: top left, top right,
+   the point, bottom right, bottom left.
+   Only the place name is in capitals: 1200 m stays small, because
+   a capital M would mean mega, not metres. */
+.arrow {
+  display: flex;
+  text-transform: uppercase;
+  align-items: center;
+  height: 38px;
+  padding: 4px 40px 0 14px;
+  background: var(--sign);
+  -webkit-clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+}
+
+/* Each stop on the trail. min-height keeps it tall, so you have
+   time to watch each sign arrive before the next one. */
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--space-m);
+  align-items: start;
+  min-height: 340px;
+  padding: var(--space-l) var(--space-s) calc(var(--scene-h) + var(--space-l));
+  background-color: var(--zone);
+  /* The dotted path: a stripe 3px wide that repeats dark, empty,
+     dark, empty... all the way down, behind the round icons. */
+  background-image: repeating-linear-gradient(var(--pine) 0 10px, transparent 10px 22px);
+  background-position: 46px 0;
+  background-size: 3px 100%;
+  background-repeat: no-repeat;
+}
+.stage p { padding-top: var(--space-s); font-size: var(--size-l); line-height: 1.5; }
+.icon {
+  width: 64px;
+  height: 64px;
+  padding: 10px;
+  border: 2px solid var(--pine);
+  border-radius: 50%;
+  background: var(--white);
+  fill: none;
+  stroke: var(--pine);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* THE VIEW AT EACH STOP: one shape along the bottom of the stage.
+   Each stop below gives it two things: --paint (its colours) and
+   --scene (the clip-path that cuts its outline). */
+.stage::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--scene-h);
+  background: var(--paint);
+  -webkit-clip-path: var(--scene);
+  clip-path: var(--scene);
+}
+
+/* The higher you climb, the colder the colours.
+   calc(14% - 28px) means: 14% of the way across, then 28px back.
+   So a house stays 56px wide on every screen. */
+.village {
+  --zone: #e4efdc;
+  --paint: #8a6a52;
+  --scene: polygon(
+    0 100%, 0 70%,
+    calc(14% - 28px) 70%, calc(14% - 28px) 40%, 14% 5%, calc(14% + 28px) 40%, calc(14% + 28px) 70%,
+    calc(42% - 28px) 70%, calc(42% - 28px) 40%, 42% 5%, calc(42% + 28px) 40%, calc(42% + 28px) 70%,
+    calc(74% - 28px) 70%, calc(74% - 28px) 40%, 74% 5%, calc(74% + 28px) 40%, calc(74% + 28px) 70%,
+    100% 70%, 100% 100%
+  );
+}
+.forest {
+  --zone: #d6e6dc;
+  --paint: var(--pine);
+  --scene: polygon(0 100%, 0 40%, 5% 0, 10% 40%, 15% 15%, 21% 45%, 27% 5%, 33% 40%, 39% 20%, 45% 45%, 51% 0, 57% 40%, 63% 15%, 69% 45%, 75% 5%, 81% 40%, 87% 15%, 93% 45%, 100% 10%, 100% 100%);
+}
+/* The flowers: one small white dot, repeated like tiles on the green. */
+.meadow {
+  --zone: #e8f2d8;
+  --paint: radial-gradient(circle, #ffffff 0 3px, transparent 4px) 0 0 / 26px 22px, #6fae55;
+  --scene: polygon(0 100%, 0 50%, 20% 25%, 45% 45%, 70% 15%, 100% 40%, 100% 100%);
+}
+.rocks {
+  --zone: #e3e7ea;
+  --paint: linear-gradient(#ffffff 0 35%, #7d8f9b 35%);
+  --scene: polygon(0 100%, 0 60%, 12% 20%, 20% 45%, 34% 0, 46% 50%, 58% 25%, 70% 55%, 84% 10%, 100% 50%, 100% 100%);
+}
+.hut {
+  --zone: #fbfdfe;
+  --paint: #6b4a36;
+  --scene: polygon(0 100%, 0 75%, calc(70% - 48px) 75%, calc(70% - 48px) 40%, 70% 0, calc(70% + 48px) 40%, calc(70% + 48px) 75%, 100% 75%, 100% 100%);
+}
+
+/* THE TABLE WITH A STICKY TOP ROW
+   The box can only grow to 360px tall. overflow: auto puts a
+   scroll bar inside it. Then the th cells stick to its top. */
+.table-box {
+  max-height: 360px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+}
+table { width: 100%; min-width: 540px; border-collapse: separate; border-spacing: 0; font-size: var(--size-s); }
+th, td { padding: 10px var(--space-s); border-bottom: 1px solid var(--line); text-align: left; }
+thead th {
+  position: sticky;
+  top: 0;
+  background: var(--rock);
+  color: var(--snow);
+  font: 700 var(--size-m)/1.2 var(--display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+tbody tr:nth-child(even) { background: var(--snow); }
+td:nth-child(2), td:nth-child(3) { white-space: nowrap; }
+
+/* SNAP PHOTOS
+   scroll-snap-type on the box says: always stop on a photo.
+   x means sideways. mandatory means it must never stop halfway.
+   scroll-snap-align on each photo says which part to stop on. */
+.strip {
+  display: flex;
+  gap: var(--space-m);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--space-xs) 0 var(--space-m);
+}
+/* Two empty spacers, before the first photo and after the last one,
+   give the first and last photo room to stop in the middle too. */
+.strip::before,
+.strip::after {
+  content: "";
+  flex: 0 0 calc(max(10%, 50% - 280px) - var(--space-m));
+}
+.strip figure {
+  flex: 0 0 80%;
+  max-width: 560px;
+  margin: 0;
+  scroll-snap-align: center;
+}
+.strip img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(29, 42, 49, 0.18);
+}
+.strip figcaption { margin-top: var(--space-xs); font: 700 var(--size-l)/1.2 var(--display); }
+
+/* The box that snaps up and down: y means up and down,
+   and every season is exactly as tall as the box. */
+.snap-box {
+  height: min(70vh, 460px);
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(29, 42, 49, 0.18);
+}
+.season {
+  position: relative;
+  height: 100%;
+  padding: var(--space-l);
+  overflow: hidden;
+  background: linear-gradient(var(--sky) 0 62%, var(--ground) 62%);
+  scroll-snap-align: start;
+}
+.season p { position: relative; z-index: 1; max-width: 22ch; }
+.season-name { margin: 0; font: 700 var(--size-4xl)/1 var(--display); text-transform: uppercase; }
+
+/* The mountain is one div cut into a peak shape with clip-path.
+   The gradient paints white snow on the top part. */
+.peak {
+  position: absolute;
+  right: 6%;
+  bottom: 38%;
+  width: 62%;
+  height: 52%;
+  background: linear-gradient(var(--white) 0 var(--snowline), var(--rock-peak) var(--snowline));
+  -webkit-clip-path: polygon(0 100%, 28% 38%, 42% 58%, 66% 0, 100% 100%);
+  clip-path: polygon(0 100%, 28% 38%, 42% 58%, 66% 0, 100% 100%);
+}
+
+/* Each season only changes the colours. */
+.spring { --sky: #cfe8f6; --ground: #8fcf6f; --rock-peak: #6f8391; --snowline: 45%; }
+.summer { --sky: #9fd3f2; --ground: #4f9a4f; --rock-peak: #6f8391; --snowline: 22%; }
+.autumn { --sky: #f6d7a7; --ground: #c98a3c; --rock-peak: #7a6a63; --snowline: 28%; }
+.winter { --sky: #dfe7ee; --ground: #ffffff; --rock-peak: #b8c6d1; --snowline: 70%; }
+
+/* SLOW LAYERS: the window you scroll inside.
+   Its own background is the sky. It never scrolls, so the sky
+   stays still, like something very, very far away. */
+.viewer {
+  height: 440px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: linear-gradient(#5b9fd4, #cfe6f3);
+  box-shadow: 0 8px 24px rgba(29, 42, 49, 0.18);
+}
+.landscape { position: relative; height: 1000px; }
+
+/* Every layer stands on the bottom edge of the landscape. */
+.layer { position: absolute; right: 0; bottom: 0; left: 0; }
+
+/* The sun: a round gradient with a sharp edge. */
+.sun {
+  height: 420px;
+  background: radial-gradient(circle at 76% 60px, #fff1a8 0 44px, rgba(255, 241, 168, 0) 46px);
+}
+
+/* Far peaks: blue rock with white snow on top. clip-path cuts the
+   shape: each pair of numbers is one corner, across then down. */
+.far {
+  height: 300px;
+  background: linear-gradient(var(--white) 0 80px, #8aa3b5 80px);
+  -webkit-clip-path: polygon(0 150px, 12% 60px, 22% 110px, 38% 0, 52% 120px, 64% 40px, 80% 150px, 92% 70px, 100% 120px, 100% 100%, 0 100%);
+  clip-path: polygon(0 150px, 12% 60px, 22% 110px, 38% 0, 52% 120px, 64% 40px, 80% 150px, 92% 70px, 100% 120px, 100% 100%, 0 100%);
+}
+
+/* Near hills: soft green bumps, closer to you. */
+.near {
+  height: 200px;
+  background: #5c9a62;
+  -webkit-clip-path: polygon(0 70px, 18% 20px, 36% 80px, 58% 0, 78% 60px, 100% 20px, 100% 100%, 0 100%);
+  clip-path: polygon(0 70px, 18% 20px, 36% 80px, 58% 0, 78% 60px, 100% 20px, 100% 100%, 0 100%);
+}
+
+/* The front layer is the whole landscape: the note at the top,
+   the trees at the bottom. */
+.front { top: 0; }
+
+/* Front trees: a zigzag edge looks like a row of pine tops. */
+.front::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 110px;
+  background: var(--pine);
+  -webkit-clip-path: polygon(0 100%, 0 40%, 6% 0, 12% 40%, 18% 10%, 25% 40%, 32% 0, 39% 40%, 46% 15%, 53% 40%, 60% 0, 67% 40%, 74% 10%, 81% 40%, 88% 0, 94% 40%, 100% 20%, 100% 100%);
+  clip-path: polygon(0 100%, 0 40%, 6% 0, 12% 40%, 18% 10%, 25% 40%, 32% 0, 39% 40%, 46% 15%, 53% 40%, 60% 0, 67% 40%, 74% 10%, 81% 40%, 88% 0, 94% 40%, 100% 20%, 100% 100%);
+}
+.viewer-note {
+  width: max-content;
+  margin: var(--space-l) auto 0;
+  padding: var(--space-xs) var(--space-m);
+  border-radius: 8px;
+  background: var(--sign);
+  font: 700 var(--size-l)/1.2 var(--display);
+  text-transform: uppercase;
+}
+
+/* The key: one coloured square for each layer. */
+.layer-list { display: grid; gap: var(--space-xs); margin: var(--space-m) 0 0; padding: 0; list-style: none; font-size: var(--size-s); }
+.layer-list li { display: grid; grid-template-columns: 24px 8em 1fr auto; align-items: center; gap: var(--space-xs) var(--space-s); padding: var(--space-xs) 0; border-bottom: 1px solid var(--line); }
+.layer-list li::before { content: ""; width: 24px; height: 24px; border-radius: 6px; background: var(--key); }
+.layer-list b { font-size: var(--size-m); }
+.layer-list code { justify-self: start; }
+.layer-list span { color: var(--rock-soft); }
+.key-sky { --key: #5b9fd4; }
+.key-sun { --key: #ffe066; }
+.key-far { --key: #8aa3b5; }
+.key-near { --key: #5c9a62; }
+.key-front { --key: #2e5e4e; }
+
+/* The band with a photo behind it. */
+.hole {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-l) var(--space-s);
+  background: var(--rock) url(scroll-lab-clouds.jpg) center / cover;
+}
+.hole-text {
+  max-width: 30ch;
+  margin: 0;
+  padding: var(--space-m);
+  border-radius: 12px;
+  background: var(--snow);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* MOVING LAYERS: only for people who did not ask for less motion.
+   perspective: 1px makes the window deep, like a box you look into.
+   translateZ pushes a layer back, scale makes it big again. */
+@media (prefers-reduced-motion: no-preference) {
+  .viewer { perspective: 1px; perspective-origin: 50% 100%; }
+  .landscape { transform-style: preserve-3d; }
+  .layer { transform-origin: 50% 100%; }
+  .sun { transform: translateZ(-3px) scale(4); }
+  .far { transform: translateZ(-2px) scale(3); }
+  .near { transform: translateZ(-1px) scale(2); }
+
+  /* fixed pins the photo to the window, so the band slides over it. */
+  .hole { background-attachment: fixed; }
+}
+
+/* The dark band at the bottom of every page. */
+.bottom { padding: var(--space-l) var(--space-s); background: var(--rock); color: var(--snow); }
+.bottom p { max-width: calc(var(--page) - 32px); margin: 0 auto var(--space-xs); }
+.bottom a { color: var(--sign); }
+
+/* Small screens: smaller title, smaller signs. */
+@media (max-width: 600px) {
+  :root { --sign-h: 40px; --scene-h: 80px; }
+  .intro h1 { font-size: var(--size-3xl); }
+  .lead { font-size: var(--size-m); }
+  .menu ul { gap: 2px; }
+  .menu a { padding: 10px; font-size: var(--size-s); font-weight: 400; }
+  .menu a[aria-current="page"] { font-weight: 700; }
+  .sign { padding: 0 var(--space-xs); font-size: var(--size-m); }
+  .arrow { height: 32px; padding-right: 32px; }
+  .stage { grid-template-columns: 48px 1fr; gap: var(--space-s); background-position: 38px 0; }
+  .icon { width: 48px; height: 48px; padding: 6px; }
+  .season { padding: var(--space-m); }
+  .season-name { font-size: var(--size-2xl); }
+  .peak { right: 4%; width: 46%; height: 40%; }
+  .viewer { height: 400px; }
+  .layer-list li { grid-template-columns: 24px 1fr auto; }
+  .layer-list code { grid-row: 2; grid-column: 2 / 4; }
+}

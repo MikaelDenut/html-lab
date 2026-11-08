@@ -1,0 +1,15 @@
+{
+  "title": "Pirate treasure map",
+  "name": "my-pirate-club",
+  "blurb": "A pirate club with a treasure map, a crew and a hunt to join",
+  "category": "fun",
+  "layout": "A treasure map page with islands placed on it",
+  "shows": [
+    "Islands placed on a map with grid areas",
+    "A dotted path drawn with SVG",
+    "Islands that rock when your mouse is on them",
+    "Pirates drawn with circles and paths",
+    "A chest that opens with a click, no script"
+  ],
+  "accent": "#b3261e"
+}

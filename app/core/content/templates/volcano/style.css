@@ -1,0 +1,528 @@
+/* Cinderkettle Volcano Observatory: one style file for all three pages. */
+
+/* A snowy volcano in the cold north: grey sky, dark rock, hot lava. Change a colour here and the whole site changes, even the drawing! */
+:root {
+  --sky: #dce8ef;
+  --paper: #f3f6f8;
+  --white: #ffffff;
+  --line: #d3dde3;
+  --basalt: #20262b;
+  --basalt-soft: #4b565e;
+  --lava: #e3461b;
+  --lava-dark: #a8300f;
+  --glow: #ffc23a;
+  --glow-light: #fff3d1;
+  --deep: #8f1d10;
+  --ash: #a3a6ab;
+  --ash-dark: #75787e;
+  --rock-1: #8b7b6b;
+  --rock-2: #75675a;
+  --rock-3: #5e5248;
+  --layer-a: #4d4844;
+  --layer-b: #6d6660;
+  --moss: #7d8c70;
+  --green: #2e7d4f;
+  --yellow: #f2c230;
+  --orange: #ee8a35;
+  --red: #c62f1f;
+  --title-font: "Avenir Next Condensed", "Futura", sans-serif;
+  --text-font: "Iowan Old Style", "Georgia", serif;
+  /* Each text size is 1.25 times the one before it. */
+  --text-s: 16px;
+  --text-m: 20px;
+  --text-l: 25px;
+  --text-xl: 31px;
+  --text-2xl: 39px;
+  --text-3xl: 49px;
+  --text-4xl: 61px;
+  /* Spaces, from small to huge. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --round: 18px;
+  --shadow: 0 10px 26px rgba(32, 38, 43, 0.16);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img, svg { display: block; max-width: 100%; height: auto; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--basalt);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: 700;
+  line-height: 1.1;
+}
+h1 { max-width: 24ch; font-size: var(--text-3xl); }
+h2 { max-width: 24ch; font-size: var(--text-2xl); }
+h3 { font-size: var(--text-l); }
+p, li, dd { max-width: 70ch; }
+a { color: var(--lava-dark); font-weight: 600; }
+
+/* A thick dark ring shows where the keyboard is. */
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--basalt); outline-offset: 3px; }
+
+/* The white bar at the top of every page. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-l);
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--basalt);
+  text-decoration: none;
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  line-height: 1;
+}
+.logo small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  font-weight: 400;
+  color: var(--basalt-soft);
+}
+.logo-mark { width: 48px; height: 48px; }
+.logo-hill { fill: var(--basalt); }
+.logo-lava { fill: var(--lava); }
+.logo-ash { fill: var(--ash); }
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  color: var(--basalt);
+  font-family: var(--title-font);
+  font-size: var(--text-m);
+  text-decoration: none;
+}
+.menu a:hover { background: var(--sky); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on has a line of hot lava under it. */
+.menu a[aria-current="page"] { box-shadow: inset 0 -4px 0 var(--lava); border-radius: 10px 10px 0 0; }
+
+.intro { max-width: 1160px; margin: 0 auto; padding: var(--space-m) var(--space-m); }
+.intro h1 { max-width: none; }
+.lead { margin: 0; font-size: var(--text-l); line-height: 1.4; color: var(--basalt-soft); }
+
+/* THE BIG DRAWING. The labels are ordinary HTML, placed on top of the SVG picture. */
+.cross-section { max-width: 1160px; margin: 0 auto; padding: 0 var(--space-m); }
+.diagram-box { position: relative; }
+.diagram { width: 100%; border-radius: var(--round); box-shadow: var(--shadow); }
+.cross-section figcaption { margin-top: var(--space-s); font-size: var(--text-s); color: var(--basalt-soft); }
+
+/* CSS paints the SVG shapes. fill is the paint inside a shape. */
+.sky { fill: var(--sky); }
+.rock-1 { fill: var(--rock-1); }
+.rock-2 { fill: var(--rock-2); }
+.rock-3 { fill: var(--rock-3); }
+.hill { fill: var(--moss); }
+.observatory rect, .observatory path { fill: var(--white); stroke: var(--basalt); stroke-width: 3; }
+.observatory line { stroke: var(--basalt); stroke-width: 4; }
+.layer-a { fill: var(--layer-a); }
+.layer-b { fill: var(--layer-b); }
+.snow { fill: var(--white); }
+.part-crater { fill: var(--basalt); }
+.part-lava polygon { fill: var(--lava); }
+.lava-core { fill: none; stroke: var(--glow); stroke-width: 3; stroke-linecap: round; }
+.part-ash circle { fill: var(--ash); }
+.part-ash .ash-dark { fill: var(--ash-dark); }
+.stop-glow { stop-color: var(--glow); }
+.stop-lava { stop-color: var(--lava); }
+.stop-deep { stop-color: var(--deep); }
+
+/* Number pins for small screens. They hide on big screens. */
+.pins { display: none; }
+.pins circle { fill: var(--white); stroke: var(--basalt); stroke-width: 5; }
+.pins text {
+  fill: var(--basalt);
+  font-family: var(--title-font);
+  font-size: 52px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+/* A label is a white card. It sits 56px to the right of its dot, and -50% moves it up by half its height, so the dot is level with its middle. */
+.labels { margin: 0; padding: 0; list-style: none; counter-reset: label; }
+.label {
+  position: absolute;
+  width: max-content;
+  max-width: 12em;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--white);
+  font-size: var(--text-s);
+  line-height: 1.35;
+  box-shadow: var(--shadow);
+  transform: translate(56px, -50%);
+  counter-increment: label;
+  cursor: default;
+}
+.label b { display: block; font-family: var(--title-font); font-size: var(--text-m); }
+
+/* The line from the card to the dot, and the dot on the part. */
+.label::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 44px;
+  height: 4px;
+  margin-top: -2px;
+  border: 1px solid var(--basalt);
+  background: var(--white);
+}
+.label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -56px;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 4px solid var(--white);
+  border-radius: 50%;
+  background: var(--part);
+}
+
+/* A "flip" label sits on the left of its dot. */
+.label.flip { text-align: right; transform: translate(calc(-100% - 56px), -50%); }
+.label.flip::before { right: auto; left: 100%; }
+.label.flip::after { left: auto; right: -56px; margin: -10px -10px 0 0; }
+
+/* Each label sits on its part. Change left and top to move it. */
+.label-ash { left: 63.3%; top: 11.6%; --part: var(--ash); }
+.label-crater { left: 50%; top: 25.8%; --part: var(--basalt); }
+.label-lava { left: 61.7%; top: 32.1%; --part: var(--lava); }
+.label-vent { left: 50%; top: 47%; --part: var(--glow); }
+.label-crust { left: 8.3%; top: 65.8%; --part: var(--rock-1); }
+.label-chamber { left: 61.7%; top: 90.8%; --part: var(--deep); }
+
+/* Point at a label, or Tab to it: :has() finds it, and every other part fades. */
+.diagram-box:has(.label:is(:hover, :focus)) .part { opacity: 0.18; }
+.diagram-box:has(.label-ash:is(:hover, :focus)) .part-ash,
+.diagram-box:has(.label-crater:is(:hover, :focus)) .part-crater,
+.diagram-box:has(.label-lava:is(:hover, :focus)) .part-lava,
+.diagram-box:has(.label-vent:is(:hover, :focus)) .part-vent,
+.diagram-box:has(.label-crust:is(:hover, :focus)) .part-crust,
+.diagram-box:has(.label-chamber:is(:hover, :focus)) .part-chamber { opacity: 1; }
+.label:is(:hover, :focus) { background: var(--glow-light); }
+.label:focus-visible, .shape-card:focus-visible { outline: 3px solid var(--basalt); outline-offset: 3px; }
+
+/* The ash cloud drifts slowly in the wind. */
+@media (prefers-reduced-motion: no-preference) {
+  .ash-cloud { animation: drift 6s ease-in-out infinite alternate; }
+}
+@keyframes drift {
+  from { transform: translate(0, 6px); }
+  to { transform: translate(16px, -8px); }
+}
+
+/* Under the drawing: the steps on the left, today's news on the right. */
+.below {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-l);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-m) 0;
+}
+
+/* The order matters here, so each step gets a number from a CSS counter. */
+.steps { margin: var(--space-m) 0 0; padding: 0; list-style: none; counter-reset: step; }
+.steps li { position: relative; margin-bottom: var(--space-m); padding-left: 64px; counter-increment: step; }
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -4px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--lava);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  font-weight: 700;
+  line-height: 44px;
+  text-align: center;
+}
+
+.status {
+  align-self: start;
+  padding: var(--space-m);
+  border-radius: var(--round);
+  background: var(--basalt);
+  color: #dfe6ea;
+}
+.status h2 { font-size: var(--text-xl); color: var(--white); }
+.alert-chip {
+  display: inline-block;
+  margin: 0 0 var(--space-s);
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--green);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-weight: 700;
+}
+
+/* A button that lifts when your mouse is on it, and pushes in when you click. */
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  background: var(--glow);
+  color: var(--basalt);
+  font-family: var(--title-font);
+  font-size: var(--text-m);
+  font-weight: 700;
+  text-decoration: none;
+}
+.button:hover { transform: translateY(-3px); background: #ffd56b; }
+.button:active { transform: translateY(1px); }
+.status .button:focus-visible { outline-color: var(--glow); }
+
+/* The title at the top of the other pages. */
+.page-title { max-width: 1160px; margin: 0 auto; padding: var(--space-l) var(--space-m) var(--space-m); }
+.section { max-width: 1160px; margin: 0 auto; padding: var(--space-l) var(--space-m) 0; }
+
+/* TYPES PAGE. The grid gives the wide shield volcano the widest column. */
+.shapes {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1.3fr;
+  gap: var(--space-m);
+  align-items: start;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 var(--space-m);
+}
+.shape-card {
+  padding: var(--space-m);
+  border-radius: var(--round);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  cursor: default;
+}
+.shape-card h2 { margin-top: var(--space-m); font-size: var(--text-xl); }
+.shape-word { margin: 0 0 var(--space-s); font-style: italic; color: var(--basalt-soft); }
+.facts { margin: 0; padding-left: 22px; }
+.facts li { margin-bottom: var(--space-xs); }
+.outline { width: 100%; border-radius: 12px; background: var(--sky); }
+.outline .body { fill: var(--layer-b); }
+.outline .edge { fill: none; stroke: var(--basalt); stroke-width: 3; stroke-linejoin: round; }
+.outline .ground { fill: var(--rock-2); }
+.outline .flow, .outline .strata { fill: none; stroke: var(--layer-a); stroke-width: 6; stroke-linecap: round; }
+.outline .cinders { fill: var(--layer-a); }
+
+/* The lava is a rectangle hiding under the ground. The volcano shape cuts it out. */
+.outline .fill { fill: var(--lava); transform: translateY(160px); }
+
+/* Point at a card, or Tab to it, and lava fills the volcano from the bottom. */
+.shape-card:is(:hover, :focus) .fill { transform: translateY(0); }
+
+.quiz details {
+  max-width: 820px;
+  margin-bottom: var(--space-s);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+.quiz summary {
+  position: relative;
+  min-height: 48px;
+  padding: var(--space-s) 56px var(--space-s) var(--space-m);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.quiz summary::-webkit-details-marker { display: none; }
+
+/* A little arrow drawn with two borders. It turns when the answer opens. */
+.quiz summary::after {
+  content: "";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -8px;
+  border: solid var(--lava-dark);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.quiz details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.quiz summary:hover { color: var(--lava-dark); }
+.quiz details p { margin: 0; padding: 0 var(--space-m) var(--space-m); }
+
+/* SAFETY PAGE. Each reading: words on the left, a drawn chart on the right. */
+.reading {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-l);
+  align-items: center;
+  padding: var(--space-m) 0;
+  border-top: 1px solid var(--line);
+}
+.reading p { margin: 0; }
+
+/* Real chart paper has thin lines. An SVG pattern draws one small square and repeats it. */
+.chart-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.strip { width: 100%; border-radius: 12px; background: var(--white); box-shadow: var(--shadow); }
+.chart { margin: 0; }
+.chart figcaption { margin-top: var(--space-xs); font-size: var(--text-s); color: var(--basalt-soft); }
+.paper-line { fill: none; stroke: var(--line); stroke-width: 1; }
+.trace {
+  fill: none;
+  stroke: var(--lava-dark);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.trace.before { stroke: var(--ash-dark); stroke-dasharray: 8 8; }
+.bar { fill: var(--glow); stroke: var(--basalt); stroke-width: 2; }
+.station { fill: var(--basalt); }
+
+/* The four alert colours. Here the colour IS the message. */
+.alert-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-s);
+  margin: var(--space-m) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.alert-list li { padding: var(--space-m); border-radius: 14px; font-size: var(--text-s); }
+.alert-list b { display: block; font-family: var(--title-font); font-size: var(--text-l); }
+.alert-list .green { background: var(--green); color: var(--white); }
+.alert-list .yellow { background: var(--yellow); }
+.alert-list .orange { background: var(--orange); }
+.alert-list .red { background: var(--red); color: var(--white); }
+
+/* A definition list: the word (dt) and what it means (dd). The grid puts two pairs in a row. */
+.glossary {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content 1fr;
+  gap: var(--space-m) var(--space-l);
+  margin: var(--space-m) 0 0;
+}
+.glossary dt { font-family: var(--title-font); font-size: var(--text-l); font-weight: 700; color: var(--lava-dark); }
+.glossary dd { margin: 0; }
+
+.visit {
+  margin-top: var(--space-l);
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--round);
+  background: var(--glow-light);
+}
+.visit ul { margin: 0; padding-left: 22px; }
+
+.bottom {
+  margin-top: var(--space-xl);
+  padding: var(--space-l) var(--space-m);
+  background: var(--basalt);
+  color: #dfe6ea;
+  text-align: center;
+  font-size: var(--text-s);
+}
+.bottom p { margin: var(--space-xs) auto; }
+.bottom a { color: var(--glow); }
+.bottom a:focus-visible { outline-color: var(--glow); }
+
+/* Things you make move with the mouse glide, for people who are happy to see it. */
+@media (prefers-reduced-motion: no-preference) {
+  .part { transition: opacity 0.4s var(--ease); }
+  .button { transition: transform 0.3s var(--ease), background 0.3s var(--ease); }
+  .outline .fill { transition: transform 1s var(--ease); }
+  .quiz summary::after { transition: transform 0.3s var(--ease); }
+}
+
+/* On a tablet, side-by-side boxes go on top of each other. */
+@media (max-width: 900px) {
+  .top-bar { padding: var(--space-s) var(--space-m); }
+  .cross-section { padding: 0 var(--space-s); }
+  .below, .reading { grid-template-columns: 1fr; gap: var(--space-m); }
+  .shapes { grid-template-columns: 1fr 1fr; }
+  .shield { grid-column: 1 / -1; }
+  .alert-list { grid-template-columns: 1fr 1fr; }
+  .glossary { grid-template-columns: max-content 1fr; }
+}
+
+/* When the drawing gets small, the labels move under it, and numbers show which is which. */
+@media (max-width: 860px) {
+  .pins { display: inline; }
+  .labels { display: grid; gap: var(--space-s); margin-top: var(--space-m); }
+  .labels .label {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    max-width: none;
+    padding: var(--space-s) var(--space-s) var(--space-s) 64px;
+    text-align: left;
+    transform: none;
+  }
+  .labels .label::before {
+    content: counter(label);
+    left: 12px;
+    right: auto;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    border: 3px solid var(--part);
+    border-radius: 50%;
+    color: var(--basalt);
+    font-family: var(--title-font);
+    font-size: var(--text-m);
+    font-weight: 700;
+    line-height: 34px;
+    text-align: center;
+  }
+  .labels .label::after { display: none; }
+}
+
+/* On a phone: smaller headings, one column, and the menu fits on one row. */
+@media (max-width: 700px) {
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+  .lead { font-size: var(--text-m); }
+  .shapes, .glossary { grid-template-columns: 1fr; }
+  .glossary dd { margin-top: -18px; }
+  .visit { padding: var(--space-m); }
+}
+@media (max-width: 480px) {
+  .menu { width: 100%; }
+  .menu ul { justify-content: space-between; flex-wrap: nowrap; }
+  .menu a { padding: 9px 10px; font-size: var(--text-s); }
+}

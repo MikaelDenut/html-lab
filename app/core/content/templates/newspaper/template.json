@@ -1,0 +1,15 @@
+{
+  "title": "School Newspaper",
+  "name": "school-newspaper",
+  "blurb": "A school newspaper with a lead story, columns and a weather box",
+  "category": "professional",
+  "layout": "Magazine grid, lead story, text in columns",
+  "shows": [
+    "A news grid with thin lines between stories",
+    "Text that flows into columns by itself",
+    "A big first letter, called a drop cap",
+    "A sun and a cloud made only with CSS",
+    "A riddle that opens with details"
+  ],
+  "accent": "#1f5f8b"
+}

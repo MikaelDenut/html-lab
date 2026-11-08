@@ -1,0 +1,278 @@
+[
+  {
+    "mac": "Avenir Next",
+    "file": "nunito-sans.woff2",
+    "weight": "200 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Avenir",
+    "file": "nunito-sans.woff2",
+    "weight": "200 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Avenir Next Condensed",
+    "file": "nunito-sans-condensed.woff2",
+    "weight": "200 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Gill Sans",
+    "file": "cabin.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Seravek",
+    "file": "cabin.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Helvetica Neue",
+    "file": "arimo.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Georgia",
+    "file": "gelasio.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Menlo",
+    "file": "noto-sans-mono.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Monaco",
+    "file": "noto-sans-mono.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Futura",
+    "file": "jost-medium.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Futura",
+    "file": "jost-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Rockwell",
+    "file": "hl-slab-regular.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Rockwell",
+    "file": "hl-slab-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "DIN Condensed",
+    "file": "hl-tall-condensed-bold.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "DIN Alternate",
+    "file": "barlow-medium.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Superclarendon",
+    "file": "besley-650.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Superclarendon",
+    "file": "besley-900.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Didot",
+    "file": "bodoni-moda-display.woff2",
+    "weight": "400 800",
+    "style": "normal"
+  },
+  {
+    "mac": "Bodoni 72",
+    "file": "bodoni-moda-text.woff2",
+    "weight": "400 800",
+    "style": "normal"
+  },
+  {
+    "mac": "Chalkboard SE",
+    "file": "comic-relief-regular.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Comic Sans MS",
+    "file": "comic-relief-regular.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Chalkboard SE",
+    "file": "comic-relief-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Comic Sans MS",
+    "file": "comic-relief-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Baskerville",
+    "file": "baskervville.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "Marker Felt",
+    "file": "hl-felt-hand.woff2",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "mac": "Hoefler Text",
+    "file": "sorts-mill-goudy.woff2",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "mac": "Impact",
+    "file": "anton.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Phosphate",
+    "file": "bungee-inline.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Charter",
+    "file": "hl-plain-serif-regular.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Charter",
+    "file": "hl-plain-serif-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Noteworthy",
+    "file": "hl-note-hand.woff2",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "mac": "Verdana",
+    "file": "hl-caption-sans-regular.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Verdana",
+    "file": "hl-caption-sans-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Arial Rounded MT Bold",
+    "file": "nunito-extrabold.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Trebuchet MS",
+    "file": "fira-sans-regular.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Trebuchet MS",
+    "file": "fira-sans-bold.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Copperplate",
+    "file": "cinzel-600.woff2",
+    "weight": "100 500",
+    "style": "normal"
+  },
+  {
+    "mac": "Copperplate",
+    "file": "cinzel-800.woff2",
+    "weight": "600 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Luminari",
+    "file": "hl-medieval.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Apple Chancery",
+    "file": "hl-chancery.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Big Caslon",
+    "file": "libre-caslon-display.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Arial Black",
+    "file": "archivo-black.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Chalkduster",
+    "file": "hl-chalk.woff2",
+    "weight": "100 900",
+    "style": "normal"
+  },
+  {
+    "mac": "Optima",
+    "file": "belleza.woff2",
+    "weight": "400",
+    "style": "normal"
+  },
+  {
+    "mac": "Iowan Old Style",
+    "file": "source-serif-4.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  },
+  {
+    "mac": "American Typewriter",
+    "file": "kameron.woff2",
+    "weight": "400 700",
+    "style": "normal"
+  }
+]

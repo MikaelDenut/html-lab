@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" width="960" height="720">
+  <!-- A rocking horse drawn with SVG shapes. The group is flipped, so the horse looks to the right. -->
+  <rect width="960" height="720" fill="#f6f1f8"/>
+  <ellipse cx="490" cy="664" rx="360" ry="22" fill="#2b1830" opacity="0.1"/>
+  <g transform="translate(960 0) scale(-1 1)">
+    <!-- The rocker and legs at the back are a little paler. -->
+    <path d="M190 560 Q520 650 860 560" fill="none" stroke="#b9bcc2" stroke-width="16" stroke-linecap="round"/>
+    <path d="M250 586 V622 M820 586 V622" stroke="#b9bcc2" stroke-width="8"/>
+    <circle cx="250" cy="626" r="18" fill="#5e5464"/>
+    <circle cx="820" cy="626" r="18" fill="#5e5464"/>
+    <path d="M420 410 L340 585 M610 410 L690 588" stroke="#c9955a" stroke-width="34" stroke-linecap="round"/>
+    <path d="M700 300 C770 290 800 345 788 430 C776 388 744 356 702 350 Z" fill="#7a4a2a"/>
+    <path d="M390 400 L290 600 M640 400 L740 598" stroke="#dea766" stroke-width="38" stroke-linecap="round"/>
+    <!-- The body and the neck. -->
+    <path d="M330 330 C330 268 420 254 520 258 C620 260 702 280 702 340 C702 402 620 432 520 432 C420 432 330 402 330 330 Z" fill="#e8b878"/>
+    <path d="M336 342 C318 282 298 232 296 190 L382 166 C392 220 410 268 434 292 Z" fill="#e8b878"/>
+    <path d="M380 300 C440 280 560 278 640 296" fill="none" stroke="#f3cf98" stroke-width="10" stroke-linecap="round"/>
+    <!-- The head, the ear, the mane and the eye. -->
+    <path d="M250 130 C290 110 350 120 380 160 C396 186 382 212 350 216 L250 270 C224 282 194 270 192 245 C190 225 205 205 225 190 Z" fill="#e8b878"/>
+    <path d="M326 128 L344 84 L364 136 Z" fill="#d49c5c"/>
+    <path d="M340 118 C382 128 402 170 412 210 C422 250 442 278 474 290 L440 302 C410 282 390 252 380 216 C370 176 356 150 330 140 Z" fill="#7a4a2a"/>
+    <circle cx="318" cy="166" r="9" fill="#2b1830"/>
+    <circle cx="321" cy="162" r="3" fill="#ffffff"/>
+    <ellipse cx="210" cy="246" rx="6" ry="4" fill="#7a4a2a"/>
+    <path d="M236 192 C246 216 250 240 242 264" fill="none" stroke="#b83a3a" stroke-width="9" stroke-linecap="round"/>
+    <!-- A wooden handle goes right through the head. -->
+    <path d="M268 206 L402 214" stroke="#a8672a" stroke-width="14" stroke-linecap="round"/>
+    <!-- The blanket and the red saddle. -->
+    <path d="M428 268 L612 268 L618 332 C560 348 480 348 422 332 Z" fill="#f7a35c"/>
+    <path d="M450 262 C470 238 560 238 592 262 L602 302 C570 322 470 322 440 302 Z" fill="#b83a3a"/>
+    <path d="M520 318 V372" stroke="#5e5464" stroke-width="4"/>
+    <rect x="506" y="370" width="28" height="10" rx="4" fill="#7d7f86"/>
+    <!-- The steel rocker in front, with two little wheels that fold down. -->
+    <path d="M150 580 Q500 680 850 580" fill="none" stroke="#7d7f86" stroke-width="18" stroke-linecap="round"/>
+    <path d="M210 596 V630 M790 596 V630" stroke="#7d7f86" stroke-width="8"/>
+    <circle cx="210" cy="634" r="22" fill="#3b3340"/>
+    <circle cx="210" cy="634" r="8" fill="#c9ccd2"/>
+    <circle cx="790" cy="634" r="22" fill="#3b3340"/>
+    <circle cx="790" cy="634" r="8" fill="#c9ccd2"/>
+  </g>
+</svg>

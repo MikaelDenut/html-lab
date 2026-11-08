@@ -1,0 +1,4 @@
+| football-pitch.jpg | Sunny grass pitch with small goals and green nets (flipped left to right, cropped to a wide strip) | 88 | 1200x499 | W.carter | CC0 | https://commons.wikimedia.org/wiki/File:Soccer_goals_in_the_south_field_in_Brastad_3.jpg |
+| football-seats.jpg | Rows of empty green stadium seats (cropped to a wide strip) | 85 | 1600x760 | Markus Spiske | CC0 | https://commons.wikimedia.org/wiki/File:Olympic_stadium_munich_-_Flickr_-_markus_spiske.jpg |
+| football-net.jpg | Football goal post with an orange net, seen from low in the grass | 93 | 600x800 | Jrcla2 | Public domain | https://commons.wikimedia.org/wiki/File:Soccer_goal_low_angle.jpg |
+| football-night.jpg | Football goal on a field at night under stars and streaky clouds (Unsplash upload from 2016, CC0 before the 2017 Unsplash licence) | 64 | 800x534 | Mitchell Lawler | CC0 | https://commons.wikimedia.org/wiki/File:Soccer_goal_construction_with_night_sky_clouds_(Unsplash).jpg |

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pebblewhistle Trail - Slow layers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M3 40 L18 14 L26 26 L32 18 L45 40 Z M13 23 L18 26 L22 21"></path>
+      </svg>
+      Pebblewhistle Trail
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Sticky signs</a></li>
+        <li><a href="snap.html">Snap photos</a></li>
+        <li><a href="layers.html" aria-current="page">Slow layers</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Far things move slowly</h1>
+      <p class="lead">Look out of a car window. The fence by the road zooms past. The trees further away go slower. The mountains far away hardly move at all. This is called parallax.</p>
+    </section>
+
+    <section class="demo">
+      <h2>A mountain in five layers</h2>
+      <p>Scroll inside this window. The trees move at full speed, the hills slower, the far peaks slower still, the sun slowest of all, and the sky not at all.</p>
+      <!-- The layers lie one on top of the other. CSS pushes the back ones away from you. -->
+      <div class="viewer" tabindex="0" role="region" aria-label="Mountain in layers, scroll inside">
+        <div class="landscape">
+          <div class="layer sun"></div>
+          <div class="layer far"></div>
+          <div class="layer near"></div>
+          <div class="layer front">
+            <p class="viewer-note">Scroll down inside me</p>
+          </div>
+        </div>
+      </div>
+
+      <ul class="layer-list">
+        <li class="key-sky"><b>Sky</b> <code>background</code> <span>does not move</span></li>
+        <li class="key-sun"><b>Sun</b> <code>translateZ(-3px) scale(4)</code> <span>one quarter speed</span></li>
+        <li class="key-far"><b>Far peaks</b> <code>translateZ(-2px) scale(3)</code> <span>one third speed</span></li>
+        <li class="key-near"><b>Near hills</b> <code>translateZ(-1px) scale(2)</code> <span>half speed</span></li>
+        <li class="key-front"><b>Front trees</b> <code>transform: none</code> <span>full speed</span></li>
+      </ul>
+      <p class="how"><code>translateZ</code> pushes a layer away from you, deeper into the screen. Far away things look smaller, so <code>scale</code> makes the layer big again. Now it looks the same, but it scrolls slower. The window needs <code>perspective: 1px</code> to make the screen deep.</p>
+    </section>
+
+    <section class="demo">
+      <h2>A hole in the page</h2>
+      <p>Now scroll the whole page and watch the band below. The photo stays still and the band slides over it.</p>
+    </section>
+
+    <!-- background-attachment: fixed pins the photo to the window, not to the band. -->
+    <div class="hole">
+      <p class="hole-text">The band is a hole in the page. The cloud photo behind it is pinned to the window with <code>background-attachment: fixed</code>.</p>
+    </div>
+
+    <section class="demo">
+      <h2>If the layers do not move</h2>
+      <p>Some people feel sick when things on the screen slide at different speeds. They can ask their computer for less motion. Then this page shows the mountain flat, and the photo scrolls with the band. The CSS checks with <code>prefers-reduced-motion</code>.</p>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p>Pebblewhistle Trail: a pretend mountain, made with HTML and CSS. The photos are real.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Parallax">Why do far things move slowly? Read about parallax on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

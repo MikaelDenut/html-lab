@@ -1,0 +1,1 @@
+| factory-wheel.jpg | Close look at a bicycle wheel with thin spokes, the hub and the fork, in warm orange light | 81 | 800x533 | Pietro De Grandi | CC0 | https://commons.wikimedia.org/wiki/File:Bicycle_wheel_(Unsplash).jpg |

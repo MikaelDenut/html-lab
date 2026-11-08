@@ -1,0 +1,1161 @@
+{
+  "topics": [
+    {
+      "id": "fade",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Fade in and out",
+      "short": "Fade",
+      "keywords": "fade opacity see-through appear disappear ghost keyframes",
+      "explain": "opacity says how much of a tag you can see. 1 means all of it, 0 means none, and 0.5 is half, like a ghost. @keyframes makes a change called fade, and animation plays it. infinite alternate means it goes in and out forever.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p { opacity: 0.5; }\n\n  @keyframes fade {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  h1 {\n    animation: fade 2s infinite alternate;\n  }\n</style>\n<h1>Now you see me</h1>\n<p>I am a ghost. You can see through me.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "opacity: 0.5;",
+          "tint": "a",
+          "means": "shows half of it"
+        },
+        {
+          "word": "@keyframes fade",
+          "tint": "b",
+          "means": "makes a change called fade"
+        },
+        {
+          "word": "fade 2s",
+          "tint": "a",
+          "means": "plays fade, and it takes 2 seconds"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 126
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p { opacity: 0.5; }\n\n      @keyframes fade {\n        from { opacity: 0; }\n        to { opacity: 1; }\n      }\n      h1 {\n        animation: fade 2s infinite alternate;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Now you see me</h1>\n    <p>I am a ghost. You can see through me.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @keyframes fade {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  h1 { animation: fade 2s; }\n</style>"
+      },
+      "turn": "change 0.5 to 0.1. The ghost gets harder to see. Then change 2s to 5s.",
+      "bar": "change **0.5** to **0.1**. The ghost gets harder to see. Then change **2s** to **5s**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/opacity"
+    },
+    {
+      "id": "transitions",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Slow and smooth changes",
+      "short": "Smooth changes",
+      "keywords": "transition duration ease delay smooth slow speed",
+      "explain": "When the mouse comes onto a tag, its new style shows at once. transition makes the change slow and smooth. Write what changes, then how long it takes. ease starts slow and ends slow, and the last time is a delay, a wait before it starts.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .box {\n    width: 150px;\n    padding: 20px;\n    background: skyblue;\n    transition: width 1s ease 0.5s;\n  }\n  .box:hover {\n    width: 350px;\n    background: hotpink;\n  }\n</style>\n<div class=\"box\">Put your mouse on me</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "transition",
+          "tint": "a",
+          "means": "makes the change slow"
+        },
+        {
+          "word": "1s",
+          "tint": "b",
+          "means": "is how long it takes"
+        },
+        {
+          "word": "ease",
+          "tint": "a",
+          "means": "starts slow and ends slow"
+        },
+        {
+          "word": "0.5s",
+          "tint": "b",
+          "means": "is a wait before it starts"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 86
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .box {\n        width: 150px;\n        padding: 20px;\n        background: skyblue;\n        transition: width 1s ease 0.5s;\n      }\n      .box:hover {\n        width: 350px;\n        background: hotpink;\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"box\">Put your mouse on me</div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1 { transition: color 1s; }\n  h1:hover { color: hotpink; }\n</style>"
+      },
+      "turn": "put your mouse on the box. Then change width 1s to all 1s. Now the color is slow too.",
+      "bar": "put your mouse on the box. Then change **width 1s** to **all 1s**. Now the color is slow too.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition"
+    },
+    {
+      "id": "hover-effects",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Hover effects",
+      "short": "Hover effects",
+      "keywords": "hover grow lift shadow focus focus-visible button tab",
+      "explain": "Hover means the mouse is on a tag. Here each button does a trick on hover: one grows, one lifts up with a shadow, and one changes color. :focus-visible gives the same trick when you reach a button with the Tab key, so people without a mouse see it too.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  button {\n    font-size: 18px;\n    padding: 10px 16px;\n    margin: 12px;\n    border: none;\n    border-radius: 8px;\n    background: skyblue;\n    transition: all 0.3s;\n  }\n  .grow:hover, .grow:focus-visible {\n    transform: scale(1.2);\n  }\n  .lift:hover, .lift:focus-visible {\n    transform: translateY(-6px);\n    box-shadow: 0 8px 10px gray;\n  }\n  .color:hover, .color:focus-visible {\n    background: gold;\n  }\n</style>\n<button class=\"grow\">Grow</button>\n<button class=\"lift\">Lift</button>\n<button class=\"color\">Color</button>"
+        }
+      ],
+      "legend": [
+        {
+          "word": ":hover",
+          "tint": "a",
+          "means": "works when the mouse is on it"
+        },
+        {
+          "word": ":focus-visible",
+          "tint": "b",
+          "means": "works when you reach it with the Tab key"
+        },
+        {
+          "word": "scale(1.2)",
+          "tint": "a",
+          "means": "makes it 1.2 times as big"
+        },
+        {
+          "word": "box-shadow",
+          "tint": "b",
+          "means": "puts a shadow under it"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 93
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      button {\n        font-size: 18px;\n        padding: 10px 16px;\n        margin: 12px;\n        border: none;\n        border-radius: 8px;\n        background: skyblue;\n        transition: all 0.3s;\n      }\n      .grow:hover, .grow:focus-visible {\n        transform: scale(1.2);\n      }\n      .lift:hover, .lift:focus-visible {\n        transform: translateY(-6px);\n        box-shadow: 0 8px 10px gray;\n      }\n      .color:hover, .color:focus-visible {\n        background: gold;\n      }\n    </style>\n  </head>\n  <body>\n    <button class=\"grow\">Grow</button>\n    <button class=\"lift\">Lift</button>\n    <button class=\"color\">Color</button>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  a { transition: all 0.3s; }\n  a:hover, a:focus-visible {\n    background: gold;\n  }\n</style>"
+      },
+      "turn": "put your mouse on each button. Then change 1.2 to 2.",
+      "bar": "put your mouse on each button. Then change **1.2** to **2**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:focus-visible"
+    },
+    {
+      "id": "transform",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Move, turn and grow",
+      "short": "Move and turn",
+      "keywords": "transform translate rotate scale skew turn move grow tilt deg",
+      "explain": "transform changes how a tag looks, and the tags around it stay where they are. translate slides it, rotate turns it, scale makes it bigger or smaller, and skew tilts it. deg means degrees: 90deg is a quarter turn, and 360deg is all the way round.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  div {\n    display: inline-block;\n    width: 70px;\n    padding: 20px 0;\n    margin: 20px;\n    text-align: center;\n    background: gold;\n  }\n  .move { transform: translate(20px, 10px); }\n  .turn { transform: rotate(20deg); }\n  .grow { transform: scale(1.3); }\n  .tilt { transform: skew(20deg); }\n</style>\n<div class=\"move\">Move</div>\n<div class=\"turn\">Turn</div>\n<div class=\"grow\">Grow</div>\n<div class=\"tilt\">Tilt</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "translate(20px, 10px)",
+          "tint": "a",
+          "means": "slides it right and down"
+        },
+        {
+          "word": "rotate(20deg)",
+          "tint": "b",
+          "means": "turns it"
+        },
+        {
+          "word": "scale(1.3)",
+          "tint": "a",
+          "means": "makes it 1.3 times as big"
+        },
+        {
+          "word": "skew(20deg)",
+          "tint": "b",
+          "means": "tilts it"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 126
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      div {\n        display: inline-block;\n        width: 70px;\n        padding: 20px 0;\n        margin: 20px;\n        text-align: center;\n        background: gold;\n      }\n      .move { transform: translate(20px, 10px); }\n      .turn { transform: rotate(20deg); }\n      .grow { transform: scale(1.3); }\n      .tilt { transform: skew(20deg); }\n    </style>\n  </head>\n  <body>\n    <div class=\"move\">Move</div>\n    <div class=\"turn\">Turn</div>\n    <div class=\"grow\">Grow</div>\n    <div class=\"tilt\">Tilt</div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1 { transform: rotate(-5deg); }\n</style>"
+      },
+      "turn": "change 20deg to 90deg in rotate. Then try 180deg.",
+      "bar": "change **20deg** to **90deg** in rotate. Then try **180deg**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transform"
+    },
+    {
+      "id": "keyframes",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Moving by itself",
+      "short": "Moving by itself",
+      "keywords": "keyframes animation infinite alternate percent loop animate",
+      "explain": "@keyframes is a plan for a move, with a name you choose. 0% is the start, 50% is halfway and 100% is the end. animation gives the plan to a tag: its name, how long, how many times and which way. infinite means forever, and alternate means there and back again.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  @keyframes drive {\n    0% { transform: translateX(0); }\n    50% { background: hotpink; }\n    100% { transform: translateX(200px); }\n  }\n  .car {\n    display: inline-block;\n    padding: 10px 20px;\n    background: gold;\n    animation: drive 3s infinite alternate;\n  }\n</style>\n<div class=\"car\">Vroom!</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "@keyframes drive",
+          "tint": "a",
+          "means": "is a plan for a move called drive"
+        },
+        {
+          "word": "50%",
+          "tint": "b",
+          "means": "is halfway"
+        },
+        {
+          "word": "3s",
+          "tint": "a",
+          "means": "is how long one trip takes"
+        },
+        {
+          "word": "infinite alternate",
+          "tint": "b",
+          "means": "means forever, there and back"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 66
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      @keyframes drive {\n        0% { transform: translateX(0); }\n        50% { background: hotpink; }\n        100% { transform: translateX(200px); }\n      }\n      .car {\n        display: inline-block;\n        padding: 10px 20px;\n        background: gold;\n        animation: drive 3s infinite alternate;\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"car\">Vroom!</div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @keyframes colors {\n    0% { color: red; }\n    50% { color: green; }\n    100% { color: blue; }\n  }\n  h1 { animation: colors 3s infinite alternate; }\n</style>"
+      },
+      "turn": "change 200px to 400px. Then delete alternate. Now it jumps back to the start.",
+      "bar": "change **200px** to **400px**. Then delete **alternate**. Now it jumps back to the start.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@keyframes"
+    },
+    {
+      "id": "bounce-shake",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Bounce, shake and wobble",
+      "short": "Bounce and shake",
+      "keywords": "bounce shake wobble jump wiggle jelly",
+      "explain": "A bounce, a shake and a wobble go away and come back. You only write the middle steps, because the start and the end are where the tag already is. Minus numbers go up or left. A fast time, like 0.3s, makes a shake.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  span {\n    display: inline-block;\n    margin: 40px 16px 10px;\n    padding: 10px;\n    background: gold;\n  }\n  @keyframes bounce {\n    50% { transform: translateY(-25px); }\n  }\n  @keyframes shake {\n    25% { transform: translateX(-6px); }\n    75% { transform: translateX(6px); }\n  }\n  @keyframes wobble {\n    25% { transform: rotate(-10deg); }\n    75% { transform: rotate(10deg); }\n  }\n  .bounce { animation: bounce 0.8s infinite; }\n  .shake { animation: shake 0.3s infinite; }\n  .wobble { animation: wobble 1s infinite; }\n</style>\n<span class=\"bounce\">Bounce</span>\n<span class=\"shake\">Shake</span>\n<span class=\"wobble\">Wobble</span>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "translateY(-25px)",
+          "tint": "a",
+          "means": "moves it up"
+        },
+        {
+          "word": "translateX(-6px)",
+          "tint": "b",
+          "means": "moves it left a little"
+        },
+        {
+          "word": "rotate(-10deg)",
+          "tint": "a",
+          "means": "turns it a little"
+        },
+        {
+          "word": "0.3s",
+          "tint": "b",
+          "means": "is fast, so it shakes"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 116
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      span {\n        display: inline-block;\n        margin: 40px 16px 10px;\n        padding: 10px;\n        background: gold;\n      }\n      @keyframes bounce {\n        50% { transform: translateY(-25px); }\n      }\n      @keyframes shake {\n        25% { transform: translateX(-6px); }\n        75% { transform: translateX(6px); }\n      }\n      @keyframes wobble {\n        25% { transform: rotate(-10deg); }\n        75% { transform: rotate(10deg); }\n      }\n      .bounce { animation: bounce 0.8s infinite; }\n      .shake { animation: shake 0.3s infinite; }\n      .wobble { animation: wobble 1s infinite; }\n    </style>\n  </head>\n  <body>\n    <span class=\"bounce\">Bounce</span>\n    <span class=\"shake\">Shake</span>\n    <span class=\"wobble\">Wobble</span>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @keyframes wobble {\n    25% { transform: rotate(-3deg); }\n    75% { transform: rotate(3deg); }\n  }\n  h1 { animation: wobble 1s infinite; }\n</style>"
+      },
+      "turn": "change 0.8s to 2s. The bounce gets slow. Then change 10deg to 30deg in both lines.",
+      "bar": "change **0.8s** to **2s**. The bounce gets slow. Then change **10deg** to **30deg** in both lines.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation"
+    },
+    {
+      "id": "spin-pulse",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Spin and pulse",
+      "short": "Spin and pulse",
+      "keywords": "spin pulse rotate turn heartbeat beat loading circle linear",
+      "explain": "A spin turns a tag all the way round, from 0deg to 360deg. linear keeps the speed the same, so the spin never slows down. A pulse grows a little and gets small again, like a heartbeat.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .spin, .pulse {\n    display: inline-block;\n    width: 60px;\n    height: 60px;\n    margin: 20px;\n    border-radius: 50%;\n  }\n  .spin {\n    border: 8px solid gold;\n    border-top-color: tomato;\n    animation: spin 1s linear infinite;\n  }\n  .pulse {\n    background: hotpink;\n    animation: pulse 1s infinite;\n  }\n  @keyframes spin {\n    to { transform: rotate(360deg); }\n  }\n  @keyframes pulse {\n    50% { transform: scale(1.2); }\n  }\n</style>\n<div class=\"spin\"></div>\n<div class=\"pulse\"></div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "rotate(360deg)",
+          "tint": "a",
+          "means": "is one whole turn"
+        },
+        {
+          "word": "linear",
+          "tint": "b",
+          "means": "keeps the same speed"
+        },
+        {
+          "word": "scale(1.2)",
+          "tint": "a",
+          "means": "grows it a little"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 148
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .spin, .pulse {\n        display: inline-block;\n        width: 60px;\n        height: 60px;\n        margin: 20px;\n        border-radius: 50%;\n      }\n      .spin {\n        border: 8px solid gold;\n        border-top-color: tomato;\n        animation: spin 1s linear infinite;\n      }\n      .pulse {\n        background: hotpink;\n        animation: pulse 1s infinite;\n      }\n      @keyframes spin {\n        to { transform: rotate(360deg); }\n      }\n      @keyframes pulse {\n        50% { transform: scale(1.2); }\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"spin\"></div>\n    <div class=\"pulse\"></div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @keyframes spin {\n    to { transform: rotate(360deg); }\n  }\n  h1 {\n    display: inline-block;\n    animation: spin 4s linear infinite;\n  }\n</style>"
+      },
+      "turn": "change 360deg to -360deg. Now it spins the other way.",
+      "bar": "change **360deg** to **-360deg**. Now it spins the other way.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/transform-function/rotate"
+    },
+    {
+      "id": "glow",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Glow and neon",
+      "short": "Glow",
+      "keywords": "glow neon text-shadow box-shadow shadow light shine",
+      "explain": "text-shadow draws a shadow behind letters, and box-shadow draws one behind a box. 0 0 keeps the shadow right behind, the next number says how soft it is, and then comes a color. A bright color on a dark page looks like a neon light.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  body { background: black; }\n  h1 {\n    color: white;\n    text-shadow: 0 0 12px hotpink;\n  }\n  .sign {\n    display: inline-block;\n    padding: 10px 20px;\n    color: cyan;\n    border: 3px solid cyan;\n    border-radius: 10px;\n    box-shadow: 0 0 15px cyan;\n  }\n</style>\n<h1>Neon night</h1>\n<p class=\"sign\">Open</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "text-shadow",
+          "tint": "a",
+          "means": "glows behind the letters"
+        },
+        {
+          "word": "12px",
+          "tint": "b",
+          "means": "is how soft and big the glow is"
+        },
+        {
+          "word": "box-shadow",
+          "tint": "a",
+          "means": "glows behind the box"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 176
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      body { background: black; }\n      h1 {\n        color: white;\n        text-shadow: 0 0 12px hotpink;\n      }\n      .sign {\n        display: inline-block;\n        padding: 10px 20px;\n        color: cyan;\n        border: 3px solid cyan;\n        border-radius: 10px;\n        box-shadow: 0 0 15px cyan;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Neon night</h1>\n    <p class=\"sign\">Open</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1 { text-shadow: 0 0 10px gold; }\n</style>"
+      },
+      "turn": "change 12px to 30px. Then change hotpink to lime.",
+      "bar": "change **12px** to **30px**. Then change **hotpink** to **lime**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-shadow"
+    },
+    {
+      "id": "rainbow",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Rainbow and moving colors",
+      "short": "Rainbow",
+      "keywords": "rainbow gradient linear-gradient background-position background-clip moving colors",
+      "explain": "linear-gradient paints colors that melt into each other. background-size makes the paint twice as wide as the tag, and the keyframes slide it along with background-position. background-clip: text paints only inside the letters, and color: transparent lets you see the paint through them.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .rainbow {\n    background-image: linear-gradient(90deg, red, orange, gold, green, blue, purple);\n    background-size: 200% 100%;\n    animation: slide 3s infinite alternate;\n  }\n  h1 {\n    display: inline-block;\n    -webkit-background-clip: text;\n    background-clip: text;\n    color: transparent;\n  }\n  p { padding: 20px; }\n  @keyframes slide {\n    to { background-position: 100% 0; }\n  }\n</style>\n<h1 class=\"rainbow\">Rainbow letters</h1>\n<p class=\"rainbow\">A moving rainbow box</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "linear-gradient",
+          "tint": "a",
+          "means": "paints colors that melt into each other"
+        },
+        {
+          "word": "background-position",
+          "tint": "b",
+          "means": "slides the paint along"
+        },
+        {
+          "word": "background-clip: text;",
+          "tint": "a",
+          "means": "paints only inside the letters"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 190
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .rainbow {\n        background-image: linear-gradient(90deg, red, orange, gold, green, blue, purple);\n        background-size: 200% 100%;\n        animation: slide 3s infinite alternate;\n      }\n      h1 {\n        display: inline-block;\n        -webkit-background-clip: text;\n        background-clip: text;\n        color: transparent;\n      }\n      p { padding: 20px; }\n      @keyframes slide {\n        to { background-position: 100% 0; }\n      }\n    </style>\n  </head>\n  <body>\n    <h1 class=\"rainbow\">Rainbow letters</h1>\n    <p class=\"rainbow\">A moving rainbow box</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1 {\n    display: inline-block;\n    background-image: linear-gradient(90deg, red, orange, gold, green, blue, purple);\n    -webkit-background-clip: text;\n    background-clip: text;\n    color: transparent;\n  }\n</style>"
+      },
+      "turn": "change 3s to 1s. Then change green to pink.",
+      "bar": "change **3s** to **1s**. Then change **green** to **pink**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/background-clip"
+    },
+    {
+      "id": "typewriter",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Typewriter text",
+      "short": "Typewriter",
+      "keywords": "typewriter typing steps ch monospace caret cursor blink letters",
+      "explain": "This text types itself. Its width grows from 0 to 18ch, and 1ch is the width of one letter. steps(18) makes it jump one letter at a time, and monospace gives every letter the same width. The line on the right blinks, like a cursor.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p {\n    font-family: monospace;\n    font-size: 24px;\n    width: 18ch;\n    white-space: nowrap;\n    overflow: hidden;\n    border-right: 3px solid black;\n    animation: type 3s steps(18) infinite alternate, blink 1s steps(1) infinite;\n  }\n  @keyframes type {\n    from { width: 0; }\n  }\n  @keyframes blink {\n    50% { border-color: transparent; }\n  }\n</style>\n<p>Hello! I can type.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "monospace",
+          "tint": "a",
+          "means": "gives every letter the same width"
+        },
+        {
+          "word": "18ch",
+          "tint": "b",
+          "means": "is as wide as 18 letters"
+        },
+        {
+          "word": "steps(18)",
+          "tint": "a",
+          "means": "jumps one letter at a time"
+        },
+        {
+          "word": "blink",
+          "tint": "b",
+          "means": "makes the line on the right blink"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 88
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p {\n        font-family: monospace;\n        font-size: 24px;\n        width: 18ch;\n        white-space: nowrap;\n        overflow: hidden;\n        border-right: 3px solid black;\n        animation: type 3s steps(18) infinite alternate, blink 1s steps(1) infinite;\n      }\n      @keyframes type {\n        from { width: 0; }\n      }\n      @keyframes blink {\n        50% { border-color: transparent; }\n      }\n    </style>\n  </head>\n  <body>\n    <p>Hello! I can type.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .typing {\n    font-family: monospace;\n    width: 18ch;\n    white-space: nowrap;\n    overflow: hidden;\n    animation: type 3s steps(18);\n  }\n  @keyframes type {\n    from { width: 0; }\n  }\n</style>\n<p class=\"typing\">Hello! I can type.</p>"
+      },
+      "turn": "write your own words. Count the letters and spaces, and put that number in place of both 18.",
+      "bar": "write your own words. Count the letters and spaces, and put that number in place of both **18**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/easing-function/steps"
+    },
+    {
+      "id": "flip-card",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "3D flip cards",
+      "short": "Flip cards",
+      "keywords": "flip card 3d perspective rotatey backface-visibility front back",
+      "explain": "A flip card has a front and a back in the same place. When the mouse is on it, both sides turn with rotateY. perspective makes the turn look 3D, and backface-visibility hides the side that faces away. The opacity lines swap the sides halfway round too, in case an older Mac misses that trick.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .card {\n    position: relative;\n    width: 180px;\n    height: 100px;\n    margin: 10px 30px;\n    perspective: 600px;\n  }\n  .front, .back {\n    position: absolute;\n    inset: 0;\n    padding: 20px;\n    -webkit-backface-visibility: hidden;\n    backface-visibility: hidden;\n    transition: transform 0.8s, opacity 0s 0.4s;\n  }\n  .front { background: gold; }\n  .back {\n    background: skyblue;\n    transform: rotateY(180deg);\n    opacity: 0;\n  }\n  .card:hover .front { transform: rotateY(-180deg); opacity: 0; }\n  .card:hover .back { transform: rotateY(0deg); opacity: 1; }\n</style>\n<div class=\"card\">\n  <div class=\"front\">Put your mouse on me</div>\n  <div class=\"back\">Hello from the back!</div>\n</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "perspective: 600px;",
+          "tint": "a",
+          "means": "makes the turn look 3D"
+        },
+        {
+          "word": "rotateY(180deg)",
+          "tint": "b",
+          "means": "turns it round, like a door"
+        },
+        {
+          "word": "backface-visibility: hidden;",
+          "tint": "a",
+          "means": "hides the side that faces away"
+        },
+        {
+          "word": "opacity: 0;",
+          "tint": "b",
+          "means": "hides the back until halfway round"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 132
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .card {\n        position: relative;\n        width: 180px;\n        height: 100px;\n        margin: 10px 30px;\n        perspective: 600px;\n      }\n      .front, .back {\n        position: absolute;\n        inset: 0;\n        padding: 20px;\n        -webkit-backface-visibility: hidden;\n        backface-visibility: hidden;\n        transition: transform 0.8s, opacity 0s 0.4s;\n      }\n      .front { background: gold; }\n      .back {\n        background: skyblue;\n        transform: rotateY(180deg);\n        opacity: 0;\n      }\n      .card:hover .front { transform: rotateY(-180deg); opacity: 0; }\n      .card:hover .back { transform: rotateY(0deg); opacity: 1; }\n    </style>\n  </head>\n  <body>\n    <div class=\"card\">\n      <div class=\"front\">Put your mouse on me</div>\n      <div class=\"back\">Hello from the back!</div>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .card {\n    position: relative;\n    width: 180px;\n    height: 100px;\n    perspective: 600px;\n  }\n  .front, .back {\n    position: absolute;\n    inset: 0;\n    padding: 20px;\n    -webkit-backface-visibility: hidden;\n    backface-visibility: hidden;\n    transition: transform 0.8s, opacity 0s 0.4s;\n  }\n  .front { background: gold; }\n  .back {\n    background: skyblue;\n    transform: rotateY(180deg);\n    opacity: 0;\n  }\n  .card:hover .front { transform: rotateY(-180deg); opacity: 0; }\n  .card:hover .back { transform: rotateY(0deg); opacity: 1; }\n</style>\n<div class=\"card\">\n  <div class=\"front\">Front</div>\n  <div class=\"back\">Back</div>\n</div>"
+      },
+      "turn": "put your mouse on the card. Then change 600px to 200px. The turn comes closer.",
+      "bar": "put your mouse on the card. Then change **600px** to **200px**. The turn comes closer.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/backface-visibility"
+    },
+    {
+      "id": "wipe-reveal",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Wipe and reveal",
+      "short": "Wipe and reveal",
+      "keywords": "wipe reveal clip-path inset cut hide show curtain",
+      "explain": "clip-path cuts away part of a tag, so only the rest shows. inset has four numbers: top, right, bottom and left. inset(0 100% 0 0) cuts away all of it from the right, and inset(0 0 0 0) cuts nothing, so the tag shows like a curtain opening. Write each line twice, once with -webkit- in front, so it works on every Mac.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .reveal {\n    padding: 20px;\n    font-size: 24px;\n    background: gold;\n    animation: wipe 2s infinite alternate;\n  }\n  @keyframes wipe {\n    from {\n      -webkit-clip-path: inset(0 100% 0 0);\n      clip-path: inset(0 100% 0 0);\n    }\n    to {\n      -webkit-clip-path: inset(0 0 0 0);\n      clip-path: inset(0 0 0 0);\n    }\n  }\n</style>\n<p class=\"reveal\">Ta-da! Here I am!</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "clip-path",
+          "tint": "a",
+          "means": "cuts away part of the tag"
+        },
+        {
+          "word": "inset(0 100% 0 0)",
+          "tint": "b",
+          "means": "cuts away all of it, from the right"
+        },
+        {
+          "word": "-webkit-clip-path",
+          "tint": "a",
+          "means": "is the same, for older Macs"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 128
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .reveal {\n        padding: 20px;\n        font-size: 24px;\n        background: gold;\n        animation: wipe 2s infinite alternate;\n      }\n      @keyframes wipe {\n        from {\n          -webkit-clip-path: inset(0 100% 0 0);\n          clip-path: inset(0 100% 0 0);\n        }\n        to {\n          -webkit-clip-path: inset(0 0 0 0);\n          clip-path: inset(0 0 0 0);\n        }\n      }\n    </style>\n  </head>\n  <body>\n    <p class=\"reveal\">Ta-da! Here I am!</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @keyframes wipe {\n    from {\n      -webkit-clip-path: inset(0 100% 0 0);\n      clip-path: inset(0 100% 0 0);\n    }\n    to {\n      -webkit-clip-path: inset(0 0 0 0);\n      clip-path: inset(0 0 0 0);\n    }\n  }\n  h1 { animation: wipe 2s; }\n</style>"
+      },
+      "turn": "change 0 100% 0 0 to 0 0 100% 0 in both from lines. Now it opens from the top down.",
+      "bar": "change **0 100% 0 0** to **0 0 100% 0** in both from lines. Now it opens from the top down.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/clip-path"
+    },
+    {
+      "id": "stagger",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "One after another",
+      "short": "One after another",
+      "keywords": "stagger delay animation-delay wave order wait",
+      "explain": "animation-delay makes a tag wait before its animation starts. Give each tag a longer wait, and they move one after another, like a wave. 0.1s is a short wait, and 1s is a long one. The word both keeps a waiting tag at its first step, so it stays hidden until its turn comes.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  span {\n    display: inline-block;\n    margin-top: 24px;\n    font-size: 30px;\n    animation: jump 1s infinite;\n  }\n  @keyframes jump {\n    50% { transform: translateY(-20px); }\n  }\n  .two { animation-delay: 0.1s; }\n  .three { animation-delay: 0.2s; }\n  .four { animation-delay: 0.3s; }\n  .five { animation-delay: 0.4s; }\n</style>\n<span>H</span>\n<span class=\"two\">E</span>\n<span class=\"three\">L</span>\n<span class=\"four\">L</span>\n<span class=\"five\">O</span>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "animation-delay",
+          "tint": "a",
+          "means": "is how long it waits first"
+        },
+        {
+          "word": "0.1s",
+          "tint": "b",
+          "means": "is a short wait"
+        },
+        {
+          "word": "0.4s",
+          "tint": "a",
+          "means": "is a longer wait, so the O goes last"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 88
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      span {\n        display: inline-block;\n        margin-top: 24px;\n        font-size: 30px;\n        animation: jump 1s infinite;\n      }\n      @keyframes jump {\n        50% { transform: translateY(-20px); }\n      }\n      .two { animation-delay: 0.1s; }\n      .three { animation-delay: 0.2s; }\n      .four { animation-delay: 0.3s; }\n      .five { animation-delay: 0.4s; }\n    </style>\n  </head>\n  <body>\n    <span>H</span>\n    <span class=\"two\">E</span>\n    <span class=\"three\">L</span>\n    <span class=\"four\">L</span>\n    <span class=\"five\">O</span>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @keyframes fade {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  h1 { animation: fade 1s; }\n  p { animation: fade 1s 1s both; }\n</style>"
+      },
+      "turn": "change 0.4s to 0s. Now the O jumps at the same time as the H.",
+      "bar": "change **0.4s** to **0s**. Now the O jumps at the same time as the H.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-delay"
+    },
+    {
+      "id": "blobs",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Shape-shifting blobs",
+      "short": "Blobs",
+      "keywords": "blob shape border-radius round morph slime corners",
+      "explain": "border-radius makes corners round. You can give each corner its own size, starting at the top left and going round. Change those sizes in keyframes, and the box melts from one shape into another, like a blob of slime.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .blob {\n    width: 150px;\n    height: 150px;\n    margin: 20px;\n    background: limegreen;\n    border-radius: 40% 60% 70% 30%;\n    animation: morph 4s infinite alternate;\n  }\n  @keyframes morph {\n    50% { border-radius: 70% 30% 50% 50%; }\n    100% { border-radius: 30% 60% 40% 70%; }\n  }\n</style>\n<div class=\"blob\"></div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "border-radius",
+          "tint": "a",
+          "means": "makes the corners round"
+        },
+        {
+          "word": "40% 60% 70% 30%",
+          "tint": "b",
+          "means": "are the four corners"
+        },
+        {
+          "word": "morph",
+          "tint": "a",
+          "means": "is the name of the change"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 202
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .blob {\n        width: 150px;\n        height: 150px;\n        margin: 20px;\n        background: limegreen;\n        border-radius: 40% 60% 70% 30%;\n        animation: morph 4s infinite alternate;\n      }\n      @keyframes morph {\n        50% { border-radius: 70% 30% 50% 50%; }\n        100% { border-radius: 30% 60% 40% 70%; }\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"blob\"></div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .blob {\n    width: 100px;\n    height: 100px;\n    background: hotpink;\n    border-radius: 40% 60% 70% 30%;\n    animation: morph 4s infinite alternate;\n  }\n  @keyframes morph {\n    to { border-radius: 70% 30% 50% 50%; }\n  }\n</style>\n<div class=\"blob\"></div>"
+      },
+      "turn": "change 70% 30% 50% 50% to 0% 0% 0% 0%. The blob turns into a square halfway.",
+      "bar": "change **70% 30% 50% 50%** to **0% 0% 0% 0%**. The blob turns into a square halfway.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/border-radius"
+    },
+    {
+      "id": "filters",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Blur and color filters",
+      "short": "Filters",
+      "keywords": "filter blur grayscale hue-rotate photo picture gray",
+      "explain": "filter changes how a tag looks, like a photo app. blur makes it fuzzy, grayscale takes the colors away, and hue-rotate swaps every color for another one. Here each picture gets its filter when the mouse is on it.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  img {\n    width: 150px;\n    margin: 4px;\n    transition: filter 0.5s;\n  }\n  .blur:hover { filter: blur(4px); }\n  .gray:hover { filter: grayscale(100%); }\n  .swap:hover { filter: hue-rotate(180deg); }\n</style>\n<img class=\"blur\" src=\"sun.jpg\" alt=\"A sunset over the sea\">\n<img class=\"gray\" src=\"sun.jpg\" alt=\"A sunset over the sea\">\n<img class=\"swap\" src=\"sun.jpg\" alt=\"A sunset over the sea\">"
+        }
+      ],
+      "legend": [
+        {
+          "word": "filter",
+          "tint": "a",
+          "means": "changes how it looks, like a photo app"
+        },
+        {
+          "word": "blur(4px)",
+          "tint": "b",
+          "means": "makes it fuzzy"
+        },
+        {
+          "word": "grayscale(100%)",
+          "tint": "a",
+          "means": "takes all the colors away"
+        },
+        {
+          "word": "hue-rotate(180deg)",
+          "tint": "b",
+          "means": "swaps each color for another"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 153
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      img {\n        width: 150px;\n        margin: 4px;\n        transition: filter 0.5s;\n      }\n      .blur:hover { filter: blur(4px); }\n      .gray:hover { filter: grayscale(100%); }\n      .swap:hover { filter: hue-rotate(180deg); }\n    </style>\n  </head>\n  <body>\n    <img class=\"blur\" src=\"sun.jpg\" alt=\"A sunset over the sea\">\n    <img class=\"gray\" src=\"sun.jpg\" alt=\"A sunset over the sea\">\n    <img class=\"swap\" src=\"sun.jpg\" alt=\"A sunset over the sea\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "sun.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  img { transition: filter 0.5s; }\n  img:hover { filter: grayscale(100%); }\n</style>"
+      },
+      "turn": "put your mouse on each picture. Then change 4px to 10px.",
+      "bar": "put your mouse on each picture. Then change **4px** to **10px**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/filter"
+    },
+    {
+      "id": "reduced-motion",
+      "group": "effects",
+      "kind": "lesson",
+      "title": "Less motion for some people",
+      "short": "Less motion",
+      "keywords": "prefers-reduced-motion reduce motion kind dizzy sick no-preference media",
+      "explain": "Some people feel dizzy or sick when things on a screen move a lot, so their Mac can ask for less motion. Put your animation lines inside @media (prefers-reduced-motion: no-preference) { }. Then they play only when the Mac did not ask for less. It is a kind thing to do for everyone who visits your page.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  @keyframes spin {\n    to { transform: rotate(360deg); }\n  }\n  .box {\n    width: 60px;\n    height: 60px;\n    margin: 20px;\n    background: tomato;\n  }\n  @media (prefers-reduced-motion: no-preference) {\n    .box { animation: spin 2s linear infinite; }\n  }\n</style>\n<div class=\"box\"></div>\n<p>I spin, unless your Mac asks for less motion.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "@media",
+          "tint": "a",
+          "means": "starts a style that works only sometimes"
+        },
+        {
+          "word": "prefers-reduced-motion: no-preference",
+          "tint": "b",
+          "means": "means the Mac did not ask for less motion"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 146
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      @keyframes spin {\n        to { transform: rotate(360deg); }\n      }\n      .box {\n        width: 60px;\n        height: 60px;\n        margin: 20px;\n        background: tomato;\n      }\n      @media (prefers-reduced-motion: no-preference) {\n        .box { animation: spin 2s linear infinite; }\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"box\"></div>\n    <p>I spin, unless your Mac asks for less motion.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  @media (prefers-reduced-motion: no-preference) {\n    h1 { animation: fade 2s; }\n  }\n  @keyframes fade {\n    from { opacity: 0; }\n  }\n</style>"
+      },
+      "turn": "ask a grown-up to turn on Reduce motion in System Preferences, Accessibility, Display. The box stops.",
+      "bar": "ask a grown-up to turn on **Reduce motion** in System Preferences, Accessibility, Display. The box stops.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion"
+    },
+    {
+      "id": "want-fade-in",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Effects",
+      "title": "Make something fade in",
+      "short": "Fade in",
+      "keywords": "fade appear opacity slowly show",
+      "explain": "Your big heading starts hidden and slowly shows when the page opens. **2s** means two seconds, so try **5s** for a slow fade.",
+      "ways": [
+        {
+          "title": "Style block: all big headings on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  @keyframes fade-in {\n    from { opacity: 0; }\n    to { opacity: 1; }\n  }\n  h1 {\n    animation: fade-in 2s;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all big headings on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "@keyframes fade-in {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\nh1 {\n  animation: fade-in 2s;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "Some people feel sick when things move. To be kind, put the **h1** part inside **@media (prefers-reduced-motion: no-preference) { }**.",
+      "learn": "fade",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 92
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      @keyframes fade-in {\n        from { opacity: 0; }\n        to { opacity: 1; }\n      }\n      h1 {\n        animation: fade-in 2s;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Hello!</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-grow-hover",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Effects",
+      "title": "Make it grow when the mouse is on it",
+      "short": "Grow on hover",
+      "keywords": "grow bigger hover mouse scale zoom",
+      "explain": "**:hover** means while the mouse is on it. **1.2** means 1.2 times as big. It works only in a style block or a style file, not inside a tag.",
+      "ways": [
+        {
+          "title": "Style block: all pictures on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  img {\n    transition: transform 0.3s;\n  }\n  img:hover {\n    transform: scale(1.2);\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all pictures on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "img {\n  transition: transform 0.3s;\n}\nimg:hover {\n  transform: scale(1.2);\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**img** means pictures. For buttons, write **button** instead.",
+      "learn": "hover-effects",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 216
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      img {\n        transition: transform 0.3s;\n      }\n      img:hover {\n        transform: scale(1.2);\n      }\n      body { margin: 20px; }\n    </style>\n  </head>\n  <body>\n    <img src=\"mars.jpg\" alt=\"The planet Mars\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "mars.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-spin",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Effects",
+      "title": "Make something spin",
+      "short": "Spin",
+      "keywords": "spin turn round rotate circle",
+      "explain": "**360deg** is one whole turn. **4s** means one turn takes four seconds. **linear** keeps the same speed all the way round.",
+      "ways": [
+        {
+          "title": "Style block: all pictures on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  @keyframes spin {\n    to { transform: rotate(360deg); }\n  }\n  img {\n    animation: spin 4s linear infinite;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all pictures on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "@keyframes spin {\n  to { transform: rotate(360deg); }\n}\nimg {\n  animation: spin 4s linear infinite;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "Some people feel sick when things move. To be kind, put the **img** part inside **@media (prefers-reduced-motion: no-preference) { }**.",
+      "learn": "spin-pulse",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 254
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      @keyframes spin {\n        to { transform: rotate(360deg); }\n      }\n      img {\n        animation: spin 4s linear infinite;\n      }\n      body { margin: 40px; }\n    </style>\n  </head>\n  <body>\n    <img src=\"mars.jpg\" alt=\"The planet Mars\">\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "mars.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ]
+    },
+    {
+      "id": "want-glow",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Effects",
+      "title": "Make my text glow",
+      "short": "Glowing text",
+      "keywords": "glow neon shine light text-shadow",
+      "explain": "**0 0** keeps the glow right behind the letters. **10px** is how soft and big it is. The glow shines best on a dark page.",
+      "ways": [
+        {
+          "title": "Inline style: just one tag",
+          "steps": [
+            {
+              "say": "Put this inside the opening tag, right after the tag's name:",
+              "lang": "html",
+              "text": "style=\"text-shadow: 0 0 10px gold;\""
+            },
+            {
+              "say": "Now your tag looks like this:",
+              "lang": "html",
+              "text": "<h1 style=\"text-shadow: 0 0 10px gold;\">My page</h1>"
+            }
+          ]
+        },
+        {
+          "title": "Style block: all big headings on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  h1 {\n    text-shadow: 0 0 10px gold;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all big headings on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "h1 {\n  text-shadow: 0 0 10px gold;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "Add a second glow after a comma: **0 0 10px gold, 0 0 20px orange**.",
+      "learn": "glow",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 92
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      body {\n        background: black;\n        color: white;\n      }\n      h1 {\n        text-shadow: 0 0 10px gold;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>My page</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "want-rainbow-text",
+      "group": "recipes",
+      "kind": "recipe",
+      "section": "Effects",
+      "title": "Make rainbow text",
+      "short": "Rainbow text",
+      "keywords": "rainbow colors gradient letters background-clip",
+      "explain": "The colors are painted behind the letters, then cut to the shape of the letters. **color: transparent** lets you see the colors through them. Keep both **background-clip** lines, so it works on every Mac.",
+      "ways": [
+        {
+          "title": "Style block: all big headings on this page",
+          "steps": [
+            {
+              "say": "Put this in the head of your page, just before **</head>**:",
+              "lang": "html",
+              "text": "<style>\n  h1 {\n    display: inline-block;\n    background-image: linear-gradient(90deg, red, orange, gold, green, blue, purple);\n    -webkit-background-clip: text;\n    background-clip: text;\n    color: transparent;\n  }\n</style>"
+            }
+          ]
+        },
+        {
+          "title": "Style file: all big headings on all your pages",
+          "steps": [
+            {
+              "say": "Put this in your CSS file, like **style.css**:",
+              "lang": "css",
+              "text": "h1 {\n  display: inline-block;\n  background-image: linear-gradient(90deg, red, orange, gold, green, blue, purple);\n  -webkit-background-clip: text;\n  background-clip: text;\n  color: transparent;\n}"
+            },
+            {
+              "say": "Your page needs this line in its head. Skip this if it is already there:",
+              "lang": "html",
+              "text": "<link rel=\"stylesheet\" href=\"style.css\">"
+            }
+          ]
+        }
+      ],
+      "tip": "**inline-block** makes the heading only as wide as its words, so all the colors fit in.",
+      "learn": "rainbow",
+      "result": {
+        "files": [
+          "result.html"
+        ],
+        "height": 108
+      },
+      "files": [
+        {
+          "name": "result.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <title>My page</title>\n    <style>\n      h1 {\n        display: inline-block;\n        background-image: linear-gradient(90deg, red, orange, gold, green, blue, purple);\n        -webkit-background-clip: text;\n        background-clip: text;\n        color: transparent;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>My rainbow page</h1>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}

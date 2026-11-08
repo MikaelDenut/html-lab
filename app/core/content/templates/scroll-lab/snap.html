@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pebblewhistle Trail - Snap photos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M3 40 L18 14 L26 26 L32 18 L45 40 Z M13 23 L18 26 L22 21"></path>
+      </svg>
+      Pebblewhistle Trail
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Sticky signs</a></li>
+        <li><a href="snap.html" aria-current="page">Snap photos</a></li>
+        <li><a href="layers.html">Slow layers</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Photos that click into place</h1>
+      <p class="lead">Scroll a box, let go, and it slides on until one picture sits right in the middle. It never stops halfway. That is <code>scroll-snap</code>.</p>
+    </section>
+
+    <section class="demo">
+      <h2>The photo strip</h2>
+      <p>Scroll sideways: use the trackpad with two fingers, or click the strip and press the arrow keys.</p>
+      <!-- tabindex="0" lets the keyboard reach the strip. Then the arrow keys scroll it. -->
+      <div class="strip" tabindex="0" role="region" aria-label="Photo strip, scroll sideways">
+        <figure>
+          <img src="scroll-lab-meadow.jpg" alt="A meadow full of tiny white flowers, with dark snowy mountains behind it" width="800" height="600">
+          <figcaption>1. The flower meadow</figcaption>
+        </figure>
+        <figure>
+          <img src="scroll-lab-ridge.jpg" alt="Green and grey mountain ridges under big white clouds" width="800" height="533">
+          <figcaption>2. The green ridge</figcaption>
+        </figure>
+        <figure>
+          <img src="scroll-lab-clouds.jpg" alt="A steep rocky mountainside rising out of a sea of clouds, lit by the low sun" width="1400" height="933">
+          <figcaption>3. Above the clouds</figcaption>
+        </figure>
+        <figure>
+          <img src="scroll-lab-glacier.jpg" alt="A wide river of ice between snowy mountains, under grey clouds" width="800" height="600">
+          <figcaption>4. The glacier</figcaption>
+        </figure>
+        <figure>
+          <img src="scroll-lab-sunrise.jpg" alt="A snowy path along a ridge, with the sun shining over a lake far below" width="800" height="533">
+          <figcaption>5. The top at sunrise</figcaption>
+        </figure>
+      </div>
+      <p class="how">The strip has <code>scroll-snap-type: x mandatory</code>. Each photo has <code>scroll-snap-align: center</code>.</p>
+    </section>
+
+    <section class="demo">
+      <h2>One year on the mountain</h2>
+      <p>This box snaps up and down. Scroll inside it: each season fills the whole box.</p>
+      <div class="snap-box" tabindex="0" role="region" aria-label="Four seasons, scroll inside">
+        <div class="season spring">
+          <div class="peak"></div>
+          <p class="season-name">Spring</p>
+          <p>The snow melts and the streams are loud.</p>
+        </div>
+        <div class="season summer">
+          <div class="peak"></div>
+          <p class="season-name">Summer</p>
+          <p>Green grass, flowers and marmots on the rocks.</p>
+        </div>
+        <div class="season autumn">
+          <div class="peak"></div>
+          <p class="season-name">Autumn</p>
+          <p>The larch trees turn bright yellow, then drop their needles.</p>
+        </div>
+        <div class="season winter">
+          <div class="peak"></div>
+          <p class="season-name">Winter</p>
+          <p>Deep snow everywhere. The hut is closed.</p>
+        </div>
+      </div>
+      <p class="how">The box has <code>scroll-snap-type: y mandatory</code>. Each season has <code>scroll-snap-align: start</code>. The mountains are drawn with CSS, not photos.</p>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p>Pebblewhistle Trail: a pretend mountain, made with HTML and CSS. The photos are real.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Mountain">What makes a mountain? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

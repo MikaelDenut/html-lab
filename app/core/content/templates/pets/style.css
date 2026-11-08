@@ -1,0 +1,498 @@
+/* Pawberry Club: soft colours, round shapes and happy animals. */
+
+/* All colours, fonts, sizes and spaces live here.
+   Change one line and the whole club changes! */
+:root {
+  --page: #fbf8ff;
+  --white: #ffffff;
+  --lilac: #ece4ff;
+  --pink: #ffe1ea;
+  --pink-deep: #ffbfd2;
+  --berry: #bd2b5c;
+  --mint: #d4f5e6;
+  --mint-deep: #86d6b0;
+  --ink: #3e2b45;
+  --soft-ink: #6e5a75;
+
+  /* The level bars and the tick boxes. */
+  --track: #f4eaf0;
+  --energy: #b35400;
+  --cuddles: var(--berry);
+  --box-edge: #b0587a;
+  --done-text: #23865a;
+
+  --round: 28px;
+  --shadow: 0 10px 30px rgba(140, 60, 100, 0.14);
+  --title-font: "Arial Rounded MT Bold", "Chalkboard SE", sans-serif;
+  --body-font: "Avenir Next", "Avenir", "Helvetica Neue", sans-serif;
+  --fun-font: "Chalkboard SE", "Marker Felt", cursive;
+
+  /* Text sizes. Each step is about 1.25 times the one before. */
+  --step-0: 18px;
+  --step-1: 22px;
+  --step-2: 28px;
+  --step-3: 35px;
+  --step-4: 44px;
+  --step-5: 55px;
+
+  /* Spaces: small inside a group, big between groups. */
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 40px;
+  --space-xl: 56px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--body-font);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); }
+a { color: var(--berry); font-weight: 600; }
+
+/* A dashed ring shows where the keyboard is. Press Tab to try it! */
+a:focus-visible { outline: 3px dashed var(--berry); outline-offset: 4px; }
+
+/* The top bar: logo on the left, menu on the right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  padding: var(--space-s) 6%;
+  background: var(--white);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--ink);
+  font-family: var(--title-font);
+  font-size: var(--step-1);
+  text-decoration: none;
+}
+
+/* The paw is a drawing made of one oval and four circles. */
+.paw { width: 46px; height: 46px; padding: var(--space-xs); border-radius: 50%; background: var(--pink); fill: var(--berry); }
+
+/* The menu is a list. Flex puts the links side by side, with no dots. */
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+
+/* The menu links are soft round pills, at least 44 px tall for a finger. */
+.menu a { display: block; min-height: 44px; padding: var(--space-xs) 18px; border-radius: 99px; color: var(--ink); text-decoration: none; }
+.menu a:hover { background: var(--pink); }
+
+/* The page you are on gets the strong berry colour. */
+.menu a[aria-current="page"] { background: var(--berry); color: var(--white); }
+
+/* The top part of every page has a soft lilac to pink colour fade. */
+.hero, .page-title {
+  padding: var(--space-xl) 6% var(--space-s);
+  background: linear-gradient(180deg, var(--lilac), var(--pink));
+}
+
+.hero { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: var(--space-l); }
+.page-title { text-align: center; }
+.page-title p { max-width: 640px; margin: 0 auto; }
+
+.big-title { font-size: var(--step-5); }
+.berry-text { color: var(--berry); }
+.buttons { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+
+.button {
+  padding: 14px 28px;
+  border-radius: 99px;
+  background: var(--berry);
+  color: var(--white);
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s;
+}
+
+.button.light { background: var(--white); color: var(--berry); }
+
+/* A button lifts up when your mouse is on it, and sinks when you press it. */
+.button:hover { transform: translateY(-6px); }
+.button:active, .menu a:active, .tabs label:active { transform: translateY(2px); }
+
+/* Three photos sit on top of each other, like stickers. */
+.hero-pictures { position: relative; width: 100%; max-width: 460px; margin: 0 auto; aspect-ratio: 1 / 1; }
+.hero-pictures img { position: absolute; object-fit: cover; }
+
+/* A pink circle peeks out from behind the photos. */
+.hero-pictures::before {
+  content: "";
+  position: absolute;
+  left: 4%;
+  bottom: 4%;
+  width: 34%;
+  height: 34%;
+  border-radius: 50%;
+  background: var(--pink-deep);
+}
+
+/* border-radius with 8 numbers makes a wobbly blob shape. */
+.blob-photo {
+  top: 4%;
+  left: 4%;
+  width: 72%;
+  height: 72%;
+  border: 8px solid var(--white);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  box-shadow: var(--shadow);
+}
+
+/* clip-path cuts the photo into a perfect circle. */
+.clip-photo { top: 0; right: 0; width: 34%; height: 34%; -webkit-clip-path: circle(50%); clip-path: circle(50%); }
+
+/* border-radius: 50% makes a circle too, and this one has a border. */
+.circle-photo {
+  right: 4%;
+  bottom: 0;
+  width: 46%;
+  height: 46%;
+  border: 8px solid var(--white);
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+
+.bubble {
+  position: absolute;
+  top: 0;
+  left: -4%;
+  margin: 0;
+  padding: var(--space-xs) 18px;
+  border-radius: 20px 20px 4px 20px;
+  background: var(--white);
+  color: var(--berry);
+  font-family: var(--fun-font);
+  font-size: var(--step-1);
+  box-shadow: var(--shadow);
+}
+
+/* The bubble floats up and down. */
+@media (prefers-reduced-motion: no-preference) {
+  .bubble { animation: float 3s ease-in-out infinite; }
+}
+
+@keyframes float {
+  50% { transform: translateY(-12px); }
+}
+
+/* The soft wave is a drawing. Its background is the part above, its fill is the part below. */
+.wave { display: block; width: 100%; height: 80px; background: var(--pink); fill: var(--page); }
+
+.section { padding: var(--space-l) 6% var(--space-xl); text-align: center; }
+.intro { max-width: 640px; margin: 0 auto var(--space-l); color: var(--soft-ink); }
+
+/* A big round box with a lilac colour. */
+.lilac-band { width: 92%; margin: 0 auto var(--space-xl); border-radius: 48px; background: var(--lilac); }
+
+/* Line icons: drawn with SVG, all with the same stroke width. */
+.line-icon { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* A white circle that holds an icon. */
+.icon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto var(--space-s);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--berry);
+}
+
+/* The help path: a dotted trail runs through the four steps.
+   ::before draws the trail. The steps hang off it at two heights. */
+.help-path {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-m);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.help-path::before {
+  content: "";
+  position: absolute;
+  top: 36px;
+  left: 12%;
+  right: 12%;
+  border-top: 4px dotted var(--berry);
+}
+
+.help-step { position: relative; }
+.help-step .icon { box-shadow: var(--shadow); }
+.step-text p { margin: 0; color: var(--soft-ink); }
+
+/* Every second step hangs lower, so the path feels like a walk. */
+.help-step:nth-child(even) .step-text { margin-top: var(--space-l); }
+
+/* flex-wrap lets cards jump to a new line when the window is small. gap is the space between. */
+.card-row { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-m); margin: 0; padding: 0; list-style: none; }
+
+/* A fact bubble has three round corners and one pointy corner. */
+.fact {
+  flex: 1 1 240px;
+  max-width: 340px;
+  padding: 22px 26px;
+  border-radius: 36px 36px 36px 6px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.fact h3 { margin: 0 0 4px; color: var(--berry); font-family: var(--fun-font); }
+.fact p { margin: 0; }
+
+/* Tabs: the round radio buttons are hidden, but you can click the labels or use the arrow keys. */
+.tabs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s);
+  padding: var(--space-m) 6% var(--space-xl);
+}
+
+.tabs input { position: absolute; opacity: 0; }
+
+.tabs label {
+  padding: var(--space-s) 26px;
+  border: 3px solid var(--pink-deep);
+  border-radius: 99px;
+  background: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--step-1);
+  cursor: pointer;
+}
+
+.tabs label:hover { background: var(--pink); }
+
+/* :checked finds the chosen tab and paints it berry. */
+.tabs input:checked + label { border-color: var(--berry); background: var(--berry); color: var(--white); }
+
+/* A dashed ring shows the tab the keyboard is on. */
+.tabs input:focus-visible + label { outline: 3px dashed var(--berry); outline-offset: 4px; }
+
+/* Every panel is hidden, and only the panel of the chosen tab shows. */
+.tab-panel {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+#tab-dogs:checked ~ .dogs-panel,
+#tab-cats:checked ~ .cats-panel,
+#tab-small:checked ~ .small-panel {
+  display: flex;
+}
+
+.animal-card, .tip-card {
+  flex: 1 1 250px;
+  max-width: 320px;
+  padding: 28px 26px;
+  border-radius: var(--round);
+  text-align: center;
+}
+
+.animal-card { background: var(--white); box-shadow: var(--shadow); }
+.tip-card { border: 3px dashed var(--mint-deep); background: var(--mint); }
+.animal-card h2, .tip-card h2 { margin: 0 0 6px; font-size: var(--step-2); }
+.photo { width: 180px; height: 180px; margin: 0 auto 18px; object-fit: cover; }
+
+/* A circle, cut out with clip-path. */
+.photo.circle { -webkit-clip-path: circle(50%); clip-path: circle(50%); }
+
+/* A blob, made with border-radius. */
+.photo.blob { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; }
+
+.age {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 14px;
+  border-radius: 99px;
+  background: var(--pink);
+  font-weight: 600;
+}
+
+/* A level bar: a pale track with a dark edge, and a coloured part as wide as its width says. */
+.level {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  align-items: center;
+  margin: var(--space-xs) 0;
+  font-weight: 600;
+  text-align: left;
+}
+
+.bar { height: 16px; border: 2px solid var(--soft-ink); border-radius: 99px; background: var(--track); overflow: hidden; }
+.bar span { display: block; height: 100%; }
+.energy { background: var(--energy); }
+.cuddles { background: var(--cuddles); }
+
+/* A white card for the story. */
+.story {
+  width: 92%;
+  max-width: 760px;
+  margin: var(--space-xs) auto var(--space-xl);
+  padding: 32px 36px;
+  border-radius: 40px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* shape-outside lets the words flow around the round picture. */
+.round-picture {
+  float: left;
+  width: 220px;
+  height: 220px;
+  margin: 0 22px 22px 0;
+  border-radius: 50%;
+  object-fit: cover;
+  shape-outside: circle(50%);
+}
+
+.check-list {
+  display: grid;
+  gap: var(--space-s);
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.check-item {
+  position: relative;
+  display: block;
+  padding: 14px 20px;
+  border: 3px solid var(--pink);
+  border-radius: 20px;
+  background: var(--white);
+  cursor: pointer;
+}
+
+.check-item:hover { border-color: var(--pink-deep); }
+
+/* The real tick boxes are hidden. We draw our own round box before the words. */
+.check-item input { position: absolute; opacity: 0; }
+.check-item span { display: flex; align-items: center; gap: 16px; }
+
+.check-item span::before {
+  content: "";
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--box-edge);
+  border-radius: 10px;
+  background: var(--white);
+}
+
+/* A ticked box turns berry. The tick is a tiny SVG drawing, written inside the CSS. */
+.check-item input:checked + span::before {
+  border-color: var(--berry);
+  background: var(--berry) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12l5 5 9-10' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E") center / 70% no-repeat;
+}
+
+.check-item input:focus-visible + span::before { outline: 3px dashed var(--berry); outline-offset: 3px; }
+
+/* :has() sees a ticked box and turns the whole row mint green. */
+.check-item:has(input:checked) { border-color: var(--mint-deep); background: var(--mint); }
+
+.check-item input:checked + span::after {
+  content: "Done!";
+  padding: 0 10px;
+  border-radius: 99px;
+  background: var(--white);
+  color: var(--done-text);
+  font-family: var(--fun-font);
+}
+
+/* The food table has round rows, like soft pills. */
+.food-table { width: 100%; max-width: 860px; margin: 0 auto; border-spacing: 0 10px; text-align: left; }
+.food-table th, .food-table td { padding: 14px 18px; vertical-align: top; }
+.food-table thead th { padding: 4px 18px; color: var(--soft-ink); }
+.food-table td { background: var(--white); }
+
+/* The pet names are row headings: th with scope="row". */
+.food-table tbody th {
+  border-radius: 20px 0 0 20px;
+  background: var(--pink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.food-table td:last-child { border-radius: 0 20px 20px 0; }
+
+.footer { background: var(--mint); text-align: center; }
+.footer .wave { background: var(--page); fill: var(--mint); }
+.footer p { margin: 0 auto; padding: 0 6% var(--space-s); }
+
+/* On a narrow window things stack and get a bit smaller.
+   The help path turns and runs down the page. */
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr; padding-top: 32px; text-align: center; }
+  .buttons { justify-content: center; }
+  .big-title { font-size: var(--step-4); }
+  .hero-pictures { max-width: 340px; }
+  .help-path { grid-template-columns: 1fr; gap: var(--space-m); max-width: 520px; text-align: left; }
+  .help-path::before { top: 0; bottom: 0; left: 36px; right: auto; border-top: 0; border-right: 4px dotted var(--berry); }
+  .help-step { display: grid; grid-template-columns: 76px 1fr; align-items: center; gap: var(--space-m); }
+  .help-step .icon { margin: 0; }
+  .help-step:nth-child(even) .step-text { margin-top: 0; }
+}
+
+/* On a phone the table turns into one small card for each pet.
+   ::before writes the column name in front of each answer. */
+@media (max-width: 600px) {
+  .food-table, .food-table tbody, .food-table tr, .food-table th, .food-table td { display: block; }
+  .food-table thead { display: none; }
+  .food-table tr { margin-bottom: var(--space-s); }
+  .food-table tbody th { border-radius: 20px 20px 0 0; }
+  .food-table td:last-child { padding-top: 0; border-radius: 0 0 20px 20px; }
+  .food-table td:nth-child(2)::before { content: "Main food: "; font-weight: 600; }
+  .food-table td:nth-child(3)::before { content: "Good to know: "; font-weight: 600; }
+}
+
+@media (max-width: 480px) {
+  :root { --step-0: 16px; }
+  h2 { font-size: var(--step-2); }
+  .top-bar { justify-content: center; }
+  .big-title { font-size: var(--step-3); }
+  .wave { height: 44px; }
+  .tabs { gap: 6px; padding: var(--space-m) var(--space-s) var(--space-l); }
+  .tabs label { padding: 8px 14px; border-width: 2px; font-size: var(--step-0); }
+  .section { padding: 32px 16px var(--space-l); }
+  .lilac-band { padding: 32px var(--space-s); }
+  .check-item { padding: var(--space-s) 14px; }
+  .check-item span { gap: var(--space-s); }
+  .story { padding: var(--space-m) 20px; }
+  .round-picture { width: 140px; height: 140px; margin: 0 14px 14px 0; }
+}

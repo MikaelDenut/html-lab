@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stories - Ada Fernwood</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="18" fill="#f08c42"/>
+        <path d="M20 4 L30 12 L20 14 Z M34 18 L30 30 L26 20 Z M28 34 L14 34 L22 27 Z M8 30 L6 18 L15 24 Z M6 14 L16 5 L16 15 Z" fill="#0f1312"/>
+        <circle cx="20" cy="20" r="5" fill="#0f1312"/>
+      </svg>
+      Ada Fernwood
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Photos</a></li>
+        <li><a href="stories.html" aria-current="page">Stories</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Two trips, told with pictures</h1>
+      <p>A story can be told with photos. Big ones set the scene, small ones show the details.</p>
+    </section>
+
+    <!-- Story 1. The first photo is very wide: object-fit cuts it to shape. -->
+    <article class="story">
+      <h2>Winter and summer in the far north</h2>
+      <figure class="wide">
+        <img src="photo-fox.jpg" alt="A red fox walking through snowy bushes" width="840" height="560">
+        <figcaption>I waited two hours in the cold for this fox. Then it walked right past me.</figcaption>
+      </figure>
+      <div class="story-text">
+        <p>Foxes have amazing ears. A fox can hear a mouse moving under the snow. Then it jumps up high and dives into the snow, nose first!</p>
+        <p>At night the sky turned green. In summer I came back to see the puffins.</p>
+      </div>
+      <!-- Two photos side by side, made with grid. -->
+      <div class="pair">
+        <figure>
+          <img src="photo-aurora.jpg" alt="Green northern lights over the dark tops of pine trees" width="840" height="560">
+          <figcaption>The northern lights. They glow when tiny bits from the Sun hit the air high above us.</figcaption>
+        </figure>
+        <figure>
+          <img src="photo-puffin.jpg" alt="A puffin with a big orange beak standing on a grey rock" width="840" height="559">
+          <figcaption>Puffins often dig their nests in the soft ground on top of sea cliffs.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- Story 2. A tall photo on one side, the words on the other. -->
+    <article class="story">
+      <h2>A rainy day in the forest</h2>
+      <div class="side">
+        <figure class="tall">
+          <img src="photo-waterfall.jpg" alt="A white waterfall rushing between brown rocks, with pine trees behind" width="480" height="720">
+          <figcaption>The camera took this photo slowly, so the water looks like silk.</figcaption>
+        </figure>
+        <div class="story-text">
+          <p>Rain is my favourite weather for forest photos. The colours get deep and the leaves shine.</p>
+          <p>I put my camera on a tripod, so it stays very still. Then the camera can take a slow photo. The rocks stay sharp, and the moving water turns soft and white.</p>
+          <blockquote>"Wet socks are the price of good photos."</blockquote>
+        </div>
+      </div>
+      <div class="pair">
+        <figure>
+          <img src="photo-fern.jpg" alt="A bright green fern leaf on a dark background" width="640" height="602">
+          <figcaption>Ferns have no flowers and no seeds. They grow from tiny spores.</figcaption>
+        </figure>
+        <figure>
+          <img src="photo-mushroom.jpg" alt="A red mushroom with white spots among brown leaves" width="600" height="800">
+          <figcaption>A fly agaric. It is poisonous, so only look at it. Never eat it!</figcaption>
+        </figure>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Ada Fernwood is made up. The photos are free to use, from <a href="https://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a>.</p>
+  </footer>
+</body>
+</html>

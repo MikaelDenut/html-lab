@@ -1,0 +1,15 @@
+{
+  "title": "School weather station",
+  "name": "my-weather-station",
+  "blurb": "A school weather station with readings, a forecast and cloud facts",
+  "category": "science",
+  "layout": "Weather dashboard: icon tiles and bar charts",
+  "shows": [
+    "A dashboard grid with wide and tall tiles",
+    "Sun, cloud and rain icons drawn with CSS",
+    "A wind arrow turned with transform",
+    "A thermometer and bar charts sized by height",
+    "A cloud quiz made with details and summary"
+  ],
+  "accent": "#1f3d36"
+}

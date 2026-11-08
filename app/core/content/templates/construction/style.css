@@ -1,0 +1,405 @@
+/* Brick, grey mortar and a dusk sky over the site. Change one line and the whole website changes!
+   Bright yellow is only for things that really are yellow on a site: tape, hard hats and the crane. */
+:root {
+  --slate: #1e2a33;
+  --slate-light: #2c3b47;
+  --slate-text: #c9d4dc;
+  --concrete: #e6e8ea;
+  --card: #ffffff;
+  --ink: #1f2328;
+  --soft-ink: #4e565e;
+  --brick: #b5432a;
+  --brick-dark: #8f3320;
+  --hivis: #ffc61a;
+  --plan: #1f5fa8;
+  --green: #1d7a3a;
+
+  /* Two fonts: Rockwell has little feet on its letters, like bricks on a wall. Avenir is for reading. */
+  --display: Rockwell, "Superclarendon", serif;
+  --body: "Avenir Next", "Gill Sans", sans-serif;
+
+  /* Each text size is 1.25 times the one below it, or more. */
+  --step--1: 14px;
+  --step-0: 18px;
+  --step-1: 23px;
+  --step-2: 29px;
+  --step-3: 37px;
+  --step-4: 47px;
+  --step-5: 59px;
+
+  /* Spaces: small inside a group, big between groups. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 32px;
+  --space-xl: 56px;
+}
+
+/* Width and height include the border, for every box and every ::before and ::after. */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--concrete);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+/* Lines of text no longer than about 70 letters, so they are easy to read. */
+p { max-width: 70ch; }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { margin: 0 0 var(--space-s); font-family: var(--display); font-weight: bold; line-height: 1.1; }
+h1, h2 { max-width: 24ch; }
+
+/* Keeps everything in a tidy column in the middle. */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs) var(--space-l);
+  padding: 10px 24px;
+  background: var(--slate);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: white;
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: bold;
+  text-decoration: none;
+}
+.logo b { color: var(--hivis); }
+.hat { width: 52px; height: 33px; }
+
+.menu { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a { display: block; min-height: 48px; padding: 12px 16px; border-radius: 6px; color: white; font-weight: 600; text-decoration: none; }
+.menu a:hover { background: var(--slate-light); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a brick red sign. */
+.menu a[aria-current="page"] { background: var(--brick); }
+
+/* Where the keyboard is, a thick yellow ring shows up. */
+a:focus-visible, summary:focus-visible {
+  outline: 4px solid var(--hivis);
+  outline-offset: 3px;
+}
+
+/* On the light page a dark ring shows better than a yellow one. */
+.wrap a:focus-visible, summary:focus-visible { outline-color: var(--slate); }
+
+/* The hero: a dusk sky with the crane standing in it. */
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; align-items: end; gap: var(--space-l); padding: var(--space-xl) 24px 0; background: var(--slate); color: white; }
+.hero-text { justify-self: end; max-width: 640px; padding-bottom: var(--space-xl); }
+.hero h1 { margin-bottom: var(--space-m); font-size: var(--step-5); }
+
+/* The important words are yellow, like a hard hat. */
+.hero h1 span { color: var(--hivis); }
+.hero p { margin: 0 0 var(--space-l); color: var(--slate-text); font-size: var(--step-0); }
+
+/* A brick red button. It lifts when your mouse is on it and presses down when you click. */
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: var(--brick);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(30, 42, 51, 0.3);
+}
+
+.button:hover { transform: translateY(-2px); background: var(--brick-dark); box-shadow: 0 10px 22px rgba(30, 42, 51, 0.35); }
+.button:active { transform: translateY(2px); box-shadow: 0 2px 6px rgba(30, 42, 51, 0.3); }
+
+.crane { width: 100%; max-width: 380px; height: auto; }
+
+/* Hazard tape is a real thing on every building site: yellow and black stripes from one repeating gradient. */
+.tape { height: 34px; background: repeating-linear-gradient(-45deg, var(--hivis) 0 26px, var(--ink) 26px 52px); }
+
+.section-title { margin: var(--space-xl) 0 var(--space-m); font-size: var(--step-3); }
+
+/* The site board: a big sign on two posts, like the one at the gate of a building site. */
+.site-board {
+  position: relative;
+  margin: var(--space-xl) 0 calc(var(--space-xl) + 48px);
+  padding: var(--space-l);
+  border: 10px solid var(--slate);
+  border-radius: 8px;
+  background: var(--card);
+}
+.site-board::before, .site-board::after { content: ""; position: absolute; top: calc(100% + 10px); width: 18px; height: 48px; background: var(--slate); }
+.site-board::before { left: 16%; }
+.site-board::after { right: 16%; }
+.site-board h2 { margin-bottom: var(--space-m); color: var(--brick); font-size: var(--step-3); }
+
+/* What we build: a list in two columns. Each icon sits in a brick red circle. */
+.services { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-m) var(--space-l); margin: 0; padding: 0; list-style: none; }
+.services li { display: grid; grid-template-columns: 56px 1fr; align-content: start; gap: 0 var(--space-m); }
+.services h3 { margin: var(--space-xs) 0 2px; font-size: var(--step-1); }
+.services p { margin: 0; color: var(--soft-ink); }
+
+/* The icons are SVG lines, all with the same stroke width. stroke is the colour of the lines. */
+.icon {
+  grid-row: span 2;
+  width: 56px;
+  height: 56px;
+  padding: 10px;
+  border-radius: 50%;
+  background: var(--brick);
+  fill: none;
+  stroke: white;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The project we are building right now: a photo next to its story. */
+.featured { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; }
+.featured img { width: 100%; border-radius: 12px; box-shadow: 0 10px 24px rgba(30, 42, 51, 0.18); }
+.featured h2 { font-size: var(--step-3); }
+.featured p { color: var(--soft-ink); }
+
+/* A dark box at the end of the page, with the address of the site office. */
+.call { width: calc(100% - 48px); max-width: 820px; margin: var(--space-xl) auto; padding: var(--space-l); border-radius: 12px; background: var(--slate); }
+.call h2 { color: var(--hivis); font-size: var(--step-2); }
+.call p { margin: 0; color: var(--slate-text); }
+
+.banner { padding: var(--space-xl) 0 var(--space-l); background: var(--slate); color: white; }
+.banner h1 { font-size: var(--step-5); }
+.banner p { margin: 0; color: var(--slate-text); }
+
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: var(--space-m); margin-bottom: var(--space-xl); }
+.project { display: flex; flex-direction: column; overflow: hidden; border-radius: 12px; background: var(--card); box-shadow: 0 6px 18px rgba(30, 42, 51, 0.1); }
+.project h3 { margin: var(--space-m) var(--space-m) var(--space-xs); font-size: var(--step-1); }
+.project p { margin: 0 var(--space-m) var(--space-s); color: var(--soft-ink); }
+
+/* Picture and drawing get the same shape: 3 wide for every 2 high. */
+.project-picture { position: relative; aspect-ratio: 3 / 2; }
+.project-picture img { width: 100%; height: 100%; object-fit: cover; }
+
+/* A blueprint: real plan paper has thin grid lines, so the grid is earned here.
+   Two gradients make the lines across and down. */
+.plan {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px) 0 0 / 20px 20px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px) 0 0 / 20px 20px,
+    var(--plan);
+}
+
+.plan svg { width: 72%; margin-top: 28px; fill: none; stroke: white; stroke-width: 3; }
+.plan text { fill: white; stroke: none; font-family: var(--body); font-size: 11px; font-weight: bold; }
+
+/* The badge sits on top of the picture, in the top left corner. */
+.project .badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  margin: 0;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: var(--step--1);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.project .building { background: var(--hivis); color: var(--ink); }
+.project .finished { background: var(--green); color: white; }
+
+/* margin-top: auto pushes the bar down to the bottom of the card. */
+.project .done-text { margin-top: auto; }
+.done-text b { color: var(--ink); }
+
+/* A real progress bar. Safari draws it in two parts: the bar and the value. */
+progress { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 18px; margin: 0 0 var(--space-m); border: 0; }
+.project progress { width: calc(100% - 40px); margin: 0 var(--space-m) var(--space-m); }
+progress::-webkit-progress-bar { border-radius: 9px; background: #d5d9dd; }
+progress::-webkit-progress-value { border-radius: 9px; background: var(--brick); }
+
+/* :has() asks "does this card have a Finished badge?" If yes, the bar goes green. */
+.project:has(.finished) progress::-webkit-progress-value { background: var(--green); }
+
+.build-page { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-l); align-items: start; }
+
+/* The timeline: a surveyor's pole on the left, and a box for each step. The order matters, so steps are numbered. */
+.timeline { position: relative; margin: 0 0 var(--space-l); padding: 0 0 0 66px; list-style: none; counter-reset: step; }
+
+/* Surveyors really use red and white striped poles to measure, so these stripes are earned. */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 20px;
+  width: 10px;
+  border-radius: 5px;
+  background: repeating-linear-gradient(var(--brick) 0 20px, white 20px 40px);
+}
+
+.timeline li {
+  position: relative;
+  margin-bottom: var(--space-m);
+  padding: var(--space-m);
+  border-radius: 10px;
+  background: var(--card);
+  box-shadow: 0 4px 12px rgba(30, 42, 51, 0.08);
+  counter-increment: step;
+}
+
+.timeline h3 { margin: 2px 0 2px; font-size: var(--step-1); }
+.timeline p { margin: 0; }
+
+/* The step number sits in a hexagon, cut out with clip-path. */
+.timeline li::before {
+  content: counter(step);
+  position: absolute;
+  top: 14px;
+  left: -64px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 52px;
+  background: var(--slate);
+  color: white;
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: bold;
+  -webkit-clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+/* When the step happens: a quiet line under the heading. */
+.timeline .when { margin-bottom: var(--space-xs); color: var(--soft-ink); font-weight: 600; }
+
+/* The last step is the best one: it gets the dark box. */
+.timeline .keys { background: var(--slate); color: white; }
+.timeline .keys .when { color: var(--slate-text); }
+.timeline .keys::before { background: var(--hivis); color: var(--ink); }
+
+/* The rules stay on the screen while you scroll the steps. */
+.rules-box {
+  position: sticky;
+  top: var(--space-m);
+  margin-top: var(--space-xl);
+  padding: var(--space-l) var(--space-m) var(--space-m);
+  border-radius: 10px;
+  background: var(--slate);
+  color: white;
+}
+.rules-box h2 { color: var(--hivis); font-size: var(--step-2); }
+.rules { margin: 0; padding: 0; list-style: none; }
+.rules li { display: flex; align-items: center; gap: var(--space-s); margin-top: var(--space-s); }
+
+/* A warning triangle, like on a real safety sign: a square cut into a triangle by clip-path.
+   The ! is painted, not written: a bar and a dot made with two gradients on the yellow. */
+.rules li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 30px;
+  height: 27px;
+  background:
+    linear-gradient(var(--ink), var(--ink)) center 9px / 4px 9px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) center 20px / 4px 4px no-repeat,
+    var(--hivis);
+  -webkit-clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.faq { margin-bottom: var(--space-xl); }
+details { max-width: 820px; margin-bottom: var(--space-s); border-radius: 10px; background: var(--card); box-shadow: 0 4px 12px rgba(30, 42, 51, 0.08); }
+details p { margin: 0; padding: 0 var(--space-m) var(--space-m); }
+
+/* The question line. We hide the little triangle and draw our own plus and minus. */
+summary {
+  position: relative;
+  padding: var(--space-m) 64px var(--space-m) var(--space-m);
+  font-family: var(--display);
+  font-size: var(--step-1);
+  font-weight: bold;
+  line-height: 1.2;
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary:hover { color: var(--brick-dark); }
+summary:active { transform: translateY(1px); }
+
+/* The plus is two bars painted with gradients: one lying down, one standing up. */
+summary::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 18px);
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--ink), var(--ink)) center / 16px 3px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) center / 3px 16px no-repeat,
+    var(--hivis);
+}
+
+/* Open? Then only the lying bar is left: a minus. */
+details[open] summary::after { background: linear-gradient(var(--ink), var(--ink)) center / 16px 3px no-repeat, var(--hivis); }
+
+.footer { padding: var(--space-l) 24px; background: var(--slate); color: var(--slate-text); text-align: center; }
+.footer p { margin: 0 auto; }
+.footer a { color: var(--hivis); font-weight: bold; }
+
+/* Things move by themselves only if the computer says that is OK. The crane is the one moving scene. */
+@media (prefers-reduced-motion: no-preference) {
+  .load { animation: swing 2.6s ease-in-out infinite alternate; }
+  .light { animation: blink 1s steps(2) infinite; }
+  .button, .menu a { transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s; }
+}
+
+/* The beam swings a little on its rope, slow at each end like a real swing.
+   The turning point is the top of the rope. */
+.load { transform-origin: 249px 60px; }
+
+@keyframes swing {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
+}
+
+/* The red light on top of the crane blinks, so planes can see it. */
+@keyframes blink {
+  to { opacity: 0; }
+}
+
+/* Tablet: the rules box goes under the steps. */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding-top: var(--space-l); }
+  .hero-text { justify-self: start; padding-bottom: 0; }
+  .crane { justify-self: center; max-width: 300px; }
+  .featured, .build-page { grid-template-columns: 1fr; }
+  .build-page { gap: 0; }
+  .rules-box { position: static; margin-top: var(--space-xs); }
+}
+
+/* Phone: smaller letters so the big words still fit. */
+@media (max-width: 600px) {
+  .top-bar { padding: var(--space-xs) 16px; }
+  .menu { width: 100%; }
+  .menu li { flex: auto; }
+  .menu a { padding: 12px 8px; text-align: center; }
+  .wrap { padding: 0 16px; }
+  .hero { padding: var(--space-l) 16px 0; }
+  .hero h1, .banner h1 { font-size: var(--step-4); }
+  .section-title, .site-board h2, .featured h2 { font-size: var(--step-2); }
+  .site-board { padding: var(--space-m); }
+  .services { grid-template-columns: 1fr; }
+  .project-grid { grid-template-columns: 1fr; }
+  .call { width: calc(100% - 32px); padding: var(--space-m); }
+  summary { font-size: var(--step-0); }
+}

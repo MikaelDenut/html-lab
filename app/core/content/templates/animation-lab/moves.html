@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animation lab - Moves</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="logo"><a href="index.html"><span class="logo-ball"></span>Animation lab</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Fades</a></li>
+        <li><a href="moves.html" aria-current="page">Moves</a></li>
+        <li><a href="timing.html">Timing</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Move lab</h1>
+      <p>Bounce, shake, spin and more. Most tests play while your mouse is on them. One test moves all by itself: can you find it?</p>
+      <p>A track that fills again and again means the animation repeats: <code>infinite</code>.</p>
+    </section>
+
+    <!-- tabindex="0" lets the Tab key stop here, so the keyboard can start the test too. -->
+    <div class="grid">
+      <article class="card bounce" tabindex="0">
+        <div class="demo"><span class="ball"></span></div>
+        <h2>Bounce</h2>
+        <p>Up with <code>translateY</code>, and a squash when it lands.</p>
+        <div class="track" data-time="0.8s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Bounce, shake and wobble</p>
+      </article>
+      <article class="card shake" tabindex="0">
+        <div class="demo"><span class="box">No!</span></div>
+        <h2>Shake</h2>
+        <p>Left, right, left, right, fast. It plays 2 times.</p>
+        <div class="track" data-time="0.5s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Bounce, shake and wobble</p>
+      </article>
+      <article class="card wobble" tabindex="0">
+        <div class="demo"><span class="box">Wob</span></div>
+        <h2>Wobble</h2>
+        <p>It slides and leans, a bit less each time.</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Bounce, shake and wobble</p>
+      </article>
+      <article class="card swing" tabindex="0">
+        <div class="demo"><span class="sign">OPEN</span></div>
+        <h2>Swing</h2>
+        <p><code>transform-origin</code> puts the turning point on the nail.</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Bounce, shake and wobble</p>
+      </article>
+      <article class="card spin" tabindex="0">
+        <div class="demo"><span class="wheel"></span></div>
+        <h2>Spin</h2>
+        <p><code>rotate(360deg)</code> with <code>linear</code>, again and again.</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Spin and pulse</p>
+      </article>
+      <article class="card pulse" tabindex="0">
+        <div class="demo"><span class="ball"></span></div>
+        <h2>Pulse</h2>
+        <p>A bit bigger with <code>scale(1.2)</code>, then back, like breathing.</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Spin and pulse</p>
+      </article>
+      <article class="card heartbeat" tabindex="0">
+        <div class="demo"><svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21 C9 18.5 2 14 2 8.5 A5 5 0 0 1 12 6 A5 5 0 0 1 22 8.5 C22 14 15 18.5 12 21 Z"/></svg></div>
+        <h2>Heartbeat</h2>
+        <p>Two quick beats, then a rest.</p>
+        <div class="track" data-time="1.3s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Spin and pulse</p>
+      </article>
+      <article class="card float" tabindex="0">
+        <div class="demo"><span class="balloon"></span></div>
+        <h2>Float</h2>
+        <p>This one moves by itself, all the time. <code>alternate</code> plays it up, then down.</p>
+        <div class="track" data-time="2s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Moving by itself</p>
+      </article>
+      <article class="card slide-in" tabindex="0">
+        <div class="demo"><span class="box">Hey</span></div>
+        <h2>Slide in</h2>
+        <p>It starts outside on the left and slides into its place.</p>
+        <div class="track" data-time="0.7s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: Moving by itself</p>
+      </article>
+      <!-- Each dot gets its own --wait. Try 0.3s steps instead of 0.1s! -->
+      <article class="card after" tabindex="0">
+        <div class="demo">
+          <span class="dots">
+            <span style="--wait: 0s"></span><span style="--wait: 0.1s"></span><span style="--wait: 0.2s"></span><span style="--wait: 0.3s"></span><span style="--wait: 0.4s"></span>
+          </span>
+        </div>
+        <h2>One after another</h2>
+        <p>All dots do the same jump. <code>animation-delay</code> makes each one wait a little longer than the one before.</p>
+        <div class="track" data-time="1s" aria-hidden="true"><span></span></div>
+        <p class="help">Help: One after another</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, this lab stops every test. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Animation">Read about animation on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

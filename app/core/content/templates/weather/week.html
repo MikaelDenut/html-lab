@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fernhollow Weather Station - This week</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>
+      Fernhollow Weather
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html">Today</a></li>
+        <li><a href="week.html" aria-current="page">This week</a></li>
+        <li><a href="learn.html">Learn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <h1>The week at our station</h1>
+      <p>Seven days of weather, from Monday to Sunday. The red number is the highest temperature of the day, the blue number the lowest.</p>
+    </section>
+
+    <section class="section">
+      <h2>Day by day</h2>
+      <ol class="week">
+        <li class="tile day">
+          <h3>Mon</h3>
+          <span class="icon rain" aria-hidden="true"><span class="cloud"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span></span>
+          <p>Showers</p>
+          <p><span class="high">High 14&deg;</span> <span class="low">Low 8&deg;</span></p>
+        </li>
+        <li class="tile day today" aria-current="date">
+          <h3>Today, Tue</h3>
+          <span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>
+          <p>Sunny spells</p>
+          <p><span class="high">High 19&deg;</span> <span class="low">Low 9&deg;</span></p>
+        </li>
+        <li class="tile day">
+          <h3>Wed</h3>
+          <span class="icon rain" aria-hidden="true"><span class="cloud"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span></span>
+          <p>Rain, windy</p>
+          <p><span class="high">High 13&deg;</span> <span class="low">Low 10&deg;</span></p>
+        </li>
+        <li class="tile day">
+          <h3>Thu</h3>
+          <span class="icon rain" aria-hidden="true"><span class="cloud"></span><span class="drop"></span><span class="drop"></span><span class="drop"></span></span>
+          <p>Heavy rain</p>
+          <p><span class="high">High 12&deg;</span> <span class="low">Low 9&deg;</span></p>
+        </li>
+        <li class="tile day">
+          <h3>Fri</h3>
+          <span class="icon cloudy" aria-hidden="true"><span class="cloud"></span></span>
+          <p>Cloudy</p>
+          <p><span class="high">High 15&deg;</span> <span class="low">Low 8&deg;</span></p>
+        </li>
+        <li class="tile day">
+          <h3>Sat</h3>
+          <span class="icon sunny" aria-hidden="true"><span class="sun"></span></span>
+          <p>Sunny</p>
+          <p><span class="high">High 21&deg;</span> <span class="low">Low 10&deg;</span></p>
+        </li>
+        <li class="tile day">
+          <h3>Sun</h3>
+          <span class="icon" aria-hidden="true"><span class="sun"></span><span class="cloud"></span></span>
+          <p>Sunny spells</p>
+          <p><span class="high">High 20&deg;</span> <span class="low">Low 11&deg;</span></p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Rain in our gauge</h2>
+      <figure class="chart">
+        <ul class="bars">
+          <li><span class="bar-space"><span class="bar" style="height: 20%"></span></span><b>2 mm</b>Mon</li>
+          <li><span class="bar-space"><span class="bar" style="height: 20%"></span></span><b>2 mm</b>Tue</li>
+          <li><span class="bar-space"><span class="bar" style="height: 60%"></span></span><b>6 mm</b>Wed</li>
+          <li><span class="bar-space"><span class="bar" style="height: 90%"></span></span><b>9 mm</b>Thu</li>
+          <li><span class="bar-space"><span class="bar" style="height: 40%"></span></span><b>4 mm</b>Fri</li>
+          <li><span class="bar-space"><span class="bar" style="height: 0%"></span></span><b>0 mm</b>Sat</li>
+          <li><span class="bar-space"><span class="bar" style="height: 10%"></span></span><b>1 mm</b>Sun</li>
+        </ul>
+        <figcaption>24 mm of rain fell this week. Each bar is 10% tall for every millimetre. Change a number in style="height" and the bar changes!</figcaption>
+      </figure>
+    </section>
+
+    <section class="section">
+      <h2>Coldest to warmest</h2>
+      <figure class="chart">
+        <ul class="ranges">
+          <li><b>Mon</b><span class="track"><span class="range" style="--low: 8; --high: 14"></span></span><span>8&deg; to 14&deg;</span></li>
+          <li><b>Tue</b><span class="track"><span class="range" style="--low: 9; --high: 19"></span></span><span>9&deg; to 19&deg;</span></li>
+          <li><b>Wed</b><span class="track"><span class="range" style="--low: 10; --high: 13"></span></span><span>10&deg; to 13&deg;</span></li>
+          <li><b>Thu</b><span class="track"><span class="range" style="--low: 9; --high: 12"></span></span><span>9&deg; to 12&deg;</span></li>
+          <li><b>Fri</b><span class="track"><span class="range" style="--low: 8; --high: 15"></span></span><span>8&deg; to 15&deg;</span></li>
+          <li><b>Sat</b><span class="track"><span class="range" style="--low: 10; --high: 21"></span></span><span>10&deg; to 21&deg;</span></li>
+          <li><b>Sun</b><span class="track"><span class="range" style="--low: 11; --high: 20"></span></span><span>11&deg; to 20&deg;</span></li>
+        </ul>
+        <figcaption>Each bar starts at the coldest temperature of the day and ends at the warmest. A long bar means a big change from night to afternoon.</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Fernhollow School and its weather station are made up. The readings are pretend, but the weather science is real.</p>
+    <p>Want to learn more? Read about <a href="https://simple.wikipedia.org/wiki/Weather">weather on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "title": "Animation lab",
+  "name": "animation-lab",
+  "blurb": "Test fades, bounces, spins and a timing race in a CSS lab",
+  "category": "effects",
+  "layout": "Effect cards with a timing track",
+  "shows": [
+    "Fades that play when you point at them",
+    "Bounce, shake, spin and a heartbeat",
+    "A race of balls with different timing",
+    "Dots that jump one after another",
+    "A timing bar that shows the seconds"
+  ],
+  "accent": "#ff7a1a"
+}

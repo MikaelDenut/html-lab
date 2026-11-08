@@ -1,0 +1,15 @@
+{
+  "title": "Robot club",
+  "name": "my-robot-club",
+  "blurb": "A robot club with a blinking robot, build steps and a parts box",
+  "category": "fun",
+  "layout": "Build instructions: numbered steps and parts",
+  "shows": [
+    "A robot drawn with SVG whose eyes blink",
+    "Big step cards numbered by a CSS counter",
+    "A parts list that sticks while you scroll",
+    "Tick boxes that cross out a part, no script",
+    "A table that turns into cards on a phone"
+  ],
+  "accent": "#c2410c"
+}

@@ -1,0 +1,438 @@
+/* Ada Fernwood, a nature photographer's website.
+   Her world: a dark room where the photos glow, like a slide show.
+   Photos look brightest on a dark page, so the page stays quiet.
+   Change a colour here and it changes on every page! */
+:root {
+  --night: #0f1312;
+  --panel: #18201d;
+  --line: #2b3531;
+  --text: #ece7dd;
+  --text-soft: #a8b6ae;
+  --fox: #f08c42;
+
+  --title-font: Didot, "Bodoni 72", Georgia, serif;
+  --text-font: "Avenir Next", "Helvetica Neue", sans-serif;
+
+  /* Font sizes. Each step is 1.25 times bigger than the one before. */
+  --size-1: 1.125rem;
+  --size-2: 1.41rem;
+  --size-3: 1.77rem;
+  --size-4: 2.22rem;
+  --size-5: 2.78rem;
+
+  /* Spaces. Small inside a group, big between groups. */
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 64px;
+
+  /* The gap between photos on the wall. Try 4px or 30px! */
+  --gap: 12px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--text-font);
+  font-size: var(--size-1);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--night);
+}
+
+main { max-width: 1240px; margin: 0 auto; padding: var(--space-l) var(--space-l) var(--space-xl); }
+p { max-width: 70ch; }
+
+h1, h2, h3 {
+  max-width: 24ch;
+  font-family: var(--title-font);
+  font-weight: normal;
+  line-height: 1.15;
+}
+
+a { color: var(--fox); }
+
+/* An orange ring shows where the keyboard is. */
+a:focus-visible { outline: 3px solid var(--fox); outline-offset: 3px; }
+
+/* The menu bar: name on the left, links on the right. */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  font-family: var(--title-font);
+  font-size: var(--size-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo svg { width: 36px; height: 36px; }
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+/* The page you are on gets an orange line under it. */
+.menu a:hover { color: var(--text); }
+.menu a:active { color: var(--fox); }
+.menu a[aria-current="page"] { color: var(--text); border-bottom-color: var(--fox); }
+
+/* A short title and a line of words. The photos are the star, so this stays small. */
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-s) var(--space-l);
+  margin: 0 0 var(--space-l);
+}
+
+.intro h1 { margin: 0; font-size: var(--size-4); }
+.intro p { margin: 0; max-width: 46ch; color: var(--text-soft); }
+
+/* THE PHOTO WALL.
+   columns makes 3 columns, and the photos flow down one, then the next. */
+.wall { columns: 3 260px; column-gap: var(--gap); }
+
+/* inline-block and break-inside: avoid keep a photo whole,
+   never cut in two between columns. */
+.tile {
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  margin: 0 0 var(--gap);
+  break-inside: avoid;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tile figure { position: relative; margin: 0; }
+.tile img { display: block; width: 100%; height: auto; }
+
+/* A thin white frame waits inside the photo, invisible (opacity: 0). */
+.tile figure::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+/* The caption waits at the bottom of the photo, invisible too. */
+.tile figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-l) var(--space-m) var(--space-m);
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  /* The shadow gets dark fast, so white words stay easy to read, even on snow. */
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0.85));
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+
+/* Mouse on a photo: the frame and the caption fade in. */
+.tile:hover figure::after, .tile:hover figcaption,
+.tile:focus-visible figure::after, .tile:focus-visible figcaption { opacity: 1; }
+
+/* Text tiles between the photos. */
+.note { padding: var(--space-l) var(--space-l) var(--space-l); background: var(--panel); }
+.note p { margin: 0; color: var(--text-soft); }
+
+.note .note-big {
+  margin: 0 0 var(--space-m);
+  font-family: var(--title-font);
+  font-size: var(--size-3);
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.note-fox { background: var(--fox); }
+.note-fox p, .note-fox .note-big, .note-fox a { color: var(--night); }
+
+/* On the orange tile the ring turns dark, so you can still see it. */
+.note-fox a:focus-visible { outline-color: var(--night); }
+
+/* THE LIGHTBOX. It covers the whole window but is hidden at first. */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-m);
+  overflow-y: auto;
+  padding: 72px var(--space-m) var(--space-l);
+  background: rgba(8, 10, 9, 0.96);
+}
+
+/* :target is the box whose id is in the address (like #fox), so it shows. */
+.lightbox:target { display: flex; }
+
+/* The box itself is not a button, so it needs no ring. Its links still have one. */
+.lightbox:focus { outline: none; }
+
+/* margin: auto above the photo and below the arrows puts them in the middle.
+   In a very short window the margins shrink to 0, and you can scroll down. */
+.lightbox figure { margin: auto 0 0; text-align: center; }
+.lightbox .arrows { margin: 0 0 auto; }
+
+/* 100vh is the whole window. The photo leaves 240px for the buttons and words. */
+.lightbox img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: calc(100vh - 240px);
+  margin: 0 auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox figcaption { margin: var(--space-m) auto 0; color: var(--text); }
+
+/* Back and Next sit side by side in one row. */
+.arrows {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-m);
+}
+
+.close, .arrow {
+  display: inline-block;
+  min-width: 44px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid var(--text-soft);
+}
+
+.close { position: absolute; top: var(--space-m); right: var(--space-m); }
+.arrow:hover, .close:hover { color: var(--night); background: var(--text); }
+.arrow:active, .close:active { transform: translateY(1px); }
+
+/* STORIES. Each story is a big title, a wide photo, words, then two photos. */
+.story { margin: 0 0 var(--space-xl); padding-top: var(--space-l); border-top: 1px solid var(--line); }
+/* One step smaller than the page title h1, so the h1 stays the biggest. */
+.story h2 { margin: 0 0 var(--space-l); font-size: var(--size-3); }
+.story figure { margin: 0; }
+.story img { display: block; width: 100%; height: auto; }
+.story figcaption { margin-top: var(--space-s); font-style: italic; color: var(--text-soft); }
+
+/* A wide photo. aspect-ratio makes it long and thin,
+   and object-fit: cover fills it without squashing the fox. */
+.wide img { aspect-ratio: 21 / 9; object-fit: cover; object-position: 40% 35%; }
+
+.story-text { max-width: 70ch; margin: var(--space-l) auto; }
+.story-text p { margin: 0 0 var(--space-m); }
+
+/* Two photos side by side, the same shape. */
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); }
+.pair img { aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* A tall photo next to the story text. */
+.side {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  align-items: center;
+  gap: var(--space-l);
+  margin-bottom: var(--space-l);
+}
+
+.side .story-text { margin: 0; }
+
+blockquote {
+  margin: var(--space-l) 0 0;
+  font-family: var(--title-font);
+  font-size: var(--size-3);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--fox);
+}
+
+/* ABOUT. A sidebar and the main text, side by side with grid. */
+.with-sidebar {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  align-items: start;
+  gap: var(--space-xl);
+}
+
+/* position: sticky keeps the sidebar on screen while you scroll. */
+.sidebar {
+  position: sticky;
+  top: var(--space-l);
+  padding: var(--space-l);
+  border-radius: 6px;
+  background: var(--panel);
+}
+
+.sidebar h2 { margin: var(--space-m) 0 var(--space-s); font-size: var(--size-3); }
+.camera { display: block; width: 100%; height: auto; }
+
+/* The flash lights up when your mouse is on the camera. */
+.camera .flash { transition: fill 0.2s; }
+.camera:hover .flash { fill: #fff7c2; }
+
+/* A list of facts: dt is the word, dd is the answer. */
+.facts { margin: 0; }
+
+.facts dt {
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--fox);
+}
+
+.facts dd { margin: 0 0 var(--space-m); color: var(--text-soft); }
+
+.about-text { max-width: 70ch; }
+.about-text h2 { margin: var(--space-xl) 0 var(--space-m); font-size: var(--size-4); }
+.lead { margin: 0; font-size: var(--size-2); }
+
+/* The gear list. Each dot is a small square, like a film frame. */
+.gear { margin: 0; padding: 0; list-style: none; }
+.gear li { position: relative; padding: var(--space-s) 0 var(--space-s) var(--space-l); border-bottom: 1px solid var(--line); }
+
+.gear li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--fox);
+}
+
+/* The steps happen in order, so a CSS counter writes 1, 2, 3 in circles. */
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li { position: relative; padding: 0 0 var(--space-l) 72px; counter-increment: step; }
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-family: var(--title-font);
+  font-size: var(--size-2);
+  color: var(--night);
+  background: var(--fox);
+}
+
+/* A thin line joins the circles, like a path through the woods. */
+.steps li::after {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 56px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--line);
+}
+
+.steps li:last-child::after { display: none; }
+.steps h3 { margin: var(--space-s) 0 4px; font-size: var(--size-2); }
+.steps p { margin: 0; color: var(--text-soft); }
+.more { margin-top: var(--space-l); }
+
+.site-footer {
+  padding: var(--space-l);
+  text-align: center;
+  color: var(--text-soft);
+  border-top: 1px solid var(--line);
+}
+
+.site-footer p { margin: 0 auto; }
+
+/* The one moment that moves: the lightbox fades in and the photo grows.
+   Only for people who like moving things. */
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox:target { animation: fade-in 0.4s var(--ease); }
+  .lightbox:target figure { animation: grow 0.6s var(--ease); }
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes grow { from { transform: scale(0.92); } to { transform: scale(1); } }
+
+/* Tablet: the sidebar goes on top of the text. */
+@media (max-width: 860px) {
+  .with-sidebar, .side { grid-template-columns: 1fr; }
+
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 var(--space-l);
+  }
+
+  .sidebar h2 { margin-top: 0; }
+  .camera { grid-row: span 2; }
+
+  /* The tall photo stays shorter than the window, so the words come soon. */
+  .side .tall img {
+    max-height: 70vh;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Phone: one or two columns, and the captions always show,
+   because a phone has no mouse to hover with. */
+@media (max-width: 560px) {
+  main { padding: var(--space-m) var(--space-m) var(--space-xl); }
+  .site-header { padding: var(--space-s) var(--space-m); }
+  .menu a { padding: 10px; }
+  .tile figcaption { padding-top: var(--space-l); opacity: 1; }
+  .pair { grid-template-columns: 1fr; }
+  .sidebar { grid-template-columns: 1fr; }
+  .arrows { gap: var(--space-s); }
+  .arrow { padding: 10px 14px; }
+}

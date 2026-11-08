@@ -1,0 +1,533 @@
+/* The colours of our old fire station. Change one here, every page changes. */
+:root {
+  --page: #f2f4f6;
+  --paper: #ffffff;
+  --slate: #24303b;
+  --slate-soft: #56636f;
+  --line: #d9dfe5;
+  --brick: #b23a26;
+  --brick-dark: #8a2a1a;
+  --brick-tint: #f8e4df;
+  --brass: #b8913a;
+  --brass-light: #f1dc9b;
+  --leaf: #2d6a4d;
+  --leaf-tint: #dff0e6;
+  --wood: #8f5c34;
+  --wood-dark: #5c3a20;
+  --case-back: #33231a;
+  --title-font: "Big Caslon", Baskerville, Georgia, serif;
+  --text-font: Seravek, "Gill Sans", sans-serif;
+  --text-xs: 14px;
+  --text-s: 18px;
+  --text-m: 23px;
+  --text-l: 29px;
+  --text-xl: 37px;
+  --text-2xl: 47px;
+  --text-3xl: 59px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --row: 232px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --shade: rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.16) 30%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.32);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--slate);
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  line-height: 1.55;
+}
+
+h1, h2, h3 { margin: 0 0 var(--space-s); font-family: var(--title-font); font-weight: 400; line-height: 1.15; max-width: 24ch; }
+h1 { font-size: var(--text-3xl); max-width: 22ch; }
+h2 { font-size: var(--text-l); }
+p { margin: 0 0 var(--space-s); max-width: 68ch; }
+a { color: var(--brick); }
+
+/* A dark ring shows where the keyboard is. For the filter it rings the group. */
+a:focus-visible,
+button:focus-visible,
+.card-form input:focus-visible,
+.card-form select:focus-visible,
+.show-switch:focus-visible ~ .show-labels { outline: 3px solid var(--slate); outline-offset: 3px; }
+
+/* On the dark bookcase and the footer the ring is light brass. */
+.bookcase a:focus-visible, .bottom a:focus-visible { outline-color: var(--brass-light); }
+
+code { white-space: nowrap; font-family: Menlo, monospace; font-size: 0.9em; }
+
+.page-title { margin-bottom: var(--space-l); }
+.wrap { max-width: 1180px; margin: 0 auto; padding: var(--space-l) var(--space-m) var(--space-xl); }
+.lead { font-size: var(--text-m); color: var(--slate-soft); line-height: 1.4; }
+
+/* The top bar: our arched logo and the menu. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  padding: var(--space-s) var(--space-m);
+  background: var(--paper);
+  border-bottom: 4px solid var(--brick);
+}
+.logo { display: flex; align-items: center; gap: var(--space-s); color: var(--slate); text-decoration: none; }
+.logo span { font-family: var(--title-font); font-size: var(--text-m); line-height: 1.1; }
+.logo small { display: block; font-family: var(--text-font); font-size: var(--text-xs); color: var(--slate-soft); }
+.logo-mark { width: 44px; height: 44px; fill: none; stroke: var(--brick); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.menu ul { display: flex; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px var(--space-s);
+  border-radius: 8px;
+  color: var(--slate);
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--brick-tint); }
+.menu a:active { transform: translateY(1px); }
+.menu a[aria-current="page"] { background: var(--brick); color: var(--paper); }
+
+/* The reading room: the bookcase, with the librarian's pick beside it. */
+.reading-room {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--space-l);
+  align-items: start;
+}
+
+/* The bookcase is a dark box with a thick wooden frame. */
+.bookcase {
+  padding: var(--space-m) var(--space-s) 0;
+  background: linear-gradient(180deg, #3e2b1f, var(--case-back));
+  border: 14px solid var(--wood);
+  border-radius: 6px;
+  box-shadow: 0 18px 40px rgba(36, 48, 59, 0.28);
+}
+.shelf { position: relative; }
+
+/* Each row of books stands on a board, painted by a gradient. */
+.books {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0 var(--space-s);
+  list-style: none;
+  background-image: linear-gradient(to top, var(--wood) 0 22px, var(--wood-dark) 22px 25px, rgba(0, 0, 0, 0.35) 25px 30px, transparent 30px);
+  /* Each board is one row tall, so the picture repeats once per row. */
+  background-size: 100% var(--row);
+}
+.books li { display: flex; align-items: flex-end; height: var(--row); padding-bottom: 22px; margin-right: 3px; }
+
+/* The shelf sign is a brass plate fixed to the front of the last board. */
+.shelf-sign {
+  position: absolute;
+  left: var(--space-m);
+  bottom: 3px;
+  margin: 0;
+  padding: 0 var(--space-s);
+  background: linear-gradient(180deg, var(--brass-light), var(--brass));
+  border-radius: 3px;
+  color: var(--slate);
+  font: 700 var(--text-xs) / 17px var(--text-font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A spine: light and shade make it look round. Two gold bands on top.
+   If a book does not set --ink-on, its words are white. */
+.spine {
+  --h: 172px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  gap: var(--space-xs);
+  width: 48px;
+  height: var(--h);
+  padding: 22px 0 8px;
+  background:
+    linear-gradient(var(--brass-light), var(--brass-light)) 0 8px / 100% 2px no-repeat,
+    linear-gradient(var(--brass-light), var(--brass-light)) 0 13px / 100% 2px no-repeat,
+    linear-gradient(90deg, var(--shade)),
+    var(--book);
+  border-radius: 3px 3px 2px 2px;
+  color: var(--ink-on, #ffffff);
+  text-decoration: none;
+  transition: transform 0.35s var(--ease);
+}
+
+/* Book heights: tall, mid and short. Book widths: thin and fat. */
+.spine.tall { --h: 198px; }
+.spine.mid { --h: 172px; }
+.spine.short { --h: 148px; }
+.spine.thin { width: 40px; }
+.spine.fat { width: 58px; }
+
+/* One line turns the title on its side. -webkit- is for older Safari. */
+.spine-title {
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  height: calc(var(--h) - 60px);
+  overflow: hidden;
+  font: 16px / 1.1 var(--title-font);
+}
+
+/* The little white label shows the shelf mark. */
+.mark {
+  padding: 2px 4px;
+  background: var(--paper);
+  border-radius: 3px;
+  color: var(--slate);
+  font: 700 var(--text-xs) / 1.2 var(--text-font);
+}
+
+/* A borrowed book leaves a gap with a dashed outline. */
+.spine.gone { background: none; border: 2px dashed rgba(241, 220, 155, 0.55); color: var(--brass-light); }
+.gone .mark { background: var(--brick); color: var(--paper); }
+
+/* Book colours. Each class only sets --book. */
+.red { --book: #a63a28; }
+.blue { --book: #2c5687; }
+.green { --book: #2d6a4d; }
+.teal { --book: #22706d; }
+.plum { --book: #6b3a5d; }
+.ink { --book: #26313d; }
+.mustard { --book: #d9a93a; --ink-on: #24303b; }
+.cream { --book: #efe4c6; --ink-on: #24303b; }
+
+/* A cover faces out, so you see the front of the book. */
+.cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 140px;
+  height: 198px;
+  padding: var(--space-s) var(--space-s) var(--space-s) 20px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.32) 0 7px, rgba(255, 255, 255, 0.2) 7px 9px, rgba(0, 0, 0, 0) 9px),
+    var(--book);
+  border-radius: 2px 6px 6px 2px;
+  color: var(--ink-on, #ffffff);
+  text-decoration: none;
+  transition: transform 0.35s var(--ease);
+}
+.motif { width: 32px; height: 32px; margin-bottom: auto; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.cover-title { font-family: var(--title-font); font-size: var(--text-s); line-height: 1.12; }
+/* A little smaller, so long names fit. */
+.cover-author { margin-top: var(--space-xs); font-size: 16px; line-height: 1.15; }
+.cover .mark { position: absolute; top: var(--space-s); right: var(--space-s); }
+
+/* Pull a book off the shelf: it slides up when your mouse is on it. */
+.spine:hover, .spine:focus-visible { transform: translateY(-10px); }
+.cover:hover, .cover:focus-visible { transform: translateY(-8px) rotate(-2deg); }
+.spine:active, .cover:active { transform: translateY(-3px); }
+
+/* The metal bookend. */
+.books .bookend { width: 30px; }
+.bookend::before {
+  content: "";
+  width: 10px;
+  height: 120px;
+  background: linear-gradient(90deg, #8d99a5, #c9d1d8 50%, #6f7b86);
+  border-radius: 4px 4px 0 0;
+}
+
+/* The librarian's pick, on white paper. */
+.pick { padding: var(--space-m); background: var(--paper); border-radius: 12px; }
+.pick h2 { font-size: var(--text-m); }
+.cover.big { width: 180px; height: 252px; margin: var(--space-s) 0 var(--space-m); }
+.cover.big .cover-title { font-size: var(--text-m); }
+.cover.big .motif { width: 44px; height: 44px; }
+.pick-link { font-weight: 700; }
+
+/* The pick leans into place once when the page opens. */
+@media (prefers-reduced-motion: no-preference) {
+  .pick .cover { animation: lean 1.1s var(--ease); }
+}
+@keyframes lean {
+  from { transform: translateY(16px) rotate(-4deg); }
+  to { transform: none; }
+}
+
+/* A book lying flat: the title reads like a normal line again. */
+.sideways, .building {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: var(--space-l);
+  align-items: center;
+  margin-top: var(--space-xl);
+}
+.lying-book {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  padding: 0 var(--space-s) 0 var(--space-m);
+  background:
+    linear-gradient(180deg, var(--shade)),
+    var(--leaf);
+  border-radius: 3px;
+  color: var(--paper);
+  font: var(--text-s) var(--title-font);
+}
+
+/* The old fire station, drawn with SVG paths. */
+.station { width: 100%; max-width: 300px; }
+.station .door { fill: var(--brick); }
+.station .sign { fill: var(--brass-light); }
+.station text { fill: var(--slate); font: 700 15px var(--text-font); letter-spacing: 3px; text-anchor: middle; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
+.button, .card-form button {
+  display: inline-block;
+  padding: var(--space-s) var(--space-m);
+  border: 0;
+  border-radius: 8px;
+  background: var(--brick);
+  color: var(--paper);
+  font: 600 var(--text-s) var(--text-font);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease), background 0.2s;
+}
+.button:hover, .card-form button:hover { background: var(--brick-dark); transform: translateY(-2px); }
+.button:active, .card-form button:active { transform: translateY(1px); }
+.button.quiet { background: var(--brass-light); color: var(--slate); }
+.button.quiet:hover { background: #e8cd7a; }
+
+/* The filter: hidden radio buttons. The checked one hides some rows. */
+.show-switch { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.show-labels, .finder ul { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.show-labels label, .finder a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--space-xs) var(--space-s);
+  background: var(--paper);
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  color: var(--slate);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.show-labels label:hover, .finder a:hover { border-color: var(--slate-soft); }
+.show-labels label:active, .finder a:active { transform: translateY(1px); }
+#show-all:checked ~ .show-labels label[for="show-all"],
+#show-in:checked ~ .show-labels label[for="show-in"],
+#show-out:checked ~ .show-labels label[for="show-out"] { background: var(--slate); border-color: var(--slate); color: var(--paper); }
+#show-in:checked ~ .book-table tbody tr.out,
+#show-out:checked ~ .book-table tbody tr.in { display: none; }
+
+/* The shelf mark links look the same. */
+.finder { margin-top: var(--space-m); }
+.finder p { margin-bottom: var(--space-xs); font-weight: 600; }
+
+.book-table { width: 100%; margin-top: var(--space-m); border-collapse: collapse; background: var(--paper); }
+.book-table caption, .hours-table caption { padding-bottom: var(--space-s); text-align: left; color: var(--slate-soft); }
+.book-table th, .book-table td, .hours-table th, .hours-table td { padding: var(--space-s) var(--space-m); border-bottom: 1px solid var(--line); text-align: left; }
+.book-table thead th { background: var(--slate); color: var(--paper); font-family: var(--text-font); font-weight: 600; }
+.book-table tbody th { font-family: var(--title-font); font-weight: 400; }
+
+/* The link #a1 makes the row with id="a1" the :target. It lights up. */
+.book-table tbody tr:target { background: var(--brass-light); }
+.book-table tbody tr:target th::after {
+  content: "Your book";
+  margin-left: var(--space-s);
+  padding: 2px 8px;
+  background: var(--slate);
+  border-radius: 999px;
+  color: var(--paper);
+  font: 700 var(--text-xs) var(--text-font);
+  vertical-align: middle;
+}
+
+/* A dot and a word, so colour is never the only clue. */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--text-s);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: currentColor; }
+.badge.in, .badge.story { background: var(--leaf-tint); color: var(--leaf); }
+.badge.out { background: var(--brick-tint); color: var(--brick-dark); }
+.badge.late { background: var(--brass-light); color: var(--slate); }
+
+.help { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); margin-top: var(--space-xl); }
+.mark-big { display: inline-flex; gap: 4px; padding: var(--space-xs) var(--space-s); background: var(--paper); border-radius: 6px; font: 700 var(--text-2xl) / 1 var(--text-font); }
+.mark-big b { color: var(--brick); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { padding: var(--space-s) 0; font-weight: 600; cursor: pointer; }
+.faq summary:hover { color: var(--brick); }
+
+/* Visit page */
+.visit-grid { display: grid; grid-template-columns: 3fr 2fr; gap: var(--space-l); }
+.hours-table { width: 100%; border-collapse: collapse; background: var(--paper); }
+.hours-table th { width: 40%; font-weight: 600; }
+.hours-table .closed { color: var(--slate-soft); }
+.address { margin-bottom: var(--space-s); font-size: var(--text-m); font-style: normal; font-weight: 600; line-height: 1.3; }
+
+.card-steps { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-l); align-items: center; margin-top: var(--space-xl); }
+
+/* A CSS counter numbers the steps. */
+.step-list { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.step-list li { position: relative; margin-bottom: var(--space-m); padding-left: 52px; counter-increment: step; }
+.step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--brick);
+  color: var(--paper);
+  font: 700 var(--text-s) / 36px var(--text-font);
+  text-align: center;
+}
+
+/* A library card made only with CSS. */
+.library-card {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1.586;
+  padding: var(--space-m);
+  background: linear-gradient(135deg, var(--brick), var(--brick-dark));
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(138, 42, 26, 0.3);
+  color: var(--paper);
+}
+.card-name { font-family: var(--title-font); font-size: var(--text-m); }
+.card-holder { margin-bottom: auto; font-size: var(--text-xs); color: #ffe9e4; }
+.card-holder span { display: block; font-size: var(--text-s); color: var(--paper); }
+.barcode { width: 160px; height: 40px; padding: 4px; background: var(--paper); border-radius: 4px; stroke: var(--slate); }
+.barcode .thin { stroke-width: 2; }
+.barcode .thick { stroke-width: 4; }
+
+.practice { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: start; margin-top: var(--space-xl); }
+.card-form { display: grid; gap: var(--space-xs); max-width: 520px; padding: var(--space-m); background: var(--paper); border-radius: 12px; }
+.card-form label { font-weight: 600; }
+.card-form input[type="text"], .card-form select {
+  min-height: 46px;
+  padding: 10px var(--space-s);
+  border: 2px solid var(--slate-soft);
+  border-radius: 8px;
+  background-color: var(--paper);
+  color: var(--slate);
+  font: var(--text-s) var(--text-font);
+}
+
+/* The example words in the box. Dark enough to read. */
+.card-form input::placeholder { color: var(--slate-soft); }
+
+/* appearance: none lets our border show on Safari's select box.
+   Two little gradients draw the arrow. */
+.card-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: var(--space-s);
+  padding-right: 40px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--slate) 50%),
+    linear-gradient(135deg, var(--slate) 50%, transparent 50%);
+  background-position: right 20px center, right 14px center;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* Only one letter? The box and the hint turn red. */
+.field-hint { margin: 0 0 var(--space-s); color: var(--slate-soft); }
+.card-form input[type="text"]:not(:placeholder-shown):invalid { border-color: var(--brick); background-color: var(--brick-tint); }
+.card-form input:not(:placeholder-shown):invalid + .field-hint { color: var(--brick-dark); font-weight: 700; }
+.card-form .promise { display: flex; align-items: center; gap: var(--space-s); margin-bottom: var(--space-s); font-weight: 400; }
+.promise input { width: 22px; height: 22px; accent-color: var(--brick); }
+.card-form button { justify-self: start; }
+.form-note { font-size: 16px; color: var(--slate-soft); }
+
+.bottom {
+  padding: var(--space-l) var(--space-m);
+  background: var(--slate);
+  color: #d5dce3;
+  text-align: center;
+}
+.bottom p { margin: 0 auto var(--space-xs); }
+.bottom b { color: var(--paper); }
+.bottom a { color: var(--brass-light); }
+
+/* Narrower: the pick moves under the bookcase. */
+@media (max-width: 1000px) {
+  .reading-room { grid-template-columns: 1fr; }
+  .pick { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 var(--space-m); align-items: start; }
+  .pick h2 { grid-column: 1 / -1; }
+  .pick .cover.big { grid-row: span 2; margin: 0; }
+}
+
+/* Tablets: side by side boxes stack. */
+@media (max-width: 760px) {
+  .sideways, .building, .help, .visit-grid, .card-steps, .practice { grid-template-columns: 1fr; gap: var(--space-m); }
+  .library-card {
+    max-width: 340px;
+  }
+  h1 { font-size: var(--text-2xl); }
+}
+
+/* Phones: smaller books, one card per book in the table. */
+@media (max-width: 600px) {
+  :root { --row: 214px; }
+  .wrap { padding: var(--space-m) 16px var(--space-l); }
+  .top-bar { padding: var(--space-s) 16px; }
+  .menu a {
+    padding: 8px 10px;
+  }
+  h1 { font-size: var(--text-xl); }
+  .lead { font-size: var(--text-s); }
+  .bookcase {
+    padding: var(--space-s) 6px 0;
+    border-width: 10px;
+  }
+  .books { padding: 0 6px; }
+  .spine, .spine.mid { --h: 160px; }
+  .spine.tall { --h: 182px; }
+  .spine.short { --h: 136px; }
+  .cover { width: 124px; height: 182px; }
+  .pick { grid-template-columns: 1fr; }
+  .pick .cover.big { margin: 0 0 var(--space-m); }
+
+  /* A screen reader reads the page out loud for people who cannot see
+     well. This hides the heading row from you, not from it. */
+  .book-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .book-table, .book-table tbody, .book-table caption { display: block; }
+  .book-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2px var(--space-s);
+    padding: var(--space-s) 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .book-table tbody th, .book-table tbody td { padding: 0; border: 0; }
+  .book-table tbody th, .book-table td[data-label="Author"] { grid-column: 1 / -1; }
+  .book-table td[data-label]::before { content: attr(data-label) ": "; color: var(--slate-soft); font-weight: 400; }
+  .hours-table th, .hours-table td { padding: var(--space-s); }
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roundabox Studio - Drawings</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="3" y="3" width="34" height="34" rx="2"></rect>
+        <circle cx="15" cy="16" r="5"></circle>
+        <path d="M8 31 L18 22 L24 27 L28 23 L33 31"></path>
+      </svg>
+      Roundabox Studio
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html" aria-current="page">Drawings</a></li>
+        <li><a href="how.html">How it is made</a></li>
+        <li><a href="challenge.html">Your turn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Pictures made of boxes</h1>
+      <p class="lead">Every picture here is drawn with CSS. No photos and no drawing app: only boxes with round corners, colours and a few cuts.</p>
+      <p>Point at a picture, or press <kbd>Tab</kbd>, and it moves. Then tick the X-ray box to see every shape as the box it really is.</p>
+      <label class="xray-switch"><input type="checkbox" id="xray"> X-ray: show the boxes</label>
+    </section>
+
+    <!-- Each picture is one div with class "art". Every div inside it is one shape.
+         tabindex="0" lets the Tab key stop on a picture, so the keyboard can make it move too. -->
+    <div class="studio">
+      <figure class="piece cat-piece" tabindex="0">
+        <div class="art cat" role="img" aria-label="An orange cat sitting and looking at you">
+          <div class="cat-tail"></div>
+          <div class="cat-ear left tri"></div>
+          <div class="cat-ear right tri"></div>
+          <div class="cat-body"></div>
+          <div class="cat-head"></div>
+          <div class="cat-eye left"></div>
+          <div class="cat-eye right"></div>
+          <div class="cat-nose"></div>
+          <div class="cat-mouth"></div>
+          <div class="cat-whiskers left"></div>
+          <div class="cat-whiskers right"></div>
+          <div class="cat-paws"></div>
+        </div>
+        <figcaption><span class="count">12 <small>boxes</small></span><b>Cat, sitting</b> The ears are cut into triangles with <code>clip-path</code>.</figcaption>
+      </figure>
+
+      <figure class="piece snail-piece" tabindex="0">
+        <div class="art snail" role="img" aria-label="A snail with a brown striped shell resting under a big mushroom">
+          <div class="mushroom-stem"></div>
+          <div class="mushroom-cap"></div>
+          <div class="snail-body"></div>
+          <div class="snail-feelers"></div>
+          <div class="snail-eyes"></div>
+          <div class="snail-shell"></div>
+        </div>
+        <figcaption><span class="count">6 <small>boxes</small></span><b>Snail</b> The second feeler and eye are <code>box-shadow</code> copies.</figcaption>
+      </figure>
+
+      <figure class="piece fish-piece" tabindex="0">
+        <div class="art fish" role="img" aria-label="An orange fish with yellow spots, blowing bubbles">
+          <div class="fish-swimmer">
+            <div class="fish-tail"></div>
+            <div class="fish-fin-top"></div>
+            <div class="fish-body"></div>
+            <div class="fish-fin-side"></div>
+            <div class="fish-eye"></div>
+            <div class="fish-mouth"></div>
+            <div class="fish-bubbles"></div>
+          </div>
+        </div>
+        <figcaption><span class="count">7 <small>boxes</small></span><b>Spotty fish</b> The spots are one tiny <code>radial-gradient</code>, repeated.</figcaption>
+      </figure>
+
+      <figure class="piece sun-piece" tabindex="0">
+        <div class="art sun" role="img" aria-label="A smiling sun with yellow rays">
+          <div class="sun-rays"></div>
+          <div class="sun-face"></div>
+          <div class="sun-eye left"></div>
+          <div class="sun-eye right"></div>
+          <div class="sun-cheeks"></div>
+          <div class="sun-smile"></div>
+        </div>
+        <figcaption><span class="count">6 <small>boxes</small></span><b>Happy sun</b> The rays are one <code>conic-gradient</code>.</figcaption>
+      </figure>
+
+      <!-- No tabindex here: Tab stops on the link inside instead. -->
+      <figure class="piece house-piece">
+        <div class="art house" role="img" aria-label="A yellow house with a red roof and smoke from the chimney">
+          <div class="house-roof tri"></div>
+          <div class="house-chimney"></div>
+          <div class="house-smoke"></div>
+          <div class="house-wall"></div>
+          <div class="house-door"></div>
+          <div class="house-window"></div>
+        </div>
+        <figcaption><span class="count">6 <small>boxes</small></span><b>Little house</b> <a href="how.html">See it built step by step</a></figcaption>
+      </figure>
+
+      <a class="piece yours-piece" href="challenge.html">
+        <span class="empty-frame">Your drawing goes here</span>
+        <span class="yours-label">Draw a face on the Your turn page</span>
+      </a>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <p>Roundabox Studio: a pretend drawing studio, drawn with HTML and CSS only.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Shape">Circles, squares, triangles: read about shapes on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kettlemoss Garden Club - Join the club</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg class="icon-defs" aria-hidden="true">
+    <symbol id="plant" viewBox="0 0 24 24"><path d="M12 21 V11 M12 14 C8 14 5 11 5 7 C9 7 12 10 12 14 M12 11 C12 7 15 4 19 4 C19 8 16 11 12 11 M5 21 H19"></path></symbol>
+  </svg>
+
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 24 24" aria-hidden="true"><use href="#plant"></use></svg>
+      <span>Kettlemoss<small>School Garden Club</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Garden year</a></li>
+        <li><a href="plants.html">Plants</a></li>
+        <li><a href="club.html" aria-current="page">Join the club</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-title">
+      <h1>Join the garden club</h1>
+      <p class="lead">We meet after school on Tuesdays and Thursdays, in the garden behind the gym. You do not need to know anything about plants. Just bring old shoes.</p>
+    </section>
+
+    <div class="club-grid">
+      <section class="panel">
+        <h2>Today's club jobs</h2>
+        <p>Tick a job when it is done. CSS counts your ticks!</p>
+        <form class="checklist">
+          <input type="checkbox" id="job-1"><label for="job-1">Fill the watering cans from the rain barrel</label>
+          <input type="checkbox" id="job-2"><label for="job-2">Water the seedlings on the windowsill</label>
+          <input type="checkbox" id="job-3"><label for="job-3">Look under the leaves for slugs and snails</label>
+          <input type="checkbox" id="job-4"><label for="job-4">Pull out the weeds, roots and all</label>
+          <input type="checkbox" id="job-5"><label for="job-5">Turn the compost with a fork</label>
+          <input type="checkbox" id="job-6"><label for="job-6">Write today's weather in the garden diary</label>
+          <input type="checkbox" id="job-7"><label for="job-7">Wash your hands</label>
+          <p class="done-count">jobs done</p>
+          <button class="button light" type="reset">Clear all ticks</button>
+          <p class="form-note">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </section>
+
+      <section class="panel join">
+        <h2>Join us</h2>
+        <form class="join-form">
+          <label for="first-name">Your first name</label>
+          <input id="first-name" type="text" placeholder="Ada" autocomplete="given-name">
+
+          <label for="class-name">Your class</label>
+          <input id="class-name" type="text" placeholder="4B" pattern="[0-9][A-Z]" aria-describedby="class-hint">
+          <p class="hint" id="class-hint">A number and a capital letter, like 4B.</p>
+
+          <fieldset class="days">
+            <legend>Which days can you come?</legend>
+            <label class="day"><input type="radio" name="day" value="tuesday" checked> Tuesday</label>
+            <label class="day"><input type="radio" name="day" value="thursday"> Thursday</label>
+            <label class="day"><input type="radio" name="day" value="both"> Both days</label>
+            <label class="day"><input type="radio" name="day" value="friday" disabled> Friday (full)</label>
+          </fieldset>
+
+          <label for="grow">What do you want to grow?</label>
+          <select id="grow">
+            <option>Peas</option>
+            <option>Potatoes</option>
+            <option>Strawberries</option>
+            <option>Lettuce</option>
+            <option>Sunflowers</option>
+            <option>Thyme</option>
+          </select>
+
+          <label class="check"><input type="checkbox"> I will bring old shoes or boots</label>
+          <button class="button" type="submit">Join the club</button>
+          <p class="form-note">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </section>
+    </div>
+
+    <section class="section">
+      <h2>Map of our garden</h2>
+      <p>The map is a CSS grid. Each box has a name, and one line of CSS says where each name goes.</p>
+      <div class="plan">
+        <div class="bed shed">Shed</div>
+        <div class="bed barrel">Rain barrel</div>
+        <div class="bed peas">Peas</div>
+        <div class="bed potatoes">Potatoes</div>
+        <div class="bed path">Path</div>
+        <div class="bed compost">Compost</div>
+        <div class="bed berries">Strawberries</div>
+        <div class="bed herbs">Thyme and herbs</div>
+        <div class="bed flowers">Sunflowers</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Kettlemoss School Garden Club</b> is a pretend club, made with HTML and CSS. The garden facts are real.</p>
+    <p>Want to grow things too? <a href="https://simple.wikipedia.org/wiki/Gardening">Read about gardening on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

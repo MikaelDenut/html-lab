@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roundabox Studio - How it is made</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="3" y="3" width="34" height="34" rx="2"></rect>
+        <circle cx="15" cy="16" r="5"></circle>
+        <path d="M8 31 L18 22 L24 27 L28 23 L33 31"></path>
+      </svg>
+      Roundabox Studio
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Drawings</a></li>
+        <li><a href="how.html" aria-current="page">How it is made</a></li>
+        <li><a href="challenge.html">Your turn</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>A house in six boxes</h1>
+      <p class="lead">Here is the little house again, built one shape at a time. Each step adds one box. The new box is in colour, the old ones turn grey.</p>
+    </section>
+
+    <!-- The class "old" turns a shape grey. Look for it in style.css. -->
+    <ol class="steps">
+      <li>
+        <div class="art house" role="img" aria-label="Step 1: a yellow wall">
+          <div class="house-wall"></div>
+        </div>
+        <p><b>1. The wall</b> A box with a <code>background</code> colour.</p>
+      </li>
+      <li>
+        <div class="art house" role="img" aria-label="Step 2: a red roof on the wall">
+          <div class="house-roof tri"></div>
+          <div class="house-wall old"></div>
+        </div>
+        <p><b>2. The roof</b> <code>clip-path</code> cuts a box into a triangle.</p>
+      </li>
+      <li>
+        <div class="art house" role="img" aria-label="Step 3: a blue door">
+          <div class="house-roof tri old"></div>
+          <div class="house-wall old"></div>
+          <div class="house-door"></div>
+        </div>
+        <p><b>3. The door</b> <code>border-radius</code> rounds the top corners.</p>
+      </li>
+      <li>
+        <div class="art house" role="img" aria-label="Step 4: a window with a white cross">
+          <div class="house-roof tri old"></div>
+          <div class="house-wall old"></div>
+          <div class="house-door old"></div>
+          <div class="house-window"></div>
+        </div>
+        <p><b>4. The window</b> Two <code>linear-gradient</code> stripes make the cross.</p>
+      </li>
+      <li>
+        <div class="art house" role="img" aria-label="Step 5: a chimney behind the roof">
+          <div class="house-roof tri old"></div>
+          <div class="house-chimney"></div>
+          <div class="house-wall old"></div>
+          <div class="house-door old"></div>
+          <div class="house-window old"></div>
+        </div>
+        <p><b>5. The chimney</b> It comes after the roof in the HTML, but <code>z-index</code> keeps the roof in front.</p>
+      </li>
+      <li>
+        <div class="art house" role="img" aria-label="Step 6: three puffs of smoke">
+          <div class="house-roof tri old"></div>
+          <div class="house-chimney old"></div>
+          <div class="house-smoke"></div>
+          <div class="house-wall old"></div>
+          <div class="house-door old"></div>
+          <div class="house-window old"></div>
+        </div>
+        <p><b>6. The smoke</b> One puff and two <code>box-shadow</code> copies.</p>
+      </li>
+    </ol>
+
+    <section class="explain">
+      <div>
+        <h2>How to cut a triangle</h2>
+        <p><code>clip-path: polygon()</code> joins dots and cuts away the rest. Each dot is two numbers: how far across, then how far down the box.</p>
+        <p>The roof has <code>class="house-roof tri"</code>. Its cut lives in the class <code>tri</code>, so every triangle can share it:</p>
+        <pre><code>.tri {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}</code></pre>
+      </div>
+      <div class="corners" role="img" aria-label="A box with a triangle inside. The dots are at 50% 0, 100% 100% and 0 100%.">
+        <div class="corners-shape tri"></div>
+        <span class="dot d1">50% 0</span>
+        <span class="dot d2">100% 100%</span>
+        <span class="dot d3">0 100%</span>
+      </div>
+    </section>
+
+    <section class="explain sizes-box">
+      <div>
+        <h2>One house, three sizes</h2>
+        <p>Every size in the house is in <code>em</code>. One em is as big as the <code>font-size</code>. So when the font-size grows, the whole house grows with it.</p>
+      </div>
+      <div class="sizes">
+        <div class="art house" style="font-size: 4px" role="img" aria-label="A small house">
+          <div class="house-roof tri"></div>
+          <div class="house-chimney"></div>
+          <div class="house-wall"></div>
+          <div class="house-door"></div>
+          <div class="house-window"></div>
+        </div>
+        <div class="art house" style="font-size: 7px" role="img" aria-label="A middle sized house">
+          <div class="house-roof tri"></div>
+          <div class="house-chimney"></div>
+          <div class="house-wall"></div>
+          <div class="house-door"></div>
+          <div class="house-window"></div>
+        </div>
+        <div class="art house" style="font-size: 10px" role="img" aria-label="A big house">
+          <div class="house-roof tri"></div>
+          <div class="house-chimney"></div>
+          <div class="house-wall"></div>
+          <div class="house-door"></div>
+          <div class="house-window"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p>Roundabox Studio: a pretend drawing studio, drawn with HTML and CSS only.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Triangle">What is a triangle? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

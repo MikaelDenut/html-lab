@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animation lab - Timing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="logo"><a href="index.html"><span class="logo-ball"></span>Animation lab</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Fades</a></li>
+        <li><a href="moves.html">Moves</a></li>
+        <li><a href="timing.html" aria-current="page">Timing</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>The timing race</h1>
+      <p>Every ball runs the same road in the same 2 seconds. Only the timing word is different. Put your mouse on a lane to start that ball. No mouse? Press <kbd>Tab</kbd> to reach a lane.</p>
+      <p>The little drawing is the timing curve: it goes up slowly where the ball is slow, and steeply where the ball is fast.</p>
+    </section>
+
+    <!-- The "start all" strip comes first, so ~ can reach every lane after it.
+         tabindex="0" lets the Tab key stop here, so the keyboard can start the race too. -->
+    <section class="race" aria-label="Race track">
+      <p class="start-all" tabindex="0">Start all! Put your mouse here and every ball runs at once.</p>
+      <div class="lane linear" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 L40 0"/></svg>
+        <div class="lane-info"><h2>linear</h2><p>The same speed all the way, like a robot.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+      <div class="lane ease" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 C10 36 10 0 40 0"/></svg>
+        <div class="lane-info"><h2>ease</h2><p>Quick start, soft stop. You get this if you say nothing.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+      <div class="lane ease-in" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 C16.8 40 40 0 40 0"/></svg>
+        <div class="lane-info"><h2>ease-in</h2><p>Slow, then faster and faster, like a sled.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+      <div class="lane ease-out" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 C0 40 23.2 0 40 0"/></svg>
+        <div class="lane-info"><h2>ease-out</h2><p>Fast, then slower, like a ball rolling to a stop.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+      <div class="lane ease-in-out" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 C16.8 40 23.2 0 40 0"/></svg>
+        <div class="lane-info"><h2>ease-in-out</h2><p>Slow, fast, slow, like a car between two stop signs.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+      <div class="lane steps" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 H8 V32 H16 V24 H24 V16 H32 V8 H40 V0"/></svg>
+        <div class="lane-info"><h2>steps(5)</h2><p>No gliding, just 5 hops, like a frog.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+      <div class="lane boing" tabindex="0">
+        <svg class="curve" viewBox="-4 -14 48 68" aria-hidden="true"><rect width="40" height="40"/><path d="M0 40 C20 60 20 -20 40 0"/></svg>
+        <div class="lane-info"><h2>cubic-bezier</h2><p>Make your own! This one backs up, then runs too far.</p><p class="help">Help: Slow and smooth changes</p></div>
+        <div class="road"><span class="runner"></span></div>
+      </div>
+    </section>
+
+    <section class="how">
+      <h2>How the race works</h2>
+      <pre><code>.runner {
+  transition: transform 2s;
+  transition-timing-function: ease-in;
+}
+
+.lane:hover .runner {
+  transform: translateX(100%);
+}</code></pre>
+      <div>
+        <p>These balls use <code>transition</code>, not <code>@keyframes</code>. A transition plays when something changes: here, when your mouse comes onto the lane.</p>
+        <p>Take your mouse away and the ball runs home, with the same timing.</p>
+        <p class="fact">Try it: change <code>2s</code> to <code>5s</code> in style.css and the race gets slow.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, this lab stops every test. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Animation">Read about animation on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

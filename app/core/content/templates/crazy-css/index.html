@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crazy CSS - Show-offs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- The bar at the top: the name on the left, the menu on the right. -->
+  <header class="bar">
+    <p class="logo"><a href="index.html"><svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L14.6 9 L22 9.2 L16.2 13.8 L18.3 21 L12 16.8 L5.7 21 L7.8 13.8 L2 9.2 L9.4 9 Z"/></svg>Crazy CSS</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html" aria-current="page">Show-offs</a></li>
+        <li><a href="magic.html">Magic</a></li>
+        <li><a href="space.html">Space</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>The CSS show</h1>
+      <p>Every piece on this stage is made with CSS, and no JavaScript at all. Put your mouse on a piece, or press <kbd>Tab</kbd> to reach it, and the show starts.</p>
+      <p>Each trick has its own block in <code>style.css</code>, with its name in capital letters. Copy one into your own page!</p>
+    </section>
+
+    <!-- Each piece: a dark stage for the trick, and a plaque that says what it is. -->
+    <div class="shows">
+      <article class="piece cube-piece wide" tabindex="0">
+        <div class="stage">
+          <div class="scene" aria-hidden="true">
+            <div class="cube">
+              <span class="face back">WOW</span>
+              <span class="face right">3D</span>
+              <span class="face left">HI</span>
+              <span class="face up">UP</span>
+              <span class="face down">YAY</span>
+              <span class="face front">CSS</span>
+            </div>
+          </div>
+        </div>
+        <div class="plaque">
+          <h2>3D cube</h2>
+          <p>Six faces, each pushed out with <code>translateZ</code>. <code>preserve-3d</code> keeps them in 3D.</p>
+          <p class="help">Help: 3D flip cards</p>
+        </div>
+      </article>
+
+      <article class="piece glitch-piece big" tabindex="0">
+        <div class="stage"><p class="glitch" data-text="GLITCH">GLITCH</p></div>
+        <div class="plaque">
+          <h2>Glitch text</h2>
+          <p>Two copies of the word, cut into slices with <code>clip-path</code>, jump around.</p>
+          <p class="help">Help: Bounce, shake and wobble</p>
+        </div>
+      </article>
+
+      <article class="piece rainbow-piece" tabindex="0">
+        <div class="stage"><p class="rainbow">RAINBOW</p></div>
+        <div class="plaque">
+          <h2>Rainbow text</h2>
+          <p><code>background-clip: text</code> paints a rainbow inside the letters.</p>
+          <p class="help">Help: Rainbow and moving colors</p>
+        </div>
+      </article>
+
+      <article class="piece neon-piece" tabindex="0">
+        <div class="stage"><p class="neon">NEON</p></div>
+        <div class="plaque">
+          <h2>Neon sign</h2>
+          <p><code>text-shadow</code> makes the glow, and opacity makes it flicker on.</p>
+          <p class="help">Help: Glow and neon</p>
+        </div>
+      </article>
+
+      <!-- Each letter waits for its own --wait before it jumps. -->
+      <article class="piece wave-piece big" tabindex="0">
+        <div class="stage">
+          <p class="wave"><span class="sr-only">Hello!</span><span class="letters" aria-hidden="true"><span style="--wait: 0s">H</span><span style="--wait: 0.1s">E</span><span style="--wait: 0.2s">L</span><span style="--wait: 0.3s">L</span><span style="--wait: 0.4s">O</span><span style="--wait: 0.5s">!</span></span></p>
+        </div>
+        <div class="plaque">
+          <h2>Letter wave</h2>
+          <p>Every letter does the same jump. <code>animation-delay</code> makes them go in turn.</p>
+          <p class="help">Help: One after another</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- The footer: a note about less motion, and a link to read more. -->
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, the show stops. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Cascading_Style_Sheets">What is CSS? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

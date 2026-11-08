@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visit - Snail Lane Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 56 36" aria-hidden="true">
+        <rect x="4" y="27" width="46" height="7" rx="3.5" fill="#a9c2b8"/>
+        <circle cx="47" cy="26" r="5" fill="#a9c2b8"/>
+        <path d="M46 22 L44 12 M50 22 L53 13" stroke="#a9c2b8" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24" cy="17" r="13" fill="#d8b25a"/>
+        <path d="M24 17 a2.5 2.5 0 0 1 5 0 a5 5 0 0 1 -10 0 a7.5 7.5 0 0 1 15 0 a10 10 0 0 1 -20 0" fill="none" stroke="#1e3b36" stroke-width="2"/>
+      </svg>
+      Snail Lane Gallery
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Paintings</a></li>
+        <li><a href="exhibitions.html">Exhibitions</a></li>
+        <li><a href="visit.html" aria-current="page">Visit</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Plan your visit</h1>
+    <p class="intro">We are at Snail Lane 3, in the old green house with the gold door. Ring the bell with the snail on it.</p>
+
+    <!-- Two boxes side by side: opening hours and prices. -->
+    <div class="visit-info">
+      <section>
+        <h2>Opening hours</h2>
+        <table class="hours">
+          <tr><th scope="row">Monday</th><td>Closed</td></tr>
+          <tr><th scope="row">Tuesday</th><td>10:00 to 18:00</td></tr>
+          <tr><th scope="row">Wednesday</th><td>10:00 to 18:00</td></tr>
+          <tr><th scope="row">Thursday</th><td>10:00 to 20:00</td></tr>
+          <tr><th scope="row">Friday</th><td>10:00 to 18:00</td></tr>
+          <tr><th scope="row">Saturday and Sunday</th><td>11:00 to 17:00</td></tr>
+        </table>
+      </section>
+      <section>
+        <h2>Tickets</h2>
+        <dl class="prices">
+          <dt>Children</dt><dd>Free</dd>
+          <dt>Grown-ups</dt><dd>8 euros</dd>
+          <dt>Snails</dt><dd>Free, of course</dd>
+        </dl>
+      </section>
+    </div>
+
+    <!-- THE FLOOR PLAN, drawn with SVG. Each room is a rect, each number a circle and a text. -->
+    <section class="plan-box">
+      <h2>Find your way</h2>
+      <div class="plan-layout">
+        <svg class="plan" viewBox="0 0 400 270" role="img" aria-label="Floor plan of the gallery with six numbered rooms">
+          <rect class="room room-green" x="10" y="10" width="200" height="170"/>
+          <rect class="room" x="220" y="10" width="170" height="90"/>
+          <rect class="room" x="220" y="110" width="170" height="70"/>
+          <rect class="room" x="10" y="190" width="130" height="70"/>
+          <rect class="room" x="150" y="190" width="100" height="70"/>
+          <rect class="room" x="260" y="190" width="130" height="70"/>
+          <rect x="184" y="256" width="32" height="8" fill="#f4eedf"/>
+          <path d="M200 268 L200 250 M192 258 L200 250 L208 258" stroke="#1e3b36" stroke-width="3" fill="none"/>
+          <g class="numbers">
+            <circle cx="200" cy="222" r="17"/><text x="200" y="229">1</text>
+            <circle cx="110" cy="95" r="17"/><text x="110" y="102">2</text>
+            <circle cx="305" cy="55" r="17"/><text x="305" y="62">3</text>
+            <circle cx="305" cy="145" r="17"/><text x="305" y="152">4</text>
+            <circle cx="75" cy="225" r="17"/><text x="75" y="232">5</text>
+            <circle cx="325" cy="225" r="17"/><text x="325" y="232">6</text>
+          </g>
+        </svg>
+        <ol class="legend">
+          <li>Way in, and the shop</li>
+          <li>The Green Room: Animals, Flowers and Light</li>
+          <li>The Dim Room: drawings and paper art</li>
+          <li>The Paint Room: make your own picture</li>
+          <li>Café</li>
+          <li>Lift and toilets</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Questions that open and close. details and summary do it, no script needed. -->
+    <section class="faq">
+      <h2>Questions</h2>
+      <details>
+        <summary>Can I take photos?</summary>
+        <p>Yes, but no flash, please. A flash makes a bright spot on the glass and bothers other visitors.</p>
+      </details>
+      <details>
+        <summary>Can I touch the paintings?</summary>
+        <p>Please do not. Our skin leaves a little oil and dirt behind, and over many years that harms the paint.</p>
+      </details>
+      <details>
+        <summary>Why is one room so dark?</summary>
+        <p>Strong light makes watercolours and paper fade. That is why the real Young Hare by Dürer is only shown now and then.</p>
+      </details>
+      <details>
+        <summary>Is there a lift?</summary>
+        <p>Yes, next to the way in. It fits a wheelchair or a pram.</p>
+      </details>
+      <details>
+        <summary>Can I bring my snail?</summary>
+        <p>Yes, if it stays in its box. Snails get in free.</p>
+      </details>
+    </section>
+
+    <p class="more">Want to know more? Read about <a href="https://simple.wikipedia.org/wiki/Painting">painting on Simple English Wikipedia</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Snail Lane Gallery is made up. The paintings are old and free to use, from <a href="https://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a>.</p>
+  </footer>
+</body>
+</html>

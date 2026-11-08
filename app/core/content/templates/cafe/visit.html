@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visit us - Honeyfern Bakery and Cafe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="23" fill="#1f3f30"/>
+        <path d="M24 38 V12 M24 30 l-8 -5 M24 30 l8 -5 M24 23 l-7 -5 M24 23 l7 -5 M24 16 l-5 -4 M24 16 l5 -4" stroke="#cfe3d5" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M35 8 q4 6 0 8 q-4 -2 0 -8 z" fill="#f2b134"/>
+      </svg>
+      <span>Honeyfern <small>Bakery and Cafe</small></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="visit.html" aria-current="page">Visit us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-top">
+      <h1>Visit us</h1>
+    </section>
+
+    <div class="wrap visit-grid">
+      <section class="card hours">
+        <h2>Opening hours</h2>
+        <table class="hours-table">
+          <tr><th scope="row">Monday</th><td class="closed">Closed</td></tr>
+          <tr><th scope="row">Tuesday to Friday</th><td>7:00 - 18:00</td></tr>
+          <tr><th scope="row">Saturday</th><td>8:00 - 17:00</td></tr>
+          <tr><th scope="row">Sunday</th><td>9:00 - 15:00</td></tr>
+        </table>
+        <p class="address"><b>12 Quillmoss Street</b><br>Near the old mill bridge</p>
+        <p class="tip">Warm bread comes out of the oven at 8:00 and at 12:00.</p>
+      </section>
+
+      <!-- A street map drawn with SVG: lines for streets, a blue river, a red pin. -->
+      <section class="card map-card">
+        <h2>Find us</h2>
+        <svg class="map" viewBox="0 0 600 340" role="img" aria-label="A street map. Honeyfern is on Quillmoss Street, near the corner of Mill Road and close to the park. Mill Road crosses the river on a bridge.">
+          <rect width="600" height="340" fill="#efe4cf"/>
+          <path d="M30 120 h60 v42 h-60 z M100 128 h70 v34 h-70 z M30 200 h70 v30 h-70 z M230 200 h80 v26 h-80 z M500 200 h70 v40 h-70 z" fill="#dccbaa"/>
+          <rect x="360" y="30" width="200" height="120" rx="18" fill="#b9d3a8"/>
+          <circle cx="400" cy="70" r="14" fill="#7fa86c"/>
+          <circle cx="445" cy="112" r="18" fill="#7fa86c"/>
+          <circle cx="520" cy="62" r="15" fill="#7fa86c"/>
+          <path d="M-10 270 C120 240 180 310 300 280 S480 240 610 270" fill="none" stroke="#8ec5e6" stroke-width="34"/>
+          <path d="M0 180 H600 M200 0 V340 M470 180 V340" stroke="#ffffff" stroke-width="22"/>
+          <rect x="183" y="262" width="34" height="46" fill="#d8c7a6"/>
+          <text class="street" x="222" y="186">QUILLMOSS STREET</text>
+          <text class="street" x="195" y="24" transform="rotate(90 195 24)">MILL ROAD</text>
+          <text class="street park" x="418" y="80">PARK</text>
+          <text class="street water" x="40" y="270">RIVER</text>
+          <rect x="420" y="196" width="34" height="22" rx="4" fill="#1f3f30"/>
+          <text x="437" y="212" fill="#ffffff" font-size="12" text-anchor="middle" font-weight="bold">BUS</text>
+          <rect x="250" y="128" width="50" height="34" rx="4" fill="#f2b134" stroke="#1f3f30" stroke-width="3"/>
+          <g class="pin">
+            <path d="M260 98 C260 76 290 76 290 98 C290 114 275 122 275 136 C275 122 260 114 260 98 Z" fill="#b23a48" stroke="#ffffff" stroke-width="3"/>
+            <circle cx="275" cy="96" r="6" fill="#ffffff"/>
+          </g>
+          <text class="place" x="292" y="58" text-anchor="middle">Honeyfern</text>
+        </svg>
+        <p class="map-note">Honeyfern is on Quillmoss Street, near the corner of Mill Road and close to the park. The bus stops just down the street. There is a bike rack by the door.</p>
+      </section>
+
+      <section class="card booking">
+        <h2>Book a table</h2>
+        <p>Coming with a big group, or for a birthday? Tell us and we will keep a table for you.</p>
+        <!-- No action: HTML Lab does not send forms. It is here to look real. -->
+        <form class="booking-form">
+          <p class="field"><label for="guest-name">Your name</label><input id="guest-name" type="text" placeholder="Sam"></p>
+          <p class="field"><label for="guests">How many people?</label><input id="guests" type="number" min="1" max="12" value="2"></p>
+          <p class="field"><label for="day">Day</label><input id="day" type="date"></p>
+          <p class="field"><label for="time">Time</label>
+            <select id="time">
+              <option>9:00</option>
+              <option>11:00</option>
+              <option>13:00</option>
+              <option>15:00</option>
+              <option disabled>17:00 (full)</option>
+            </select>
+          </p>
+          <p class="field wide"><label for="wish">Anything we should know?</label><textarea id="wish" rows="3" placeholder="A high chair, please"></textarea></p>
+          <p class="field wide"><label class="check"><input type="checkbox"> It is a birthday! Please bring a candle.</label></p>
+          <p class="field wide"><button class="button" type="submit">Ask for a table</button></p>
+          <p class="form-note wide">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><b>Honeyfern Bakery and Cafe</b>, 12 Quillmoss Street. A make-believe cafe: make it your own!</p>
+    <p>Most maps show places as if you were a bird looking down. Read about <a href="https://simple.wikipedia.org/wiki/Map">maps on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

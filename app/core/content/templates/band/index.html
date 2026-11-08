@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Thunder Pancakes - a rock band for kids</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <!-- Three pancakes and a lightning bolt, drawn with SVG. -->
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <ellipse cx="20" cy="31" rx="17" ry="6" fill="#c8742a"/>
+        <ellipse cx="20" cy="25" rx="16" ry="6" fill="#e0943f"/>
+        <ellipse cx="20" cy="19" rx="15" ry="6" fill="#f2b45a"/>
+        <path d="M22 1 L13 17 L20 17 L16 30 L28 12 L21 12 Z" fill="#ffd84d" stroke="#19143a" stroke-width="1.5"/>
+      </svg>
+      The Thunder Pancakes
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="music.html">Music</a></li>
+        <li><a href="tour.html">Tour</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- The big top part: words on the left, a record on the right. -->
+    <section class="hero">
+      <div class="hero-words">
+        <h1 class="big-title">The Thunder Pancakes</h1>
+        <p class="tagline">A rock band for kids. Loud guitars, soft pancakes, and songs about breakfast, rain and space.</p>
+        <p class="buttons">
+          <a class="button" href="music.html">Hear our songs</a>
+          <a class="button button-outline" href="tour.html">See the tour</a>
+        </p>
+      </div>
+
+      <!-- The record is a circle with grooves. It spins in style.css. -->
+      <div class="turntable">
+        <div class="record">
+          <p class="record-label">Thunder<br>Pancakes</p>
+        </div>
+        <div class="tonearm"></div>
+      </div>
+    </section>
+
+    <!-- The newest song in a card. -->
+    <section class="latest">
+      <h2>Brand new song</h2>
+      <article class="song-card">
+        <div class="cover cover-syrup mini-cover"></div>
+        <div class="song-text">
+          <h3>Maple Lightning</h3>
+          <p>From the album <a href="music.html">Syrup Storm</a>. A fast song about a storm that rains maple syrup.</p>
+          <div class="progress"><span></span></div>
+          <p class="song-time">1:24 / 3:12</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- The band. Each person is drawn with SVG.
+         Their colours come from the class on the card. -->
+    <section class="band">
+      <h2>Meet the band</h2>
+      <ul class="band-grid">
+        <li class="member juno">
+          <svg class="person" viewBox="0 0 120 140" role="img" aria-label="Juno with drumsticks">
+            <rect class="shirt" x="28" y="80" width="64" height="60" rx="24"/>
+            <circle class="skin" cx="60" cy="50" r="30"/>
+            <path class="hair" d="M30 50 Q30 16 60 16 Q90 16 90 50 Q80 30 60 32 Q40 30 30 50 Z"/>
+            <circle class="hair" cx="26" cy="40" r="10"/>
+            <circle class="hair" cx="94" cy="40" r="10"/>
+            <circle cx="49" cy="52" r="4"/><circle cx="71" cy="52" r="4"/>
+            <path class="smile" d="M48 64 Q60 76 72 64"/>
+            <path class="stick" d="M14 74 L40 108 M106 74 L80 108"/>
+            <rect class="drum" x="26" y="110" width="68" height="28" rx="4"/>
+            <ellipse class="drum-top" cx="60" cy="110" rx="34" ry="7"/>
+          </svg>
+          <h3>Juno</h3>
+          <p class="role">Drums</p>
+          <p>Juno can play the drums with two wooden spoons.</p>
+        </li>
+        <li class="member ollie">
+          <svg class="person" viewBox="0 0 120 140" role="img" aria-label="Ollie with a guitar">
+            <rect class="shirt" x="28" y="80" width="64" height="60" rx="24"/>
+            <circle class="skin" cx="60" cy="50" r="30"/>
+            <path class="hair" d="M28 46 L36 18 L48 30 L60 12 L72 30 L84 18 L92 46 Q60 30 28 46 Z"/>
+            <circle cx="49" cy="52" r="4"/><circle cx="71" cy="52" r="4"/>
+            <path class="smile" d="M48 64 Q60 76 72 64"/>
+            <rect class="neck" x="64" y="76" width="8" height="46" rx="3" transform="rotate(50 68 110)"/>
+            <circle class="guitar" cx="44" cy="118" r="16"/>
+            <circle cx="44" cy="118" r="5"/>
+          </svg>
+          <h3>Ollie</h3>
+          <p class="role">Guitar and singing</p>
+          <p>Ollie writes new songs in the bath.</p>
+        </li>
+        <li class="member priya">
+          <svg class="person" viewBox="0 0 120 140" role="img" aria-label="Priya with a bass guitar">
+            <rect class="shirt" x="28" y="80" width="64" height="60" rx="24"/>
+            <path class="hair" d="M28 56 Q22 14 60 16 Q98 14 92 56 L96 96 L80 96 L84 56 Z M24 96 L36 56 L28 56 Z"/>
+            <circle class="skin" cx="60" cy="52" r="28"/>
+            <path class="hair" d="M32 48 Q40 22 60 24 Q80 22 88 48 Q74 34 60 36 Q46 34 32 48 Z"/>
+            <circle cx="49" cy="54" r="4"/><circle cx="71" cy="54" r="4"/>
+            <path class="smile" d="M48 66 Q60 76 72 66"/>
+            <rect class="neck" x="70" y="62" width="8" height="58" rx="3" transform="rotate(45 74 116)"/>
+            <ellipse class="guitar" cx="46" cy="120" rx="18" ry="14"/>
+          </svg>
+          <h3>Priya</h3>
+          <p class="role">Bass</p>
+          <p>Priya's bass is taller than her little brother.</p>
+        </li>
+        <li class="member max">
+          <svg class="person" viewBox="0 0 120 140" role="img" aria-label="Max with a keyboard">
+            <rect class="shirt" x="28" y="80" width="64" height="60" rx="24"/>
+            <circle class="skin" cx="60" cy="50" r="30"/>
+            <path class="hair" d="M30 44 Q34 18 60 18 Q86 18 90 44 Z"/>
+            <rect class="hair" x="22" y="40" width="76" height="8" rx="4"/>
+            <circle cx="49" cy="56" r="4"/><circle cx="71" cy="56" r="4"/>
+            <path class="smile" d="M48 66 Q60 76 72 66"/>
+            <rect class="keys" x="10" y="108" width="100" height="22" rx="4"/>
+            <path class="key-lines" d="M24 108 V130 M38 108 V130 M52 108 V130 M66 108 V130 M80 108 V130 M94 108 V130"/>
+          </svg>
+          <h3>Max</h3>
+          <p class="role">Keyboard</p>
+          <p>Max eats seven pancakes before every show.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- A true fact, with a link to read more. -->
+    <aside class="fact-box">
+      <h2>Did you know?</h2>
+      <p>Each side of a vinyl record has one long groove. It spirals from the edge to the middle, and the needle follows it.</p>
+      <a class="button" href="https://en.wikipedia.org/wiki/Phonograph_record">Records on Wikipedia</a>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Thunder Pancakes are made up, and this site is made with HTML and CSS.</p>
+  </footer>
+</body>
+</html>

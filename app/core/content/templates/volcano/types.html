@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cinderkettle Observatory - Volcano types</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path class="logo-hill" d="M4 42 L20 14 H28 L44 42 Z"></path>
+        <path class="logo-lava" d="M22 14 H26 L27 42 H21 Z"></path>
+        <circle class="logo-ash" cx="27" cy="8" r="5"></circle>
+      </svg>
+      <span>Cinderkettle<small>Volcano Observatory</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Inside the volcano</a></li>
+        <li><a href="types.html" aria-current="page">Types</a></li>
+        <li><a href="safety.html">Safety</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-title">
+      <h1>Three shapes of volcano</h1>
+      <p class="lead">The lava decides the shape. Runny lava spreads out into wide, gentle volcanoes. Sticky lava, ash and lumps of lava pile up into steep ones. Point at a card, or press Tab, to fill it with lava.</p>
+    </section>
+
+    <div class="shapes">
+      <article class="shape-card shield" tabindex="0">
+        <svg class="outline" viewBox="0 0 480 170" aria-hidden="true">
+          <clipPath id="clip-shield"><path d="M10 150 C90 118 160 92 190 92 H290 C320 92 390 118 470 150 Z"></path></clipPath>
+          <path class="body" d="M10 150 C90 118 160 92 190 92 H290 C320 92 390 118 470 150 Z"></path>
+          <path class="flow" d="M250 94 C270 110 300 118 330 136"></path>
+          <g clip-path="url(#clip-shield)"><rect class="fill" width="480" height="170"></rect></g>
+          <path class="edge" d="M10 150 C90 118 160 92 190 92 H290 C320 92 390 118 470 150"></path>
+          <rect class="ground" y="150" width="480" height="20"></rect>
+        </svg>
+        <h2>Shield volcano</h2>
+        <p class="shape-word">Wide and gentle</p>
+        <ul class="facts">
+          <li>Runny lava flows a long way before it cools, so the sides are low and wide.</li>
+          <li>Mauna Loa in Hawaii is a shield volcano. It is the biggest active volcano on Earth.</li>
+        </ul>
+      </article>
+
+      <article class="shape-card" tabindex="0">
+        <svg class="outline" viewBox="0 0 300 170" aria-hidden="true">
+          <clipPath id="clip-cinder"><path d="M40 150 L130 84 Q150 100 170 84 L260 150 Z"></path></clipPath>
+          <path class="body" d="M40 150 L130 84 Q150 100 170 84 L260 150 Z"></path>
+          <g class="cinders"><circle cx="110" cy="120" r="4"></circle><circle cx="150" cy="112" r="4"></circle><circle cx="190" cy="126" r="4"></circle><circle cx="130" cy="138" r="4"></circle><circle cx="176" cy="142" r="4"></circle></g>
+          <g clip-path="url(#clip-cinder)"><rect class="fill" width="300" height="170"></rect></g>
+          <path class="edge" d="M40 150 L130 84 Q150 100 170 84 L260 150"></path>
+          <rect class="ground" y="150" width="300" height="20"></rect>
+        </svg>
+        <h2>Cinder cone</h2>
+        <p class="shape-word">Small and steep</p>
+        <ul class="facts">
+          <li>Lumps of lava fly out of one vent, cool in the air and pile up into a steep hill.</li>
+          <li>Parícutin in Mexico started in a farmer's cornfield in 1943.</li>
+        </ul>
+      </article>
+
+      <article class="shape-card" tabindex="0">
+        <svg class="outline" viewBox="0 0 390 170" aria-hidden="true">
+          <clipPath id="clip-strato"><path d="M20 150 C120 140 168 80 182 26 L195 36 L208 26 C222 80 270 140 370 150 Z"></path></clipPath>
+          <path class="body" d="M20 150 C120 140 168 80 182 26 L195 36 L208 26 C222 80 270 140 370 150 Z"></path>
+          <path class="strata" d="M90 150 C150 136 176 96 190 64 C204 96 230 136 300 150 M150 150 C176 136 186 118 195 102 C204 118 214 136 240 150"></path>
+          <g clip-path="url(#clip-strato)"><rect class="fill" width="390" height="170"></rect></g>
+          <path class="edge" d="M20 150 C120 140 168 80 182 26 L195 36 L208 26 C222 80 270 140 370 150"></path>
+          <rect class="ground" y="150" width="390" height="20"></rect>
+        </svg>
+        <h2>Stratovolcano</h2>
+        <p class="shape-word">Tall and steep</p>
+        <ul class="facts">
+          <li>It is built from many layers of hardened lava and ash, one on top of another.</li>
+          <li>Mount Fuji in Japan is a stratovolcano. So is our Mount Cinderkettle!</li>
+        </ul>
+      </article>
+    </div>
+
+    <section class="section quiz">
+      <h2>Which volcano is it?</h2>
+      <details>
+        <summary>A small, steep hill with a bowl on top, made of lava lumps?</summary>
+        <p>A cinder cone. The lumps landed all around the vent, like sand in an egg timer.</p>
+      </details>
+      <details>
+        <summary>So wide and low, it looks like a shield lying on the ground?</summary>
+        <p>A shield volcano. That look is where its name comes from.</p>
+      </details>
+      <details>
+        <summary>Tall and steep, with stripes of lava and ash inside?</summary>
+        <p>A stratovolcano. "Strata" means layers. Look for the stripes in our drawing on the first page.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Cinderkettle Volcano Observatory</b> is pretend, and so is Mount Cinderkettle. The science is real.</p>
+    <p>Want more? <a href="https://simple.wikipedia.org/wiki/Volcano">Read about volcanoes on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

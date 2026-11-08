@@ -1,0 +1,531 @@
+/* Fern green and honey gold, like the name. Change one line and the whole cafe changes! */
+:root {
+  --paper: #ffffff;
+  --mist: #eef5ef;
+  --ink: #1d2a22;
+  --soft: #4a5a4f;
+  --line: #d5e3d8;
+  --fern: #2f5d46;
+  --fern-dark: #1f3f30;
+  --fern-tint: #cfe3d5;
+  --honey: #f2b134;
+  --honey-deep: #9a5a06;
+  --berry: #b23a48;
+  --wood: #7a5230;
+  --lake: #2f6f93;
+  --note: #fdf3dc;
+  --field-edge: #7d8f83;
+
+  /* Three fonts: a strong shop-sign letter, a calm one for reading, and chalk for the board. */
+  --title-font: Superclarendon, Rockwell, Georgia, serif;
+  --text-font: "Gill Sans", "Avenir Next", sans-serif;
+  --chalk-font: Chalkduster, "Marker Felt", cursive;
+
+  /* Every size is 1.25 times the one before it. */
+  --size-xs: 12px;
+  --size-s: 15px;
+  --size-m: 19px;
+  --size-l: 24px;
+  --size-xl: 30px;
+  --size-2xl: 38px;
+  --size-3xl: 48px;
+  --size-4xl: 60px;
+
+  /* The spaces we use, from tiny to huge. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.55;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-m);
+  font-family: var(--title-font);
+  font-weight: bold;
+  line-height: 1.15;
+}
+h1 { max-width: 14ch; font-size: var(--size-4xl); }
+h2 { max-width: 24ch; font-size: var(--size-2xl); }
+h3 { font-size: var(--size-l); }
+
+/* Lines of text stay short, so your eyes do not get lost. */
+p { max-width: 70ch; }
+a { color: var(--fern); }
+img { display: block; max-width: 100%; }
+
+/* Keyboard users see a thick dark green ring where they are. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--fern-dark);
+  outline-offset: 3px;
+}
+
+/* In the dark footer the ring turns honey, so you can still see it. */
+.footer a:focus-visible { outline-color: var(--honey); }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-l); }
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: 12px var(--space-l);
+  background: var(--paper);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--fern-dark);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  text-decoration: none;
+}
+.logo small {
+  display: block;
+  color: var(--soft);
+  font-family: var(--text-font);
+  font-size: var(--size-xs);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.logo-mark { width: 48px; height: 48px; }
+.menu {
+  display: flex;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  padding: 10px 18px;
+  border-radius: 30px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.menu a:hover { background: var(--mist); }
+.menu a:active { background: var(--fern-tint); }
+
+/* The page you are on gets a fern-green button. */
+.menu a[aria-current="page"] { background: var(--fern); color: white; }
+
+/* Split screen: two columns. The photo fills the left one. */
+.split-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+.hero-photo { width: 100%; height: 100%; object-fit: cover; }
+
+/* The words sit on pale green, with a honey fern drawn in the corner. */
+.hero-words {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-2xl) 7%;
+  background: url(cafe-fern.svg) right -30px bottom -60px / 180px auto no-repeat, var(--mist);
+}
+
+.hero-words h1 { color: var(--fern-dark); }
+.lead { color: var(--soft); font-size: var(--size-l); }
+.open-now {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: var(--space-s) 0 0;
+  font-weight: 600;
+}
+
+/* A green dot with a pale ring around it, made by a second circle behind it. */
+.open-now::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border: 5px solid var(--fern-tint);
+  border-radius: 50%;
+  background: var(--fern);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-m);
+  margin: var(--space-xl) 0 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 26px;
+  border: 2px solid var(--honey);
+  border-radius: 30px;
+  background: var(--honey);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The button grows when your mouse is on it, and shrinks a bit when you press it. */
+.button:hover { transform: scale(1.05); }
+.button:active { transform: scale(0.97); }
+.outline { border-color: var(--fern); background: transparent; color: var(--fern-dark); }
+
+/* The chalkboard: dark green, with a wooden frame at the top and bottom like a real board. */
+.board {
+  padding: var(--space-2xl) 0;
+  border-top: 14px solid var(--wood);
+  border-bottom: 14px solid var(--wood);
+  background: radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%), var(--fern-dark);
+}
+
+/* Chalk letters, because a cafe really writes its specials on a board. */
+.chalk {
+  max-width: none;
+  margin-bottom: var(--space-xl);
+  color: white;
+  font-family: var(--chalk-font);
+  font-size: var(--size-3xl);
+  font-weight: normal;
+  text-align: center;
+}
+.specials { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-l); }
+.special {
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+  transform: rotate(-1.5deg);
+}
+
+/* Each card is pinned up at its own angle. Mouse on it? It stands up straight. */
+.special:nth-child(2) { transform: rotate(1deg); }
+.special:hover { transform: rotate(0deg); }
+.special img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px 16px 0 0;
+  object-fit: cover;
+}
+.special-text { position: relative; padding: var(--space-l); }
+.special-text p { margin: 0; color: var(--soft); }
+.special h3 { padding-right: 70px; }
+
+/* The price is a round honey sticker on the edge of the photo. */
+.special-text .price-tag {
+  position: absolute;
+  top: -36px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--honey);
+  color: var(--ink);
+  font-family: var(--title-font);
+  font-size: var(--size-m);
+  box-shadow: 0 6px 14px rgba(29, 42, 34, 0.3);
+  transform: rotate(10deg);
+}
+
+/* Small round diet badges. Rest your mouse on one to see what the letters mean.
+   The key line says it for everyone. */
+.diet {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 13px;
+  background: var(--honey-deep);
+  color: white;
+  font: bold var(--size-xs) var(--text-font);
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: help;
+}
+
+.vegan { background: var(--fern); }
+.gluten { background: var(--lake); }
+
+.story {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: var(--space-2xl);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+.shop-drawing { width: 100%; height: auto; }
+.promises { margin: var(--space-l) 0 0; padding: 0; list-style: none; }
+.promises li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-bottom: var(--space-s);
+  font-weight: 600;
+}
+
+/* A honey drop: a square with three round corners, turned a little. */
+.promises li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 0 50% 50% 50%;
+  background: var(--honey);
+  transform: rotate(45deg);
+}
+
+/* ---------- The top of the Menu and Visit pages ---------- */
+
+/* One fern picture, used twice in one background: big and small. */
+.page-top {
+  padding: var(--space-2xl) var(--space-l);
+  color: white;
+  text-align: center;
+  background:
+    url(cafe-fern.svg) left 6% top 20px / 110px auto no-repeat,
+    url(cafe-fern.svg) right 6% bottom -90px / 150px auto no-repeat,
+    var(--fern);
+}
+
+.page-top h1 { margin: 0 auto; }
+.key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-s);
+  margin: var(--space-m) auto 0;
+  color: var(--fern-tint);
+  font-size: var(--size-s);
+}
+.key span { margin: 0 var(--space-s); white-space: nowrap; }
+.key .diet { border: 2px solid white; }
+
+/* On the chalkboard the key sits right under the title. */
+.board .chalk { margin-bottom: var(--space-m); }
+.board .key { margin: 0 auto var(--space-xl); }
+
+/* The menu is a paper card. outline-offset draws a second frame inside it.
+   A minus margin pulls the card up, so it overlaps the green band above it. */
+.menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-l) var(--space-2xl);
+  max-width: 1072px;
+  margin: calc(var(--space-xl) * -1) auto 0;
+  padding: var(--space-2xl) var(--space-xl) var(--space-l);
+  border-radius: 6px;
+  background: var(--paper);
+  box-shadow: 0 16px 40px rgba(29, 42, 34, 0.14);
+  outline: 2px solid var(--line);
+  outline-offset: -14px;
+}
+
+.menu-part h2 { padding-bottom: 6px; border-bottom: 4px double var(--honey-deep); font-size: var(--size-xl); }
+.menu-list { margin: 0; padding: 0; list-style: none; }
+.menu-list li { margin: var(--space-m) 0 var(--space-l); }
+
+/* Dish and price on one line. Flex pushes the price to the right. */
+.menu-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-s);
+  margin: 0;
+}
+.dish {
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  gap: var(--space-s);
+  font-weight: 600;
+}
+
+/* An empty box that grows as wide as it can. Its bottom edge is dotted. */
+.dish::after {
+  content: "";
+  flex: 1;
+  min-width: 24px;
+  border-bottom: 3px dotted var(--honey-deep);
+}
+.price { color: var(--honey-deep); font-family: var(--title-font); }
+.dish-info { margin: 2px 0 0; color: var(--soft); font-style: italic; }
+.menu-note { margin: var(--space-l) auto var(--space-2xl); color: var(--soft); text-align: center; }
+
+/* ---------- The Visit page ---------- */
+.visit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: var(--space-l);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+.card {
+  padding: var(--space-l);
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: 0 8px 24px rgba(29, 42, 34, 0.12);
+}
+.card h2 { font-size: var(--size-xl); }
+.hours-table { width: 100%; border-collapse: collapse; }
+.hours-table th, .hours-table td { padding: 12px 6px; border-bottom: 2px dotted var(--line); }
+.hours-table th { font-weight: normal; text-align: left; }
+.hours-table td { font-weight: bold; text-align: right; white-space: nowrap; }
+.closed { color: var(--berry); }
+
+/* The row under your mouse turns pale green. */
+.hours-table tr:hover { background: var(--mist); }
+.address { margin: var(--space-l) 0 0; }
+.tip {
+  margin: var(--space-l) 0 0;
+  padding: var(--space-s) var(--space-m);
+  border: 2px dashed var(--honey);
+  border-radius: 12px;
+  background: var(--note);
+}
+
+/* SVG text can use CSS too: fill is the colour of the letters. */
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+.map .street { fill: #6f6656; font: bold 13px var(--text-font); letter-spacing: 2px; }
+.map .park { fill: #2c4a24; }
+.map .water { fill: #1d4a66; }
+.map .place { fill: var(--fern-dark); font: bold 20px var(--title-font); }
+.map-note { margin: var(--space-m) 0 0; color: var(--soft); }
+
+.booking { grid-column: 1 / -1; }
+.booking-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0 var(--space-l);
+  margin-top: var(--space-l);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-m);
+}
+.field label { font-weight: 600; }
+
+/* Wide fields fill the whole row: 1 / -1 means from the first grid line to the last one. */
+.wide { grid-column: 1 / -1; }
+
+.field input, .field select, .field textarea {
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 2px solid var(--field-edge);
+  border-radius: 12px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
+}
+
+/* The grey hint text in an empty box is dark enough to read. */
+.field ::placeholder { color: var(--soft); }
+
+/* Our own select box: the Mac's arrow is hidden, two gradients draw a new one. */
+.field select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--ink) 50%);
+  background-position: right 24px center, right 18px center;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* The box you type in gets a green edge. Things that are switched off look pale. */
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--fern); }
+.field :disabled, .button:disabled { opacity: 0.5; cursor: not-allowed; }
+.check { display: flex; align-items: center; gap: var(--space-s); }
+.field .check input { width: 22px; min-height: 22px; accent-color: var(--fern); }
+.field .button { align-self: flex-start; }
+.form-note { margin: 0; font-size: var(--size-s); color: var(--soft); }
+
+.footer {
+  padding: var(--space-xl) var(--space-l);
+  background: var(--fern-dark);
+  color: var(--fern-tint);
+  text-align: center;
+}
+.footer p { margin: var(--space-xs) auto; }
+.footer a { color: var(--honey); font-weight: 600; }
+
+/* Things move only if the computer says moving is OK. One moment on each page. */
+@media (prefers-reduced-motion: no-preference) {
+  .button, .special { transition: transform 0.25s; }
+  .special:first-child .price-tag { animation: stamp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .menu-grid { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .pin { animation: drop 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+}
+
+/* Home: the first price sticker is stamped on. */
+@keyframes stamp {
+  from { transform: rotate(-20deg) scale(1.4); }
+  to { transform: rotate(10deg) scale(1); }
+}
+
+/* Menu: the paper menu card slides up into place. */
+@keyframes rise {
+  from { transform: translateY(24px); }
+  to { transform: translateY(0); }
+}
+
+/* Visit: the map pin drops onto the cafe. */
+@keyframes drop {
+  from { transform: translateY(-40px); }
+  to { transform: translateY(0); }
+}
+
+/* Narrow window: the two halves go one above the other. */
+@media (max-width: 860px) {
+  .split-hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero-photo { height: 340px; }
+  .hero-words { padding: var(--space-xl) var(--space-l) 48px; }
+  .story, .menu-grid, .visit-grid { grid-template-columns: 1fr; }
+  .story { gap: var(--space-l); }
+  .shop-drawing { max-width: 360px; margin: 0 auto; }
+  .menu-grid { margin-right: var(--space-l); margin-left: var(--space-l); }
+  .hero-words .lead { max-width: 34ch; }
+}
+
+/* Phone: smaller titles, and the menu buttons share the width. */
+@media (max-width: 560px) {
+  h1 { font-size: var(--size-2xl); }
+  h2, .chalk { font-size: var(--size-xl); }
+  .top-bar { padding: 10px var(--space-m); }
+  nav, .menu { width: 100%; }
+  .menu li { flex: 1; }
+  .menu a { padding: 10px var(--space-s); text-align: center; }
+  .wrap { padding: 0 var(--space-m); }
+  .hero-photo { height: 260px; }
+  .card { padding: 20px; }
+  .page-top { background-size: 56px auto, 80px auto; background-position: left 8px top 12px, right 8px bottom -40px; }
+  .menu-grid {
+    margin: calc(var(--space-l) * -1) 0 0;
+    padding: var(--space-xl) var(--space-l) var(--space-s);
+    border-radius: 0;
+  }
+  .map .street { font-size: 22px; letter-spacing: 0; }
+}

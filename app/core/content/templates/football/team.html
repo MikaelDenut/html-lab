@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The team - Hilltop Hedgehogs FC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="club-name" href="index.html">
+      <svg class="badge" viewBox="0 0 100 120" aria-hidden="true">
+        <path d="M50 4 L94 14 V56 C94 86 76 104 50 116 C24 104 6 86 6 56 V14 Z" fill="#0d1a3a" stroke="#ff6a13" stroke-width="5"/>
+        <text x="50" y="31" fill="#ffc531" font-size="15" font-weight="bold" text-anchor="middle" letter-spacing="2">HHFC</text>
+        <path d="M18 84 L13 74 L21 71 L15 62 L24 60 L21 51 L30 52 L30 43 L38 46 L41 37 L47 43 L52 35 L56 43 L62 37 L64 47 L71 44 L70 54 L76 56 L70 84 Q44 92 18 84 Z" fill="#ff6a13"/>
+        <path d="M60 54 Q80 58 92 72 Q80 85 60 85 Z" fill="#f6d2a8"/>
+        <circle cx="74" cy="66" r="3.2" fill="#0d1a3a"/>
+        <circle cx="90" cy="72" r="3.5" fill="#0d1a3a"/>
+        <ellipse cx="34" cy="88" rx="6" ry="3" fill="#f6d2a8"/>
+        <ellipse cx="56" cy="88" rx="6" ry="3" fill="#f6d2a8"/>
+        <circle cx="50" cy="101" r="8" fill="#ffffff"/>
+        <polygon points="50,97 54,100 52.5,104 47.5,104 46,100" fill="#0d1a3a"/>
+      </svg>
+      <span>Hilltop Hedgehogs <b>FC</b></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="team.html" aria-current="page">Team</a></li>
+        <li><a href="matches.html">Matches</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- The shirt is drawn once here. Every card uses it again. -->
+  <svg class="hidden" aria-hidden="true">
+    <symbol id="shirt" viewBox="0 0 100 100">
+      <path d="M32 8 L42 4 Q50 13 58 4 L68 8 L94 26 L82 44 L72 37 V94 H28 V37 L18 44 L6 26 Z"/>
+      <path d="M42 4 Q50 13 58 4 L55 3 Q50 9 45 3 Z" fill="#ffffff"/>
+      <path d="M6 26 L18 44 L22 41 L10 23 Z M94 26 L82 44 L78 41 L90 23 Z" fill="#ffffff"/>
+    </symbol>
+  </svg>
+
+  <main>
+    <section class="page-banner">
+      <div class="wrap">
+        <h1 class="big-title">Meet the team</h1>
+        <p class="hero-text">Put your mouse on a card and it flips over. Every player has a secret on the back!</p>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <!-- tabindex="0" lets the Tab key stop on a card, so keyboard users can flip it too. Only use it when there is a real reason like this. -->
+      <div class="squad">
+        <article class="player-card keeper" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">1</text></svg>
+              <h2>Oscar Quill</h2>
+              <p class="position">Goalkeeper</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> A goalkeeper wears a different colour so the referee can spot them. Oscar picked green!</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">2</text></svg>
+              <h2>Mia Thorn</h2>
+              <p class="position">Defender</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Mia has never lost a game of rock, paper, scissors. Well, almost never.</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">4</text></svg>
+              <h2>Theo Bramble</h2>
+              <p class="position">Defender</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Theo can stop a high ball with his chest, then pass it with his left foot.</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">6</text></svg>
+              <h2>Ava Pike</h2>
+              <p class="position">Midfielder</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Ava runs about 4 kilometres in a match. That is 10 laps of a running track!</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">8</text></svg>
+              <h2>Sam Hedges</h2>
+              <p class="position">Midfielder</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Sam once scored with his knee. It still counts: you may use any part of you except your hands and arms.</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">9</text></svg>
+              <h2>Leo Sparks</h2>
+              <p class="position">Forward</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Leo can keep the ball in the air 52 times with his feet without dropping it.</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">10</text></svg>
+              <h2>Ruby Fern</h2>
+              <p class="position">Forward</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Ruby does a cartwheel after every goal. Last season that was a lot of cartwheels.</p>
+          </div>
+        </article>
+        <article class="player-card" tabindex="0">
+          <div class="card-inner">
+            <div class="card-front">
+              <svg class="shirt" viewBox="0 0 100 100" aria-hidden="true"><use href="#shirt"/><text x="50" y="74">11</text></svg>
+              <h2>Noah Birch</h2>
+              <p class="position">Forward</p>
+            </div>
+            <p class="card-back"><b class="label">Fun fact</b> Noah has lucky socks. His mum says they have been washed twice. Ever.</p>
+          </div>
+        </article>
+      </div>
+      <p class="why">Why hedgehogs? A real hedgehog has about 5,000 to 7,000 spines. Just like us, it is small but tough!</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Hilltop Hedgehogs FC is a make-believe club. Learn about the real game: <a href="https://simple.wikipedia.org/wiki/Association_football">football on Simple English Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

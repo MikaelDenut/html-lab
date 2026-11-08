@@ -1,0 +1,489 @@
+/* Cornerkite Studio: one style file for all three pages. */
+
+/* The colour key. Each part of a page has its own colour, on every page.
+   Change one colour here and every layout on the site changes with it! */
+:root {
+  --ink: #1b1f3b;
+  --ink-soft: #4a4f6e;
+  --paper: #ffffff;
+  --wash: #eef1f6;
+  --line: #d5dae5;
+  --head: #ff9f80;
+  --menu: #ffd166;
+  --main: #9ee6c4;
+  --side: #a9c5ff;
+  --foot: #1b1f3b;
+  --accent: #c43d16;
+  --title-font: Futura, "Avenir Next", sans-serif;
+  --text-font: Charter, Georgia, serif;
+  --code-font: Menlo, monospace;
+  --code-size: 16px; /* Menlo looks big, so 16px code sits well beside 18px words. */
+  --text-xs: 14px;
+  --text-s: 18px;
+  --text-m: 23px;
+  --text-l: 29px;
+  --text-xl: 37px;
+  --text-2xl: 47px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --round: 16px;
+  --shadow: 0 10px 26px rgba(27, 31, 59, 0.12);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  line-height: 1.55;
+}
+
+h1, h2 { font-family: var(--title-font); font-weight: 700; line-height: 1.15; margin: 0 0 var(--space-s); }
+h1 { font-size: var(--text-2xl); max-width: 16ch; }
+h2 { font-size: var(--text-l); max-width: 22ch; }
+p { max-width: 70ch; margin: 0 0 var(--space-s); }
+a { color: var(--ink); }
+
+/* An orange ring shows where the keyboard is. */
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* Code looks like code: the Menlo font. The property name is bold and orange. */
+code { font-family: var(--code-font); font-size: var(--code-size); }
+code b { color: var(--accent); }
+pre { margin: 0; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-m); }
+
+/* The top bar is a flexbox with space-between: logo left, menu right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-family: var(--title-font);
+  font-size: var(--text-m);
+  font-weight: 700;
+  line-height: 1.1;
+  text-decoration: none;
+}
+.logo small { display: block; font-size: var(--text-xs); font-weight: 500; color: var(--ink-soft); }
+.kite { width: 44px; height: 44px; }
+.kite-head { fill: var(--head); }
+.kite-menu { fill: var(--menu); }
+.kite-main { fill: var(--main); }
+.kite-side { fill: var(--side); }
+
+/* The kite lifts up once when the page opens, then stays still. */
+@media (prefers-reduced-motion: no-preference) {
+  .kite { animation: lift 1.6s var(--ease) both; }
+}
+@keyframes lift {
+  from { transform: translateY(8px) rotate(-30deg); }
+  to { transform: none; }
+}
+
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-family: var(--title-font);
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--wash); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a dark pill. */
+.menu a[aria-current="page"] { background: var(--ink); color: #fff; }
+
+/* The top of the home page: words on the left, the colour key on the right. */
+.intro {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-l);
+  align-items: end;
+  padding: var(--space-l) 0 var(--space-m);
+}
+.lead { font-size: var(--text-m); line-height: 1.45; color: var(--ink-soft); }
+.key { padding: var(--space-m); border-radius: var(--round); background: var(--wash); }
+.key h2 { font-size: var(--text-m); }
+.key ul { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xs) var(--space-m); margin: 0; padding: 0; list-style: none; }
+.key li { display: flex; align-items: center; gap: var(--space-s); }
+.swatch { flex: none; width: 22px; height: 22px; border-radius: 6px; }
+
+/* Five colours, one for each part. The swatches and the little pages share them. */
+.head { background: var(--head); }
+.key .menu, .part.menu, .box.menu, .cell.menu { background: var(--menu); }
+.main { background: var(--main); }
+.side { background: var(--side); }
+.foot { background: var(--foot); color: #fff; }
+
+/* THE BIG ONE: the eight boxes sit on a grid with named areas. Each line in
+   the quotes is one row. Write a name twice and that box covers two columns. */
+.library {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "single  sidebar  grail    grail"
+    "cards   cards    magazine footer"
+    "split   split    hero     footer";
+  gap: var(--space-m);
+  padding: var(--space-m) 0 var(--space-xl);
+}
+.demo-single { grid-area: single; }
+.demo-sidebar { grid-area: sidebar; }
+.demo-grail { grid-area: grail; }
+.demo-cards { grid-area: cards; }
+.demo-magazine { grid-area: magazine; }
+.demo-footer { grid-area: footer; }
+.demo-split { grid-area: split; }
+.demo-hero { grid-area: hero; }
+
+/* Each layout is a white card. The tiny page inside grows to fill the card. */
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding: var(--space-m);
+  border-radius: var(--round);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.demo h2 { margin: var(--space-xs) 0 0; font-size: var(--text-m); }
+.demo code {
+  display: block;
+  padding: var(--space-xs) var(--space-s);
+  border-radius: 8px;
+  background: var(--wash);
+  overflow-wrap: anywhere;
+}
+.demo p { margin: 0; font-size: var(--text-s); color: var(--ink-soft); }
+
+/* A tiny page: a grey sheet that holds coloured parts. */
+.mini {
+  flex: 1;
+  min-height: 170px;
+  padding: 8px;
+  gap: 6px;
+  border-radius: 10px;
+  background: var(--wash);
+}
+.part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 4px;
+  border-radius: 6px;
+  font: 700 var(--text-xs)/1.2 var(--title-font);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* 1. A narrow box with margin: 0 auto sits in the middle. */
+.mini-single { display: grid; grid-template-rows: auto 1fr auto; }
+.mini-single .main { width: 60%; margin: 0 auto; }
+
+/* 2. Flexbox: the menu is 30% wide, flex: 1 gives the rest to main. */
+.mini-sidebar { display: flex; }
+.mini-sidebar .menu { width: 30%; }
+.mini-sidebar .main { flex: 1; }
+
+/* 3. Three columns: the middle one is three times as wide. */
+.mini-grail { display: grid; grid-template-columns: 1fr 3fr 1fr; grid-template-rows: auto 1fr auto; }
+.mini-grail .head, .mini-grail .foot, .mini-magazine .head, .mini-magazine .foot { grid-column: 1 / -1; }
+
+/* 4. As many columns as fit, each at least 70px wide. */
+.mini-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); align-content: start; }
+.mini-cards .part { min-height: 54px; }
+
+/* 5. The big story covers two columns and two rows. */
+.mini-magazine { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto 1fr 1fr auto; }
+.mini-magazine .big { grid-column: span 2; grid-row: span 2; }
+
+/* 6. margin-top: auto pushes the footer down as far as it can go. */
+.mini-sticky { display: flex; flex-direction: column; }
+.mini-sticky .main { min-height: 60px; }
+.mini-sticky .foot { margin-top: auto; }
+
+/* 7. Two columns, exactly the same width. */
+.mini-split { display: grid; grid-template-columns: 1fr 1fr; }
+
+/* 8. place-items: center puts the title in the middle, across and down. */
+.mini-hero { display: grid; grid-template-rows: auto 1fr; }
+.hero-band { display: grid; place-items: center; }
+.hero-band b { font-size: var(--text-m); letter-spacing: 0; }
+
+.mix { padding: var(--space-l); margin-bottom: var(--space-xl); border-radius: var(--round); background: var(--wash); }
+.mix code { padding: 2px 6px; border-radius: 6px; background: var(--paper); }
+
+/* Links dressed as buttons. They lift a little when your mouse is on them. */
+.buttons { display: flex; flex-wrap: wrap; gap: var(--space-s); margin: var(--space-m) 0 0; }
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 11px 26px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--title-font);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s var(--ease);
+}
+.button.light { background: var(--menu); color: var(--ink); }
+.button:hover { transform: translateY(-3px); }
+.button:active { transform: translateY(1px); }
+
+.page-title { padding: var(--space-l) 0 var(--space-m); }
+.page-title h1 { max-width: 20ch; }
+
+/* GRID PAGE. The real checkbox hides, but it still works.
+   Its label is dressed up as a switch and sticks to the top while you scroll. */
+.lines-switch { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch {
+  position: sticky;
+  top: var(--space-s);
+  z-index: 5;
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 48px;
+  padding: 8px 20px 8px 12px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--title-font);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+/* The track is light enough to see on the dark pill, even when off. */
+.switch::before { content: ""; width: 46px; height: 28px; border-radius: 999px; background: #8a8fb0; }
+.switch::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.3s var(--ease);
+}
+.switch:hover::before { background: #a3a8c6; }
+.switch:active { transform: translateY(1px); }
+
+/* :checked is true when the box is ticked. Then the knob slides and turns the switch on. */
+.lines-switch:checked + .switch::before { background: var(--accent); }
+.lines-switch:checked + .switch::after { transform: translateX(18px); }
+.lines-switch:focus-visible + .switch { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-l);
+  align-items: center;
+  padding: var(--space-l) 0;
+  border-bottom: 1px solid var(--line);
+}
+.grid-row:last-of-type { border-bottom: 0; margin-bottom: var(--space-l); }
+.grid-text code { display: block; padding: var(--space-s); border-radius: 8px; background: var(--wash); line-height: 1.6; }
+
+/* A grid box. --pad is used twice: for the padding and to place the lines exactly. */
+.grid-box {
+  --pad: 12px;
+  position: relative;
+  display: grid;
+  gap: 8px;
+  padding: var(--pad);
+  border-radius: 12px;
+  background: var(--wash);
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 6px;
+  font: 700 var(--text-xs)/1.2 var(--title-font);
+}
+
+/* The words sit on top of the dashed lines, on their own patch of colour. */
+.cell b { position: relative; z-index: 2; padding: 0 6px; border-radius: 4px; background: inherit; }
+
+/* The lines: a see-through copy of the same grid on top. inherit copies the
+   columns, rows and gap from the box, so the dashed boxes match exactly. */
+.lines {
+  position: absolute;
+  inset: var(--pad);
+  z-index: 1;
+  display: grid;
+  grid-template-columns: inherit;
+  grid-template-rows: inherit;
+  gap: inherit;
+  counter-reset: line;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.lines span { position: relative; border: 2px dashed var(--accent); border-radius: 4px; }
+
+/* When the switch is on, every set of lines on the page fades in. */
+.lines-switch:checked ~ .grid-row .lines { opacity: 1; transform: none; }
+
+/* Each column of the twelve gets a number on its left line. A counter counts for you. */
+.twelve { grid-template-columns: repeat(12, 1fr); margin-top: 28px; }
+.twelve .lines span::before {
+  counter-increment: line;
+  content: counter(line);
+  position: absolute;
+  top: -30px;
+  left: -8px;
+  font: 700 var(--text-xs)/1 var(--title-font);
+  color: var(--accent);
+}
+.twelve .lines::after { content: "13"; position: absolute; top: -30px; right: -14px; font: 700 var(--text-xs)/1 var(--title-font); color: var(--accent); }
+.span-12 { grid-column: span 12; }
+.span-8 { grid-column: span 8; }
+.span-4 { grid-column: span 4; }
+
+/* Four columns, three rows of 90px. The big box starts at line 1 and stops at line 3. */
+.wall { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 90px); }
+.wall .big { grid-column: 1 / 3; grid-row: 1 / 3; font-size: var(--text-l); }
+
+/* A map made of words. Each box says which area it lives in. */
+.areas {
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 60px 150px 60px;
+  grid-template-areas:
+    "head head head"
+    "menu main side"
+    "foot foot foot";
+}
+.a-head { grid-area: head; }
+.a-menu { grid-area: menu; }
+.a-main { grid-area: main; }
+.a-side { grid-area: side; }
+.a-foot { grid-area: foot; }
+
+.mixed { grid-template-columns: 120px 1fr; grid-template-rows: repeat(2, 90px); }
+.mixed .tall { grid-row: span 2; }
+
+/* FLEX PAGE. Four examples, two in a row. */
+.flex-examples { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-m); }
+.flex-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  padding: var(--space-m);
+  border-radius: var(--round);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+.flex-card h2 { font-size: var(--text-m); margin: 0; }
+.flex-card code { padding: var(--space-xs) var(--space-s); border-radius: 8px; background: var(--wash); }
+.flex-card p { margin: 0; color: var(--ink-soft); }
+
+/* A rail is a flex row. Only one word changes from rail to rail. */
+.rail { display: flex; gap: 8px; padding: 10px; border-radius: 10px; background: var(--wash); }
+.box { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 8px; font: 700 var(--text-s)/1 var(--title-font); }
+.start { justify-content: flex-start; }
+.center { justify-content: center; }
+.between { justify-content: space-between; }
+.wrap-rail { flex-wrap: wrap; max-width: 260px; }
+
+.playground { margin: var(--space-l) 0 var(--space-xl); padding: var(--space-l); border-radius: var(--round); background: var(--wash); }
+.play-area { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.play-area input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.play-area label {
+  min-height: 44px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--paper);
+  font: var(--code-size)/1.6 var(--code-font);
+  cursor: pointer;
+}
+.play-area label:hover { box-shadow: inset 0 0 0 2px var(--ink-soft); }
+.play-area label:active { transform: translateY(1px); }
+
+/* The word you picked turns dark, like the menu. */
+.play-area input:checked + label { background: var(--ink); color: #fff; }
+.play-area input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 3px; }
+.rail.play { flex-basis: 100%; margin-top: var(--space-s); background: var(--paper); }
+.play-code { flex-basis: 100%; margin-top: var(--space-s); font-size: var(--text-s); }
+/* A CSS word stays in one piece, even when it has a hyphen in it. */
+.value, .word { white-space: nowrap; }
+
+/* Each picked word moves the boxes, and writes itself into the code line. */
+.value::after { content: "flex-start"; }
+#jc-center:checked ~ .play { justify-content: center; }
+#jc-center:checked ~ .play-code .value::after { content: "center"; }
+#jc-end:checked ~ .play { justify-content: flex-end; }
+#jc-end:checked ~ .play-code .value::after { content: "flex-end"; }
+#jc-between:checked ~ .play { justify-content: space-between; }
+#jc-between:checked ~ .play-code .value::after { content: "space-between"; }
+#jc-around:checked ~ .play { justify-content: space-around; }
+#jc-around:checked ~ .play-code .value::after { content: "space-around"; }
+#jc-evenly:checked ~ .play { justify-content: space-evenly; }
+#jc-evenly:checked ~ .play-code .value::after { content: "space-evenly"; }
+
+.bottom {
+  padding: var(--space-l) var(--space-m);
+  background: var(--foot);
+  color: #dfe2f0;
+  text-align: center;
+}
+.bottom p { margin: var(--space-xs) auto; }
+.bottom a { color: var(--menu); font-weight: 700; }
+
+/* On a tablet: two columns. The map of names changes, the boxes follow. */
+@media (max-width: 1000px) {
+  .library {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "single   sidebar"
+      "grail    grail"
+      "cards    footer"
+      "split    footer"
+      "magazine magazine"
+      "hero     hero";
+  }
+  .intro, .grid-row { grid-template-columns: 1fr; gap: var(--space-m); }
+}
+
+/* On a phone: one column, one box under the other. */
+@media (max-width: 600px) {
+  h1 { font-size: var(--text-xl); }
+  .wrap { padding: 0 var(--space-s); }
+  .top-bar { justify-content: center; padding: var(--space-s); }
+  .menu ul { gap: 2px; }
+  .menu a { padding: 9px 12px; }
+  .library {
+    grid-template-columns: 1fr;
+    grid-template-areas: "single" "sidebar" "grail" "cards" "magazine" "footer" "split" "hero";
+  }
+  .mini-sticky { min-height: 260px; }
+  .key ul, .flex-examples { grid-template-columns: 1fr; }
+  .mix, .playground { padding: var(--space-m); }
+  .wall { grid-template-rows: repeat(3, 70px); }
+  .twelve { gap: 4px; }
+}

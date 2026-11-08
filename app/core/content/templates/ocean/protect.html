@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fathomwick Ocean Club - Protect the ocean</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">Fathomwick <span>Ocean Club</span></a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html">The big dive</a></li>
+        <li><a href="creatures.html">Creatures</a></li>
+        <li><a href="protect.html" aria-current="page">Protect</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-top photo-top">
+      <div>
+        <h1>Help the ocean from home</h1>
+        <p>You do not need a boat to look after the sea. A lot of the rubbish in the sea starts on land, so what we do at home and at school really counts.</p>
+      </div>
+      <figure class="top-photo">
+        <img src="ocean-turtle-nets.jpg" width="640" height="426" alt="Two green sea turtles resting on a sandy beach next to a heap of old fishing nets">
+        <figcaption>Green sea turtles resting on a beach in Hawaii, next to old fishing nets the sea washed up.</figcaption>
+      </figure>
+    </section>
+
+    <section class="why">
+      <div>
+        <h2>Lost nets</h2>
+        <p>Fishing nets that get lost can drift for years. Turtles, seals and fish get stuck in them.</p>
+      </div>
+      <div>
+        <h2>Bags that look like food</h2>
+        <p>A floating plastic bag can look like a jellyfish. Hungry sea turtles sometimes eat one by mistake.</p>
+      </div>
+      <div>
+        <h2>Plastic does not rot away</h2>
+        <p>Sun and waves break plastic into tiny bits called microplastics. Small sea animals eat them.</p>
+      </div>
+    </section>
+
+    <section class="help">
+      <div>
+        <h2>My ocean checklist</h2>
+        <p>Tick a box when you have done it.</p>
+        <ul class="checklist">
+          <li><input type="checkbox" id="bottle"><label for="bottle">Take a bottle I can fill again</label></li>
+          <li><input type="checkbox" id="box"><label for="box">Pack my lunch in a box, not in plastic wrap</label></li>
+          <li><input type="checkbox" id="pick"><label for="pick">Pick up three bits of rubbish at the park or beach</label></li>
+          <li><input type="checkbox" id="bin"><label for="bin">Close the lid of the bin, so wind cannot blow rubbish away</label></li>
+          <li><input type="checkbox" id="balloon"><label for="balloon">Never let a balloon fly away</label></li>
+          <li><input type="checkbox" id="friend"><label for="friend">Tell a friend one sea fact from this site</label></li>
+        </ul>
+      </div>
+
+      <form class="pledge">
+        <h2>Sign the ocean pledge</h2>
+
+        <label for="name">My first name</label>
+        <!-- aria-describedby tells a screen reader which message belongs to this box. -->
+        <input type="text" id="name" name="name" placeholder="Robin" minlength="2" required aria-describedby="name-error">
+        <p class="error" id="name-error">Please write at least 2 letters.</p>
+
+        <fieldset class="levels">
+          <legend>My helper level</legend>
+          <div><input type="radio" id="pool" name="level" checked><label for="pool">Rock pool helper</label></div>
+          <div><input type="radio" id="reef" name="level"><label for="reef">Reef ranger</label></div>
+          <div><input type="radio" id="deep" name="level" disabled><label for="deep">Deep diver (coming soon)</label></div>
+        </fieldset>
+
+        <label for="promise">My promise to the ocean</label>
+        <textarea id="promise" name="promise" rows="3" placeholder="I will..."></textarea>
+
+        <button class="button" type="submit">Sign the pledge</button>
+        <p class="practice">A practice form: HTML Lab does not send it.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Fathomwick Ocean Club is made up, but every fact about the sea is real.</p>
+    <p>Want to help more? Read about <a href="https://simple.wikipedia.org/wiki/Ocean">the ocean on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

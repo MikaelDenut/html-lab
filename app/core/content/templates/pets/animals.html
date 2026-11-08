@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pawberry Club - Animals</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="paw" viewBox="0 0 100 100" aria-hidden="true">
+        <ellipse cx="50" cy="68" rx="22" ry="18"></ellipse>
+        <circle cx="22" cy="42" r="10"></circle>
+        <circle cx="40" cy="24" r="10"></circle>
+        <circle cx="60" cy="24" r="10"></circle>
+        <circle cx="78" cy="42" r="10"></circle>
+      </svg>
+      Pawberry Club
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="animals.html" aria-current="page">Animals</a></li>
+        <li><a href="care.html">Pet care</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-title">
+      <h1 class="big-title">Animals looking for a home</h1>
+      <p>Pick a tab to meet our dogs, cats and small pets. The bars show how much energy each one has, and how much it loves cuddles.</p>
+    </section>
+
+    <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,50 C160,0 320,0 480,35 C640,70 800,90 960,60 C1120,30 1280,10 1440,40 L1440,100 L0,100 Z"></path>
+    </svg>
+
+    <div class="tabs">
+      <input type="radio" name="kind" id="tab-dogs" checked>
+      <label for="tab-dogs">Dogs</label>
+      <input type="radio" name="kind" id="tab-cats">
+      <label for="tab-cats">Cats</label>
+      <input type="radio" name="kind" id="tab-small">
+      <label for="tab-small">Small pets</label>
+
+      <div class="tab-panel dogs-panel">
+        <article class="animal-card">
+          <img class="photo blob" src="pets-puppy.jpg" alt="A small white and brown puppy" width="960" height="640">
+          <h2>Nugget</h2>
+          <p class="age">Puppy, 4 months</p>
+          <p>Small, fast and always happy. Nugget wants to chase every ball he sees.</p>
+          <p class="level">Energy <span class="bar" role="img" aria-label="95 out of 100"><span class="energy" style="width: 95%"></span></span></p>
+          <p class="level">Cuddles <span class="bar" role="img" aria-label="70 out of 100"><span class="cuddles" style="width: 70%"></span></span></p>
+        </article>
+        <article class="animal-card">
+          <img class="photo circle" src="pets-dog.jpg" alt="A calm brown dog lying in the grass" width="720" height="480">
+          <h2>Maple</h2>
+          <p class="age">Dog, 6 years</p>
+          <p>A calm and gentle dog. Maple loves long walks and naps in the sun.</p>
+          <p class="level">Energy <span class="bar" role="img" aria-label="50 out of 100"><span class="energy" style="width: 50%"></span></span></p>
+          <p class="level">Cuddles <span class="bar" role="img" aria-label="95 out of 100"><span class="cuddles" style="width: 95%"></span></span></p>
+        </article>
+        <article class="tip-card">
+          <p class="icon"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7.5 L16.5 15"/><path d="M7.5 9 L15 16.5"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><circle cx="9" cy="4.8" r="2"/><circle cx="4.8" cy="9" r="2"/><circle cx="19.2" cy="15" r="2"/><circle cx="15" cy="19.2" r="2"/></svg></p>
+          <h2>Dog tip</h2>
+          <p>Every dog needs a walk every day, and fresh water all the time.</p>
+          <p>Never give a dog chocolate. It is poison for dogs.</p>
+        </article>
+      </div>
+
+      <div class="tab-panel cats-panel">
+        <article class="animal-card">
+          <img class="photo circle" src="pets-cat.jpg" alt="A fluffy ginger cat looking to the side" width="720" height="482">
+          <h2>Saffron</h2>
+          <p class="age">Cat, 3 years</p>
+          <p>Fluffy and a little shy. Saffron likes quiet rooms and a soft brush.</p>
+          <p class="level">Energy <span class="bar" role="img" aria-label="35 out of 100"><span class="energy" style="width: 35%"></span></span></p>
+          <p class="level">Cuddles <span class="bar" role="img" aria-label="60 out of 100"><span class="cuddles" style="width: 60%"></span></span></p>
+        </article>
+        <article class="animal-card">
+          <img class="photo blob" src="pets-kitten.jpg" alt="A striped kitten with a very big yawn" width="720" height="480">
+          <h2>Yoyo</h2>
+          <p class="age">Kitten, 5 months</p>
+          <p>First Yoyo yawns. Then Yoyo plays with a string for a whole hour!</p>
+          <p class="level">Energy <span class="bar" role="img" aria-label="85 out of 100"><span class="energy" style="width: 85%"></span></span></p>
+          <p class="level">Cuddles <span class="bar" role="img" aria-label="75 out of 100"><span class="cuddles" style="width: 75%"></span></span></p>
+        </article>
+        <article class="tip-card">
+          <p class="icon"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M6 7 C10 9 13 13 14.5 19.5 M9 4.8 C13 7 17 11 19.8 13.5 M4.5 13 C8 13 11 15.5 12 20"/></svg></p>
+          <h2>Cat tip</h2>
+          <p>Cats love to scratch. A scratching post keeps their claws healthy and saves your sofa.</p>
+          <p>Cats also like a high place where they can sit and watch.</p>
+        </article>
+      </div>
+
+      <div class="tab-panel small-panel">
+        <article class="animal-card">
+          <img class="photo blob" src="pets-rabbit.jpg" alt="A ginger rabbit with long floppy ears" width="720" height="540">
+          <h2>Toffee</h2>
+          <p class="age">Rabbit, 2 years</p>
+          <p>A rabbit with floppy ears. Toffee munches hay all day long.</p>
+          <p class="level">Energy <span class="bar" role="img" aria-label="45 out of 100"><span class="energy" style="width: 45%"></span></span></p>
+          <p class="level">Cuddles <span class="bar" role="img" aria-label="65 out of 100"><span class="cuddles" style="width: 65%"></span></span></p>
+        </article>
+        <article class="animal-card">
+          <img class="photo circle" src="pets-guinea-pig.jpg" alt="A brown and white guinea pig in the grass" width="720" height="405">
+          <h2>Peanut</h2>
+          <p class="age">Guinea pig, 1 year</p>
+          <p>Peanut squeaks "wheek wheek!" when he hears his food coming.</p>
+          <p class="level">Energy <span class="bar" role="img" aria-label="60 out of 100"><span class="energy" style="width: 60%"></span></span></p>
+          <p class="level">Cuddles <span class="bar" role="img" aria-label="80 out of 100"><span class="cuddles" style="width: 80%"></span></span></p>
+        </article>
+        <article class="tip-card">
+          <p class="icon"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 C5 10 10 5 20 4 C19 14 14 19 5 19 Z"/><path d="M5 19 L13 11"/></svg></p>
+          <h2>Small pet tip</h2>
+          <p>Rabbits and guinea pigs feel happier with a friend of their own kind.</p>
+          <p>Sit on the floor and let them come to you. They feel safest with all four feet on the ground.</p>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,50 C160,0 320,0 480,35 C640,70 800,90 960,60 C1120,30 1280,10 1440,40 L1440,100 L0,100 Z"></path>
+    </svg>
+    <p>Pawberry Club is a made-up club. The animal photos are free to use, from Wikimedia Commons.</p>
+    <p>Want to learn more? Read about <a href="https://simple.wikipedia.org/wiki/Pet">pets on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

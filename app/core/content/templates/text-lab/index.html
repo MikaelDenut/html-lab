@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text Lab - Specimens</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="11"></circle>
+        <path d="M20 2 V38 M2 20 H38"></path>
+      </svg>
+      Text Lab
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html" aria-current="page">Specimens</a></li>
+        <li><a href="fonts.html">Font pairs</a></li>
+        <li><a href="tricks.html">Tricks</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="sheet">
+    <section class="sheet-head">
+      <div>
+        <h1>Letters can do tricks</h1>
+        <p class="lead">This page is a type specimen: a sheet that shows off what letters can do. Each box holds one trick, and the grey line under it names the CSS that makes it.</p>
+        <p>Put your mouse on a box, or press <kbd>Tab</kbd> to jump to it. Four of the boxes play.</p>
+      </div>
+      <ul class="glyphs" aria-label="The three fonts of this site">
+        <li class="glyph display">Aa<small>Didot</small></li>
+        <li class="glyph">Aa<small>Avenir Next</small></li>
+        <li class="glyph code">Aa<small>Menlo</small></li>
+      </ul>
+    </section>
+
+    <!-- tabindex="0" lets the Tab key stop on a box, so the keyboard can play it too. -->
+    <div class="specimens">
+      <article class="cell span-4 cell-outline" tabindex="0">
+        <h2>Outline letters</h2>
+        <p class="sample outline">Hollow</p>
+        <p class="how"><code>-webkit-text-stroke</code> draws the edge, <code>color: transparent</code> empties the inside. Point at it to pour in red ink.</p>
+      </article>
+
+      <article class="cell span-2 tall">
+        <h2>Writing downwards</h2>
+        <div class="down-samples">
+          <p class="upright">TOWER</p>
+          <p class="sideways">This line runs from the top down.</p>
+        </div>
+        <p class="how"><code>writing-mode: vertical-rl</code> turns the line. <code>text-orientation: upright</code> stands each letter up. Japanese and Chinese can be written like this, in columns from right to left.</p>
+      </article>
+
+      <article class="cell span-2 cell-pop" tabindex="0">
+        <h2>Letters in 3D</h2>
+        <p class="sample pop">POP!</p>
+        <p class="how">Eight <code>text-shadow</code> copies, each 1px further. Point at it to press it flat.</p>
+      </article>
+
+      <article class="cell span-2 cell-air" tabindex="0">
+        <h2>Letters that breathe</h2>
+        <p class="sample breathe">SPACE</p>
+        <p class="how"><code>letter-spacing</code> puts air between the letters. Point at it.</p>
+      </article>
+
+      <article class="cell span-3">
+        <h2>A drop cap</h2>
+        <p class="story">Long ago, books were written by hand. The first letter of a chapter was often painted big and bright, in red or even in gold. When printing began, printers left an empty space, and a painter added that letter by hand.</p>
+        <p class="how"><code>::first-letter</code> picks the first letter. <code>float: left</code> lets the lines flow round it.</p>
+      </article>
+
+      <article class="cell span-3 cell-pen" tabindex="0">
+        <h2>Highlighter pen</h2>
+        <p class="sample marked">A <mark>yellow pen</mark> marks the words that matter. This one even <mark>goes over two lines of text, and each line gets its own piece of yellow</mark>.</p>
+        <p class="how">The yellow is a <code>linear-gradient</code>. Point at it: it grows from 0% to 100% wide.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <p>Text Lab: a sheet of letter tricks, made with HTML and CSS only.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Typeface">What is a typeface? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

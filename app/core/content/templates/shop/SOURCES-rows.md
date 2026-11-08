@@ -1,0 +1,4 @@
+| shop-top.jpg | A plain wooden spinning top standing on a parquet floor (cropped to 4:3) | 40 | 640x480 | Lacen | Public domain | https://commons.wikimedia.org/wiki/File:Spinning_top.jpg |
+| shop-truck.jpg | A dark wooden toy truck with patterns burned into the wood (cropped to 4:3, made a little brighter) | 39 | 640x480 | Ingolfson | Public domain | https://commons.wikimedia.org/wiki/File:Trade_Aid_Store_Gifts,_Wooden_Car_Model.jpg |
+| shop-bear.jpg | A hand lifting a big brown teddy bear up to the evening sky (cropped to the bear and the hand, no face) | 43 | 640x480 | Alex Blăjan | CC0 | https://commons.wikimedia.org/wiki/File:Alex_Bl%C4%83jan_2016-06-05_(Unsplash).jpg |
+| shop-kite.jpg | A rainbow diamond kite with long red and yellow ribbons in a blue sky with clouds (cropped to 4:3) | 28 | 640x480 | Aaron Burden | CC0 | https://commons.wikimedia.org/wiki/File:Aaron_Burden_2017-03-08_(Unsplash).jpg |

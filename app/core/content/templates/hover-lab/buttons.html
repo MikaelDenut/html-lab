@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hover playground - Buttons</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="logo"><a href="index.html">Hover playground</a></p>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Cards</a></li>
+        <li><a href="buttons.html" aria-current="page">Buttons</a></li>
+        <li><a href="pictures.html">Pictures</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <h1>Ten fun buttons</h1>
+      <p>These buttons are links made with the <code>&lt;a&gt;</code> tag, because each one takes you to a card. A link takes you somewhere. A <code>&lt;button&gt;</code> does something on the page, and for that it needs JavaScript or a form.</p>
+      <p>No mouse? Hold <kbd>Option</kbd> and press <kbd>Tab</kbd> to jump from link to link.</p>
+      <p>Click a button and its card lights up. The link jumps to the card's <code>id</code>, and <code>:target</code> colours that card.</p>
+      <p>Every button starts as <code>class="btn"</code>. A second class adds the trick.</p>
+    </section>
+
+    <section class="group">
+      <h2 class="group-title">Press and play</h2>
+      <div class="grid">
+        <article id="push" class="card">
+          <div class="demo"><a class="btn btn-push" href="#push">Push me</a></div>
+          <h3>Push down</h3>
+          <p>It moves down and its thick <code>box-shadow</code> gets thin.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article id="shine" class="card">
+          <div class="demo"><a class="btn btn-shine" href="#shine">Shiny</a></div>
+          <h3>Shine</h3>
+          <p>A white stripe runs across with <code>translateX</code>.</p>
+          <p class="help">Help: Hover effects</p>
+        </article>
+        <article id="arrow" class="card">
+          <div class="demo"><a class="btn btn-icon" href="#arrow">Next <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 H19 M13 6 L19 12 L13 18"/></svg></a></div>
+          <h3>Arrow slides out</h3>
+          <p>The SVG arrow comes in with <code>opacity</code> and <code>translateX</code>.</p>
+          <p class="help">Help: Move, turn and grow</p>
+        </article>
+        <article id="fill" class="card">
+          <div class="demo"><a class="btn btn-fill" href="#fill">Fill up</a></div>
+          <h3>Fill from below</h3>
+          <p>A dark box grows up from the bottom with <code>scaleY</code>.</p>
+          <p class="help">Help: Wipe and reveal</p>
+        </article>
+        <article id="neon" class="card neon-card">
+          <div class="demo"><a class="btn btn-neon" href="#neon">Neon</a></div>
+          <h3>Neon light</h3>
+          <p><code>box-shadow</code> and <code>text-shadow</code> glow like a lamp.</p>
+          <p class="help">Help: Glow and neon</p>
+        </article>
+        <article id="rainbow" class="card">
+          <div class="demo"><a class="btn btn-rainbow" href="#rainbow">Rainbow</a></div>
+          <h3>Rainbow edge</h3>
+          <p>The rainbow behind the border slides along.</p>
+          <p class="help">Help: Rainbow and moving colors</p>
+        </article>
+        <article id="jelly" class="card">
+          <div class="demo"><a class="btn btn-jelly" href="#jelly">Wobbly</a></div>
+          <h3>Jelly button</h3>
+          <p>It uses the <code>jelly</code> keyframes from the cards page.</p>
+          <p class="help">Help: Bounce, shake and wobble</p>
+        </article>
+        <article id="pop" class="card">
+          <div class="demo"><a class="btn btn-pop" href="#pop">Boing!</a></div>
+          <h3>Spring pop</h3>
+          <p><code>cubic-bezier</code> makes it grow too far, then spring back.</p>
+          <p class="help">Help: Slow and smooth changes</p>
+        </article>
+        <article id="plus" class="card">
+          <div class="demo"><a class="btn btn-round" href="#plus" aria-label="Spin the plus"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 V20 M4 12 H20"/></svg></a></div>
+          <h3>Spin the plus</h3>
+          <p><code>rotate(135deg)</code> turns the plus into an x.</p>
+          <p class="help">Help: Spin and pulse</p>
+        </article>
+        <article id="pulse" class="card">
+          <div class="demo"><a class="btn btn-pulse" href="#pulse">Pulse</a></div>
+          <h3>Pulse ring</h3>
+          <p>A ring grows and fades, again and again.</p>
+          <p class="help">Help: Spin and pulse</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="calm">Some people feel dizzy when things move. If their Mac asks for less motion, this site stops moving. See the last block in <code>style.css</code>. Help: Less motion for some people</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Cascading_Style_Sheets">What is CSS? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

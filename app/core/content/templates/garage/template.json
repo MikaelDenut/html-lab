@@ -1,0 +1,15 @@
+{
+  "title": "Car Repair Garage",
+  "name": "my-car-garage",
+  "blurb": "A car repair workshop with a price list and online booking",
+  "category": "industrial",
+  "layout": "Price list table, booking steps, checklist",
+  "shows": [
+    "Wheels that spin when your mouse is on",
+    "A table header that sticks while you scroll",
+    "Steps that count themselves with a counter",
+    "Big tick boxes made from a hidden checkbox",
+    "A coupon with a dashed cut line"
+  ],
+  "accent": "#0e5a63"
+}

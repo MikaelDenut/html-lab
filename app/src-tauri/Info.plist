@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSDocumentsFolderUsageDescription</key>
+  <string>HTML Lab needs this to open and save your web pages.</string>
+  <key>NSDesktopFolderUsageDescription</key>
+  <string>HTML Lab needs this to open and save your web pages.</string>
+  <key>NSDownloadsFolderUsageDescription</key>
+  <string>HTML Lab needs this to open and save your web pages.</string>
+</dict>
+</plist>

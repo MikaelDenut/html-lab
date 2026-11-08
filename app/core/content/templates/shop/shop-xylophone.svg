@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <!-- A toy xylophone drawn with SVG. Each bar is shorter than the one before, so each plays a higher note. -->
+  <rect width="640" height="480" fill="#f6f1f8"/>
+  <ellipse cx="320" cy="404" rx="240" ry="18" fill="#2b1830" opacity="0.1"/>
+  <!-- Two wooden rails. They come closer together on the right. -->
+  <path d="M112 152 L528 200 M112 352 L528 304" stroke="#c98a4b" stroke-width="22" stroke-linecap="round"/>
+  <!-- Five bars: x moves right, y moves down, and the height gets smaller. -->
+  <rect x="140" y="120" width="56" height="264" rx="10" fill="#d9534f"/>
+  <rect x="218" y="136" width="56" height="230" rx="10" fill="#f0a030"/>
+  <rect x="296" y="152" width="56" height="196" rx="10" fill="#f2cf3a"/>
+  <rect x="374" y="168" width="56" height="162" rx="10" fill="#5aa760"/>
+  <rect x="452" y="184" width="56" height="128" rx="10" fill="#4a7fc1"/>
+  <!-- A small pin holds each bar on each rail. -->
+  <g fill="#6b4a2b">
+    <circle cx="168" cy="159" r="6"/><circle cx="168" cy="345" r="6"/>
+    <circle cx="246" cy="168" r="6"/><circle cx="246" cy="336" r="6"/>
+    <circle cx="324" cy="177" r="6"/><circle cx="324" cy="327" r="6"/>
+    <circle cx="402" cy="186" r="6"/><circle cx="402" cy="318" r="6"/>
+    <circle cx="480" cy="195" r="6"/><circle cx="480" cy="309" r="6"/>
+  </g>
+  <!-- The beater: a stick with a ball on the end. -->
+  <path d="M330 420 L560 396" stroke="#c98a4b" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="566" cy="395" r="20" fill="#b83a3a"/>
+</svg>

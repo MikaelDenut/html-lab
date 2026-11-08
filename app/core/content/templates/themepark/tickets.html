@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tickets - Fizzwhirl Park</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="logo" href="index.html">
+        <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+          <circle class="logo-wheel" cx="22" cy="20" r="16"/>
+          <path class="logo-spokes" d="M22 4 V36 M8.1 12 L35.9 28 M35.9 12 L8.1 28 M22 20 L12 42 M22 20 L32 42"/>
+        </svg>
+        Fizzwhirl Park
+      </a>
+      <nav class="menu" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html">Park map</a></li>
+          <li><a href="rides.html">Rides</a></li>
+          <li><a href="tickets.html" aria-current="page">Tickets</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1>Pick your ticket</h1>
+      <p>One ticket opens every ride, all day long. Children under 3 come in free.</p>
+    </div>
+
+    <form class="ticket-form">
+      <!-- Each ticket is a label with a radio button inside. Click a ticket to pick it. -->
+      <fieldset class="ticket-choices">
+        <legend>Tickets</legend>
+        <label class="ticket child">
+          <input type="radio" name="ticket" value="child">
+          <span class="ticket-body">
+            <span class="ticket-name">Small fry</span>
+            <span>One child, 3 to 11 years old</span>
+            <span class="ticket-price">22 €</span>
+          </span>
+        </label>
+        <label class="ticket family">
+          <input type="radio" name="ticket" value="family" checked>
+          <span class="ticket-body">
+            <span class="ticket-name">Family</span>
+            <span>Two grown-ups and two children</span>
+            <span class="ticket-price">96 €</span>
+          </span>
+        </label>
+        <label class="ticket grown-up">
+          <input type="radio" name="ticket" value="grown-up">
+          <span class="ticket-body">
+            <span class="ticket-name">Big kid</span>
+            <span>One person, 12 years or older</span>
+            <span class="ticket-price">32 €</span>
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="visit-day">
+        <label>Which day will you come?
+          <select name="day">
+            <option>Saturday</option>
+            <option>Sunday</option>
+            <option>A school holiday</option>
+          </select>
+        </label>
+        <button class="button" type="submit">Buy tickets</button>
+      </div>
+      <p class="practice">A practice form: HTML Lab does not send it.</p>
+    </form>
+
+    <section class="planner" aria-labelledby="plan-title">
+      <h2 id="plan-title">Plan your day</h2>
+      <!-- colspan="2" lets one cell cover two columns. -->
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Time</th><th>For little explorers</th><th>For thrill fans</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>10:00</th><td>Sleepy Sloth Train round Monkey Woods</td><td>Gigglecoaster, before the line gets long</td></tr>
+            <tr><th>11:00</th><td>Teeny Meadow Carousel</td><td>Tickle Tower</td></tr>
+            <tr><th>12:30</th><td class="together" colspan="2">Lunch for everyone at Fizzwhirl Square</td></tr>
+            <tr><th>14:00</th><td>Big Daisy Wheel</td><td>Soggy Sock Falls (bring a towel!)</td></tr>
+            <tr><th>15:30</th><td class="together" colspan="2">The Bubble Parade on the main path</td></tr>
+            <tr><th>16:30</th><td>Moonhopper</td><td>Bumblebee Bumpers</td></tr>
+            <tr><th>18:00</th><td class="together" colspan="2">The park closes. Wave goodbye to the sloth!</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions</h2>
+      <details>
+        <summary>What if I am not tall enough for a ride?</summary>
+        <p>At the gate we measure you and give you a coloured wristband. The colour shows which rides you can go on.</p>
+      </details>
+      <details>
+        <summary>Can we bring a picnic?</summary>
+        <p>Yes! There are picnic tables in Monkey Woods, in the shade of the trees.</p>
+      </details>
+      <details>
+        <summary>What happens when it rains?</summary>
+        <p>Most rides keep going in the rain. Soggy Sock Falls makes you wet anyway!</p>
+      </details>
+      <details>
+        <summary>What if I lose my grown-up?</summary>
+        <p>Find a park helper in a purple T-shirt. They take you to the Main Gate, and we call your grown-up.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <div class="wrap">
+      <p>Fizzwhirl Park is a pretend park, made with HTML and CSS. Open every day from April to October, 10:00 to 18:00.</p>
+      <p>Wonder how a carousel turns? <a href="https://en.wikipedia.org/wiki/Carousel">Read about carousels on Wikipedia</a></p>
+    </div>
+  </footer>
+</body>
+</html>

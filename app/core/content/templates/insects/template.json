@@ -1,0 +1,15 @@
+{
+  "title": "Insect Field Guide",
+  "name": "My insect field guide",
+  "blurb": "Insects from A to Z, their bodies, and how to spot them kindly",
+  "category": "science",
+  "layout": "Field guide with a sticky A to Z index",
+  "shows": [
+    "An A to Z index that sticks while you scroll",
+    "Jump links, and :target lights up the letter",
+    "A labelled insect drawn with SVG <text>",
+    "A tick box that hides the labels for a quiz",
+    "Tally marks drawn with CSS stripes"
+  ],
+  "accent": "#2747c4"
+}

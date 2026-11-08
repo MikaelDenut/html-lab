@@ -1,0 +1,15 @@
+{
+  "title": "Football club",
+  "name": "my-football-club",
+  "blurb": "A kids' football club with a squad, a big match and a league table",
+  "category": "fun",
+  "layout": "Sticky header, flip-card squad grid, league table",
+  "shows": [
+    "Sock stripes and grass bands from gradients",
+    "A header that stays on top as you scroll",
+    "Player cards that flip over in 3D",
+    "A league table with striped rows",
+    "Round W, D and L badges and a big VS card"
+  ],
+  "accent": "#ff6a13"
+}

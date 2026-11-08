@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your basket - Wobbleplum Toys</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="28" r="17" fill="#6b2d6f"/>
+        <circle cx="17" cy="22" r="4" fill="#ecdcf0" opacity="0.5"/>
+        <path d="M24 12 V6" stroke="#4a1a4f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M25 9 Q31 1 39 5 Q33 13 25 9 Z" fill="#2f7d57"/>
+      </svg>
+      <span>Wobbleplum <small>Wooden toys</small></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Shop</a></li>
+        <li><a href="product.html">Toy of the month</a></li>
+        <li>
+          <a href="basket.html" aria-current="page">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            Basket
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap page">
+    <!-- The order matters here, so the steps get numbers. -->
+    <ol class="steps">
+      <li aria-current="step">Basket</li>
+      <li>Delivery</li>
+      <li>Payment</li>
+      <li>Done</li>
+    </ol>
+
+    <h1>Your basket</h1>
+
+    <div class="basket">
+      <section class="lines" aria-label="Toys in your basket">
+        <div class="line line-head" aria-hidden="true">
+          <span>Toy</span><span>Price</span><span>How many</span><span>Total</span>
+        </div>
+        <!-- Each line uses grid areas: pic, what, unit, how-many and sum. -->
+        <article class="line">
+          <img src="shop-horse.svg" width="960" height="720" alt="">
+          <div class="what">
+            <h2>Wooden rocking horse</h2>
+            <p>Small, red saddle</p>
+          </div>
+          <p class="unit">€149 each</p>
+          <p class="how-many"><label class="for-readers" for="many-horses">How many rocking horses</label><input id="many-horses" type="number" min="1" max="9" value="1"></p>
+          <p class="sum"><span class="for-readers">Total: </span>€149</p>
+        </article>
+        <article class="line">
+          <img src="shop-top.jpg" width="640" height="480" alt="">
+          <div class="what">
+            <h2>Spinning top</h2>
+            <p>Plain beech</p>
+          </div>
+          <p class="unit">€9 each</p>
+          <p class="how-many"><label class="for-readers" for="many-tops">How many spinning tops</label><input id="many-tops" type="number" min="1" max="9" value="1"></p>
+          <p class="sum"><span class="for-readers">Total: </span>€9</p>
+        </article>
+        <p class="small-print">A practice shop: the totals stay the same when you change how many.</p>
+        <p class="small-print">Want something else too? <a href="index.html">Keep shopping</a></p>
+      </section>
+
+      <aside class="totals">
+        <h2>Order summary</h2>
+        <table>
+          <tr><th scope="row">Toys</th><td>€158</td></tr>
+          <tr>
+            <th scope="row">Delivery</th>
+            <td><span class="free"><svg class="icon truck" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6h11v10H2z M13 9h4l4 4v3h-8"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></svg> Free</span></td>
+          </tr>
+          <tr class="grand"><th scope="row">Total</th><td>€158</td></tr>
+        </table>
+        <a class="button" href="#delivery">Go to delivery</a>
+        <p class="small-print">Prices include tax. Delivery is free from €50.</p>
+      </aside>
+    </div>
+
+    <section class="delivery" id="delivery">
+      <h2>Where should we send it?</h2>
+      <!-- A form with no action does not send anything. -->
+      <form class="delivery-form">
+        <p class="field"><label for="buyer">Your name</label><input id="buyer" type="text" placeholder="Alex"></p>
+        <p class="field"><label for="town">Town</label><input id="town" type="text" placeholder="Toffeemoss"></p>
+        <p class="field wide"><label for="street">Street and house number</label><input id="street" type="text" placeholder="4 Apple Row"></p>
+        <fieldset class="options wide">
+          <legend>How should it come?</legend>
+          <label class="option"><input type="radio" name="way" checked><span><b>Home delivery</b> <small>free, 2 to 4 days</small></span></label>
+          <label class="option"><input type="radio" name="way"><span><b>Pick up at our shop</b> <small>free, tomorrow</small></span></label>
+          <label class="option"><input type="radio" name="way" disabled><span><b>Same day</b> <small>not in your area</small></span></label>
+        </fieldset>
+        <p class="wide">
+          <button class="button" type="submit">Go to payment</button>
+        </p>
+        <p class="form-note wide">A practice form: HTML Lab does not send it.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><b>Wobbleplum Toys</b>, 9 Toffeemoss Lane. A make-believe shop: make it your own!</p>
+    <p>Teddy bears got their name in 1902. Read about <a href="https://simple.wikipedia.org/wiki/Teddy_bear">teddy bears on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,443 @@
+/* Wren Tallowby, illustrator: one style sheet for all three pages.
+   The look comes from an illustrator's sketchbook: dotted paper and bright inks. */
+
+/* Change a colour, a size or a space here and the whole site changes! */
+:root {
+  --paper: #f6f7fb;
+  --white: #ffffff;
+  --ink: #1d2550;
+  --soft-ink: #4a5380;
+  --line: #dfe3f0;
+  --blue: #2f4fa8;
+  --blue-soft: #c9d3f2;
+  --pink: #ff4fa3;
+  --dark-pink: #c2187a;
+  --yellow: #ffd23f;
+  --green: #5fd38d;
+  --title-font: "Baskerville", "Hoefler Text", serif;
+  --text-font: "Avenir Next", "Helvetica Neue", sans-serif;
+  /* Each text size is 1.25 times the one before. */
+  --text-m: 16px;
+  --text-l: 20px;
+  --text-xl: 25px;
+  --text-2xl: 31px;
+  --text-3xl: 39px;
+  --text-4xl: 49px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 20px;
+  --space-l: 32px;
+  --space-xl: 56px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+svg { display: block; }
+a { color: var(--dark-pink); }
+
+/* An illustrator draws in a dotted sketchbook, so the page is dotted paper too. */
+body {
+  margin: 0;
+  color: var(--ink);
+  /* font: size/line-height family. The number after the / is the space between lines. */
+  font: var(--text-m)/1.6 var(--text-font);
+  background-color: var(--paper);
+  background-image: radial-gradient(var(--line) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  line-height: 1.15;
+}
+
+p { max-width: 70ch; }
+
+/* A thick dark ring shows where the keyboard is. */
+a:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* On the blue sidebar the ring is yellow, so you can still see it. */
+.sidebar a:focus-visible { outline-color: var(--yellow); }
+
+/* The top bar: name on the left, menu on the right. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--space-m) var(--space-l);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--ink);
+  font: bold var(--text-l) var(--title-font);
+  text-decoration: none;
+}
+
+/* The round logo is turned a little, like a stamp. */
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--pink);
+  font-style: italic;
+  transform: rotate(-12deg);
+}
+
+.menu { display: flex; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+
+.menu a {
+  display: block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.menu a:hover { background: var(--line); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on looks like a sticker, a little bit crooked. */
+.menu a[aria-current="page"] {
+  color: var(--white);
+  background: var(--blue);
+  transform: rotate(-3deg);
+}
+
+/* Two columns: the sidebar on the left, the main page on the right. */
+.cv {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-l);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--space-s) var(--space-l) var(--space-xl);
+}
+
+/* "sticky" keeps the sidebar on the screen while you scroll down. */
+.sidebar {
+  position: sticky;
+  top: var(--space-m);
+  align-self: start;
+  padding: var(--space-l) 24px;
+  border-radius: 24px;
+  color: var(--white);
+  background: var(--blue);
+  box-shadow: 0 16px 36px rgba(29, 37, 80, 0.28);
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto var(--space-m);
+  border: 5px solid var(--white);
+  border-radius: 50%;
+}
+
+.name { margin: 0; font: bold var(--text-xl)/1.1 var(--title-font); }
+.role { margin: var(--space-xs) 0 var(--space-m); color: var(--yellow); font-weight: 600; }
+
+.free {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-m);
+  padding: 8px var(--space-s);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* The green dot. On the About page its ring ripples twice, then rests. */
+.dot, .dot::after {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.dot { position: relative; flex: none; }
+.dot::after { content: ""; position: absolute; inset: 0; }
+
+.contact { margin: 0 0 var(--space-m); padding: 0; color: var(--blue-soft); list-style: none; }
+
+.contact li {
+  display: flex;
+  gap: var(--space-s);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* The little icons are drawn with lines: stroke is the line colour. */
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  fill: none;
+  stroke: var(--yellow);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The two buttons share the row, or stack when there is no room. */
+.side-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+
+.button {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 999px;
+  color: var(--ink);
+  background: var(--yellow);
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.3s var(--ease-out);
+}
+
+/* A button jumps up when your mouse is on it, and sinks when you press. */
+.button:hover { transform: translateY(-3px); }
+.button:active { transform: translateY(1px); }
+
+.button-light {
+  color: var(--white);
+  background: transparent;
+  border: 2px solid var(--blue-soft);
+}
+
+.main { min-width: 0; }
+
+.intro h1 { max-width: 20ch; font-size: var(--text-4xl); }
+
+/* A yellow stripe behind the words, like a highlighter pen. */
+.marker {
+  background: linear-gradient(transparent 58%, var(--yellow) 58%, var(--yellow) 92%, transparent 92%);
+}
+
+.lead { margin: 0 0 var(--space-l); color: var(--soft-ink); font-size: var(--text-l); }
+
+/* The newest book, drawn big on the first page. */
+.newest {
+  margin: 0 0 var(--space-xl);
+  padding: var(--space-s);
+  border-radius: 20px;
+  background: var(--white);
+  box-shadow: 0 10px 28px rgba(29, 37, 80, 0.14);
+}
+
+.newest svg, .work svg { width: 100%; height: auto; border-radius: 12px; }
+.newest figcaption, .work figcaption { padding: var(--space-s) var(--space-xs) var(--space-xs); color: var(--soft-ink); }
+.newest strong, .work strong { display: block; color: var(--ink); font: bold var(--text-l) var(--title-font); }
+
+/* Each part of a page starts with a thin line and lots of space. */
+.block {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-l);
+  border-top: 2px solid var(--line);
+}
+
+.block h2 { font-size: var(--text-2xl); }
+
+/* The work timeline: years on the left, jobs on the right.
+   Change --year-col or --gap and the line and dots move with them. */
+.timeline {
+  --year-col: 110px;
+  --gap: 48px;
+  margin: var(--space-m) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--year-col) 1fr;
+  gap: var(--gap);
+  padding-bottom: var(--space-l);
+}
+
+/* A thin line joins all the jobs. calc() puts it in the middle of the gap. */
+.timeline li::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: -12px;
+  left: calc(var(--year-col) + var(--gap) / 2 - 1px);
+  width: 2px;
+  background: var(--line);
+}
+
+.timeline li:last-child::before { display: none; }
+
+/* Each job has a round dot on that line. The dot is 14px wide,
+   so it starts 7px left of the middle of the gap. */
+.timeline li::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: calc(var(--year-col) + var(--gap) / 2 - 7px);
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--pink);
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.timeline .now::after { background: var(--pink); }
+.timeline h3 { margin: 0; font-size: var(--text-l); }
+.timeline p { margin: 0; }
+.years { color: var(--blue); font-weight: bold; }
+.place { color: var(--dark-pink); font-weight: 600; }
+
+/* A big quote mark, made with "content". */
+.quote {
+  position: relative;
+  margin: var(--space-xl) 0 0;
+  padding: var(--space-l) var(--space-l) var(--space-l) 96px;
+  border-radius: 24px;
+  background: var(--yellow);
+}
+
+/* \201C is the code number for a curly opening quote mark. */
+.quote::before {
+  content: "\201C";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  font: bold 110px/1 var(--title-font);
+}
+
+.quote p { margin: 0 0 var(--space-s); font: italic var(--text-l)/1.4 var(--title-font); }
+.quote footer { font-weight: 600; }
+
+/* Skill bars: the coloured part is as long as the --level number. */
+.skills { margin: 0; padding: 0; list-style: none; }
+.skills li { margin-bottom: var(--space-m); }
+.skill-name { display: flex; justify-content: space-between; max-width: none; margin: 0 0 var(--space-xs); font-weight: 600; }
+.skill-name span { color: var(--soft-ink); font-weight: normal; }
+
+.bar {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  width: var(--level);
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue), var(--dark-pink));
+  transform-origin: left;
+}
+
+/* Tool cards: as many in a row as there is room for. */
+.tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tools li {
+  padding: var(--space-m) var(--space-s);
+  border-radius: 18px;
+  background: var(--white);
+  box-shadow: 0 6px 16px rgba(29, 37, 80, 0.1);
+  font-weight: 600;
+  text-align: center;
+}
+
+.tools svg { width: 56px; height: 56px; margin: 0 auto var(--space-s); }
+.tools small { display: block; color: var(--soft-ink); font-size: var(--text-m); font-weight: normal; }
+
+.languages { margin: 0; }
+.languages div { padding: var(--space-s) 0; border-bottom: 1px solid var(--line); }
+.languages dt { font: bold var(--text-l) var(--title-font); }
+.languages dd { margin: 0; color: var(--soft-ink); }
+
+/* The portfolio grid: 2 columns, and wide drawings take both. */
+.work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l); }
+
+.work {
+  margin: 0;
+  padding: var(--space-s);
+  border-radius: 20px;
+  background: var(--white);
+  box-shadow: 0 6px 18px rgba(29, 37, 80, 0.12);
+}
+
+.work.wide { grid-column: span 2; }
+
+.footer { padding: var(--space-l) var(--space-m) var(--space-xl); color: var(--soft-ink); text-align: center; }
+.footer p { max-width: none; margin: 4px 0; }
+
+/* Things move only if the computer says moving is OK. */
+@media (prefers-reduced-motion: no-preference) {
+  .home .dot::after { animation: ripple 2s var(--ease-out) 2; }
+  .bar span { animation: grow 1.6s var(--ease-out); }
+}
+
+/* The ripple grows bigger and fades away. */
+@keyframes ripple {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(2.8); opacity: 0; }
+}
+
+/* The skill bars grow from half to their full length. A still picture of the page still shows real bars. */
+@keyframes grow {
+  from { transform: scaleX(0.5); }
+  to { transform: scaleX(1); }
+}
+
+/* In a narrower window the big title gets a little smaller. */
+@media (max-width: 900px) {
+  .intro h1 { font-size: var(--text-3xl); }
+}
+
+/* On a small tablet the sidebar goes on top, with Wren next to the text. */
+@media (max-width: 700px) {
+  .cv { grid-template-columns: 1fr; }
+  .sidebar {
+    position: static;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--space-l);
+    align-items: center;
+  }
+  .avatar { margin: 0; }
+}
+
+/* On a phone everything stands in one column. */
+@media (max-width: 600px) {
+  .top-bar, .cv { padding-left: 16px; padding-right: 16px; }
+  .sidebar { grid-template-columns: 1fr; gap: 0; padding: 24px 20px; text-align: center; }
+  .avatar { width: 120px; height: 120px; margin: 0 auto var(--space-m); }
+  .free { justify-content: center; }
+  .side-buttons { grid-template-columns: 1fr; }
+  .contact { text-align: left; }
+  .intro h1 { font-size: var(--text-2xl); }
+  .block { margin-top: var(--space-l); }
+  .timeline li { grid-template-columns: 1fr; gap: 0; padding-left: var(--space-l); }
+  .timeline li::before { left: 6px; }
+  .timeline li::after { left: 0; }
+  .quote { padding: 72px 22px 22px; }
+  .work-grid { grid-template-columns: 1fr; }
+  .work.wide { grid-column: auto; }
+}

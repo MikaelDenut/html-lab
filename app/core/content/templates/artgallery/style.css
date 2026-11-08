@@ -1,0 +1,543 @@
+/* Snail Lane Gallery, a small art gallery.
+   Its world: an old house with deep green walls, gold frames and soft lights.
+   The paintings are the stars, so everything else stays quiet.
+   Change a colour here and it changes on every page! */
+:root {
+  --wall: #1e3b36;
+  --wall-light: #274a44;
+  --line: #3a5f58;
+  --text: #eef2ec;
+  --text-soft: #a9c2b8;
+  --gold: #d8b25a;
+  --gold-light: #f6e3a1;
+  --gold-dark: #7a561a;
+  --card: #f4eedf;
+  --ink: #2b2a24;
+  --ink-soft: #5c574a;
+
+  --title-font: Baskerville, "Hoefler Text", Georgia, serif;
+  --text-font: "Gill Sans", "Avenir Next", sans-serif;
+  /* In Gill Sans a 1 looks like a capital I, so numbers use Avenir Next. */
+  --number-font: "Avenir Next", "Helvetica Neue", sans-serif;
+
+  /* Font sizes. Each step is 1.25 times bigger than the one before. */
+  --size-1: 1.125rem;
+  --size-2: 1.41rem;
+  --size-3: 1.77rem;
+  --size-4: 2.22rem;
+  --size-5: 2.78rem;
+
+  /* Spaces. Small inside a group, big between groups. */
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 64px;
+
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+/* A soft light falls on the wall from above, like in a real gallery. */
+body {
+  margin: 0;
+  font-family: var(--text-font);
+  font-size: var(--size-1);
+  line-height: 1.6;
+  color: var(--text);
+  background: radial-gradient(ellipse 90% 520px at 50% 0, #2c544d, transparent) no-repeat var(--wall);
+}
+
+main { max-width: 1200px; margin: 0 auto; padding: var(--space-l) var(--space-l) var(--space-xl); }
+p { max-width: 70ch; }
+
+h1, h2, h3 {
+  max-width: 24ch;
+  font-family: var(--title-font);
+  font-weight: normal;
+  line-height: 1.15;
+}
+
+h1 { margin: 0 0 var(--space-m); font-size: var(--size-5); }
+a { color: var(--gold); }
+
+/* A gold ring shows where the keyboard is. */
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+
+/* The menu bar: snail and name on the left, links on the right. */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding: var(--space-m) var(--space-l);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  font-family: var(--title-font);
+  font-size: var(--size-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo svg { width: 52px; height: 34px; }
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+/* The page you are on gets a gold line under it. */
+.menu a:hover { color: var(--text); }
+.menu a:active { color: var(--gold); }
+.menu a[aria-current="page"] { color: var(--text); border-bottom-color: var(--gold); }
+
+.welcome { margin: 0 auto var(--space-l); text-align: center; }
+.welcome h1, .welcome p { margin-left: auto; margin-right: auto; }
+.welcome p, .intro { color: var(--text-soft); }
+
+/* THE WALL. flex-wrap puts the paintings in rows,
+   and align-items: flex-start lets each one hang at its own height. */
+.wall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-xl) var(--space-l);
+  padding-top: var(--space-xl);
+}
+
+/* Each painting has a soft picture light on the wall behind it. */
+.artwork {
+  max-width: 100%;
+  margin: 0;
+  padding: 56px var(--space-m) 0;
+  background: radial-gradient(ellipse 60% 45% at 50% 35%, rgba(246, 227, 161, 0.1), transparent 70%);
+}
+
+.size-s { width: 240px; }
+.size-m { width: 300px; }
+.size-l { width: 380px; }
+
+/* Move a painting down the wall. Try 0px or 150px! */
+.hang-mid { margin-top: 40px; }
+.hang-low { margin-top: 96px; }
+
+/* THE GOLD FRAME. A gradient makes the shiny gold.
+   Gold frames earn layered shadows: two thin rings inside make the
+   carved edge, and two soft shadows below lift it off the wall. */
+.frame {
+  position: relative;
+  padding: 16px;
+  background: linear-gradient(135deg, #f6e3a1, #b8862f 25%, #f1d27a 50%, #9c6e22 75%, #e8c66a);
+  box-shadow:
+    inset 0 0 0 3px #7a5418,
+    inset 0 0 0 6px #f0d488,
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    0 22px 40px rgba(0, 0, 0, 0.45);
+  transform-origin: 50% -40px;
+}
+
+.frame img, .my-painting {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid #3d2b0e;
+}
+
+.frame-thin { padding: 9px; }
+.frame-wide { padding: 26px; }
+
+/* A dark wooden frame with a thin gold edge next to the painting. */
+.frame-dark { background: linear-gradient(135deg, #4a3826, #1d140b 50%, #3b2c1c); box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35), 0 22px 40px rgba(0, 0, 0, 0.45); }
+.frame-dark img { border-color: var(--gold); }
+
+/* A paper picture sits on a light card called a mat. The padding is the mat! */
+.mat img { padding: 22px; background: #f3efe4; border-color: #c9bfa6; }
+
+/* The wire and the nail: two thin diagonal lines and a dot, all made with gradients.
+   Each line is a gradient that is see-through, then 2px of colour exactly in the middle,
+   then see-through again. Going corner to corner, that thin middle part is a diagonal line. */
+.frame::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -44px;
+  width: 96px;
+  height: 44px;
+  margin-left: -48px;
+  background:
+    radial-gradient(circle at 50% 4px, #c9b27a 3px, transparent 4px),
+    linear-gradient(to bottom right, transparent calc(50% - 1px), #9b8a62 50%, transparent calc(50% + 1px)) left / 50% 100% no-repeat,
+    linear-gradient(to bottom left, transparent calc(50% - 1px), #9b8a62 50%, transparent calc(50% + 1px)) right / 50% 100% no-repeat;
+}
+
+/* My Sunny Day: a sun, two hills and the sky, all made with gradients. */
+.my-painting {
+  aspect-ratio: 4 / 5;
+  background:
+    radial-gradient(circle at 70% 26%, #ffd84d 26px, transparent 27px),
+    radial-gradient(ellipse 70% 40% at 15% 100%, #4f9a4a 98%, transparent 100%),
+    radial-gradient(ellipse 80% 32% at 90% 100%, #7cc062 98%, transparent 100%),
+    linear-gradient(#8fd0f0, #e2f4fa);
+}
+
+/* THE LABEL. A small card under each painting, like in a museum. */
+.label {
+  max-width: 260px;
+  margin: var(--space-l) auto 0;
+  padding: var(--space-m);
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  background: var(--card);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+}
+
+.label p { margin: 0 0 var(--space-s); }
+
+.painter {
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.title {
+  font-family: var(--title-font);
+  font-size: var(--size-2);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.label .real {
+  margin: 0;
+  padding-top: var(--space-s);
+  color: var(--gold-dark);
+  border-top: 1px solid #ddd3bb;
+}
+
+.slow {
+  max-width: 70ch;
+  margin: var(--space-xl) auto 0;
+  padding-top: var(--space-l);
+  border-top: 1px solid var(--line);
+}
+
+.slow h2 { margin: 0 0 var(--space-m); font-size: var(--size-3); }
+.slow li { margin-bottom: var(--space-s); }
+
+/* A gold button. It lifts a little when your mouse is on it. */
+.button {
+  display: inline-block;
+  min-height: 44px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--wall);
+  background: var(--gold);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease);
+}
+
+.button:hover { background: var(--gold-light); transform: translateY(-2px); }
+.button:active { transform: translateY(1px); }
+
+/* EXHIBITIONS. A thin line runs down the left side of the list. */
+.narrow { max-width: 860px; }
+
+.timeline {
+  position: relative;
+  margin: var(--space-xl) 0 0;
+  padding: 0 0 0 48px;
+  list-style: none;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--line);
+}
+
+/* display: flow-root keeps the floating picture inside its show. */
+.show { position: relative; display: flow-root; margin-bottom: var(--space-xl); }
+.show h2 { margin: 0 0 4px; font-size: var(--size-4); }
+.show p { margin: 0 0 var(--space-m); }
+.when { color: var(--text-soft); }
+
+/* A dot on the line for each show. The show on now gets a bigger gold dot. */
+.show::before {
+  content: "";
+  position: absolute;
+  left: -45px;
+  top: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: var(--wall);
+}
+
+.show-now::before {
+  left: -49px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  background: var(--gold);
+}
+
+.badge {
+  display: inline-block;
+  margin-left: var(--space-s);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--wall);
+  background: var(--gold);
+}
+
+/* The small picture floats to the right, and the words go round it. */
+.thumb {
+  float: right;
+  width: 180px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin: 0 0 var(--space-m) var(--space-l);
+  box-shadow: var(--shadow);
+}
+
+.thumb-blue { background: radial-gradient(circle at 30% 40%, #2d5fa8 22%, transparent 23%), radial-gradient(circle at 56% 62%, #5b8fd6 25%, transparent 26%), radial-gradient(circle at 78% 36%, #1b3a73 17%, transparent 18%), #cfe0f5; }
+.thumb-boat { position: relative; background: linear-gradient(#a9d3f0 68%, #3f78b5 68%); }
+.thumb-tiny { position: relative; background: #e9e1cc; }
+
+/* clip-path cuts a white box into the shape of a paper boat. */
+.thumb-boat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  -webkit-clip-path: polygon(50% 14%, 74% 54%, 51% 54%, 51% 60%, 88% 60%, 74% 80%, 26% 80%, 12% 60%, 49% 60%, 49% 54%);
+  clip-path: polygon(50% 14%, 74% 54%, 51% 54%, 51% 60%, 88% 60%, 74% 80%, 26% 80%, 12% 60%, 49% 60%, 49% 54%);
+}
+
+/* A painting smaller than a stamp: blue inside, gold padding as the frame. */
+.thumb-tiny::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 16px;
+  height: 13px;
+  margin-left: -8px;
+  padding: 2px;
+  background: linear-gradient(#5b8fd6, #5b8fd6) content-box, var(--gold);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* VISIT. Opening hours and tickets side by side. */
+/* align-items: start lets each box be only as tall as its own words. */
+.visit-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+  gap: var(--space-l);
+  margin: var(--space-l) 0 var(--space-xl);
+}
+
+.visit-info section { padding: var(--space-l); border-radius: 4px; background: var(--wall-light); }
+.visit-info h2, .plan-box h2, .faq h2 { margin: 0 0 var(--space-m); font-size: var(--size-3); }
+
+.hours { width: 100%; border-collapse: collapse; }
+.hours th, .hours td { padding: var(--space-s) 0; text-align: left; border-bottom: 1px solid var(--line); }
+.hours th { font-weight: normal; color: var(--text-soft); }
+.hours td { text-align: right; }
+
+/* A dl list in a grid: the word on the left, the price on the right. */
+.prices { display: grid; grid-template-columns: 1fr auto; margin: 0; }
+.prices dt, .prices dd { margin: 0; padding: var(--space-s) 0; border-bottom: 1px solid var(--line); }
+.prices dt { color: var(--text-soft); }
+.prices dd { text-align: right; }
+
+/* THE FLOOR PLAN. CSS can colour SVG shapes with fill and stroke. */
+.plan-box { margin-bottom: var(--space-xl); }
+
+.plan-layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  gap: var(--space-l);
+}
+
+.plan {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: var(--space-m);
+  border-radius: 4px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.room { fill: #e6dcc4; stroke: var(--wall); stroke-width: 3; }
+.room-green { fill: #9fc2b4; }
+
+/* Put your mouse on a room and it lights up gold.
+   Only for fun: the rooms are not links. */
+.room:hover { fill: var(--gold-light); }
+.numbers circle { fill: var(--wall); }
+
+.numbers text {
+  fill: var(--gold-light);
+  font-family: var(--number-font);
+  font-size: 20px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+/* The legend numbers come from a CSS counter, in the same circles as the plan. */
+.legend {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: room;
+}
+
+.legend li {
+  position: relative;
+  min-height: 32px;
+  margin-bottom: var(--space-m);
+  padding: 2px 0 0 48px;
+  counter-increment: room;
+}
+
+.legend li::before {
+  content: counter(room);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--number-font);
+  font-weight: 600;
+  color: var(--wall);
+  background: var(--gold-light);
+}
+
+/* QUESTIONS. Click a question and details opens to show the answer. */
+.faq { max-width: 70ch; margin-bottom: var(--space-l); }
+.faq details { border-bottom: 1px solid var(--line); }
+
+.faq summary {
+  position: relative;
+  padding: 14px 32px 14px 0;
+  font-family: var(--title-font);
+  font-size: var(--size-2);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq summary:active { transform: translateY(1px); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--gold-light); }
+.faq details p { margin: 0 0 var(--space-m); color: var(--text-soft); }
+
+/* The plus sign is two thin gradient bars. When the answer is open, only one bar is left: a minus.
+   position: absolute puts it at the right end of the question. */
+.faq summary::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(var(--gold), var(--gold)) center / 16px 2px no-repeat, linear-gradient(var(--gold), var(--gold)) center / 2px 16px no-repeat;
+}
+
+.faq details[open] summary::after { background: linear-gradient(var(--gold), var(--gold)) center / 16px 2px no-repeat; }
+.more { margin: 0; }
+
+.site-footer {
+  padding: var(--space-l);
+  text-align: center;
+  color: var(--text-soft);
+  border-top: 1px solid var(--line);
+}
+
+.site-footer p { margin: 0 auto; }
+
+/* The one moment that moves: put your mouse on a painting and it swings on its nail.
+   transform-origin above puts the turning point right at the nail. */
+@media (prefers-reduced-motion: no-preference) {
+  .artwork:hover .frame { animation: swing 1.8s var(--ease); }
+}
+
+@keyframes swing {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(3deg); }
+  45% { transform: rotate(-2deg); }
+  70% { transform: rotate(1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Tablet: the floor plan goes above its list. */
+@media (max-width: 860px) {
+  .plan-layout { grid-template-columns: 1fr; }
+  .size-l { width: 340px; }
+}
+
+/* Phone: one painting at a time, all hung at the same height. */
+@media (max-width: 560px) {
+  main { padding: var(--space-m) var(--space-m) var(--space-xl); }
+  .site-header { padding: var(--space-s) var(--space-m); }
+  .menu a { padding: 10px 8px; font-size: 1rem; letter-spacing: 1px; }
+  h1 { font-size: var(--size-4); }
+  .wall { gap: var(--space-l); padding-top: 0; }
+  .hang-mid, .hang-low { margin-top: 0; }
+  .timeline { padding-left: 40px; }
+  .timeline::before { left: 3px; }
+  .visit-info section { padding: var(--space-l) var(--space-m); }
+
+  .thumb {
+    float: none;
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 0 var(--space-m);
+  }
+}

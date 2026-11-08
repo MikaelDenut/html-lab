@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How it works - Sunwhirl Energy</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="wrap top-inner">
+        <a class="logo" href="index.html">
+          <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+            <circle class="logo-sun" cx="22" cy="22" r="21"/>
+            <g class="logo-blades">
+              <ellipse class="logo-blade" cx="22" cy="12" rx="3.5" ry="10"/>
+              <ellipse class="logo-blade" cx="22" cy="12" rx="3.5" ry="10" transform="rotate(120 22 22)"/>
+              <ellipse class="logo-blade" cx="22" cy="12" rx="3.5" ry="10" transform="rotate(240 22 22)"/>
+            </g>
+            <circle class="logo-hub" cx="22" cy="22" r="4"/>
+          </svg>
+          <span>Sunwhirl<small>Energy</small></span>
+        </a>
+        <nav aria-label="Main menu">
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="how-it-works.html" aria-current="page">How it works</a></li>
+            <li><a href="visit.html">Visit us</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-title">
+        <div class="wrap">
+          <h1>From wind to your plug</h1>
+          <p>Electricity takes a long trip before it reaches your home. Here is every stop on the way.</p>
+        </div>
+      </section>
+
+      <figure class="scene">
+        <svg viewBox="0 0 800 340" preserveAspectRatio="xMinYMax slice" role="img" aria-label="Two wind turbines on green hills, with power lines going to a house">
+          <defs>
+            <linearGradient id="sky-fade" x1="0" y1="0" x2="0" y2="1">
+              <stop class="sky-top" offset="0"/>
+              <stop class="sky-low" offset="1"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="340" fill="url(#sky-fade)"/>
+          <circle class="sun" cx="700" cy="70" r="36"/>
+          <path class="gust" d="M20 90 H110 Q130 90 128 72 M40 130 H140 M20 170 H96 Q118 170 116 188"/>
+          <path class="hill-back" d="M0 250 Q160 190 330 230 T660 215 T800 225 V340 H0 Z"/>
+          <path class="hill" d="M0 292 Q200 244 420 282 T800 272 V340 H0 Z"/>
+          <polygon class="tower" points="175,284 185,284 182,120 178,120"/>
+          <polygon class="tower" points="327,238 333,238 331,160 329,160"/>
+          <g transform="translate(180 118)">
+            <g class="blades">
+              <path class="blade" d="M-4 0 Q-7 -50 0 -96 Q6 -50 4 0 Z"/>
+              <path class="blade" d="M-4 0 Q-7 -50 0 -96 Q6 -50 4 0 Z" transform="rotate(120)"/>
+              <path class="blade" d="M-4 0 Q-7 -50 0 -96 Q6 -50 4 0 Z" transform="rotate(240)"/>
+              <circle class="hub" r="8"/>
+            </g>
+          </g>
+          <g transform="translate(330 158) scale(0.55)">
+            <g class="blades far">
+              <path class="blade" d="M-4 0 Q-7 -50 0 -96 Q6 -50 4 0 Z"/>
+              <path class="blade" d="M-4 0 Q-7 -50 0 -96 Q6 -50 4 0 Z" transform="rotate(120)"/>
+              <path class="blade" d="M-4 0 Q-7 -50 0 -96 Q6 -50 4 0 Z" transform="rotate(240)"/>
+              <circle class="hub" r="8"/>
+            </g>
+          </g>
+          <path class="wire" d="M184 262 Q330 262 456 204 M484 204 Q545 228 596 209 M624 209 Q680 222 712 246"/>
+          <rect class="pole" x="466" y="200" width="8" height="84"/>
+          <rect class="pole" x="452" y="198" width="36" height="6"/>
+          <rect class="pole" x="606" y="205" width="8" height="74"/>
+          <rect class="pole" x="592" y="203" width="36" height="6"/>
+          <polygon class="roof" points="690,244 735,206 780,244"/>
+          <rect class="wall" x="700" y="242" width="70" height="44"/>
+          <rect class="window" x="712" y="254" width="18" height="16"/>
+          <rect class="door" x="744" y="260" width="15" height="26"/>
+        </svg>
+      </figure>
+
+      <section class="wrap journey">
+        <h2 class="section-title">The journey of electricity</h2>
+        <p class="intro">Follow the arrows, from a puff of wind to the plug in your wall.</p>
+        <ol class="process">
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 18h24a6 6 0 1 0-6-6M4 28h32a6 6 0 1 1-6 6M4 38h14"/></svg>
+            <h3>Wind</h3>
+            <p>The wind pushes the three blades round and round.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M27 11 17 27h9l-4 11 11-17h-9z"/></svg>
+            <h3>Generator</h3>
+            <p>The blades turn a shaft. Magnets spin past copper wire, and that makes electricity.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="8" width="30" height="34" rx="4"/><path d="M24 34V16M17 23l7-7 7 7"/></svg>
+            <h3>Transformer</h3>
+            <p>It pushes the electricity much harder (that push is called voltage), so less of it is lost on the long trip.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 13 44M24 4l11 40M10 14h28M14 27h20M17 14l14 13M31 14 17 27"/></svg>
+            <h3>Power lines</h3>
+            <p>Tall towers carry the wires across the fields to the towns.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M18 6v10M30 6v10M12 16h24v7a12 12 0 0 1-24 0zM24 35v9"/></svg>
+            <h3>Your plug</h3>
+            <p>A substation, a small fenced building full of machines, makes the push gentle again. Wires under the street bring it home.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="wrap journey" id="sun">
+        <h2 class="section-title">And the sun?</h2>
+        <p class="intro">Solar panels have no blades and no generator. The light does all the work.</p>
+        <ol class="process sun-path">
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="9"/><path d="M24 3v6M24 39v6M3 24h6M39 24h6M9 9l4 4M35 35l4 4M9 39l4-4M35 13l4-4"/></svg>
+            <h3>Sunlight</h3>
+            <p>Light from the sun reaches Earth in about 8 minutes.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 34 12 10h30l-6 24zM9 22h30M24 10l-3 24M22 34v8M14 42h16"/></svg>
+            <h3>Solar panel</h3>
+            <p>Solar cells, mostly made of silicon, turn the light into electricity.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="10" width="38" height="28" rx="4"/><path d="M11 24c3-8 6-8 9 0s6 8 9 0 6-8 9 0"/></svg>
+            <h3>Inverter</h3>
+            <p>The panel makes electricity that flows one way. The inverter changes it so it swings back and forth, like the electricity in your wall.</p>
+          </li>
+          <li class="step">
+            <svg class="step-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 22 24 7l18 15M11 19v23h26V19M20 42V30h8v12"/></svg>
+            <h3>Your home</h3>
+            <p>On a sunny day, lamps and fridges run on sunshine.</p>
+          </li>
+        </ol>
+      </section>
+
+      <aside class="wrap">
+        <div class="fact-box">
+          <h2>Did you know?</h2>
+          <p>Before the blades start, the turbine turns its whole head to face the wind. A small wind vane on top tells it where the wind is coming from.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="bottom">
+      <div class="wrap">
+        <p>Sunwhirl Energy, Gustwell Lane 4. A pretend company, made with HTML and CSS.</p>
+        <p>Want to know more? <a href="https://en.wikipedia.org/wiki/Wind_turbine">Read about wind turbines on Wikipedia</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

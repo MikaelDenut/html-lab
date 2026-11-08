@@ -1,0 +1,543 @@
+/* ROUNDABOX STUDIO: one style file for all three pages. */
+
+/* The colours, fonts, sizes and spaces of the site. */
+:root {
+  --paper: #f4f6fa;
+  --ink: #1d2433;
+  --ink-soft: #4a5468;
+  --line: #c3cad6;
+  --red: #c2341f;
+  --tomato: #ff5b4a;
+  --sunflower: #ffc53d;
+  --xray: #ff3fb4;
+  --display: Futura, "Trebuchet MS", sans-serif;
+  --text: "Gill Sans", sans-serif;
+  --code: Menlo, Monaco, monospace;
+  --size-s: 16px;
+  --size-m: 20px;
+  --size-l: 25px;
+  --size-2xl: 39px;
+  --size-4xl: 62px;
+  --space-xs: 8px;
+  --space-s: 16px;
+  --space-m: 24px;
+  --space-l: 40px;
+  --space-xl: 72px;
+  --page: 1120px;
+  --shadow: 0 12px 32px rgba(29, 36, 51, 0.16);
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; background: var(--paper); color: var(--ink); font: var(--size-m)/1.5 var(--text); }
+
+h1, h2 { margin: 0; font-family: var(--display); font-weight: 500; line-height: 1.1; }
+p { max-width: 62ch; margin: 0 0 var(--space-s); }
+a { color: var(--red); font-weight: 600; }
+code, kbd { padding: 1px 5px; border-radius: 4px; background: rgba(29, 36, 51, 0.08); font-family: var(--code); font-size: 0.8em; }
+
+/* A thick dark ring shows where the keyboard is. */
+a:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible { outline: 3px solid var(--ink); outline-offset: 6px; }
+
+/* The top bar: the name on the left, the menu on the right. */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-m);
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: var(--space-m) var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--ink);
+  font: 500 var(--size-l)/1 var(--display);
+  text-decoration: none;
+}
+.logo-mark { width: 36px; height: 36px; fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.menu ul { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a { display: block; min-height: 44px; padding: 9px 18px; border-radius: 999px; color: var(--ink); text-decoration: none; }
+.menu a:hover { background: #fff; }
+.menu a:active { transform: translateY(1px); }
+.menu a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+
+.intro, .studio, .steps, .explain, .lab, .ideas { max-width: var(--page); margin: 0 auto; padding: 0 var(--space-s); }
+.intro { padding-top: var(--space-l); padding-bottom: var(--space-xl); }
+.intro h1 { margin-bottom: var(--space-m); font-size: var(--size-4xl); }
+.lead { font-size: var(--size-l); line-height: 1.45; }
+
+/* The X-ray switch: a real checkbox. */
+.xray-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 44px;
+  padding: var(--space-xs) var(--space-m);
+  border-radius: 999px;
+  background: #fff;
+}
+.xray-switch input { width: 20px; height: 20px; accent-color: var(--xray); }
+
+/* THE STUDIO: big drawings and small drawings side by side. */
+.studio {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: var(--space-xl) var(--space-m);
+  padding-bottom: var(--space-xl);
+}
+
+/* Each drawing says how big it is with --art. min() picks the smaller:
+   22px or 2% of the window, so the cat shrinks in a small window. */
+.cat-piece { grid-column: span 4; --art: min(22px, 2vw); }
+.snail-piece { grid-column: span 2; --art: 16px; }
+.fish-piece { grid-column: span 4; --art: min(20px, 1.9vw); }
+.sun-piece { grid-column: span 2; --art: 14px; }
+.house-piece { grid-column: span 3; --art: 14px; }
+.yours-piece { grid-column: span 3; }
+
+/* The words sit beside a drawing, or flex-wrap moves them under it. */
+.piece { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-s) var(--space-m); margin: 0; }
+.piece figcaption { flex: 1 1 180px; max-width: 32ch; font-size: var(--size-s); line-height: 1.4; }
+.piece b { display: block; font: 500 var(--size-l)/1.2 var(--display); }
+
+/* The big number: how many boxes the drawing needs. */
+.count { display: block; color: var(--red); font: 500 var(--size-4xl)/1 var(--display); }
+.count small { font-size: var(--size-m); }
+
+/* The picture you Tab to gets a bigger shadow. */
+.piece:focus-visible .art { box-shadow: 0 18px 44px rgba(29, 36, 51, 0.32); }
+
+/* The box that waits for your drawing. */
+.yours-piece { color: var(--ink); text-decoration: none; }
+.empty-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 280px;
+  padding: var(--space-m);
+  border: 3px dashed var(--line);
+  border-radius: 16px;
+  font: 500 var(--size-l)/1.2 var(--display);
+  text-align: center;
+}
+.yours-label { flex: 1 1 180px; font-size: var(--size-s); text-decoration: underline; }
+.yours-piece:hover .empty-frame { border-color: var(--red); }
+
+/* THE ART: a box with position: relative. Each shape in it is a div
+   with position: absolute. Its first line: where it is and how big.
+   Sizes are in em, so --art, the font-size, resizes the whole drawing. */
+.art {
+  position: relative;
+  width: 20em;
+  height: 20em;
+  overflow: hidden;
+  border-radius: 0.8em;
+  box-shadow: var(--shadow);
+  font-size: var(--art, 10px);
+}
+.art div { position: absolute; }
+
+/* X-RAY: ticked, every shape loses its round corners and its cut,
+   and a pink dashed line shows the box. */
+main:has(#xray:checked) .art div:empty {
+  border-radius: 0;
+  -webkit-clip-path: none;
+  clip-path: none;
+  outline: 0.12em dashed var(--xray);
+  opacity: 0.85;
+}
+
+/* class="tri" cuts a triangle. Each pair is a corner: across, down. */
+.tri { -webkit-clip-path: polygon(50% 0, 100% 100%, 0 100%); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+
+/* THE CAT: 12 boxes. Change --fur for a different cat. */
+.cat { --fur: #f28c38; --fur-dark: #c9651d; --belly: #ffe6c7; background: #cfe3e8; }
+.cat-tail {
+  left: 13em; top: 9.5em; width: 2.2em; height: 9em;
+  border-radius: 1.1em;
+  background: var(--fur-dark);
+  transform: rotate(32deg);
+  transform-origin: 50% 100%;
+}
+/* Pink inside the ear: a radial-gradient. */
+.cat-ear {
+  top: 1.4em; width: 4.4em; height: 5em;
+  background: radial-gradient(circle at 50% 45%, #ff9bb0 0 1em, var(--fur) 1.1em);
+}
+.cat-ear.left { left: 4.4em; transform: rotate(-16deg); }
+.cat-ear.right { left: 11.2em; transform: rotate(16deg); }
+.cat-body {
+  left: 4.5em; top: 9em; width: 11em; height: 10.5em;
+  border-radius: 50% 50% 42% 42% / 55% 55% 45% 45%;
+  background: radial-gradient(ellipse at 50% 85%, var(--belly) 0 32%, var(--fur) 33%);
+}
+.cat-head {
+  left: 3.75em; top: 3em; width: 12.5em; height: 10.5em;
+  border-radius: 50%;
+  background: var(--fur);
+}
+.cat-eye {
+  top: 6.6em; width: 2.6em; height: 2.8em;
+  border-radius: 50%;
+  background: radial-gradient(0.4em 1em, var(--ink) 90%, #7bd35b 100%);
+}
+.cat-eye.left { left: 6.4em; }
+.cat-eye.right { left: 11em; }
+.cat-nose {
+  left: 9.2em; top: 9.4em; width: 1.6em; height: 1.1em;
+  background: #ff7d96;
+  -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+/* The mouth: no top border, round bottom corners. */
+.cat-mouth {
+  left: 8.8em; top: 10.1em; width: 2.4em; height: 1.2em;
+  border: 0.2em solid var(--ink);
+  border-top: 0;
+  border-radius: 0 0 1.2em 1.2em;
+}
+/* Two whiskers in one box: its top and bottom borders. */
+.cat-whiskers {
+  top: 9.6em; width: 4.6em; height: 1.1em;
+  border-top: 0.15em solid var(--ink);
+  border-bottom: 0.15em solid var(--ink);
+}
+.cat-whiskers.left { left: 2.4em; transform: rotate(8deg); }
+.cat-whiskers.right { left: 13em; transform: rotate(-8deg); }
+/* One paw, and a box-shadow copy 4.4em to the right. */
+.cat-paws {
+  left: 6.3em; top: 17.8em; width: 3em; height: 1.9em;
+  border-radius: 50% 50% 40% 40%;
+  background: var(--belly);
+  box-shadow: 4.4em 0 0 var(--belly);
+}
+
+/* THE HOUSE: 6 boxes on a sky with grass. */
+.house { background: linear-gradient(#a8daf5 0 90%, #6cbf5a 90%); }
+.house-chimney {
+  left: 12.6em; top: 3.6em; width: 2.4em; height: 5em;
+  background: #b5482e;
+}
+/* Smoke: one puff, two box-shadow copies. 1.1em -1.2em is 1.1em
+   right and 1.2em up. The last number makes a copy bigger. */
+.house-smoke {
+  left: 13em; top: 2.6em; width: 1.6em; height: 1.6em;
+  border-radius: 50%;
+  background: #eef1f5;
+  box-shadow: 1.1em -1.2em 0 0.2em #eef1f5, 2.6em -2em 0 0.4em #eef1f5;
+}
+/* Roof tiles: a red stripe and a dark line, repeated.
+   z-index: 1 puts the roof in front of the chimney. */
+.house-roof {
+  z-index: 1;
+  left: 2.4em; top: 4em; width: 15.2em; height: 6.2em;
+  background: repeating-linear-gradient(var(--tomato) 0 1em, #d9402f 1em 1.2em);
+}
+.house-wall {
+  left: 4em; top: 10em; width: 12em; height: 8em;
+  background: #ffd27a;
+}
+/* The knob: a tiny yellow radial-gradient. */
+.house-door {
+  left: 10.6em; top: 13em; width: 3em; height: 5em;
+  border-radius: 1.5em 1.5em 0 0;
+  background: radial-gradient(circle at 75% 55%, var(--sunflower) 0 0.3em, transparent 0.35em), #3d6fb6;
+}
+/* The cross: one gradient draws a bar down, one a bar across. */
+.house-window {
+  left: 5.6em; top: 11.6em; width: 3.4em; height: 3.4em;
+  border: 0.3em solid #fff;
+  background: linear-gradient(90deg, transparent 44%, #fff 44% 56%, transparent 56%),
+    linear-gradient(transparent 44%, #fff 44% 56%, transparent 56%), #9fd3f2;
+}
+
+/* Shapes from the steps before turn grey on the How page. */
+.old { filter: grayscale(1) brightness(0.85); }
+
+/* THE SNAIL: a tall picture. */
+.snail { --snail: #c7b07c; width: 12em; height: 24em; background: linear-gradient(#cdeaf7 0 84%, #6cbf5a 84%); }
+.mushroom-stem {
+  left: 4.6em; top: 7.6em; width: 2.8em; height: 13em;
+  border-radius: 1.2em 1.2em 0.5em 0.5em;
+  background: #f2e4c8;
+}
+.mushroom-cap {
+  left: 0.6em; top: 3.2em; width: 10.8em; height: 5.4em;
+  border-radius: 50% 50% 1em 1em / 100% 100% 1em 1em;
+  background: linear-gradient(#a86a35 0 80%, #e8d6b4 80%);
+}
+.snail-body {
+  left: 1em; top: 18.4em; width: 9.6em; height: 2.4em;
+  border-radius: 1.2em 2em 0.4em 0.4em;
+  background: var(--snail);
+}
+/* One feeler and a box-shadow copy. skewX leans both to the front. */
+.snail-feelers {
+  left: 8.2em; top: 15.4em; width: 0.36em; height: 3.4em;
+  border-radius: 0.18em;
+  background: var(--snail);
+  box-shadow: 1.3em 0.4em 0 var(--snail);
+  transform: skewX(-14deg);
+  transform-origin: 50% 100%;
+}
+.snail-eyes {
+  left: 8.78em; top: 14.95em; width: 0.9em; height: 0.9em;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 1.2em 0.4em 0 var(--ink);
+}
+/* The shell: a dark and a light ring, repeated. Their middle is
+   off-centre, so you can see the shell turn. */
+.snail-shell {
+  left: 1.6em; top: 13.2em; width: 6.4em; height: 6.4em;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at 58% 56%, #7a3f1f 0 0.3em, #e3a15c 0.3em 1.1em);
+}
+
+/* THE SUN: the rays are a conic-gradient. It goes round like a
+   clock hand: yellow for 12 degrees, empty for 18. */
+.sun { background: #a8daf5; }
+.sun-rays {
+  left: 1em; top: 1em; width: 18em; height: 18em;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--sunflower) 0 12deg, transparent 12deg 30deg);
+}
+.sun-face {
+  left: 4.25em; top: 4.25em; width: 11.5em; height: 11.5em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #ffe680, var(--sunflower) 70%);
+}
+.sun-eye {
+  top: 8em; width: 1.3em; height: 1.8em;
+  border-radius: 50%;
+  background: var(--ink);
+}
+.sun-eye.left { left: 7.6em; }
+.sun-eye.right { left: 11.1em; }
+.sun-cheeks {
+  left: 6.4em; top: 10.8em; width: 1.8em; height: 1.1em;
+  border-radius: 50%;
+  background: #ff8a6b;
+  box-shadow: 5.4em 0 0 #ff8a6b;
+}
+/* The smile: only the bottom border of a round box. */
+.sun-smile {
+  left: 8em; top: 10.2em; width: 4em; height: 2.4em;
+  border: 0.35em solid transparent;
+  border-bottom-color: var(--ink);
+  border-radius: 50%;
+}
+
+/* THE FISH: a wide picture under water. */
+.fish { width: 30em; height: 14em; background: linear-gradient(#bfe6f2, #6fb7d6); }
+.fish-swimmer { inset: 0; }
+.fish-tail {
+  left: 2.5em; top: 3.5em; width: 6.5em; height: 7em;
+  background: #e8662a;
+  -webkit-clip-path: polygon(0 0, 100% 50%, 0 100%, 30% 50%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%, 30% 50%);
+}
+.fish-fin-top {
+  left: 11em; top: 1.6em; width: 7.5em; height: 3.6em;
+  background: #e8662a;
+  -webkit-clip-path: polygon(0 100%, 35% 0, 100% 100%);
+  clip-path: polygon(0 100%, 35% 0, 100% 100%);
+}
+/* Spots: one yellow circle, repeated like tiles by background-size. */
+.fish-body {
+  left: 7.5em; top: 3em; width: 16em; height: 8em;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--sunflower) 0 0.45em, transparent 0.5em) 0 0 / 2.2em 2.2em, #ff8a3d;
+}
+.fish-fin-side {
+  left: 13em; top: 6.8em; width: 3.6em; height: 2.2em;
+  border-radius: 0 100% 0 100%;
+  background: #e8662a;
+  transform: rotate(-12deg);
+}
+.fish-eye {
+  left: 18.6em; top: 4.6em; width: 2.2em; height: 2.2em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 50%, var(--ink) 0 0.5em, #fff 0.55em);
+}
+.fish-mouth {
+  left: 22.4em; top: 7.2em; width: 1.3em; height: 0.45em;
+  border-radius: 0.25em;
+  background: #b54515;
+}
+/* Bubbles: one and two box-shadow copies. b3 makes the white see-through. */
+.fish-bubbles {
+  left: 25.5em; top: 5.5em; width: 1em; height: 1em;
+  border-radius: 50%;
+  background: #ffffffb3;
+  box-shadow: 1.2em -2.2em 0 0.25em #ffffffb3, 0.4em -4.4em 0 -0.15em #ffffffb3;
+}
+
+/* MOVING PICTURES, unless you asked for less motion. The sun rays
+   move by themselves, the rest when you point or Tab (:focus-within). */
+@media (prefers-reduced-motion: no-preference) {
+  .sun-rays { animation: spin 40s linear infinite; }
+
+  .cat-tail,
+  .house-smoke,
+  .snail-shell,
+  .sun-eye,
+  .fish-swimmer { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  .cat-piece:is(:hover, :focus-within) .cat-tail { animation: wag 0.5s ease-in-out infinite alternate; }
+  .house-piece:is(:hover, :focus-within) .house-smoke { transform: translateY(-1.2em); }
+  .snail-piece:is(:hover, :focus-within) .snail-shell { transform: rotate(-200deg); }
+  .sun-piece:is(:hover, :focus-within) .sun-eye.right { transform: scaleY(0.15); }
+  .fish-piece:is(:hover, :focus-within) .fish-swimmer { transform: translateX(3em); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes wag { to { transform: rotate(14deg); } }
+
+/* THE HOW PAGE: six steps in a row of three. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-l) var(--space-m);
+  margin-bottom: var(--space-xl);
+  list-style: none;
+  --art: 10px;
+}
+.steps li { display: flex; flex-direction: column; align-items: center; }
+.steps p { max-width: 24ch; margin-top: var(--space-s); text-align: center; }
+.steps b { display: block; color: var(--red); font: 500 var(--size-l)/1.2 var(--display); }
+
+.explain {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-l);
+  align-items: center;
+  margin-bottom: var(--space-xl);
+}
+.explain h2 { margin-bottom: var(--space-s); font-size: var(--size-2xl); }
+pre { margin: 0; padding: var(--space-m); overflow-x: auto; border-radius: 12px; background: var(--ink); color: var(--paper); }
+pre code { padding: 0; background: none; font-size: var(--size-s); line-height: 1.6; }
+
+/* The box with the three corners of the roof. */
+.corners {
+  position: relative;
+  justify-self: center;
+  width: 300px; height: 150px;
+  margin: var(--space-l) 0;
+  border: 2px dashed var(--ink-soft);
+}
+.corners-shape { position: absolute; inset: 0; background: var(--tomato); }
+/* translate(-50%, -50%) puts each label's middle on its corner. */
+.dot {
+  position: absolute;
+  padding: 2px var(--space-xs);
+  border-radius: 6px;
+  background: var(--sunflower);
+  color: var(--ink);
+  font: 600 var(--size-s) var(--code);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+}
+.d1 { left: 50%; top: 0; }
+.d2 { left: 100%; top: 100%; }
+.d3 { left: 0; top: 100%; }
+.sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-m); }
+
+/* YOUR FACE: change these four lines! */
+.lab {
+  --skin: #ffd27a;   /* LINE 1: the colour of the face */
+  --eye: 2em;        /* LINE 2: how big the eyes are */
+  --mouth: 0deg;     /* LINE 3: 0deg is a smile, 180deg turns it upside down */
+  --cheeks: #ff8a6b; /* LINE 4: the colour of the cheeks */
+}
+
+.lab { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-l); margin-bottom: var(--space-xl); --art: 16px; }
+.face-art { background: #dfe7f0; }
+.face {
+  left: 2em; top: 2em; width: 16em; height: 16em;
+  border-radius: 50%;
+  background: var(--skin);
+}
+
+/* translate(-50%, -50%) puts each eye's middle on its spot,
+   so a bigger eye still sits right. */
+.face-eye {
+  top: 8em; width: var(--eye); height: var(--eye);
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translate(-50%, -50%);
+}
+.face-eye.left { left: 7em; }
+.face-eye.right { left: 13em; }
+.face-eye.middle { left: 10em; top: 5em; }
+.face-cheeks {
+  left: 4.6em; top: 10.6em; width: 2.6em; height: 1.4em;
+  border-radius: 50%;
+  background: var(--cheeks);
+  box-shadow: 8.2em 0 0 var(--cheeks);
+}
+.face-mouth {
+  left: 7em; top: 10.4em; width: 6em; height: 3.4em;
+  border: 0.5em solid transparent;
+  border-bottom-color: var(--ink);
+  border-radius: 50%;
+  transform: rotate(var(--mouth));
+}
+
+/* Moods: :has() finds the picked round button and changes the face. */
+.lab-side { display: grid; gap: var(--space-m); }
+.lab-side p { margin: 0; }
+.moods { display: grid; gap: var(--space-xs); min-width: 220px; margin: 0; padding: var(--space-m); border: 2px solid var(--line); border-radius: 12px; background: #fff; }
+.moods legend { padding: 0 var(--space-xs); font: 500 var(--size-l) var(--display); }
+.moods label { display: flex; align-items: center; gap: var(--space-s); min-height: 44px; }
+.moods input { width: 22px; height: 22px; accent-color: var(--red); }
+.lab:has(#sleepy:checked) .face-eye { height: 0.4em; border-radius: 0.2em; }
+.lab:has(#surprised:checked) .face-eye { width: calc(var(--eye) * 1.3); height: calc(var(--eye) * 1.3); }
+.lab:has(#surprised:checked) .face-mouth { left: 8.5em; top: 11em; width: 3em; height: 3.4em; border-color: var(--ink); }
+.lab:has(#grumpy:checked) { --mouth: 180deg; }
+.lab:has(#grumpy:checked) .face-eye { -webkit-clip-path: inset(45% 0 0 0); clip-path: inset(45% 0 0 0); }
+
+.ideas { padding-bottom: var(--space-xl); }
+.ideas h2 { margin-bottom: var(--space-s); font-size: var(--size-2xl); }
+.ideas li { margin-bottom: var(--space-xs); }
+
+/* The dark band at the bottom. */
+.bottom { padding: var(--space-l) var(--space-s); background: var(--ink); color: var(--paper); }
+.bottom p { max-width: calc(var(--page) - 32px); margin: 0 auto var(--space-xs); }
+.bottom a { color: var(--sunflower); }
+
+/* Middle screens: two columns. */
+@media (max-width: 1000px) {
+  .studio { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-l) var(--space-m); }
+  .studio > * { grid-column: span 1; }
+  .cat-piece, .fish-piece { grid-column: span 2; }
+  .cat-piece { --art: 20px; }
+  .snail-piece { --art: 14px; }
+  .fish-piece { --art: 17px; }
+  .house-piece, .sun-piece { --art: 12px; }
+  .empty-frame { width: 240px; height: 240px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .explain { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Small screens: one column. */
+@media (max-width: 600px) {
+  .studio { grid-template-columns: minmax(0, 1fr); }
+  .studio > * { grid-column: auto; }
+  .cat-piece, .house-piece, .sun-piece { --art: min(14px, 4vw); }
+  .snail-piece { --art: 12px; }
+  .fish-piece { --art: min(10px, 2.8vw); }
+  .intro h1 { font-size: var(--size-2xl); }
+  .lead { font-size: var(--size-m); }
+  .menu a { padding: 10px; font-size: var(--size-s); }
+  .steps { --art: 6.5px; gap: var(--space-m) var(--space-s); }
+  .lab { --art: 12px; }
+  .corners { width: 240px; }
+  pre { white-space: pre-wrap; }
+}

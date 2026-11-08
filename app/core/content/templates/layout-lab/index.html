@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cornerkite Studio - Eight layouts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="kite" viewBox="0 0 40 40" aria-hidden="true">
+        <path class="kite-head" d="M20 2 L38 20 H20 Z"></path><path class="kite-menu" d="M20 2 L2 20 H20 Z"></path>
+        <path class="kite-main" d="M2 20 L20 38 V20 Z"></path><path class="kite-side" d="M38 20 L20 38 V20 Z"></path>
+      </svg>
+      <span>Cornerkite Studio <small>Layout library</small></span>
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Eight layouts</a></li>
+        <li><a href="grid.html">Grid</a></li>
+        <li><a href="flex.html">Flexbox</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <div>
+        <h1>Eight layouts that build the web</h1>
+        <p class="lead">Almost every page you visit uses one of these plans, or mixes two. Each box below is a tiny real page. The line of code under it does the main trick.</p>
+      </div>
+      <div class="key">
+        <h2>The colour key</h2>
+        <ul>
+          <li><span class="swatch head"></span>Header: the top</li>
+          <li><span class="swatch menu"></span>Menu: the links</li>
+          <li><span class="swatch main"></span>Main: the content</li>
+          <li><span class="swatch side"></span>Side: extra things</li>
+          <li><span class="swatch foot"></span>Footer: the bottom</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="library" aria-label="Eight page layouts">
+      <article class="demo demo-single">
+        <div class="mini mini-single" aria-hidden="true">
+          <span class="part head">Header</span>
+          <span class="part main">Main</span>
+          <span class="part foot">Footer</span>
+        </div>
+        <h2>Single column</h2>
+        <code><b>margin</b>: 0 auto;</code>
+        <p>One narrow road down the middle. Great for stories.</p>
+      </article>
+
+      <article class="demo demo-sidebar">
+        <div class="mini mini-sidebar" aria-hidden="true">
+          <span class="part menu">Menu</span>
+          <span class="part main">Main</span>
+        </div>
+        <h2>Sidebar</h2>
+        <code><b>flex</b>: 1;</code>
+        <p>A menu down the side. The main part takes all the space that is left.</p>
+      </article>
+
+      <article class="demo demo-grail">
+        <div class="mini mini-grail" aria-hidden="true">
+          <span class="part head">Header</span>
+          <span class="part menu">Menu</span>
+          <span class="part main">Main</span>
+          <span class="part side">Side</span>
+          <span class="part foot">Footer</span>
+        </div>
+        <h2>Holy grail</h2>
+        <code><b>grid-template-columns</b>: 1fr 3fr 1fr;</code>
+        <p>Header, three columns, footer. For years it was hard to build, so people named it after the Holy Grail, a treasure that knights in old stories searched for a very long time.</p>
+      </article>
+
+      <article class="demo demo-cards">
+        <div class="mini mini-cards" aria-hidden="true">
+          <span class="part main">Card</span><span class="part main">Card</span><span class="part main">Card</span>
+          <span class="part main">Card</span><span class="part main">Card</span><span class="part main">Card</span>
+        </div>
+        <h2>Card grid</h2>
+        <code><b>grid-template-columns</b>: repeat(auto-fill, minmax(70px, 1fr));</code>
+        <p>Boxes in rows. When the box gets narrower, fewer cards fit in a row.</p>
+      </article>
+
+      <article class="demo demo-magazine">
+        <div class="mini mini-magazine" aria-hidden="true">
+          <span class="part head">Header</span>
+          <span class="part main big">Big story</span>
+          <span class="part side">Story</span>
+          <span class="part side">Story</span>
+          <span class="part foot">Footer</span>
+        </div>
+        <h2>Magazine</h2>
+        <code><b>grid-column</b>: span 2;</code>
+        <p>One big story covers two columns. Smaller stories stand beside it, like in a newspaper.</p>
+      </article>
+
+      <article class="demo demo-footer">
+        <div class="mini mini-sticky" aria-hidden="true">
+          <span class="part head">Header</span>
+          <span class="part main">Short page</span>
+          <span class="part foot">Footer</span>
+        </div>
+        <h2>Footer that stays down</h2>
+        <code><b>margin-top</b>: auto;</code>
+        <p>Even on a short page, the footer sits at the very bottom, not in the middle.</p>
+      </article>
+
+      <article class="demo demo-split">
+        <div class="mini mini-split" aria-hidden="true">
+          <span class="part side">Picture</span>
+          <span class="part main">Words</span>
+        </div>
+        <h2>Split screen</h2>
+        <code><b>grid-template-columns</b>: 1fr 1fr;</code>
+        <p>Two halves side by side, often a picture and some words.</p>
+      </article>
+
+      <article class="demo demo-hero">
+        <div class="mini mini-hero" aria-hidden="true">
+          <span class="part head">Header</span>
+          <span class="part main hero-band"><b>Big title</b></span>
+        </div>
+        <h2>Centered hero</h2>
+        <code><b>place-items</b>: center;</code>
+        <p>A big welcome in the exact middle of a wide band.</p>
+      </article>
+    </section>
+
+    <section class="mix">
+      <h2>Plans inside plans</h2>
+      <p>Real websites mix layouts. This page does too: the eight boxes sit on a grid with named areas. Open style.css and look for <code><b>grid-template-areas</b></code> to find the map.</p>
+      <p class="buttons">
+        <a class="button" href="grid.html">See grid layouts up close</a>
+        <a class="button light" href="flex.html">Line things up with flexbox</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Cornerkite Studio</b>, 7 Kerning Court. A pretend web studio, made with HTML and CSS.</p>
+    <p>Want to know more? <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout">Read about CSS grid on MDN</a></p>
+  </footer>
+</body>
+</html>

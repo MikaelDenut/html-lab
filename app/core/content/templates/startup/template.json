@@ -1,0 +1,15 @@
+{
+  "title": "App startup",
+  "name": "my-app-startup",
+  "blurb": "A landing page for a homework planner app, with prices and help",
+  "category": "professional",
+  "layout": "Landing page: hero, feature grid, pricing table",
+  "shows": [
+    "A phone screen drawn with boxes, no photo",
+    "A ring chart made with conic-gradient",
+    "A price switch made with radio buttons",
+    "A star plan that is bigger than the rest",
+    "Questions that open with details and summary"
+  ],
+  "accent": "#e6b000"
+}

@@ -1,0 +1,513 @@
+/* Wobblenut Garage: one style file for all three pages.
+   The look: an old workshop sign, petrol teal with a tangerine stripe. */
+
+/* Change one line here and the whole garage changes colour! */
+:root {
+  --ink: #22262b;
+  --quiet: #5c6a70;
+  --teal: #0e5a63;
+  --teal-dark: #093f46;
+  --teal-light: #dcebec;
+  --road: #9dbfc3;
+  --tangerine: #f28c28;
+  --tangerine-dark: #b5621a;
+  --lamp-red: #d6402b;
+  --coupon: #fff1e0;
+  --steel: #eef1f2;
+  --white: #ffffff;
+  --title-font: Rockwell, Superclarendon, serif;
+  --text-font: "Avenir Next", "Gill Sans", sans-serif;
+  --size-s: 16px;
+  --size-m: 20px;
+  --size-l: 25px;
+  --size-xl: 31px;
+  --size-2xl: 39px;
+  --size-3xl: 49px;
+  --size-4xl: 61px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --round: 10px;
+  --shadow: 0 10px 26px rgba(9, 63, 70, 0.18);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.55;
+}
+
+/* Headings: more space above them than below. */
+h1, h2, h3 { max-width: 24ch; margin: 0 0 var(--space-s); font-family: var(--title-font); line-height: 1.15; }
+h1 { font-size: var(--size-4xl); }
+h2 { font-size: var(--size-2xl); }
+h3 { font-size: var(--size-l); }
+p, li { max-width: 70ch; }
+p { margin: 0 0 var(--space-s); }
+a { color: var(--teal); }
+a:hover { color: var(--teal-dark); }
+
+/* Press Tab: a ring shows where you are.
+   A dark teal ring on light parts, an orange ring on the dark teal parts. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--teal-dark);
+  outline-offset: 2px;
+}
+.top-bar a:focus-visible, .hero a:focus-visible, .bottom a:focus-visible { outline-color: var(--tangerine); }
+
+/* The page sits in the middle and never gets too wide. */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--space-m); }
+
+/* The sign at the top, with a tangerine stripe under it. */
+.top-bar { background: var(--teal-dark); border-bottom: 6px solid var(--tangerine); }
+.top-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  padding-top: var(--space-s);
+  padding-bottom: var(--space-s);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--white);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+/* The logo stays white under the mouse. Without this, a:hover makes it dark teal,
+   the same colour as the bar, and the name disappears. */
+.logo:hover { color: var(--white); }
+.logo small { display: block; font-size: var(--size-s); color: var(--teal-light); }
+.logo-nut { fill: var(--tangerine); }
+.logo-hole { fill: var(--teal-dark); }
+
+/* Put your mouse on the logo and the nut turns, like a spanner did it. */
+.logo svg { transform-origin: center; }
+.logo:hover svg { transform: rotate(60deg); }
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 10px var(--space-s);
+  border-radius: var(--round);
+  color: var(--white);
+  font-weight: 600;
+  font-size: var(--size-s);
+  text-decoration: none;
+}
+.menu a:hover { color: var(--white); background: rgba(255, 255, 255, 0.12); }
+.menu a:active { background: rgba(255, 255, 255, 0.24); }
+
+/* The page you are on looks like a tangerine button. */
+.menu a[aria-current="page"] { background: var(--tangerine); color: var(--ink); }
+
+.hero { background: var(--teal); color: var(--white); padding: var(--space-xl) 0 var(--space-l); }
+
+/* Two halves: the words on the left, the car on the right. */
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: center; }
+.hero-lead { font-size: var(--size-l); max-width: 30ch; margin-bottom: var(--space-m); }
+.hero-car { margin: 0; }
+.hero-car svg { display: block; width: 100%; height: auto; }
+
+.quick-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-m);
+  margin: var(--space-m) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--teal-light);
+  font-size: var(--size-s);
+}
+.quick-facts b { display: block; color: var(--white); }
+
+.button {
+  display: inline-block;
+  min-height: 48px;
+  margin: 0 var(--space-s) var(--space-s) 0;
+  padding: var(--space-s) var(--space-m);
+  border: 0;
+  border-radius: var(--round);
+  background: var(--tangerine);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--size-s);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button.light { background: var(--white); color: var(--teal-dark); }
+
+/* Buttons lift up when your mouse is on them, and press down when you click. */
+.button:hover { color: var(--ink); transform: translateY(-3px); box-shadow: 0 8px 18px rgba(9, 63, 70, 0.3); }
+.button:active { transform: translateY(1px); box-shadow: none; }
+
+/* The car drawing takes its colours from the top of this file. */
+.car-shadow { fill: var(--teal-dark); opacity: 0.5; }
+.car-body { fill: var(--tangerine); }
+.car-glass { fill: var(--teal-light); }
+.car-line { fill: none; stroke: var(--tangerine-dark); stroke-width: 3; }
+.car-handle { fill: var(--tangerine-dark); }
+.car-lamp { fill: var(--white); }
+.car-rear-lamp { fill: var(--lamp-red); }
+.tyre { fill: var(--ink); }
+.rim { fill: var(--steel); }
+.spokes { stroke: var(--ink); stroke-width: 4; }
+.road { stroke: var(--teal-light); stroke-width: 4; stroke-dasharray: 28 18; opacity: 0.6; }
+
+/* Put your mouse on the car and the wheels turn round once. */
+.hero-car:hover .wheel { transform: rotate(360deg); }
+
+.services { padding-top: var(--space-xl); }
+
+/* The job most people book gets a big box. The other jobs sit in a list beside it. */
+.job-board {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: var(--space-l);
+  align-items: start;
+  margin-top: var(--space-m);
+}
+.lead-job { padding: var(--space-m); border-radius: var(--round); background: var(--steel); }
+.lead-job h3 { font-size: var(--size-xl); }
+.lead-job .job-icon { width: 64px; height: 64px; margin-bottom: var(--space-s); }
+.lead-job .from { margin-bottom: var(--space-m); font-size: var(--size-xl); }
+.lead-job .button { margin-bottom: 0; }
+
+/* Each job in the list: icon, words, and the price on the right. */
+.job-list { margin: 0; padding: 0; list-style: none; }
+.job-list li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: var(--space-s) var(--space-m);
+  align-items: start;
+  padding: var(--space-s) 0;
+  border-bottom: 2px solid var(--steel);
+}
+.job-list li:first-child { padding-top: 0; }
+.job-list h3 { margin: 0; font-size: var(--size-m); }
+.job-list p { margin: 0; font-size: var(--size-s); }
+.from { color: var(--teal); font-weight: 700; white-space: nowrap; }
+.job-list .from { font-size: var(--size-m); }
+.job-icon {
+  width: 40px;
+  height: 40px;
+  fill: none;
+  stroke: var(--teal);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.why { margin-top: var(--space-xl); padding: var(--space-xl) 0; background: var(--steel); }
+.why-inner { display: grid; grid-template-columns: 2fr 3fr; gap: var(--space-l); align-items: center; }
+.why-picture {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--round);
+  box-shadow: var(--shadow);
+}
+.why-list { margin: 0; padding: 0; list-style: none; }
+.why-list li { position: relative; padding-left: 44px; margin-bottom: var(--space-m); }
+
+/* A round tick in front of each reason. The tick is a turned L shape. */
+.why-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+.why-list li::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  width: 13px;
+  height: 7px;
+  border-style: solid;
+  border-color: var(--white);
+  border-width: 0 0 3px 3px;
+  transform: rotate(-45deg);
+}
+
+/* The title box at the top of the other pages. */
+.page-title { background: var(--teal); color: var(--white); padding: var(--space-xl) 0 var(--space-l); }
+.page-title p { font-size: var(--size-l); max-width: 36ch; margin: 0; }
+.prices-banner { background: linear-gradient(90deg, rgba(9, 63, 70, 0.96), rgba(9, 63, 70, 0.55)), url(garage-tyre.jpg) center / cover; }
+
+/* The offer looks like a coupon you could cut out: the dashed line is where the scissors go. */
+.offer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-m);
+  align-items: center;
+  margin: var(--space-l) 0;
+  padding: var(--space-m);
+  border: 3px dashed var(--ink);
+  border-radius: var(--round);
+  background: var(--coupon);
+}
+.offer h2 { font-size: var(--size-xl); }
+.offer p { margin: 0; }
+.offer .button { margin: 0; }
+
+/* The round stamp is turned a little, like it was stamped by hand. */
+.offer-stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--tangerine);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: 700;
+  transform: rotate(-12deg);
+}
+
+/* On a wide screen the tip sits beside the price list. */
+.price-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr);
+  gap: var(--space-l);
+  align-items: start;
+}
+
+/* The price list. "separate" with no spacing keeps the dark top row in one piece. */
+.price-list { width: 100%; border-collapse: separate; border-spacing: 0; }
+.price-list td:nth-child(2) { white-space: nowrap; }
+.price-list caption { caption-side: bottom; padding-top: var(--space-s); text-align: left; font-size: var(--size-s); }
+.price-list th, .price-list td { padding: var(--space-s); text-align: left; }
+.price-list td, .price-list th[scope="row"] { border-bottom: 1px solid var(--steel); }
+.price-list tbody th { font-weight: 400; }
+
+/* The top row sticks to the top of the window while you scroll down the list. */
+.price-list thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--teal-dark);
+  color: var(--white);
+  font-size: var(--size-s);
+}
+
+/* Each group of jobs starts with its own coloured row. */
+.price-list .group th {
+  padding-top: var(--space-m);
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: 700;
+}
+.price-list tbody tr:not(.group):hover { background: var(--steel); }
+
+/* Prices line up on the right, with numbers that are all the same width. */
+.price-list .money { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 700; }
+.free { color: var(--teal); }
+
+.tip { padding: var(--space-m); border-radius: var(--round); background: var(--steel); }
+.tip h2 { font-size: var(--size-l); }
+
+.intro-title { padding: var(--space-xl) 0 var(--space-l); }
+.intro-title p { font-size: var(--size-l); max-width: 36ch; }
+
+/* Three steps side by side. The numbers count by themselves with a CSS counter.
+   Numbers are allowed here because the order of the steps matters. */
+.booking-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+/* A dashed road runs from the middle of the first number to the middle of the last one. */
+.booking-steps::before {
+  content: "";
+  position: absolute;
+  top: 32px;
+  left: calc((100% - 2 * var(--space-l)) / 6);
+  right: calc((100% - 2 * var(--space-l)) / 6);
+  border-top: 4px dashed var(--road);
+}
+.booking-steps li { position: relative; counter-increment: step; text-align: center; }
+.booking-steps li::before {
+  content: counter(step);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto var(--space-s);
+  border: 5px solid var(--white);
+  border-radius: 50%;
+  background: var(--tangerine);
+  font-family: var(--title-font);
+  font-size: var(--size-xl);
+  font-weight: 700;
+}
+.booking-steps h2 { margin: 0 auto var(--space-xs); font-size: var(--size-l); }
+.booking-steps p { margin: 0 auto; font-size: var(--size-s); }
+
+.book-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-l);
+  align-items: start;
+  margin: var(--space-xl) 0;
+}
+.book-grid h2 { font-size: var(--size-xl); }
+.checklist, .form-box { padding: var(--space-m); border-radius: var(--round); background: var(--steel); }
+.check-list { margin: var(--space-m) 0 0; padding: 0; list-style: none; }
+.check-list label { display: flex; align-items: center; gap: var(--space-s); min-height: 48px; cursor: pointer; }
+
+/* The real checkbox hides. A bigger, prettier box shows instead. */
+.check-list input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tick-box {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--teal);
+  border-radius: 8px;
+  background: var(--white);
+}
+.check-list label:hover .tick-box { border-color: var(--teal-dark); background: var(--teal-light); }
+
+/* When you tick it, the box turns teal and a white tick appears. */
+.check-list input:checked + .tick-box { background: var(--teal); }
+.check-list input:checked + .tick-box::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  width: 15px;
+  height: 8px;
+  border-style: solid;
+  border-color: var(--white);
+  border-width: 0 0 4px 4px;
+  transform: rotate(-45deg);
+}
+.check-list input:checked ~ .check-text { color: var(--teal); font-weight: 600; }
+.check-list input:focus-visible + .tick-box { outline: 3px solid var(--teal-dark); outline-offset: 2px; }
+
+/* Each label sits on top of its box. */
+.booking-form { display: grid; gap: var(--space-xs); }
+.booking-form label { margin-top: var(--space-s); font-size: var(--size-s); font-weight: 700; }
+.booking-form input, .booking-form select, .booking-form textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-s);
+  border: 2px solid var(--teal);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--size-s);
+}
+
+/* The grey example words inside a box. */
+.booking-form ::placeholder { color: var(--quiet); opacity: 1; }
+
+/* The select box loses its Mac look. Two little triangles from gradients make its arrow. */
+.booking-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 44px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--teal) 50%), linear-gradient(135deg, var(--teal) 50%, transparent 50%);
+  background-position: right 22px center, right 14px center;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
+}
+.booking-form input:hover, .booking-form select:hover, .booking-form textarea:hover { border-color: var(--teal-dark); }
+
+/* A grey, faded box means you cannot use it right now. */
+.booking-form :disabled { opacity: 0.55; cursor: not-allowed; }
+.booking-form .button { margin-top: var(--space-m); margin-bottom: 0; justify-self: start; }
+.practice { margin: var(--space-xs) 0 0; font-size: var(--size-s); }
+
+/* Space under the page, before the footer.
+   :has() asks "is the grey band inside main?". If yes, the band touches the footer. */
+main { padding-bottom: var(--space-xl); }
+main:has(.why) { padding-bottom: 0; }
+
+/* The bottom of every page. */
+.bottom { padding: var(--space-l) 0; background: var(--teal-dark); color: var(--teal-light); font-size: var(--size-s); }
+.bottom p { margin: var(--space-xs) 0; }
+.bottom a { color: var(--tangerine); }
+.bottom a:hover { color: var(--white); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .wheel { transition: transform 1.2s var(--ease); }
+  .logo svg, .button { transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+}
+
+/* On a narrower screen the halves stack on top of each other. */
+@media (max-width: 960px) {
+  .price-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .hero-inner, .why-inner, .book-grid, .job-board { grid-template-columns: 1fr; }
+  .hero-car { max-width: 480px; }
+  .offer { grid-template-columns: auto 1fr; }
+  .offer .button { grid-column: 1 / -1; justify-self: start; }
+  h1 { font-size: var(--size-3xl); }
+}
+
+/* On a phone the steps go under each other, and the road goes down. */
+@media (max-width: 600px) {
+  .wrap { padding-left: 16px; padding-right: 16px; }
+  h1 { font-size: var(--size-2xl); }
+  h2 { font-size: var(--size-xl); }
+  .hero-lead, .page-title p, .intro-title p { font-size: var(--size-m); }
+  .booking-steps { grid-template-columns: 1fr; gap: var(--space-m); }
+  .booking-steps::before {
+    top: 34px;
+    bottom: 34px;
+    left: 50%;
+    right: auto;
+    border-top: 0;
+    border-left: 4px dashed var(--road);
+  }
+  .booking-steps li { background: var(--white); }
+  .offer { grid-template-columns: 1fr; }
+  .offer-stamp { width: 76px; height: 76px; font-size: var(--size-m); }
+  .price-list th, .price-list td { padding: var(--space-s) var(--space-xs); }
+  .menu a { padding: 10px 8px; }
+  .job-list li { grid-template-columns: 40px 1fr; }
+  .job-list .from { grid-column: 2; }
+}

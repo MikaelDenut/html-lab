@@ -1,0 +1,700 @@
+/* Plum and apricot, like the fruit trees behind the workshop.
+   Change a colour here and the whole shop changes. */
+:root {
+  --paper: #ffffff;
+  --mist: #f6f1f8;
+  --line: #e6dcea;
+  --ink: #2b1830;
+  --soft: #5e4a66;
+  --plum: #6b2d6f;
+  --plum-dark: #4a1a4f;
+  --plum-tint: #ecdcf0;
+  --apricot: #f7a35c;
+  --leaf: #27704d;
+  --field-edge: #8f7c97;
+
+  --title-font: Rockwell, Georgia, serif;
+  --text-font: "Avenir Next", Avenir, "Helvetica Neue", sans-serif;
+
+  /* Each size is 1.25 times (or more) the one before it. */
+  --size-s: 14px;
+  --size-m: 18px;
+  --size-l: 23px;
+  --size-xl: 29px;
+  --size-2xl: 37px;
+  --size-3xl: 47px;
+
+  /* Small gaps inside a group, big gaps between groups. */
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(43, 24, 48, 0.12);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--size-m);
+  line-height: 1.55;
+}
+
+h1, h2, h3 { margin: 0 0 var(--space-s); font-family: var(--title-font); line-height: 1.15; }
+h1 { max-width: 20ch; font-size: var(--size-3xl); }
+h2 { font-size: var(--size-xl); }
+h3 { font-size: var(--size-l); }
+p { max-width: 70ch; margin: 0 0 var(--space-m); }
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--plum); }
+a:hover { color: var(--plum-dark); }
+
+/* Hidden from eyes, but a screen reader (a program that reads the page out loud) and Tab find it. */
+.for-readers, .add, .gallery input, .option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* A thick ring shows where the keyboard is. */
+a:focus-visible, button:focus-visible, input:focus-visible,
+.add:focus-visible + .add-button, .option input:focus-visible + span {
+  outline: 3px solid var(--plum);
+  outline-offset: 3px;
+}
+
+/* On dark boxes the ring turns apricot. */
+.basket-bar a:focus-visible, .footer a:focus-visible { outline-color: var(--apricot); }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: var(--space-xl) var(--space-l) var(--space-2xl); }
+.lead { color: var(--soft); }
+
+/* All icons share one stroke width. */
+.icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ----- Top bar ----- */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s) var(--space-l);
+  padding: var(--space-s) var(--space-l);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  color: var(--ink);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: bold;
+  line-height: 1.1;
+  text-decoration: none;
+}
+.logo small {
+  display: block;
+  color: var(--soft);
+  font-family: var(--text-font);
+  font-size: var(--size-s);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.logo svg { width: 46px; height: 46px; }
+/* The plum wobbles when your mouse is on the logo. */
+.logo:hover svg { transform: rotate(-12deg); }
+.menu {
+  display: flex;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 44px;
+  padding: 0 var(--space-m);
+  border-radius: 999px;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--mist); }
+.menu a:active { transform: scale(0.97); }
+.menu a[aria-current="page"] { background: var(--plum); color: var(--paper); }
+.menu .icon { width: 22px; height: 22px; }
+
+/* ----- Buttons ----- */
+/* A link or label that looks like a round pill. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-s);
+  min-height: 48px;
+  padding: 0 var(--space-l);
+  border: 0;
+  border-radius: 999px;
+  background: var(--apricot);
+  color: var(--ink);
+  font: 700 var(--size-m) var(--text-font);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(164, 82, 15, 0.25);
+}
+.button:hover { color: var(--ink); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(164, 82, 15, 0.3); }
+.button:active { transform: translateY(1px) scale(0.98); box-shadow: 0 2px 6px rgba(164, 82, 15, 0.3); }
+
+/* ----- Shop page ----- */
+/* Two columns: the filters are thin, the toys get the rest. */
+.shop {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+  margin-top: var(--space-xl);
+  counter-reset: basket;
+}
+.filters {
+  position: sticky;
+  top: var(--space-m);
+  padding: var(--space-l);
+  border-radius: var(--radius);
+  background: var(--mist);
+}
+.filters h2 { font-size: var(--size-l); }
+.filters fieldset { margin: 0 0 var(--space-l); padding: 0; border: 0; }
+.filters legend { margin-bottom: var(--space-s); font-weight: 700; }
+.filters .option input + span { background: var(--paper); }
+.filters .option input:checked + span { background: var(--plum-tint); }
+.free-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0;
+  color: var(--soft);
+}
+.free-note .icon, .promises .icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: var(--plum);
+}
+
+/* A shop shows its toys side by side, so a grid of cards is its job.
+   The big card takes two columns and two rows. */
+.products { position: relative; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: var(--space-l);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
+/* The card lifts up when your mouse is on it. */
+.card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(43, 24, 48, 0.16); }
+.card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.card-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-m) var(--space-l) var(--space-l);
+}
+.card h3 a { color: var(--ink); }
+.card h3 a:hover { color: var(--plum); }
+.info { color: var(--soft); }
+.price {
+  margin: auto 0 var(--space-m);
+  color: var(--plum);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: bold;
+}
+.big { grid-column: span 2; grid-row: span 2; }
+/* height: 0 plus flex: 1 lets the picture grow into the space that is left.
+   contain keeps the whole horse in view. */
+.big img {
+  flex: 1;
+  height: 0;
+  min-height: 260px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: var(--mist);
+}
+.big .card-text { flex: none; }
+.big h3 { font-size: var(--size-xl); }
+
+/* The sticker spins in like a spinning top, then stops a little tilted. */
+.sticker {
+  position: absolute;
+  top: var(--space-m);
+  left: var(--space-m);
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--apricot);
+  font-size: var(--size-s);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(43, 24, 48, 0.25);
+  transform: rotate(-8deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sticker { animation: spin-in 0.8s var(--ease-out) both; }
+}
+@keyframes spin-in {
+  from { transform: rotate(-368deg) scale(0.7); }
+  to { transform: rotate(-8deg) scale(1); }
+}
+
+/* The real checkbox is hidden. Its label is the button you see. */
+.add-button { width: 100%; }
+.added-text { display: none; }
+.add:checked + .add-button { background: var(--plum); color: var(--paper); }
+.add:checked + .add-button .add-text { display: none; }
+.add:checked + .add-button .added-text { display: inline-flex; align-items: center; gap: 10px; }
+.added-text::before {
+  content: "";
+  width: 7px;
+  height: 13px;
+  border: solid currentColor;
+  border-width: 0 3px 3px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+/* Pick a filter and the other toys hide. They only turn invisible,
+   so the basket below still counts them. */
+.shop:has(#kind-wood:checked) .card:not(.wood),
+.shop:has(#kind-soft:checked) .card:not(.soft),
+.shop:has(#kind-outdoor:checked) .card:not(.outdoor),
+.shop:has(#cheap:checked) .card:not(.cheap) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+/* The basket counts the ticked boxes by itself. No JavaScript! */
+.add:checked { counter-increment: basket; }
+.count::after { content: counter(basket); }
+
+/* The basket bar sticks to the bottom of the window. */
+.basket-bar {
+  position: sticky;
+  bottom: var(--space-m);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  margin-top: var(--space-xl);
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 12px 28px rgba(43, 24, 48, 0.3);
+}
+.basket-bar p {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0;
+  font-weight: 600;
+}
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--apricot);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ----- Toy page ----- */
+.crumbs { margin-bottom: var(--space-l); color: var(--soft); }
+.crumbs a { font-weight: 600; }
+.product {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+/* The frame hides what sticks out of a zoomed picture. */
+.big-frame {
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--mist);
+  box-shadow: var(--shadow);
+}
+.big-frame img { width: 100%; transform-origin: 50% 85%; }
+/* Each radio button zooms the big picture (and its thumbnail) to a different spot. */
+#view-head:checked ~ .big-frame img, .head img { transform: scale(2.2); transform-origin: 86% 4%; }
+#view-wheels:checked ~ .big-frame img, .wheels img { transform: scale(2); transform-origin: 100% 100%; }
+/* When the page opens, the horse rocks once and stops. */
+@media (prefers-reduced-motion: no-preference) {
+  .big-frame img { animation: rock 1s var(--ease-out); }
+}
+@keyframes rock {
+  0% { transform: rotate(-5deg); }
+  35% { transform: rotate(3deg); }
+  65% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0); }
+}
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-m);
+  margin-top: var(--space-m);
+}
+.thumb {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background: var(--mist);
+  cursor: pointer;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb:hover { border-color: var(--plum-tint); }
+.thumb:active { transform: scale(0.97); }
+#view-whole:checked ~ .thumbs .whole,
+#view-head:checked ~ .thumbs .head,
+#view-wheels:checked ~ .thumbs .wheels { border-color: var(--plum); }
+#view-whole:focus-visible ~ .thumbs .whole,
+#view-head:focus-visible ~ .thumbs .head,
+#view-wheels:focus-visible ~ .thumbs .wheels { outline: 3px solid var(--plum); outline-offset: 3px; }
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--soft);
+}
+.rating .icon {
+  width: 22px;
+  height: 22px;
+  fill: var(--apricot);
+  color: #a4520f;
+}
+.big-price {
+  margin: 0 0 var(--space-s);
+  color: var(--plum);
+  font-family: var(--title-font);
+  font-size: var(--size-2xl);
+  font-weight: bold;
+}
+/* A green dot: an empty round box. */
+.stock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--leaf);
+  font-weight: 600;
+}
+.stock::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--leaf);
+}
+.options { margin: 0 0 var(--space-l); padding: 0; border: 0; }
+.options legend { margin-bottom: var(--space-s); font-weight: 700; }
+/* The real radio button is hidden. The box next to it shows your pick. */
+.option { display: inline-flex; margin: 0 var(--space-s) var(--space-s) 0; }
+.option input + span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-s);
+  min-height: 48px;
+  padding: var(--space-s) var(--space-m);
+  border: 2px solid var(--field-edge);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.option input + span:hover { border-color: var(--plum); }
+.option input:checked + span { border-color: var(--plum); background: var(--plum-tint); }
+.option input:disabled + span {
+  border-style: dashed;
+  color: var(--soft);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.option small { color: var(--soft); font-size: var(--size-s); }
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
+}
+.red { background: #b83a3a; }
+.blue { background: #3a62b8; }
+.moss { background: #6f8a3a; }
+.promises {
+  display: grid;
+  gap: var(--space-s);
+  margin: var(--space-l) 0 0;
+  padding: var(--space-l) 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.promises li { display: flex; align-items: center; gap: var(--space-m); }
+.details { max-width: 760px; margin-top: var(--space-2xl); }
+.spec { width: 100%; border-collapse: collapse; }
+.spec th, .spec td { padding: var(--space-s) var(--space-m); text-align: left; vertical-align: top; }
+.spec th { width: 35%; color: var(--soft); font-weight: 600; }
+/* Every other row gets a light colour, so your eye stays on the line. */
+.spec tr:nth-child(odd) { background: var(--mist); }
+
+/* ----- Basket page ----- */
+/* The steps count 1, 2, 3, 4 by themselves with a CSS counter. */
+.steps {
+  display: flex;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-xl);
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+/* The stripe on top of each step is a gradient, 4px tall. */
+.steps li {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-s);
+  padding-top: 12px;
+  background: linear-gradient(var(--line), var(--line)) top / 100% 4px no-repeat;
+  color: var(--soft);
+  font-weight: 600;
+  counter-increment: step;
+}
+.steps li::before {
+  content: counter(step);
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--line);
+  color: var(--ink);
+}
+.steps [aria-current="step"], .page:has(#delivery:target) .steps li:nth-child(2) {
+  background-image: linear-gradient(var(--plum), var(--plum));
+  color: var(--ink);
+}
+/* Jump down to the delivery form and step 2 lights up too. */
+.steps [aria-current="step"]::before, .page:has(#delivery:target) .steps li:nth-child(2)::before {
+  background: var(--plum);
+  color: var(--paper);
+}
+.basket {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* Each basket line is a small grid of five columns. */
+.line {
+  display: grid;
+  grid-template-columns: 96px 1fr 100px 110px 80px;
+  grid-template-areas: "pic what unit how-many sum";
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m) 0;
+  border-bottom: 1px solid var(--line);
+}
+.line-head {
+  padding-top: 0;
+  color: var(--soft);
+  font-size: var(--size-s);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.line-head span:first-child { grid-column: span 2; }
+.line img {
+  grid-area: pic;
+  width: 96px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.what { grid-area: what; }
+.what h2 { margin: 0; font-size: var(--size-l); }
+.what p { margin: 0; color: var(--soft); }
+.unit { grid-area: unit; margin: 0; }
+.how-many { grid-area: how-many; margin: 0; }
+.sum { grid-area: sum; margin: 0; font-weight: 700; }
+.how-many input, .field input {
+  min-height: 48px;
+  padding: 0 var(--space-m);
+  border: 2px solid var(--field-edge);
+  border-radius: 10px;
+  background: var(--paper);
+  color: inherit;
+  font: inherit;
+}
+.how-many input { width: 84px; }
+.how-many input:focus, .field input:focus { border-color: var(--plum); }
+/* The grey hint text in an empty box is dark enough to read. */
+.field input::placeholder { color: var(--soft); }
+
+.totals {
+  position: sticky;
+  top: var(--space-m);
+  padding: var(--space-l);
+  border-radius: var(--radius);
+  background: var(--mist);
+}
+.totals table { width: 100%; margin-bottom: var(--space-l); border-collapse: collapse; }
+.totals th, .totals td { padding: var(--space-s) 0; font-weight: 400; text-align: left; }
+.totals td { text-align: right; }
+.totals .grand th, .totals .grand td {
+  padding-top: var(--space-m);
+  border-top: 2px solid var(--ink);
+  font-family: var(--title-font);
+  font-size: var(--size-l);
+  font-weight: bold;
+}
+.totals .button { width: 100%; }
+.free {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--leaf);
+  font-weight: 700;
+}
+.truck { width: 28px; height: 28px; }
+/* The little truck drives in when the page opens. */
+@media (prefers-reduced-motion: no-preference) {
+  .truck { animation: drive-in 0.7s var(--ease-out) both; }
+}
+@keyframes drive-in {
+  from { transform: translateX(-70px); }
+  to { transform: translateX(0); }
+}
+.small-print { margin: var(--space-m) 0 0; color: var(--soft); }
+
+.delivery {
+  max-width: 780px;
+  margin-top: var(--space-2xl);
+  padding: var(--space-xl);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  /* A little space stays above the card after the jump. */
+  scroll-margin-top: var(--space-l);
+}
+.delivery:target { outline: 3px solid var(--plum); outline-offset: 4px; }
+.delivery-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--space-l);
+  margin-top: var(--space-l);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-m);
+}
+.field label { font-weight: 600; }
+.wide { grid-column: 1 / -1; }
+.form-note { margin: var(--space-s) 0 0; color: var(--soft); font-size: var(--size-s); }
+
+/* ----- Footer ----- */
+.footer {
+  padding: var(--space-xl) var(--space-l);
+  background: var(--plum-dark);
+  color: var(--plum-tint);
+  text-align: center;
+}
+.footer p { margin: 0 auto var(--space-s); }
+.footer a { color: var(--apricot); font-weight: 600; }
+.footer a:hover { color: var(--paper); }
+
+/* Things glide only if the computer says moving is OK. */
+@media (prefers-reduced-motion: no-preference) {
+  .button, .card { transition: 0.25s var(--ease-out); }
+  .logo svg { transition: transform 0.4s var(--ease-out); }
+  .big-frame img { transition: 0.7s var(--ease-out); }
+  .thumb, .option input + span { transition: 0.2s; }
+}
+
+/* ----- Smaller windows ----- */
+/* On a tablet the filters and the summary move above the rest. */
+@media (max-width: 860px) {
+  .shop, .product, .basket { grid-template-columns: 1fr; gap: var(--space-l); }
+  .filters, .totals { position: static; }
+  .filters { display: flex; flex-wrap: wrap; column-gap: var(--space-xl); }
+  .filters h2, .free-note { width: 100%; }
+  .filters fieldset { margin-bottom: var(--space-s); }
+}
+
+/* On a phone everything stacks in one column. */
+@media (max-width: 560px) {
+  .wrap { padding: var(--space-l) var(--space-m) var(--space-xl); }
+  h1 { font-size: var(--size-2xl); }
+  .top-bar { padding: var(--space-s) var(--space-m); }
+  nav, .menu { width: 100%; justify-content: space-between; }
+  .menu a { padding: 0 var(--space-s); }
+  .big { grid-column: auto; grid-row: auto; }
+  .steps li { flex-direction: column; align-items: flex-start; font-size: var(--size-s); }
+  .line {
+    grid-template-columns: 80px 1fr auto;
+    grid-template-areas: "pic what sum" "pic unit how-many";
+    gap: var(--space-xs) var(--space-m);
+  }
+  .line-head { display: none; }
+  .line img { width: 80px; }
+  .what h2 { font-size: var(--size-m); }
+  .delivery { padding: var(--space-l); }
+  .delivery-form { grid-template-columns: 1fr; }
+}

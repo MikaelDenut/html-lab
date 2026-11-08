@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lanternvale Railway - Tickets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="lantern" viewBox="0 0 40 56" aria-hidden="true">
+        <circle cx="20" cy="6" r="4" fill="none" stroke="#ffc72c" stroke-width="3"/>
+        <path d="M9 15 H31 L27 10 H13 Z" fill="#ffc72c"/>
+        <rect x="11" y="15" width="18" height="27" rx="3" fill="#fff1b8" stroke="#ffc72c" stroke-width="3"/>
+        <rect x="7" y="42" width="26" height="7" rx="2" fill="#ffc72c"/>
+      </svg>
+      <span>Lanternvale <b>Railway</b></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">Departures</a></li>
+        <li><a href="routes.html">Routes</a></li>
+        <li><a href="tickets.html" aria-current="page">Tickets</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1>Tickets</h1>
+      <p class="intro">Every ticket works on both lines. Children under 6 ride free, and so do dogs that fit on a lap.</p>
+    </div>
+
+    <div class="tickets">
+      <!-- A ticket: the main part, a dashed tear line, and the stub with the price. -->
+      <article class="ticket" id="single">
+        <div class="ticket-main">
+          <h2>Single</h2>
+          <p class="route">Any station <span>to</span> any station</p>
+          <p>One trip. Change at Lanternvale Central as often as you need.</p>
+        </div>
+        <div class="ticket-stub">
+          <p class="price">€3</p>
+          <p class="barcode" aria-hidden="true"></p>
+        </div>
+      </article>
+      <article class="ticket rover" id="rover">
+        <div class="ticket-main">
+          <h2>Day Rover</h2>
+          <p class="route">All stations <span>all day</span></p>
+          <p>Hop on and off as much as you like, until the last train.</p>
+        </div>
+        <div class="ticket-stub">
+          <p class="price">€8</p>
+          <p class="barcode" aria-hidden="true"></p>
+        </div>
+      </article>
+      <article class="ticket family" id="family">
+        <div class="ticket-main">
+          <h2>Family Day</h2>
+          <p class="route">2 grown-ups <span>and</span> 3 children</p>
+          <p>A whole day out for the whole family, on both lines.</p>
+        </div>
+        <div class="ticket-stub">
+          <p class="price">€18</p>
+          <p class="barcode" aria-hidden="true"></p>
+        </div>
+      </article>
+      <article class="ticket bike" id="bike-ticket">
+        <div class="ticket-main">
+          <h2>Bike</h2>
+          <p class="route">One bike <span>one day</span></p>
+          <p>For your bike, not for you. Buy a ticket for yourself too.</p>
+        </div>
+        <div class="ticket-stub">
+          <p class="price">€2</p>
+          <p class="barcode" aria-hidden="true"></p>
+        </div>
+      </article>
+    </div>
+
+    <section class="bike-sign">
+      <!-- The bike sign: white lines on blue, like the signs on a real platform. -->
+      <svg class="bike-icon" viewBox="0 0 200 120" aria-hidden="true">
+        <circle cx="42" cy="82" r="30"/>
+        <circle cx="158" cy="82" r="30"/>
+        <path d="M42 82 L95 82 L78 38 Z M78 38 L136 42 L95 82 M136 42 L158 82 M136 42 L130 26 L148 24 M66 32 L90 32"/>
+      </svg>
+      <div>
+        <h2>How to travel with a bike</h2>
+        <ol class="bike-steps">
+          <li>Buy a bike ticket, and one for yourself.</li>
+          <li>Wait at the bike sign at the end of the platform. The bike carriage stops right there.</li>
+          <li>Let people off first. Then walk your bike on. Never ride on the platform.</li>
+          <li>Strap your bike in the bike space and stay close to it.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="finder">
+      <h2>Which ticket is best for me?</h2>
+      <!-- Radio buttons and :checked show the answer. No script needed. -->
+      <fieldset class="chooser">
+        <legend>How will you travel?</legend>
+        <div class="choices">
+          <input type="radio" name="trip" id="trip-one" checked>
+          <label for="trip-one">One trip</label>
+          <input type="radio" name="trip" id="trip-day">
+          <label for="trip-day">Lots of trips in one day</label>
+          <input type="radio" name="trip" id="trip-family">
+          <label for="trip-family">A day out with my family</label>
+          <input type="radio" name="trip" id="trip-bike">
+          <label for="trip-bike">With my bike</label>
+          <p class="answer answer-one">Buy a <a href="#single">Single</a> for €3. Every trip costs the same.</p>
+          <p class="answer answer-day">Buy a <a href="#rover">Day Rover</a> for €8 and hop on and off all day.</p>
+          <p class="answer answer-family">Buy a <a href="#family">Family Day</a> for €18. It is for 2 grown-ups and 3 children.</p>
+          <p class="answer answer-bike">Buy a <a href="#bike-ticket">Bike</a> ticket for €2, and a ticket for yourself too.</p>
+        </div>
+      </fieldset>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Lanternvale Railway is a make-believe railway. Every town on it is made up too. Draw your own line!</p>
+  </footer>
+</body>
+</html>

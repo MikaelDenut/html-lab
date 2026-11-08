@@ -1,0 +1,549 @@
+{
+  "topics": [
+    {
+      "id": "type-scale",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Big, bigger, biggest",
+      "short": "Size steps",
+      "keywords": "size sizes big bigger biggest heading headings font-size scale steps important",
+      "explain": "Good pages use only a few text sizes, and each size is clearly bigger than the one below it. Make each step at least 1.25 times as big: 16, 20, 25, 31, 39. Then your eyes see at once what matters most.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p { font-size: 16px; }\n  h3 { font-size: 20px; }\n  h2 { font-size: 25px; }\n  h1 { font-size: 39px; }\n</style>\n<h1>My space club</h1>\n<h2>Planets</h2>\n<h3>Mars</h3>\n<p>Mars looks red because its dust is full of rust.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "16px",
+          "tint": "a",
+          "means": "is normal text"
+        },
+        {
+          "word": "20px",
+          "tint": "b",
+          "means": "is 16 times 1.25"
+        },
+        {
+          "word": "25px",
+          "tint": "a",
+          "means": "is 20 times 1.25"
+        },
+        {
+          "word": "39px",
+          "tint": "b",
+          "means": "is two steps up, for the biggest title"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 224
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p { font-size: 16px; }\n      h3 { font-size: 20px; }\n      h2 { font-size: 25px; }\n      h1 { font-size: 39px; }\n    </style>\n  </head>\n  <body>\n    <h1>My space club</h1>\n    <h2>Planets</h2>\n    <h3>Mars</h3>\n    <p>Mars looks red because its dust is full of rust.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  p { font-size: 16px; }\n  h3 { font-size: 20px; }\n  h2 { font-size: 25px; }\n  h1 { font-size: 39px; }\n</style>"
+      },
+      "turn": "change 25px to 21px. Now Planets and Mars look almost the same. Which one is more important?",
+      "bar": "change **25px** to **21px**. Now Planets and Mars look almost the same.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/font-size"
+    },
+    {
+      "id": "give-room",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Give things room",
+      "short": "Spacing",
+      "keywords": "space spacing room gap margin crowded squashed group groups apart",
+      "explain": "Things that belong together sit close. Different groups get more space between them, so a heading sits nearer its own text than the group above. Pick a few space sizes and use only those, like 4, 8, 16, 32 and 64 pixels. Each one is double the one before.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  h2, p { margin: 0; }\n  h2 { margin-bottom: 8px; }\n  section { margin-bottom: 32px; }\n</style>\n<section>\n  <h2>Mars</h2>\n  <p>The red planet. It has two small moons.</p>\n</section>\n<section>\n  <h2>Saturn</h2>\n  <p>It has rings made of ice and rock.</p>\n</section>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "margin: 0;",
+          "tint": "a",
+          "means": "takes away the spaces the browser adds by itself"
+        },
+        {
+          "word": "8px",
+          "tint": "b",
+          "means": "is a small space, inside a group"
+        },
+        {
+          "word": "32px",
+          "tint": "a",
+          "means": "is a big space, between groups"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 180
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      h2, p { margin: 0; }\n      h2 { margin-bottom: 8px; }\n      section { margin-bottom: 32px; }\n    </style>\n  </head>\n  <body>\n    <section>\n      <h2>Mars</h2>\n      <p>The red planet. It has two small moons.</p>\n    </section>\n    <section>\n      <h2>Saturn</h2>\n      <p>It has rings made of ice and rock.</p>\n    </section>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h2, p { margin: 0; }\n  h2 { margin-bottom: 8px; }\n  section { margin-bottom: 32px; }\n</style>"
+      },
+      "turn": "change 32px to 8px. Now everything is squashed, and it is hard to see where Mars ends. Then try 64px.",
+      "bar": "change **32px** to **8px**. Can you still see the two groups? Then try **64px**.",
+      "more": "https://web.dev/learn/css/spacing"
+    },
+    {
+      "id": "easy-to-read",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Easy to read",
+      "short": "Easy to read",
+      "keywords": "read reading readable line-height lines long wide width ch contrast gray grey dark light",
+      "explain": "Very long lines make your eyes tired, so stop text at about 70 letters wide with max-width: 70ch. line-height puts air between the lines. Use dark text on a light background, or light text on a dark one. Normal text should be at least 16px.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  p {\n    max-width: 70ch;\n    font-size: 18px;\n    line-height: 1.6;\n    color: #222;\n  }\n</style>\n<h1>The Moon</h1>\n<p>The Moon has no light of its own. It shines because light from the Sun bounces off it. We always see the same side of the Moon, because it turns once each time it goes around the Earth.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "70ch",
+          "tint": "a",
+          "means": "is about 70 letters wide"
+        },
+        {
+          "word": "1.6",
+          "tint": "b",
+          "means": "puts air between the lines"
+        },
+        {
+          "word": "#222",
+          "tint": "a",
+          "means": "is almost black, easy to read on white"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 184
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      p {\n        max-width: 70ch;\n        font-size: 18px;\n        line-height: 1.6;\n        color: #222;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>The Moon</h1>\n    <p>The Moon has no light of its own. It shines because light from the Sun bounces off it. We always see the same side of the Moon, because it turns once each time it goes around the Earth.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  p {\n    max-width: 70ch;\n    font-size: 18px;\n    line-height: 1.6;\n    color: #222;\n  }\n</style>"
+      },
+      "turn": "change 1.6 to 1. The lines squash together. Then change #222 to #bbb. Is it still easy to read?",
+      "bar": "change **1.6** to **1**. Then change **#222** to **#bbb**. Is it still easy to read?",
+      "more": "https://web.dev/learn/design/typography"
+    },
+    {
+      "id": "two-fonts",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Two fonts that go together",
+      "short": "Two fonts",
+      "keywords": "font fonts font-family pair match together serif sans-serif letters typeface",
+      "explain": "Use one font for headings and one for reading, and never more than three in all. Pick two that look different: one with little feet on its letters (serif) and one without (sans-serif). Only fonts on your Mac work, like Futura, Georgia, Rockwell, Optima and Avenir Next. The word after the comma is a backup.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  h1, h2 { font-family: Futura, sans-serif; }\n  p { font-family: Georgia, serif; }\n</style>\n<h1>The Dinosaur Club</h1>\n<h2>The biggest ones</h2>\n<p>Some dinosaurs were longer than two buses. These giants ate only plants.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "Futura, sans-serif",
+          "tint": "a",
+          "means": "is for headings, with a backup"
+        },
+        {
+          "word": "Georgia, serif",
+          "tint": "b",
+          "means": "is for reading, with a backup"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 172
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      h1, h2 { font-family: Futura, sans-serif; }\n      p { font-family: Georgia, serif; }\n    </style>\n  </head>\n  <body>\n    <h1>The Dinosaur Club</h1>\n    <h2>The biggest ones</h2>\n    <p>Some dinosaurs were longer than two buses. These giants ate only plants.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  h1, h2 { font-family: Futura, sans-serif; }\n  p { font-family: Georgia, serif; }\n</style>"
+      },
+      "turn": "change Futura to Rockwell. Then try Didot. Which one goes best with Georgia?",
+      "bar": "change **Futura** to **Rockwell**. Then try **Didot**. Which one goes best with Georgia?",
+      "more": "https://web.dev/learn/css/typography"
+    },
+    {
+      "id": "color-jobs",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Choose your colors",
+      "short": "Your colors",
+      "keywords": "color colors colour colours palette accent theme var variable background quiet gray grey",
+      "explain": "Pick a few colors and give each one a job: a background, a text color, and one bright accent for what matters most. For quiet text, use a lighter shade of your main color, not gray. Name your colors in :root and use them with var(). Change one line, and the whole page changes.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  :root {\n    --background: #0b1d3a;\n    --text: #f1f5ff;\n    --quiet: #9fb3d9;\n    --accent: gold;\n  }\n  body {\n    background: var(--background);\n    color: var(--text);\n  }\n  h1, strong { color: var(--accent); }\n  .quiet { color: var(--quiet); }\n</style>\n<h1>Night sky club</h1>\n<p>We look at the stars every <strong>Friday</strong>.</p>\n<p class=\"quiet\">Bring a warm coat and a hot drink.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "--accent: gold;",
+          "tint": "a",
+          "means": "names a color by its job"
+        },
+        {
+          "word": "var(--accent)",
+          "tint": "b",
+          "means": "uses that color"
+        },
+        {
+          "word": "#9fb3d9",
+          "tint": "a",
+          "means": "is a light blue for quiet text, not gray"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 148
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      :root {\n        --background: #0b1d3a;\n        --text: #f1f5ff;\n        --quiet: #9fb3d9;\n        --accent: gold;\n      }\n      body {\n        background: var(--background);\n        color: var(--text);\n      }\n      h1, strong { color: var(--accent); }\n      .quiet { color: var(--quiet); }\n    </style>\n  </head>\n  <body>\n    <h1>Night sky club</h1>\n    <p>We look at the stars every <strong>Friday</strong>.</p>\n    <p class=\"quiet\">Bring a warm coat and a hot drink.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  :root {\n    --background: #0b1d3a;\n    --text: #f1f5ff;\n    --accent: gold;\n  }\n  body {\n    background: var(--background);\n    color: var(--text);\n  }\n  h1 { color: var(--accent); }\n</style>"
+      },
+      "turn": "change #9fb3d9 to gray. See how dull the quiet line looks? Then change gold to hotpink. Two things change at once.",
+      "bar": "change **#9fb3d9** to **gray**. Then change **gold** to **hotpink**.",
+      "more": "https://web.dev/learn/design/theming"
+    },
+    {
+      "id": "soft-shadows",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Shadows that look real",
+      "short": "Soft shadows",
+      "keywords": "shadow shadows box-shadow soft blur blurry depth float lift rgba",
+      "explain": "In real life the light comes from above, so a shadow falls a little below a thing, and its edge is soft. box-shadow takes three sizes and a color: how far right, how far down, and how blurry. Use black you can see through, made with rgba, not solid black.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  body { background: #eef2f7; }\n  .card {\n    display: inline-block;\n    width: 120px;\n    margin: 16px;\n    padding: 20px;\n    border-radius: 12px;\n    background: white;\n  }\n  .hard { box-shadow: 4px 4px 0 black; }\n  .soft { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }\n</style>\n<p class=\"card hard\">Hard shadow</p>\n<p class=\"card soft\">Soft shadow</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "4px 4px 0 black",
+          "tint": "a",
+          "means": "is a hard black edge, like a sticker"
+        },
+        {
+          "word": "0 8px",
+          "tint": "b",
+          "means": "puts the shadow just below, as if the light is above"
+        },
+        {
+          "word": "24px",
+          "tint": "a",
+          "means": "makes the edge soft"
+        },
+        {
+          "word": "rgba(0, 0, 0, 0.2)",
+          "tint": "b",
+          "means": "is black you can see through"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 106
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      body { background: #eef2f7; }\n      .card {\n        display: inline-block;\n        width: 120px;\n        margin: 16px;\n        padding: 20px;\n        border-radius: 12px;\n        background: white;\n      }\n      .hard { box-shadow: 4px 4px 0 black; }\n      .soft { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }\n    </style>\n  </head>\n  <body>\n    <p class=\"card hard\">Hard shadow</p>\n    <p class=\"card soft\">Soft shadow</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .soft { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }\n</style>"
+      },
+      "turn": "change 24px to 0, and the soft shadow gets a hard edge. Put it back, then change 8px to 20px. The card floats higher!",
+      "bar": "change **24px** to **0**. Then put it back and change **8px** to **20px**.",
+      "more": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/box-shadow"
+    },
+    {
+      "id": "line-up",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Line things up",
+      "short": "Line up",
+      "keywords": "line align alignment neat tidy edge straight grid columns messy left",
+      "explain": "Pick one edge and start everything on it: the heading, the text and the boxes. The pink line is only here to show you the edge, so take it out when you are done. A grid keeps boxes in neat rows and columns, so they always line up.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  body {\n    border-left: 2px dashed hotpink;\n    padding-left: 16px;\n  }\n  h1 { color: #0b6e69; }\n  .boxes {\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr;\n    gap: 16px;\n  }\n  .boxes p {\n    margin: 0;\n    padding: 12px;\n    background: #e0f2f1;\n  }\n</style>\n<h1>Football club</h1>\n<p>We play every week. Come and join us!</p>\n<div class=\"boxes\">\n  <p>Training on Monday</p>\n  <p>Games on Saturday</p>\n  <p>A party in June</p>\n</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "border-left: 2px dashed hotpink;",
+          "tint": "a",
+          "means": "draws the edge, only to show it"
+        },
+        {
+          "word": "display: grid;",
+          "tint": "b",
+          "means": "puts the boxes in neat columns"
+        },
+        {
+          "word": "1fr 1fr 1fr",
+          "tint": "a",
+          "means": "means three columns, the same width"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 164
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      body {\n        border-left: 2px dashed hotpink;\n        padding-left: 16px;\n      }\n      h1 { color: #0b6e69; }\n      .boxes {\n        display: grid;\n        grid-template-columns: 1fr 1fr 1fr;\n        gap: 16px;\n      }\n      .boxes p {\n        margin: 0;\n        padding: 12px;\n        background: #e0f2f1;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Football club</h1>\n    <p>We play every week. Come and join us!</p>\n    <div class=\"boxes\">\n      <p>Training on Monday</p>\n      <p>Games on Saturday</p>\n      <p>A party in June</p>\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .boxes {\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr;\n    gap: 16px;\n  }\n</style>"
+      },
+      "turn": "add text-align: center; to the h1 rule. The heading leaves the pink line. Does the page look as neat? Then take it out again.",
+      "bar": "add **text-align: center;** to the h1 rule. Does it still line up?",
+      "more": "https://web.dev/learn/css/grid"
+    },
+    {
+      "id": "good-buttons",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Buttons that say what they do",
+      "short": "Good buttons",
+      "keywords": "button buttons click link links hover focus focus-visible words finger tap big",
+      "explain": "A button says what happens when you press it: a doing word and a thing, like Book a visit or Join the club. Never just Click here. Make it at least 44 pixels tall, so a finger can hit it. Let it change when the mouse is on it, and when the keyboard reaches it.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .tiny {\n    font-size: 11px;\n    padding: 2px 4px;\n    border: 1px solid gray;\n    color: gray;\n  }\n  .button {\n    display: inline-block;\n    padding: 14px 24px;\n    border-radius: 8px;\n    background: #0b6e69;\n    color: white;\n    font-size: 18px;\n    text-decoration: none;\n  }\n  .button:hover { background: #084f4b; }\n  .button:focus-visible {\n    outline: 3px solid orange;\n    outline-offset: 3px;\n  }\n</style>\n<p><a class=\"tiny\" href=\"#visit\">Click here</a></p>\n<p><a class=\"button\" href=\"#visit\">Book a visit</a></p>\n<h2 id=\"visit\">Which day would you like to come?</h2>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "Book a visit",
+          "tint": "a",
+          "means": "says what happens: a doing word and a thing"
+        },
+        {
+          "word": "padding: 14px 24px;",
+          "tint": "b",
+          "means": "makes it big enough for a finger, over 44 pixels tall"
+        },
+        {
+          "word": ":hover",
+          "tint": "a",
+          "means": "changes it when the mouse is on it"
+        },
+        {
+          "word": ":focus-visible",
+          "tint": "b",
+          "means": "shows a ring when the keyboard reaches it"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 168
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .tiny {\n        font-size: 11px;\n        padding: 2px 4px;\n        border: 1px solid gray;\n        color: gray;\n      }\n      .button {\n        display: inline-block;\n        padding: 14px 24px;\n        border-radius: 8px;\n        background: #0b6e69;\n        color: white;\n        font-size: 18px;\n        text-decoration: none;\n      }\n      .button:hover { background: #084f4b; }\n      .button:focus-visible {\n        outline: 3px solid orange;\n        outline-offset: 3px;\n      }\n    </style>\n  </head>\n  <body>\n    <p><a class=\"tiny\" href=\"#visit\">Click here</a></p>\n    <p><a class=\"button\" href=\"#visit\">Book a visit</a></p>\n    <h2 id=\"visit\">Which day would you like to come?</h2>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .button {\n    display: inline-block;\n    padding: 14px 24px;\n    border-radius: 8px;\n    background: #0b6e69;\n    color: white;\n    text-decoration: none;\n  }\n  .button:hover { background: #084f4b; }\n  .button:focus-visible { outline: 3px solid orange; }\n</style>"
+      },
+      "turn": "change the words Book a visit to Click here. Can you still tell what it does? Change it back, then put your mouse on it.",
+      "bar": "change **Book a visit** to **Click here**. Can you still tell what it does?",
+      "more": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Text_styling/Styling_links"
+    },
+    {
+      "id": "one-star",
+      "group": "design",
+      "kind": "lesson",
+      "title": "One star per page",
+      "short": "One star",
+      "keywords": "star stand out standout important attention calm busy simple loud moving",
+      "explain": "If everything shouts, nobody hears anything. Give each page one star: one thing that is bigger and brighter than the rest, and keep everything else calm. Let at most one thing move by itself. Here only the star moves, and only once.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .calm { color: #475569; }\n  .star {\n    padding: 12px 20px;\n    border-radius: 12px;\n    background: gold;\n    font-size: 22px;\n    animation: pop 0.6s ease-out;\n  }\n  @keyframes pop {\n    from { transform: scale(0.6); }\n    to { transform: scale(1); }\n  }\n</style>\n<h1>School fair</h1>\n<p class=\"star\">The fair is on Saturday!</p>\n<p class=\"calm\">There are cakes, games and prizes.</p>\n<p class=\"calm\">Bring your friends and family.</p>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "star",
+          "tint": "a",
+          "means": "is the one thing that stands out"
+        },
+        {
+          "word": "gold",
+          "tint": "b",
+          "means": "is the only bright color"
+        },
+        {
+          "word": "pop 0.6s",
+          "tint": "a",
+          "means": "is the only thing that moves, and only once"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 220
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <style>\n      .calm { color: #475569; }\n      .star {\n        padding: 12px 20px;\n        border-radius: 12px;\n        background: gold;\n        font-size: 22px;\n        animation: pop 0.6s ease-out;\n      }\n      @keyframes pop {\n        from { transform: scale(0.6); }\n        to { transform: scale(1); }\n      }\n    </style>\n  </head>\n  <body>\n    <h1>School fair</h1>\n    <p class=\"star\">The fair is on Saturday!</p>\n    <p class=\"calm\">There are cakes, games and prizes.</p>\n    <p class=\"calm\">Bring your friends and family.</p>\n  </body>\n</html>\n",
+          "hidden": false
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .star {\n    padding: 12px 20px;\n    border-radius: 12px;\n    background: gold;\n    font-size: 22px;\n  }\n</style>"
+      },
+      "turn": "in the line about cakes, change calm to star. Now two things shout and jump. Which one do you look at? Change it back: calm wins.",
+      "bar": "in the line about cakes, change **calm** to **star**. Which one do you look at now?",
+      "more": "https://web.dev/articles/prefers-reduced-motion"
+    },
+    {
+      "id": "fits-a-phone",
+      "group": "design",
+      "kind": "lesson",
+      "title": "Looks good on a phone",
+      "short": "Fits any window",
+      "keywords": "phone mobile tablet window screen responsive fit auto-fit minmax repeat picture pictures max-width small",
+      "explain": "A phone is narrow and a computer is wide, so let your page bend. repeat(auto-fit, minmax(150px, 1fr)) makes as many columns as fit, each at least 150 pixels wide. max-width: 100% stops a picture from getting wider than its box. Press the Phone button, the little phone above the page, to try it.",
+      "code": [
+        {
+          "lang": "html",
+          "text": "<style>\n  .gallery {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));\n    gap: 12px;\n  }\n  img {\n    max-width: 100%;\n    height: auto;\n    border-radius: 8px;\n  }\n</style>\n<h1>My pictures</h1>\n<div class=\"gallery\">\n  <img src=\"tree.jpg\" alt=\"An oak tree in a misty field\" width=\"320\" height=\"240\">\n  <img src=\"sun.jpg\" alt=\"A sunset over the sea\" width=\"320\" height=\"240\">\n  <img src=\"boat.jpg\" alt=\"A sailboat on sparkling water\" width=\"320\" height=\"240\">\n</div>"
+        }
+      ],
+      "legend": [
+        {
+          "word": "auto-fit",
+          "tint": "a",
+          "means": "makes as many columns as fit"
+        },
+        {
+          "word": "minmax(150px, 1fr)",
+          "tint": "b",
+          "means": "keeps each column at least 150 pixels wide"
+        },
+        {
+          "word": "max-width: 100%;",
+          "tint": "a",
+          "means": "keeps a picture inside its box"
+        }
+      ],
+      "result": {
+        "files": [
+          "my-page.html"
+        ],
+        "height": 219
+      },
+      "files": [
+        {
+          "name": "my-page.html",
+          "code": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <!-- This line lets a phone show the page at its own width. -->\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <style>\n      .gallery {\n        display: grid;\n        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));\n        gap: 12px;\n      }\n      img {\n        max-width: 100%;\n        height: auto;\n        border-radius: 8px;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>My pictures</h1>\n    <div class=\"gallery\">\n      <img src=\"tree.jpg\" alt=\"An oak tree in a misty field\" width=\"320\" height=\"240\">\n      <img src=\"sun.jpg\" alt=\"A sunset over the sea\" width=\"320\" height=\"240\">\n      <img src=\"boat.jpg\" alt=\"A sailboat on sparkling water\" width=\"320\" height=\"240\">\n    </div>\n  </body>\n</html>\n",
+          "hidden": false
+        },
+        {
+          "name": "tree.jpg",
+          "hidden": true,
+          "picture": true
+        },
+        {
+          "name": "sun.jpg",
+          "hidden": true,
+          "picture": true
+        },
+        {
+          "name": "boat.jpg",
+          "hidden": true,
+          "picture": true
+        }
+      ],
+      "insert": {
+        "lang": "html",
+        "text": "<style>\n  .gallery {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));\n    gap: 12px;\n  }\n  img {\n    max-width: 100%;\n    height: auto;\n  }\n</style>"
+      },
+      "turn": "press the Phone button above the page. The pictures move into two columns. Then delete max-width: 100%; and watch the pictures spill out.",
+      "bar": "press the Phone button above the page. Then delete **max-width: 100%;** and watch.",
+      "more": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design"
+    }
+  ]
+}

@@ -1,0 +1,503 @@
+/* Glimmerford Family Science Day: one style file for all three pages. */
+
+/* Change a colour, a size or a space here and the whole festival changes! */
+:root {
+  --night: #1d1a44;
+  --night-light: #2e2a66;
+  --page: #ffffff;
+  --ink: #23213d;
+  --quiet: #5c587e;
+  --lemon: #ffd23f;
+  --lilac: #efecfb;
+  --violet: #6644d8;
+  --teal: #0b7476;
+  --coral: #c93a47;
+  --amber: #a35f00;
+  --slate: #4f5d78;
+  --green: #357a31;
+  --title-font: Futura, "Avenir Next", sans-serif;
+  --text-font: "Gill Sans", "Avenir Next", sans-serif;
+  --data-font: "DIN Condensed", "Avenir Next Condensed", sans-serif;
+  --text-s: 16px;
+  --text-m: 20px;
+  --text-l: 25px;
+  --text-xl: 31px;
+  --text-2xl: 39px;
+  --text-3xl: 49px;
+  --text-4xl: 61px;
+  --text-5xl: 76px;
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --round: 16px;
+  --shadow: 0 10px 26px rgba(29, 26, 68, 0.16);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Every room has its own colour. The schedule, the map and the cards use it. */
+.hall { --room: var(--violet); }
+.lab { --room: var(--teal); }
+.dome { --room: var(--night); }
+.workshop { --room: var(--coral); }
+.cafe { --room: var(--amber); }
+.toilets { --room: var(--slate); }
+.garden { --room: var(--green); }
+
+* { box-sizing: border-box; }
+img { display: block; max-width: 100%; height: auto; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: 700;
+  line-height: 1.1;
+}
+h1 { font-size: var(--text-4xl); max-width: 18ch; }
+h2 { font-size: var(--text-2xl); margin-top: var(--space-l); }
+h3 { font-size: var(--text-l); }
+
+/* Lines stay short, so your eyes find the next line easily. */
+p, li { max-width: 70ch; }
+a { color: var(--violet); }
+
+/* A thick violet ring shows where the keyboard is. On the dark bars it turns yellow, so you can still see it. */
+a:focus-visible, summary:focus-visible { outline: 4px solid var(--violet); outline-offset: 3px; }
+.top-bar a:focus-visible, .hero a:focus-visible, .bottom a:focus-visible { outline-color: var(--lemon); }
+
+/* The dark bar at the top of every page. */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-m);
+  background: var(--night);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: #fff;
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+.logo small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  font-weight: 400;
+  color: var(--lemon);
+}
+
+/* The atom is drawn with three ellipses and a circle. */
+.atom { width: 48px; height: 48px; transition: transform 0.8s var(--ease); }
+.atom ellipse { fill: none; stroke: var(--lemon); stroke-width: 5; }
+.atom .core { fill: var(--coral); }
+
+/* The atom spins when your mouse is on the logo. */
+.logo:hover .atom { transform: rotate(180deg); }
+
+.menu ul { display: flex; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--night-light); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on gets a yellow button. */
+.menu a[aria-current="page"] { background: var(--lemon); color: var(--night); font-weight: 600; }
+
+/* The big dark box at the top of the home page. */
+.hero {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  gap: var(--space-l);
+  padding: var(--space-l);
+  background: var(--night);
+  color: #fff;
+}
+.lead { font-size: var(--text-l); line-height: 1.4; color: #dcd8f5; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: var(--space-s); margin: var(--space-m) 0 0; }
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 11px 26px;
+  border-radius: 999px;
+  background: var(--lemon);
+  color: var(--night);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s var(--ease);
+}
+.button.ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 2px #fff; }
+.button:hover { transform: translateY(-3px); }
+.button:active { transform: translateY(1px); }
+
+/* The date board, like the flip clock at a train station. */
+.date-board { justify-self: center; text-align: center; }
+.tiles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-s);
+  perspective: 400px;
+}
+.tile {
+  position: relative;
+  min-width: 112px;
+  padding: 16px 12px 6px;
+  border-radius: 10px;
+  background: linear-gradient(var(--night-light) 50%, #25215a 50%);
+  color: var(--lemon);
+  font-family: var(--data-font);
+  font-size: var(--text-5xl);
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+.tile.small { min-width: 0; font-size: var(--text-3xl); }
+.to { font-size: var(--text-m); color: #dcd8f5; }
+
+/* A thin line cuts each tile in half, where it would flip. */
+.tile::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: var(--night);
+}
+.place { margin: var(--space-m) auto 0; font-size: var(--text-m); color: #dcd8f5; }
+
+/* When the page opens, the date tiles flip once, one after the other. Never more than two move at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .tile { animation: flip 0.9s var(--ease) both; }
+  .tile:nth-child(2) { animation-delay: 0.45s; }
+  .tile:nth-child(3) { animation-delay: 0.9s; }
+  .tiles + .tiles .tile { animation: none; }
+}
+@keyframes flip {
+  0% { transform: rotateX(0); }
+  35% { transform: rotateX(-80deg); }
+  100% { transform: rotateX(0); }
+}
+
+.section { max-width: 1160px; margin: 0 auto; padding: var(--space-m) var(--space-m) 0; }
+.more-link { margin: var(--space-s) 0 0; font-weight: 600; }
+
+/* One big card on the left, two small cards on the right. */
+.highlights {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: auto auto;
+  gap: var(--space-m);
+}
+.feature { grid-row: span 2; }
+.highlight {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--round);
+  background: var(--lilac);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.highlight:not(.feature) { display: grid; grid-template-columns: 140px 1fr; }
+.card-text { padding: var(--space-m); }
+.card-text p { margin: 0 0 var(--space-xs); }
+.highlight h3 a { color: var(--ink); text-decoration: none; }
+
+/* The link covers the whole card, so you can click anywhere on it. */
+.highlight h3 a::after { content: ""; position: absolute; inset: 0; }
+.highlight:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+.highlight:active { transform: translateY(0); }
+.highlight:focus-within { outline: 4px solid var(--violet); outline-offset: 3px; }
+.meta { font-size: var(--text-s); font-weight: 600; color: var(--quiet); }
+
+/* Saturn sits on top of the stars. Screen blending makes its black sky see-through. */
+.space-picture { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+.space-picture img { width: 100%; height: 100%; object-fit: cover; }
+.space-picture .saturn {
+  position: absolute;
+  top: 22%;
+  left: 25%;
+  width: 50%;
+  height: auto;
+  mix-blend-mode: screen;
+  transition: transform 0.6s var(--ease);
+}
+.feature:hover .saturn { transform: rotate(-12deg) scale(1.08); }
+
+/* Drawings take their colours from the room. */
+.drawing { width: 100%; height: 100%; min-height: 120px; background: var(--room); }
+.bubble { fill: rgba(255, 255, 255, 0.18); stroke: #fff; stroke-width: 3; }
+.shine, .glass {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.slime { fill: #b6f07a; }
+
+/* The prices sit in one box, with lines between them. */
+.price-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-m);
+  padding: 0;
+  list-style: none;
+  border: 2px solid var(--night);
+  border-radius: var(--round);
+}
+.price-list li { flex: 1 1 180px; padding: var(--space-m); border-left: 1px solid #c9c4e8; }
+.price-list li:first-child { border-left: 0; }
+.price-list b {
+  display: block;
+  font-family: var(--data-font);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--violet);
+}
+
+/* The dark title box on the Schedule and Venue pages. */
+.page-title { margin: var(--space-m) 0; padding: var(--space-l); border-radius: var(--round); background: var(--night); color: #fff; }
+.page-title p { margin: 0; color: #dcd8f5; }
+
+/* The timetable is a grid: one column for each room, one row for each hour.
+   1fr makes every hour row as tall as the tallest one, so a long box always means a long show. */
+.timetable {
+  display: grid;
+  grid-template-columns: 72px repeat(4, 1fr);
+  grid-template-rows: auto repeat(8, minmax(76px, 1fr));
+  gap: var(--space-xs);
+}
+
+/* The home page shows only the morning: three hours. */
+.timetable.morning { grid-template-rows: auto repeat(3, minmax(76px, 1fr)); }
+.corner { grid-column: 1; grid-row: 1; }
+.room-name { grid-row: 1; }
+.hour { grid-column: 1; }
+
+/* The room class picks the column. Same room, same column! */
+.timetable .hall { grid-column: 2; }
+.timetable .lab { grid-column: 3; }
+.timetable .dome { grid-column: 4; }
+.timetable .workshop { grid-column: 5; }
+.timetable .lunch { grid-column: 2 / 6; }
+
+.corner, .hour {
+  margin: 0;
+  padding-top: var(--space-xs);
+  font-family: var(--data-font);
+  font-size: var(--text-l);
+  color: var(--quiet);
+}
+.room-name {
+  margin: 0;
+  padding: var(--space-s);
+  border-radius: 10px 10px 0 0;
+  background: var(--room);
+  color: #fff;
+  font-family: var(--title-font);
+  font-size: var(--text-m);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* In the HTML, style="grid-row: 2 / span 2" means: start in row 2 (9:00) and fill 2 rows.
+   Two rows = a two-hour show. */
+.session { padding: var(--space-s) 14px; border-radius: 10px; background: var(--room); color: #fff; }
+.session h3 { margin: 0 0 4px; font-size: var(--text-m); }
+.session p { margin: 0; font-family: var(--data-font); font-size: var(--text-m); color: #fff; }
+.session .come-go { margin-top: 4px; font-family: var(--text-font); font-size: var(--text-s); }
+
+/* A dashed line inside the box means "come and go when you like". */
+.drop-in { outline: 2px dashed rgba(255, 255, 255, 0.75); outline-offset: -7px; }
+.lunch { background: var(--lemon); color: var(--night); text-align: center; }
+.lunch p { margin: 0 auto; color: var(--night); }
+
+/* On a big screen the room name is hidden, but screen readers still read it. It shows in the phone list. */
+.where {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.tip { margin-top: var(--space-l); padding: var(--space-m); border-radius: var(--round); background: var(--lilac); }
+.tip h2 { margin-top: 0; font-size: var(--text-xl); }
+.tip p { margin: 0; }
+
+/* The map and its list sit side by side. */
+.map-layout { display: grid; grid-template-columns: 3fr 2fr; gap: var(--space-l); align-items: start; }
+.map-layout h2 { grid-column: 1 / -1; margin-bottom: 0; }
+.map { margin: 0; }
+.map figcaption { font-size: var(--text-s); color: var(--quiet); }
+
+/* The venue map is drawn with SVG: boxes, circles and numbers. Its shapes get their colours from CSS, like boxes do. */
+.floor { fill: var(--lilac); stroke: var(--night); stroke-width: 4; }
+.room { fill: var(--room); }
+.map .garden { fill: #d3ebc9; stroke: var(--green); stroke-width: 3; }
+.tree { fill: var(--green); }
+.door { fill: var(--lemon); stroke: var(--night); stroke-width: 3; }
+.pin { fill: #fff; stroke: var(--night); stroke-width: 4; }
+.pin-number, .map-label { font-family: var(--title-font); font-weight: 700; text-anchor: middle; fill: var(--night); }
+.pin-number { font-size: 24px; }
+.map-label { font-size: 20px; }
+
+/* The list counts 1, 2, 3 by itself and paints each number. */
+.map-key { counter-reset: place; margin: 0; padding: 0; list-style: none; }
+.map-key li {
+  counter-increment: place;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-bottom: var(--space-s);
+}
+.map-key li::before {
+  content: counter(place);
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--room);
+  color: #fff;
+  font-family: var(--title-font);
+  font-weight: 700;
+  line-height: 40px;
+  text-align: center;
+}
+
+/* Four ways to come, each with a drawn icon. */
+.ways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ways p { margin: 0; }
+.way-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-xs);
+  fill: none;
+  stroke: var(--violet);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Questions that open and close when you click them. */
+details { margin-bottom: var(--space-s); border-radius: var(--round); background: var(--lilac); }
+summary {
+  position: relative;
+  min-height: 44px;
+  padding: 14px 60px 14px var(--space-m);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary:hover { color: var(--violet); }
+
+/* A plus sign drawn with two lines. It turns into a cross when open. */
+summary::after {
+  content: "";
+  position: absolute;
+  right: var(--space-m);
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  background:
+    linear-gradient(var(--violet), var(--violet)) center / 20px 4px no-repeat,
+    linear-gradient(var(--violet), var(--violet)) center / 4px 20px no-repeat;
+  transition: transform 0.3s var(--ease);
+}
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 0; padding: 0 var(--space-m) var(--space-m); }
+
+.bottom {
+  margin-top: var(--space-xl);
+  padding: var(--space-m);
+  background: var(--night);
+  color: #dcd8f5;
+  text-align: center;
+  font-size: var(--text-s);
+}
+.bottom p { margin: var(--space-xs) auto; }
+.bottom a { color: var(--lemon); font-weight: 600; }
+
+/* On a tablet the hero, the cards and the map go into one column. */
+@media (max-width: 960px) {
+  .hero, .map-layout, .highlights { grid-template-columns: 1fr; }
+  .feature { grid-row: auto; }
+  .hero { padding: var(--space-l) var(--space-m); }
+  h1 { font-size: var(--text-3xl); }
+  .session h3 { font-size: var(--text-s); }
+
+  /* On small screens the date comes first: it is what people look for. */
+  .date-board { order: -1; }
+}
+
+/* On a phone the timetable turns into a simple list, in time order. */
+@media (max-width: 640px) {
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-xl); }
+  .top-bar { justify-content: center; padding: var(--space-s) var(--space-s); }
+  .section { padding: var(--space-m) var(--space-s) 0; }
+  .page-title { padding: var(--space-m); }
+  .timetable { display: block; }
+  .corner, .room-name, .hour { display: none; }
+  .session { margin-bottom: var(--space-s); }
+  .session h3 { font-size: var(--text-m); }
+
+  /* The room name shows again, as a white badge in the room's own colour. */
+  .where {
+    position: static;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    margin-left: var(--space-xs);
+    padding: 0 10px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--room);
+    font-family: var(--text-font);
+    font-size: var(--text-s);
+  }
+  .highlight:not(.feature) { grid-template-columns: 96px 1fr; }
+  .tile { min-width: 84px; font-size: var(--text-4xl); }
+  .tile.small { font-size: var(--text-2xl); }
+}

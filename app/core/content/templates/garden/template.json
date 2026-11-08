@@ -1,0 +1,15 @@
+{
+  "title": "School Garden Club",
+  "name": "My garden club",
+  "blurb": "A school garden club's year, month by month, far in the north",
+  "category": "science",
+  "layout": "Twelve-month calendar grid of the garden year",
+  "shows": [
+    "A year grid: a season, then its 3 months",
+    "Daylight bars sized by a number in CSS",
+    "Icons drawn once and used again with <use>",
+    "Seed packets with a flap cut by clip-path",
+    "A checklist where CSS counts your ticks"
+  ],
+  "accent": "#3e7a22"
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crew - Mission Comet Kite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M6 34 L22 18" stroke="#3ed2ff" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="26" cy="14" r="9" fill="#ffc94d"/>
+      </svg>
+      Comet Kite
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="planets.html">Planets</a></li>
+        <li><a href="crew.html" aria-current="page">Crew</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-top">
+      <div class="twinkle"></div>
+      <div class="wrap">
+        <h1 class="big-title">Meet the crew</h1>
+        <p class="lead">Three friends and one robot. Each of them has a mission patch, drawn with SVG shapes in the code.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <!-- Each card sets its own --glow colour, the same as its patch. -->
+        <div class="card-grid">
+          <article class="crew-card" style="--glow: #ffc94d">
+            <svg class="patch" viewBox="0 0 120 120" role="img" aria-label="Nora's patch: a gold star">
+              <circle cx="60" cy="60" r="56" fill="#16205a" stroke="#ffc94d" stroke-width="6"/>
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#ffc94d" stroke-dasharray="3 6"/>
+              <path d="M60 27 L67 46 L87 46 L71 59 L76 78 L60 67 L44 78 L49 59 L33 46 L53 46 Z" fill="#ffc94d"/>
+              <rect x="26" y="88" width="68" height="18" rx="9" fill="#ffc94d"/>
+              <text x="60" y="101">NORA</text>
+            </svg>
+            <h2>Nora Lind</h2>
+            <p class="job">Commander</p>
+            <p>Nora is in charge of the whole mission. She stays calm, even when her lunch floats away.</p>
+            <p class="favourite">Favourite planet: Saturn</p>
+          </article>
+
+          <article class="crew-card" style="--glow: #ff4fa3">
+            <svg class="patch" viewBox="0 0 120 120" role="img" aria-label="Max's patch: a little rocket">
+              <circle cx="60" cy="60" r="56" fill="#16205a" stroke="#ff4fa3" stroke-width="6"/>
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#ff4fa3" stroke-dasharray="3 6"/>
+              <path d="M53 72 L60 86 L67 72 Z" fill="#ffc94d"/>
+              <path d="M50 58 L39 78 L51 72 Z M70 58 L81 78 L69 72 Z" fill="#ff4fa3"/>
+              <path d="M60 22 C73 35 75 56 70 72 L50 72 C45 56 47 35 60 22 Z" fill="#eef1ff"/>
+              <circle cx="60" cy="48" r="7" fill="#3ed2ff"/>
+              <rect x="26" y="88" width="68" height="18" rx="9" fill="#ff4fa3"/>
+              <text x="60" y="101">MAX</text>
+            </svg>
+            <h2>Max Ortiz</h2>
+            <p class="job">Pilot</p>
+            <p>Max flies the ship and parks it next to moons. He practised in a flight simulator for years.</p>
+            <p class="favourite">Favourite planet: Jupiter</p>
+          </article>
+
+          <article class="crew-card" style="--glow: #3ed2ff">
+            <svg class="patch" viewBox="0 0 120 120" role="img" aria-label="Ama's patch: a planet with a ring">
+              <circle cx="60" cy="60" r="56" fill="#16205a" stroke="#3ed2ff" stroke-width="6"/>
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#3ed2ff" stroke-dasharray="3 6"/>
+              <circle cx="60" cy="56" r="18" fill="#3ed2ff"/>
+              <ellipse cx="60" cy="56" rx="34" ry="9" fill="none" stroke="#ffc94d" stroke-width="4" transform="rotate(-18 60 56)"/>
+              <circle cx="32" cy="34" r="2" fill="#ffffff"/>
+              <circle cx="88" cy="30" r="2" fill="#ffffff"/>
+              <rect x="26" y="88" width="68" height="18" rx="9" fill="#3ed2ff"/>
+              <text x="60" y="101">AMA</text>
+            </svg>
+            <h2>Ama Osei</h2>
+            <p class="job">Scientist</p>
+            <p>Ama studies rocks, ice and clouds on every world. She fills a whole notebook every week.</p>
+            <p class="favourite">Favourite planet: Mars</p>
+          </article>
+        </div>
+
+        <article class="crew-card robot-card">
+          <svg class="patch" viewBox="0 0 120 120" role="img" aria-label="Zubbo's patch: a robot face">
+            <circle cx="60" cy="60" r="56" fill="#16205a" stroke="#9b6bff" stroke-width="6"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="#9b6bff" stroke-dasharray="3 6"/>
+            <path d="M60 40 L60 28" stroke="#c9b8ff" stroke-width="3"/>
+            <circle cx="60" cy="26" r="5" fill="#ff4fa3"/>
+            <rect x="38" y="40" width="44" height="36" rx="8" fill="#c9b8ff"/>
+            <circle cx="51" cy="56" r="6" fill="#060a1f"/>
+            <circle cx="69" cy="56" r="6" fill="#060a1f"/>
+            <rect x="50" y="66" width="20" height="4" rx="2" fill="#060a1f"/>
+            <rect x="26" y="88" width="68" height="18" rx="9" fill="#9b6bff"/>
+            <text x="60" y="101">ZUBBO</text>
+          </svg>
+          <div>
+            <h2>Zubbo</h2>
+            <p class="job">Ship robot</p>
+            <p>Zubbo fixes things, counts the snacks and tells very bad jokes. It never sleeps, but it likes to charge its battery on movie night.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section training">
+      <div class="wrap">
+        <h2 class="section-title">How the crew trained</h2>
+        <p>Real astronauts train for years before they fly. Our crew did the same things.</p>
+        <ul class="training-list">
+          <li>
+            <h3>The giant pool</h3>
+            <p>They practised space walks under water, in a huge pool. Floating in water feels a bit like floating in space.</p>
+          </li>
+          <li>
+            <h3>The floating plane</h3>
+            <p>A special plane flies up and down like a roller coaster. At the top of each hill, everyone floats for about 20 seconds.</p>
+          </li>
+          <li>
+            <h3>Survival camp</h3>
+            <p>They learned to keep warm, build a shelter and call for help, in case the capsule lands far from home.</p>
+          </li>
+          <li>
+            <h3>The gym, every day</h3>
+            <p>In space, muscles and bones get weaker. So astronauts exercise for about two hours every day.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Mission Comet Kite is pretend. The planets are real!</p>
+    <p>Learn more at <a href="https://spaceplace.nasa.gov/planets/en/">NASA Space Place: All about the planets</a></p>
+  </footer>
+</body>
+</html>

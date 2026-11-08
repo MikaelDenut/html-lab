@@ -1,0 +1,15 @@
+{
+  "title": "Bike factory",
+  "name": "my-bike-factory",
+  "blurb": "A bike factory dashboard with gauges, orders and open jobs",
+  "category": "industrial",
+  "layout": "Dashboard: sticky side menu, gauges, data table",
+  "shows": [
+    "A side menu that stays put as you scroll",
+    "Round gauges painted with conic-gradient",
+    "Coloured status badges in a data table",
+    "A snake of steps with arrows cut by clip-path",
+    "A green safety sign painted with box-shadow"
+  ],
+  "accent": "#c62a3d"
+}

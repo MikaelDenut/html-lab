@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The hunt - Gullwhistle Bay Pirate Club</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="logo" href="index.html">
+        <svg class="logo-flag" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+          <path class="pole" d="M9 4 V42"/>
+          <path class="flag" d="M10 6 H38 L31 15 L38 24 H10 Z"/>
+          <path class="flag-x" d="M17 10 L27 20 M27 10 L17 20"/>
+        </svg>
+        <span>Gullwhistle Bay <span class="logo-sub">Pirate Club</span></span>
+      </a>
+      <nav class="menu" aria-label="Main menu">
+        <ul>
+          <li><a href="index.html">The map</a></li>
+          <li><a href="crew.html">The crew</a></li>
+          <li><a href="hunt.html" aria-current="page">The hunt</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <h1>The Great Treasure Hunt</h1>
+      <p>Once a month, the crews follow the clues through Gullwhistle Park. The hunt takes about two hours, and every pirate goes home with treasure.</p>
+    </div>
+
+    <section class="scroll" id="clues" aria-labelledby="clues-title">
+      <h2 id="clues-title">The rules, clue by clue</h2>
+      <ol class="clue-list">
+        <li>
+          <h3>Find your crew</h3>
+          <p>A crew is 3 or 4 pirates and one grown-up. Choose a crew name together.</p>
+        </li>
+        <li>
+          <h3>Get your map piece</h3>
+          <p>Every crew gets one piece of the map and a compass at Biscuit Beach. That is the sandpit by the park gate.</p>
+        </li>
+        <li>
+          <h3>Solve the riddle</h3>
+          <p>Each map piece has a riddle on the back. It tells you where the next clue is hidden.</p>
+        </li>
+        <li>
+          <h3>Walk, do not run</h3>
+          <p>Stay on the paths, and stay where your grown-up can see you.</p>
+        </li>
+        <li>
+          <h3>Collect five stamps</h3>
+          <p>Every clue box has a stamp. Stamp your crew card, then put the clue back for the next crew.</p>
+        </li>
+        <li>
+          <h3>Find the X</h3>
+          <p>With five stamps, the last riddle shows you the way to the big red X.</p>
+        </li>
+        <li>
+          <h3>Share the treasure</h3>
+          <p>Open the chest together. Every pirate gets the same share. That is our pirate code!</p>
+        </li>
+      </ol>
+    </section>
+
+    <div class="hunt-end">
+      <section class="treasure-box" id="treasure" aria-labelledby="treasure-title">
+        <h2 id="treasure-title">What is in the chest?</h2>
+        <!-- details and summary open and close with a click, no script. -->
+        <details class="chest-details">
+          <summary>
+            <span class="chest" aria-hidden="true">
+              <span class="coin"></span>
+              <span class="coin"></span>
+              <span class="coin"></span>
+              <span class="lid"></span>
+              <span class="box"></span>
+            </span>
+            <span class="chest-button open-text">Open the chest</span>
+            <span class="chest-button close-text">Close the chest</span>
+          </summary>
+          <p>Chocolate coins, a golden crew badge for every pirate, and the first piece of next month's map!</p>
+        </details>
+      </section>
+
+      <section class="join" id="join" aria-labelledby="join-title">
+        <h2 id="join-title">Join the next hunt</h2>
+        <form class="join-form">
+          <label for="pirate-name">Your pirate name</label>
+          <input id="pirate-name" name="pirate-name" type="text" placeholder="Captain Socks">
+
+          <label for="age">Your age</label>
+          <select id="age" name="age">
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+          </select>
+
+          <fieldset class="colours">
+            <legend>Pick a crew colour</legend>
+            <label><input type="radio" name="colour" value="red" checked> <span class="swatch" style="background: var(--red)"></span> Red</label>
+            <label><input type="radio" name="colour" value="blue"> <span class="swatch" style="background: var(--sea)"></span> Blue</label>
+            <label><input type="radio" name="colour" value="green"> <span class="swatch" style="background: var(--leaf)"></span> Green</label>
+            <label><input type="radio" name="colour" value="gold" disabled> <span class="swatch" style="background: var(--gold)"></span> Gold (full)</label>
+          </fieldset>
+
+          <label for="grown-up">Grown-up who comes with you</label>
+          <input id="grown-up" name="grown-up" type="text">
+
+          <label class="promise"><input type="checkbox" name="promise"> I promise to walk, not run, and to share the treasure.</label>
+
+          <button class="button" type="submit">Join the crew</button>
+          <p class="practice">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <div class="wrap">
+      <p>Gullwhistle Bay Pirate Club is a pretend club, made with HTML and CSS.</p>
+      <p>How do maps help you find things? <a href="https://simple.wikipedia.org/wiki/Map">Read about maps on Simple English Wikipedia</a></p>
+    </div>
+  </footer>
+</body>
+</html>

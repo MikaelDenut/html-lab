@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Captain Puddlejump - Issue 1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path class="logo-drop" d="M16 2 C22 11 27 16 27 21 A11 11 0 0 1 5 21 C5 16 10 11 16 2 Z"/>
+      </svg>
+      Captain Puddlejump
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Cover</a></li>
+        <li><a href="story.html">Story</a></li>
+        <li><a href="heroes.html">Heroes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- The comic cover. The sky photo is in style.css. -->
+    <section class="cover photo photo-clouds">
+      <div class="cover-words">
+        <p class="issue-box">Issue <span>1</span> - Price: 1 smile</p>
+        <h1 class="big-title"><span class="title-top">Captain</span> Puddlejump</h1>
+        <p class="tagline">The hero who jumps into one puddle... and pops out of another!</p>
+      </div>
+
+      <div class="cover-hero">
+        <p class="bubble">Puddle power, here I come!</p>
+
+        <!-- The hero. Change the colours in :root in style.css. -->
+        <svg class="hero-drawing" viewBox="0 0 200 250" role="img" aria-label="Captain Puddlejump waving">
+          <!-- cape -->
+          <path class="hero-cape" d="M66 98 L134 98 L176 234 Q156 222 140 238 Q120 222 100 238 Q80 222 60 238 Q44 222 24 234 Z"/>
+          <!-- arms and gloves -->
+          <rect class="hero-suit" x="122" y="40" width="20" height="72" rx="10" transform="rotate(25 132 108)"/>
+          <rect class="hero-suit" x="58" y="100" width="20" height="62" rx="10" transform="rotate(25 68 104)"/>
+          <circle class="hero-boots" cx="161" cy="44" r="13"/>
+          <circle class="hero-boots" cx="44" cy="158" r="12"/>
+          <!-- legs and rain boots -->
+          <rect class="hero-suit" x="74" y="168" width="22" height="44"/>
+          <rect class="hero-suit" x="104" y="168" width="22" height="44"/>
+          <rect class="hero-boots" x="68" y="204" width="32" height="30" rx="8"/>
+          <rect class="hero-boots" x="100" y="204" width="32" height="30" rx="8"/>
+          <!-- body, belt and a water drop -->
+          <rect class="hero-suit" x="66" y="94" width="68" height="84" rx="22"/>
+          <rect class="hero-boots" x="66" y="158" width="68" height="10"/>
+          <circle cx="100" cy="124" r="17" fill="white"/>
+          <path class="hero-suit" d="M100 110 C108 121 111 126 111 130 A11 11 0 0 1 89 130 C89 126 92 121 100 110 Z"/>
+          <!-- head, rain hat, mask and smile -->
+          <circle class="hero-skin" cx="100" cy="62" r="32"/>
+          <path class="hero-hat" d="M68 50 Q100 4 132 50 Z"/>
+          <ellipse class="hero-hat" cx="100" cy="50" rx="44" ry="8"/>
+          <rect class="hero-mask" x="70" y="56" width="60" height="16" rx="8"/>
+          <circle cx="86" cy="64" r="5" fill="white"/>
+          <circle cx="114" cy="64" r="5" fill="white"/>
+          <path d="M86 80 Q100 92 114 80" fill="none"/>
+        </svg>
+      </div>
+
+      <div class="burst pow"><p>POW!</p></div>
+    </section>
+
+    <!-- Three boxes under the cover, on a 6-column grid. -->
+    <div class="issue-guide">
+      <article class="guide-box guide-wide">
+        <h2>Read the story</h2>
+        <p>Baron Bone-Dry wants to drink every puddle in the city. Oh no! Who can stop him?</p>
+        <a class="button" href="story.html">Open issue 1</a>
+      </article>
+      <article class="guide-box guide-narrow">
+        <h2>Meet the heroes</h2>
+        <p>A brave hero, a little rain cloud, a clever granny and one very grumpy baron.</p>
+        <a class="button" href="heroes.html">See the cards</a>
+      </article>
+      <article class="guide-box guide-strip dots dots-yellow">
+        <h2>Did you know?</h2>
+        <p>Old comic books were printed with tiny dots of colour, called Ben-Day dots. The dots on this page are made with CSS!</p>
+        <a class="button" href="https://en.wikipedia.org/wiki/Comics">Comics on Wikipedia</a>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Captain Puddlejump is made with HTML and CSS. Read about <a href="https://en.wikipedia.org/wiki/Comics">comics on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

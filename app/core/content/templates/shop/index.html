@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wobbleplum Toys - wooden toys that last</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <!-- The logo is a plum drawn with two circles and a leaf. -->
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="28" r="17" fill="#6b2d6f"/>
+        <circle cx="17" cy="22" r="4" fill="#ecdcf0" opacity="0.5"/>
+        <path d="M24 12 V6" stroke="#4a1a4f" stroke-width="3" stroke-linecap="round"/>
+        <path d="M25 9 Q31 1 39 5 Q33 13 25 9 Z" fill="#2f7d57"/>
+      </svg>
+      <span>Wobbleplum <small>Wooden toys</small></span>
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Shop</a></li>
+        <li><a href="product.html">Toy of the month</a></li>
+        <li>
+          <a href="basket.html">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            Basket
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <h1>Wooden toys that last for years</h1>
+    <p class="lead">Our wooden toys are made by hand in our workshop on Toffeemoss Lane, tested by kids, and strong enough for the next kid too.</p>
+
+    <!-- The shop is one big grid: filters on the left, toys on the right. -->
+    <div class="shop">
+      <aside class="filters">
+        <h2>Find a toy</h2>
+        <fieldset>
+          <legend>Kind of toy</legend>
+          <label class="option"><input type="radio" name="kind" id="kind-all" checked><span>All toys</span></label>
+          <label class="option"><input type="radio" name="kind" id="kind-wood"><span>Wooden toys</span></label>
+          <label class="option"><input type="radio" name="kind" id="kind-soft"><span>Soft toys</span></label>
+          <label class="option"><input type="radio" name="kind" id="kind-outdoor"><span>Outdoor toys</span></label>
+        </fieldset>
+        <fieldset>
+          <legend>Price</legend>
+          <label class="option"><input type="checkbox" id="cheap"><span>Under €20</span></label>
+        </fieldset>
+        <p class="free-note">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6h11v10H2z M13 9h4l4 4v3h-8"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></svg>
+          Free delivery when you spend €50 or more.
+        </p>
+      </aside>
+
+      <section class="products">
+        <h2 class="for-readers">Our toys</h2>
+        <!-- Each card has a class like "wood" or "cheap". The filters look for them. -->
+        <ul class="grid">
+          <li class="card big wood">
+            <img src="shop-horse.svg" width="960" height="720" alt="A drawing of a wooden rocking horse with a red saddle, on steel rockers with small wheels">
+            <p class="sticker">Toy of the month</p>
+            <div class="card-text">
+              <h3><a href="product.html">Wooden rocking horse</a></h3>
+              <p class="info">It rocks, and it rolls too: fold the little wheels down and push it across the room.</p>
+              <p class="price">€149</p>
+              <input class="add" type="checkbox" id="add-horse" checked>
+              <label class="button add-button" for="add-horse">
+                <span class="add-text">Add <span class="for-readers">rocking horse </span>to basket</span>
+                <span class="added-text"><span class="for-readers">rocking horse </span>In your basket</span>
+              </label>
+            </div>
+          </li>
+          <li class="card wood cheap">
+            <img src="shop-top.jpg" width="640" height="480" alt="A plain wooden spinning top standing on a wooden floor">
+            <div class="card-text">
+              <h3>Spinning top</h3>
+              <p class="info">Give it a twist and watch it go.</p>
+              <p class="price">€9</p>
+              <input class="add" type="checkbox" id="add-top" checked>
+              <label class="button add-button" for="add-top">
+                <span class="add-text">Add <span class="for-readers">spinning top </span>to basket</span>
+                <span class="added-text"><span class="for-readers">spinning top </span>In your basket</span>
+              </label>
+            </div>
+          </li>
+          <li class="card wood">
+            <img src="shop-truck.jpg" width="640" height="480" alt="A dark wooden toy truck with patterns burned into the wood">
+            <div class="card-text">
+              <h3>Wooden truck</h3>
+              <p class="info">Patterns burned into the wood by hand.</p>
+              <p class="price">€34</p>
+              <input class="add" type="checkbox" id="add-truck">
+              <label class="button add-button" for="add-truck">
+                <span class="add-text">Add <span class="for-readers">wooden truck </span>to basket</span>
+                <span class="added-text"><span class="for-readers">wooden truck </span>In your basket</span>
+              </label>
+            </div>
+          </li>
+          <li class="card wood">
+            <img src="shop-xylophone.svg" width="640" height="480" alt="A drawing of a toy xylophone with five coloured bars that get shorter, and a beater">
+            <div class="card-text">
+              <h3>Little xylophone</h3>
+              <p class="info">Five bars, five notes, one happy drummer.</p>
+              <p class="price">€29</p>
+              <input class="add" type="checkbox" id="add-xylophone">
+              <label class="button add-button" for="add-xylophone">
+                <span class="add-text">Add <span class="for-readers">xylophone </span>to basket</span>
+                <span class="added-text"><span class="for-readers">xylophone </span>In your basket</span>
+              </label>
+            </div>
+          </li>
+          <li class="card soft cheap">
+            <img src="shop-bear.jpg" width="640" height="480" alt="A hand lifting a big brown teddy bear up to the evening sky">
+            <div class="card-text">
+              <h3>Cuddly bear</h3>
+              <p class="info">Soft, big and very good at listening.</p>
+              <p class="price">€19</p>
+              <input class="add" type="checkbox" id="add-bear">
+              <label class="button add-button" for="add-bear">
+                <span class="add-text">Add <span class="for-readers">cuddly bear </span>to basket</span>
+                <span class="added-text"><span class="for-readers">cuddly bear </span>In your basket</span>
+              </label>
+            </div>
+          </li>
+          <li class="card outdoor cheap">
+            <img src="shop-kite.jpg" width="640" height="480" alt="A rainbow kite with long red and yellow ribbons in a blue sky">
+            <div class="card-text">
+              <h3>Rainbow kite</h3>
+              <p class="info">Long ribbons that dance in the wind.</p>
+              <p class="price">€18</p>
+              <input class="add" type="checkbox" id="add-kite">
+              <label class="button add-button" for="add-kite">
+                <span class="add-text">Add <span class="for-readers">rainbow kite </span>to basket</span>
+                <span class="added-text"><span class="for-readers">rainbow kite </span>In your basket</span>
+              </label>
+            </div>
+          </li>
+        </ul>
+
+        <div class="basket-bar">
+          <p>Toys in your basket: <span class="count"></span></p>
+          <a class="button" href="basket.html">Go to my basket</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><b>Wobbleplum Toys</b>, 9 Toffeemoss Lane. A make-believe shop: make it your own!</p>
+    <p>On a xylophone each bar has a different length, so each one plays a different note. Read about <a href="https://simple.wikipedia.org/wiki/Xylophone">xylophones on Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

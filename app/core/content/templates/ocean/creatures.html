@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fathomwick Ocean Club - Creatures</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">Fathomwick <span>Ocean Club</span></a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html">The big dive</a></li>
+        <li><a href="creatures.html" aria-current="page">Creatures</a></li>
+        <li><a href="protect.html">Protect</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-top">
+      <h1>Meet the creatures</h1>
+      <p>Every animal here hides a secret fact. Point at a card, or press the Tab key, to read it.</p>
+    </section>
+
+    <div class="reef">
+      <!-- tabindex="0" lets the Tab key stop on a card, so its secret fact slides up. Use it only when the keyboard must reach something. -->
+      <article class="reveal tall" tabindex="0">
+        <img src="ocean-turtle.jpg" width="640" height="480" alt="A green sea turtle swimming, seen from above">
+        <p class="zone-badge">Sunlight zone</p>
+        <h2>Green sea turtle</h2>
+        <p class="fact">Grown-up green turtles eat seagrass and seaweed. They are named after the green colour of their fat, not their shell.</p>
+      </article>
+
+      <article class="reveal wide" tabindex="0">
+        <svg viewBox="0 0 400 180" role="img" aria-label="Drawing of a long blue whale">
+          <path class="body" d="M20 96 C40 70 120 60 220 66 C290 70 340 84 356 90 Q374 86 388 78 L390 96 Q374 100 356 100 C320 116 240 126 160 124 C80 122 30 112 20 96 Z"/>
+          <path class="stroke" d="M44 106 C90 116 150 118 210 114"/>
+          <circle class="eye" cx="74" cy="90" r="6"/>
+        </svg>
+        <p class="zone-badge">Sunlight zone</p>
+        <h2>Blue whale</h2>
+        <p class="fact">The biggest animal that has ever lived, bigger than any dinosaur. Yet it eats krill: tiny animals that look like shrimp.</p>
+      </article>
+
+      <article class="reveal" tabindex="0">
+        <img src="ocean-manta.jpg" width="720" height="540" alt="A manta ray gliding above a reef">
+        <p class="zone-badge">Sunlight zone</p>
+        <h2>Manta ray</h2>
+        <p class="fact">Every manta has its own pattern of spots on its belly, like a fingerprint.</p>
+      </article>
+
+      <article class="reveal" tabindex="0">
+        <img src="ocean-jelly.jpg" width="720" height="540" alt="Moon jellies floating in blue water">
+        <p class="zone-badge">Sunlight zone</p>
+        <h2>Moon jelly</h2>
+        <p class="fact">Jellyfish were drifting in the sea more than 500 million years ago, long before the dinosaurs.</p>
+      </article>
+
+      <article class="reveal tall" tabindex="0">
+        <svg viewBox="0 0 180 240" role="img" aria-label="Drawing of an orange seahorse with a curly tail">
+          <path class="warm" d="M84 92 L62 88 L64 118 L80 122 Z"/>
+          <path class="warm" d="M88 34 L92 20 L100 30 C116 28 128 42 128 60 C140 60 152 62 160 62 C164 66 164 72 160 76 C150 76 138 76 126 80 C140 102 138 132 120 152 C104 168 100 186 112 200 C124 214 116 230 100 228 C86 226 86 210 98 208 C82 200 74 180 80 160 C70 130 74 90 84 70 C76 58 78 42 88 34 Z"/>
+          <path class="stroke" d="M92 108 H124 M90 126 H126 M92 144 H118"/>
+          <circle class="eye" cx="108" cy="50" r="5"/>
+        </svg>
+        <p class="zone-badge">Sunlight zone</p>
+        <h2>Seahorse</h2>
+        <p class="fact">The dad carries the eggs in a pouch on his belly until the babies hatch.</p>
+      </article>
+
+      <article class="reveal" tabindex="0">
+        <img src="ocean-dumbo.jpg" width="720" height="540" alt="A pale dumbo octopus with fins like ears">
+        <p class="zone-badge">Abyss</p>
+        <h2>Dumbo octopus</h2>
+        <p class="fact">Like every octopus, it has three hearts and blue blood.</p>
+      </article>
+
+      <article class="reveal wide" tabindex="0">
+        <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of an anglerfish with a glowing light on a rod">
+          <path class="body" d="M60 104 C60 66 98 50 136 58 C170 66 186 88 186 104 C186 130 160 148 124 148 C88 148 60 132 60 104 Z"/>
+          <path class="body" d="M184 104 L222 80 V128 Z"/>
+          <path class="stroke" d="M66 112 L74 102 L82 114 L90 102 L98 114 L106 103 M112 60 C102 30 76 24 58 42"/>
+          <circle class="lure" cx="56" cy="46" r="9"/>
+          <circle class="eye" cx="112" cy="86" r="7"/>
+        </svg>
+        <p class="zone-badge">Midnight zone</p>
+        <h2>Anglerfish</h2>
+        <p class="fact">The light on her rod is made by tiny bacteria that live inside it.</p>
+      </article>
+
+      <article class="reveal" tabindex="0">
+        <svg viewBox="0 0 240 180" role="img" aria-label="Drawing of an orange sea star with five arms">
+          <polygon class="star-edge" points="120,18 138,66 188,68 148,99 162,148 120,120 78,148 92,99 52,68 102,66"/>
+          <polygon class="star" points="120,18 138,66 188,68 148,99 162,148 120,120 78,148 92,99 52,68 102,66"/>
+          <g class="bumps">
+            <circle cx="120" cy="90" r="6"/>
+            <circle cx="120" cy="62" r="4"/>
+            <circle cx="120" cy="40" r="4"/>
+            <circle cx="147" cy="81" r="4"/>
+            <circle cx="168" cy="74" r="4"/>
+            <circle cx="137" cy="113" r="4"/>
+            <circle cx="149" cy="131" r="4"/>
+            <circle cx="103" cy="113" r="4"/>
+            <circle cx="91" cy="131" r="4"/>
+            <circle cx="93" cy="81" r="4"/>
+            <circle cx="72" cy="74" r="4"/>
+          </g>
+        </svg>
+        <p class="zone-badge">Sunlight zone</p>
+        <h2>Sea star</h2>
+        <p class="fact">It can grow back an arm it has lost. It also has a tiny eye at the end of each arm.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Fathomwick Ocean Club is made up, but every fact about the sea is real.</p>
+    <p>Want to meet more? Read about <a href="https://simple.wikipedia.org/wiki/Ocean">the ocean on Simple Wikipedia</a>.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,254 @@
+{
+  "animation-lab": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set effects)",
+    "date": "2026-11-08",
+    "hash": "73a437a0e1ffde38b59873536c14df20e8b57976ca148182883e5af483b5bf61",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "artgallery": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set creative)",
+    "date": "2026-11-08",
+    "hash": "8de3dc17eeec76fee03ca11689f3346edcc57384ef645f84640fa5c0e1d8afe3",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "band": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set creative)",
+    "date": "2026-11-08",
+    "hash": "99bff297260dd23ec47e32afd12117b9ee978814f28539139db57b29e3c70f36",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "cafe": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro1)",
+    "date": "2026-11-08",
+    "hash": "9e3719783dd69f64492012b7f2a6d3f78cc56df3bf7dc32e313d2cd3620c9295",
+    "verdict": "pass, 0 open must-fix; then one gallery line shortened to under 48 characters"
+  },
+  "clinic": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro2)",
+    "date": "2026-11-08",
+    "hash": "f2cbdb7f0169679d8d34091df2238184b58ec176140accf022e75254509cf2a2",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "comic": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set first6b)",
+    "date": "2026-11-08",
+    "hash": "ff0054999a35f1986e7d5ad7d596dd89f6f1c8710c8446a12bdbb910b0cad36f",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "construction": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set ind1)",
+    "date": "2026-11-08",
+    "hash": "2f5a911f8a1a867b243787635ebc9dd598be4fb8468493062b558794a31c7c61",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "cookbook": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set mix)",
+    "date": "2026-11-08",
+    "hash": "2f1565896d66f9403d720810e407004f12bb7c7b2498e9cda96810798404df1e",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "crazy-css": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set effects)",
+    "date": "2026-11-08",
+    "hash": "d4262793dba369dfff9603de4ff95a9737d52ab6d5397fad7e9474d7c118e08a",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "css-drawing": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set effects2)",
+    "date": "2026-11-08",
+    "hash": "3fa7f817e0c8b3283ae3ccd0e719418697483434f73aa3c41f49aa4772b2eb21",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "dino": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set first6a)",
+    "date": "2026-11-08",
+    "hash": "6b31cafcf677af5e0ccfbe243c31c5a7a832fea8d3a67249e7de28f6e49419ff",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "energy": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set ind2)",
+    "date": "2026-11-08",
+    "hash": "1de89ab4570145f2cab8248afe0e67864c45060230ee74eda000ac2d9631a885",
+    "verdict": "pass, 0 open must-fix; then .logo:hover contrast fix (1.0:1 to over 11:1), rendered and checked"
+  },
+  "event": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro2)",
+    "date": "2026-11-08",
+    "hash": "bb4c7513fbf624e5a362cbc05c76ddfa12e3dc324dbc206ac0c19c7711c9d6f5",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "factory": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set ind1)",
+    "date": "2026-11-08",
+    "hash": "1f1727223bd3891034d302d3922f51734c4b8e2c8ab7c3d2136ec24982f73b03",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "fashion": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set sci)",
+    "date": "2026-11-08",
+    "hash": "0daf16c5adb377489b1d2d7a0f467e24759fdef55bcbd7899dabfb282f069248",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "football": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set first6a)",
+    "date": "2026-11-08",
+    "hash": "4e731e41a507cb66f58ead8084abf466949379838042db7da8868c8c5919b7f1",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "garage": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set ind2)",
+    "date": "2026-11-08",
+    "hash": "4b9b36a4b3bf855d42708fa359984d7ee89395d4e8b977ebaab5ed3dd970b358",
+    "verdict": "pass, 0 open must-fix; then .logo:hover contrast fix (1.0:1 to over 11:1), rendered and checked"
+  },
+  "garden": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set sci2)",
+    "date": "2026-11-08",
+    "hash": "ab302d0561de475a72cb2a814f7896eb6fdfaa90aa72311069e8f409495c3bff",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "harbour": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set ind2)",
+    "date": "2026-11-08",
+    "hash": "2a5f7d62ef23fba5505954c635d2d9a6a793ed4868137c7925f4c52db5a568e0",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "hotel": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro2)",
+    "date": "2026-11-08",
+    "hash": "b94dddb5a3754cdb7e8b05b5964f746b9ed4baaaee64161f35d2bb271946eb94",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "houses": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro3)",
+    "date": "2026-11-08",
+    "hash": "5e176378a5f440c032b8b5cd28d8732aabe47236e5a14022799277c159b4910a",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "hover-lab": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set effects)",
+    "date": "2026-11-08",
+    "hash": "41f772032a16eb03a852fb765f4a90d9bc40ce0b0d998378cba642c85dbf15f4",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "insects": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set sci2)",
+    "date": "2026-11-08",
+    "hash": "0d680d5bd8560d60c2862bf7da600f1893d50acfceea0a3daecedfed22a6c5cf",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "layout-lab": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set mix)",
+    "date": "2026-11-08",
+    "hash": "5fce4c1db0ef94c7d1114aed8421e3518d250142ec86413a5adf18f75dc1b42d",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "library": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set mix)",
+    "date": "2026-11-08",
+    "hash": "77d632419c5e76b3e4e618f275ffa64bd0becc93f6a3aae3dfc63da1ba723e61",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "newspaper": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro3)",
+    "date": "2026-11-08",
+    "hash": "09e73d7865c644b4b6ae46b1f5de1b109068df091f4fecfc8d20de6240b8a29c",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "ocean": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set sci)",
+    "date": "2026-11-08",
+    "hash": "e16224ea08a78876e4a18143e328ba445e5fa98b724ae1d06caa6ccc163b6f9f",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "pets": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set first6b)",
+    "date": "2026-11-08",
+    "hash": "63256166b799d2080c223041ce6ca3c2bcab5c45084652442a11f6566d730c31",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "photo": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set creative)",
+    "date": "2026-11-08",
+    "hash": "2c17f953469a60ab7e85f8a07961d03fb92b04564d491b95d890744becdc35a2",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "pirates": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set fun2)",
+    "date": "2026-11-08",
+    "hash": "7cd3195514d27a111faa292c7d4f9edaa8c4878ba28721d2569c4b8b4f0cd11f",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "pixel": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set first6b)",
+    "date": "2026-11-08",
+    "hash": "c5fc93078ce1fc6fd96365d416662ed686f6f215e20012ddbc29c48c13d3b2f0",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "railway": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set ind1)",
+    "date": "2026-11-08",
+    "hash": "0ac32b87dd8794aa0d9a3417c3919b2d7d9473df68c1edbde3d60f950150d000",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "resume": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro3)",
+    "date": "2026-11-08",
+    "hash": "6c4adfd6a45b08b0fb6ff31bf7e0538e1fa822e5e6c06c52345625fb8b3d18b8",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "robots": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set fun2)",
+    "date": "2026-11-08",
+    "hash": "ffb748251da5019fac09afd28889beaa94fb3338048262e6e1f86e3441b5d127",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "scroll-lab": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set effects2)",
+    "date": "2026-11-08",
+    "hash": "e6cf50c1e2db90c730cca8e80e8305b377c70c0d3ea63546e629e0d7f2864604",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "shop": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro1)",
+    "date": "2026-11-08",
+    "hash": "2ccaa4c9f9878c5f5d8d13b1a94efa455aab4cd032e11a87e2f4bd309c1e172e",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "space": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set first6a)",
+    "date": "2026-11-08",
+    "hash": "1c9f21c25037d55c1902f5f328371bb492a996f1860832f8447f34fe3b0e7b89",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "startup": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set pro1)",
+    "date": "2026-11-08",
+    "hash": "0768f83b0dfef429b11cf49e99986573ae91ef773d65a543097bad7b5efb01dd",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "text-lab": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set effects2)",
+    "date": "2026-11-08",
+    "hash": "5901d66b1738ffbbb2ace0f6072cb49fc9276968894877ac5da04335d7f05dc3",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "themepark": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set fun2)",
+    "date": "2026-11-08",
+    "hash": "65419903d75df03372ed1f48a455b92340521dba65c796dc033a34b4ce4be082",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "volcano": {
+    "by": "three-lens review, fix, fresh verify (run wf_4d62f76e-6ad, set sci2)",
+    "date": "2026-11-08",
+    "hash": "9b0b873001c12c50216f88ce096ac1408d30c044a38437324e3ca820c27135e1",
+    "verdict": "pass, 0 open must-fix"
+  },
+  "weather": {
+    "by": "three-lens review, fix, fresh verify (run wf_02f538ad-6c7, set sci)",
+    "date": "2026-11-08",
+    "hash": "2276098be2d8f86fe9644519ff9e00e61fe1e19ba0923cc3789256ff8c2a1136",
+    "verdict": "pass, 0 open must-fix"
+  }
+}

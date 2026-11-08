@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ships today - Port of Brindlewick</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="wrap top-inner">
+        <a class="logo" href="index.html">
+          <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+            <rect class="logo-box rust" x="2" y="29" width="19" height="13" rx="2"/>
+            <rect class="logo-box cobalt" x="23" y="29" width="19" height="13" rx="2"/>
+            <rect class="logo-box lifted" x="8" y="14" width="28" height="13" rx="2"/>
+          </svg>
+          <span>Brindlewick<small>Port and container terminal</small></span>
+        </a>
+        <nav aria-label="Main menu">
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="ships.html" aria-current="page">Ships today</a></li>
+            <li><a href="work.html">How a box moves</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-title">
+        <div class="wrap">
+          <h1>Ships today</h1>
+          <p>Find your ship, see when it comes in, and where it ties up.</p>
+        </div>
+      </section>
+
+      <div class="wrap tracking">
+        <div class="tools">
+          <form class="find-ship" role="search">
+            <label for="ship-name">Ship name or box code</label>
+            <div class="search-row">
+              <input id="ship-name" type="search" placeholder="Kelp Queen">
+              <button class="button" type="submit">Find my ship</button>
+            </div>
+            <p class="practice">A practice form: HTML Lab does not send it.</p>
+          </form>
+          <fieldset class="filter">
+            <legend>Show</legend>
+            <input type="radio" name="show" id="show-all" checked><label for="show-all">All ships</label>
+            <input type="radio" name="show" id="show-port"><label for="show-port">In port</label>
+            <input type="radio" name="show" id="show-coming"><label for="show-coming">Coming in</label>
+            <input type="radio" name="show" id="show-sea"><label for="show-sea">At sea</label>
+          </fieldset>
+        </div>
+
+        <p class="swipe-hint">Slide the table sideways to see every column.</p>
+        <div class="table-box" tabindex="0" role="region" aria-label="Ships at Brindlewick this week">
+          <table class="ship-table">
+            <caption>Ships at Brindlewick this week</caption>
+            <thead>
+              <tr><th scope="col">Ship</th><th scope="col">Status</th><th scope="col">Arrives</th><th scope="col">Berth</th><th scope="col">Comes from</th><th scope="col">Carries</th></tr>
+            </thead>
+            <tbody>
+              <tr class="in-port"><th scope="row">Puffin Pebble</th><td><span class="status">In port</span></td><td class="data">Mon 06:40</td><td class="data">3</td><td>Shanghai</td><td>Toys, bikes and laptops</td></tr>
+              <tr class="in-port"><th scope="row">Kelp Queen</th><td><span class="status">In port</span></td><td class="data">Mon 11:20</td><td class="data">7</td><td>New York</td><td>Paper and machine parts</td></tr>
+              <tr class="coming"><th scope="row">Lady Limpet</th><td><span class="status">Coming in</span></td><td class="data">Tue 14:15</td><td class="data">5</td><td>Santos</td><td>Coffee and frozen fruit</td></tr>
+              <tr class="coming"><th scope="row">Herring Hop</th><td><span class="status">Coming in</span></td><td class="data">Tue 18:30</td><td class="data">8</td><td>Bergen</td><td>Fish in cold boxes</td></tr>
+              <tr class="coming"><th scope="row">Grey Gannet</th><td><span class="status">Coming in</span></td><td class="data">Wed 09:00</td><td class="data">2</td><td>Shanghai</td><td>Shoes and sofas</td></tr>
+              <tr class="at-sea"><th scope="row">Morning Mackerel</th><td><span class="status">At sea</span></td><td class="data">Fri 07:00</td><td class="data">Not yet</td><td>New York</td><td>Medicine and books</td></tr>
+              <tr class="at-sea"><th scope="row">Salty Sprat</th><td><span class="status">At sea</span></td><td class="data">Sat 16:45</td><td class="data">Not yet</td><td>Santos</td><td>Orange juice and sugar</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <section class="wrap section">
+        <h2>Where our ships sail</h2>
+        <p>Three long routes start at Brindlewick. The dashed lines show the way the ships go.</p>
+        <figure class="route-map">
+          <svg viewBox="0 30 1000 350" role="img" aria-label="A world map with three dashed routes from Brindlewick: to New York, to Shanghai and to Santos">
+              <path class="land" d="M39 61 67 53 144 56 236 56 250 72 272 97 283 78 306 81 322 83 344 106 333 122 306 133 294 138 289 153 275 164 278 181 272 172 267 167 250 169 231 175 231 192 247 197 250 192 258 192 256 206 269 208 269 222 286 228 278 228 261 217 244 211 208 194 194 186 181 167 172 156 156 139 156 117 139 97 111 83 83 81 61 92 42 83ZM297 33 333 22 417 19 444 42 439 56 389 69 378 83 361 75 350 61 339 39ZM286 228 300 217 328 219 356 236 361 250 378 258 403 267 394 286 389 311 375 317 367 328 353 344 339 356 328 361 319 375 311 389 308 403 300 400 294 389 297 361 303 333 306 300 289 289 275 267 278 256 283 244Z"/>
+              <path class="land" d="M475 147 475 131 494 129 487 116 497 112 506 108 514 103 522 100 522 92 529 90 528 97 533 99 539 100 553 99 558 96 558 92 567 91 567 85 581 83 564 83 559 81 569 69 561 67 549 78 553 83 546 90 539 96 535 94 531 89 529 85 522 89 515 88 514 81 519 75 539 64 547 58 558 56 578 53 592 56 614 64 622 61 653 60 667 57 689 58 700 49 722 49 744 42 778 36 792 35 814 44 861 51 889 50 917 53 944 56 972 56 1000 58 1000 69 986 72 953 83 936 108 933 92 897 86 881 100 892 117 867 131 858 139 858 153 850 153 850 144 847 139 836 139 839 147 831 153 836 164 839 167 831 181 817 189 806 192 800 200 803 217 794 225 786 222 778 214 775 228 788 246 781 242 772 228 772 206 761 203 761 194 756 189 744 189 739 194 722 208 722 222 714 228 703 203 694 189 686 181 672 181 658 179 656 183 664 189 658 197 653 203 644 206 625 214 619 214 608 192 597 172 594 172 590 165 594 162 597 150 600 149 583 149 578 148 572 142 572 138 567 138 567 144 561 149 558 142 554 136 553 133 538 124 534 126 544 135 551 139 544 144 543 144 533 133 528 128 522 128 508 130 508 133 500 142 499 144 494 148 484 150 482 148ZM484 111 504 108 505 104 500 101 494 95 495 90 492 87 486 87 483 93 486 97 492 99 492 102 487 102 486 106 492 107ZM483 106 483 100 479 96 472 100 472 107ZM433 68 439 66 456 65 462 69 458 72 448 74 437 73ZM861 162 865 162 867 156 875 157 880 155 886 154 891 151 892 144 894 140 893 135 889 137 888 142 886 144 881 147 878 151 869 151 864 154 860 157ZM889 133 892 134 898 133 904 130 894 124 893 130ZM833 199 840 199 838 206 839 211 844 214 836 212 833 206ZM722 232 722 223 726 228 727 232 724 234Z"/>
+              <path class="land" d="M484 151 494 152 508 148 528 147 528 156 542 160 553 166 556 161 569 162 581 164 590 163 591 167 593 175 603 192 608 207 620 215 622 221 642 217 642 221 636 233 628 244 614 256 610 264 612 281 612 292 597 306 599 317 590 322 589 331 583 336 575 344 556 347 551 344 549 333 542 325 533 297 538 281 533 264 526 253 526 240 524 238 516 238 508 232 494 236 488 236 479 238 468 231 463 225 458 219 453 209 454 196 453 192 458 181 464 174 473 168 474 160 481 156ZM637 283 640 293 631 319 622 319 620 308 623 294 631 288Z"/>
+              <path class="land" d="M765 235 771 236 779 244 789 254 794 260 794 266 790 266 783 261 778 253 771 244ZM803 246 806 254 808 258 818 261 824 260 828 247 831 236 825 231 821 236 814 241 808 245ZM793 269 800 268 808 268 818 271 818 274 808 273 800 272 794 270ZM864 254 875 259 883 254 892 257 905 262 910 267 917 279 908 278 899 275 892 275 883 273 882 264 872 261 867 258Z"/>
+              <path class="land" d="M815 311 817 322 819 344 828 347 843 344 858 338 875 346 883 347 889 356 906 358 917 354 925 336 926 328 925 319 918 312 906 303 904 292 899 289 896 280 893 286 893 297 889 299 879 292 879 283 867 281 860 292 853 289 847 292 839 300 836 304 825 308ZM980 346 986 351 996 355 992 359 986 365 985 361 983 359 985 353ZM980 362 984 365 981 371 975 374 969 379 962 378 962 376 968 372 974 369 978 364Z"/>
+              <path class="route to-new-york" d="M512 104 506 108 486 112 294 138"/>
+              <path class="route to-shanghai" d="M512 104 506 108 486 112 472 128 472 147 484 150 528 145 556 154 590 162 590 168 594 175 608 197 621 216 644 217 683 222 722 236 764 233 778 242 788 247 803 233 819 206 838 164"/>
+              <path class="route to-santos" d="M512 104 506 108 486 112 467 128 461 150 444 181 428 217 417 250 406 278 392 306 371 317"/>
+              <g transform="translate(472 114)">
+                <g class="sailing-ship">
+                  <path class="little-ship" d="M-13 0H11V5H-9Z"/>
+                  <rect class="little-ship" x="-6" y="-5" width="12" height="4"/>
+                </g>
+              </g>
+              <circle class="port home" cx="512" cy="104" r="8"/>
+              <circle class="port" cx="294" cy="137" r="6"/>
+              <circle class="port" cx="838" cy="163" r="6"/>
+              <circle class="port" cx="371" cy="317" r="6"/>
+              <text class="place home" x="524" y="98">Brindlewick</text>
+              <text class="place" x="282" y="160" text-anchor="end">New York</text>
+              <text class="place" x="990" y="142" text-anchor="end">Shanghai</text>
+              <text class="place" x="358" y="338" text-anchor="end">Santos</text>
+          </svg>
+        </figure>
+        <ul class="legend">
+          <li class="to-new-york"><span><b>New York:</b> west across the Atlantic Ocean, about 10 days</span></li>
+          <li class="to-shanghai"><span><b>Shanghai:</b> the short way, through the Suez Canal, about 5 weeks</span></li>
+          <li class="to-santos"><span><b>Santos, Brazil:</b> south across the Atlantic Ocean, about 2 weeks</span></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="bottom">
+      <div class="wrap">
+        <p>Port of Brindlewick, Quay Road 1. A pretend port, made with HTML and CSS.</p>
+        <p>Want to know more? <a href="https://en.wikipedia.org/wiki/Container_ship">Read about container ships on Wikipedia</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

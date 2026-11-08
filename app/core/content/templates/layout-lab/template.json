@@ -1,0 +1,15 @@
+{
+  "title": "Layout Lab",
+  "name": "My layout lab",
+  "blurb": "A web studio's library of eight classic page layouts",
+  "category": "professional",
+  "layout": "Eight classic page layouts, each one labelled",
+  "shows": [
+    "Eight page layouts made with grid and flex",
+    "One CSS line that makes each layout",
+    "Grid lines that show when you flip a switch",
+    "Boxes that move when you pick a word",
+    "A page map drawn with words"
+  ],
+  "accent": "#c43d16"
+}

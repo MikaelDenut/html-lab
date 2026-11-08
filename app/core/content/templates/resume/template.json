@@ -1,0 +1,15 @@
+{
+  "title": "Illustrator CV",
+  "name": "illustrator-cv",
+  "blurb": "The CV website of an illustrator, with drawings made in SVG",
+  "category": "professional",
+  "layout": "Two-column CV: sidebar and timeline",
+  "shows": [
+    "A sidebar that stays put while you scroll",
+    "A work timeline with dots on a line",
+    "Skill bars that grow when the page opens",
+    "A highlighter stripe drawn with a gradient",
+    "A face and pictures drawn with SVG"
+  ],
+  "accent": "#ff4fa3"
+}

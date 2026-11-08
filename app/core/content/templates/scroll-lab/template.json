@@ -1,0 +1,15 @@
+{
+  "title": "Scroll lab",
+  "name": "My scroll lab",
+  "blurb": "A mountain trail with sticky signs, snapping photos and slow layers",
+  "category": "effects",
+  "layout": "Scroll tricks: sticky, snap and slow layers",
+  "shows": [
+    "Sticky signs that stack up",
+    "A table with a top row that stays",
+    "A photo strip that snaps",
+    "A box that snaps up and down",
+    "Layers that scroll at different speeds"
+  ],
+  "accent": "#2e5e4e"
+}

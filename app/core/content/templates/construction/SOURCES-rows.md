@@ -1,0 +1,3 @@
+| construction-site.jpg | A big building site seen from above, with red cranes, steel bars and fresh concrete (cropped to 3:2) | 68 | 600x400 | chuttersnap | CC0 | https://commons.wikimedia.org/wiki/File:View_Above_Construction_Site_(Unsplash).jpg |
+| construction-scaffold.jpg | A tall building wall covered in metal scaffolding and see-through plastic sheets (cropped to 3:2) | 53 | 600x400 | Ricardo Gomez Angel | CC0 | https://commons.wikimedia.org/wiki/File:Scaffolding_(Unsplash).jpg |
+| construction-house.jpg | A wooden house with a balcony and big windows at sunset (cropped to 3:2) | 41 | 600x400 | Bruno Marinho | CC0 | https://commons.wikimedia.org/wiki/File:Forest_house_(Unsplash).jpg |

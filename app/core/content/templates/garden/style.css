@@ -1,0 +1,556 @@
+/* Kettlemoss School Garden Club: one style file for all three pages. */
+
+/* Dark soil, a red wheelbarrow and one colour for each season. Change a colour here and the whole garden changes! */
+:root {
+  --soil: #2d2118;
+  --soil-soft: #5f4b3e;
+  --white: #ffffff;
+  --line: #e8e1da;
+  --tomato: #c23b26;
+  --tomato-dark: #9c2c1a;
+  --spring: #3e7a22;
+  --spring-light: #e4f1d6;
+  --summer: #f2b705;
+  --summer-light: #fff1bf;
+  --autumn: #b44b17;
+  --autumn-light: #fbe0cc;
+  --winter: #3f6e9e;
+  --winter-light: #e1ebf5;
+  --night: #2f3b5c;
+  --water: #3f86c6;
+  --leaf: #4f8a2b;
+  --leaf-light: #9ccc6e;
+  --berry: #d33a2c;
+  --potato: #c9975b;
+  --petal: #f2b705;
+  --middle: #6b4423;
+  --flower: #9a6ac2;
+  --title-font: Superclarendon, Rockwell, serif;
+  --text-font: "Gill Sans", "Avenir Next", sans-serif;
+  /* Each text size is 1.25 times the one before it. */
+  --text-s: 16px;
+  --text-m: 20px;
+  --text-l: 25px;
+  --text-xl: 31px;
+  --text-2xl: 39px;
+  --text-3xl: 49px;
+  /* Spaces, from small to huge. */
+  --space-xs: 6px;
+  --space-s: 12px;
+  --space-m: 24px;
+  --space-l: 48px;
+  --space-xl: 80px;
+  --round: 16px;
+  --shadow: 0 10px 24px rgba(45, 33, 24, 0.16);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+img, svg { display: block; max-width: 100%; height: auto; }
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--soil);
+  font-family: var(--text-font);
+  font-size: var(--text-m);
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--space-s);
+  font-family: var(--title-font);
+  font-weight: 700;
+  line-height: 1.15;
+}
+h1 { max-width: 22ch; font-size: var(--text-3xl); }
+h2 { max-width: 26ch; font-size: var(--text-xl); }
+h3 { font-size: var(--text-l); }
+p, li, dd { max-width: 70ch; }
+a { color: var(--tomato-dark); font-weight: 600; }
+
+/* A thick ring shows where the keyboard is. */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--soil); outline-offset: 3px; }
+
+/* The icons live once in a hidden SVG, and <use> shows them again and again. */
+.icon-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) var(--space-l);
+  border-bottom: 1px solid var(--line);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--soil);
+  text-decoration: none;
+  font-family: var(--title-font);
+  font-size: var(--text-l);
+  font-weight: 700;
+  line-height: 1.05;
+}
+.logo small {
+  display: block;
+  font-family: var(--text-font);
+  font-size: var(--text-s);
+  font-weight: 400;
+  color: var(--soil-soft);
+}
+.logo-mark {
+  width: 52px;
+  height: 52px;
+  padding: 8px;
+  border-radius: 50%;
+  background: var(--spring);
+  fill: none;
+  stroke: var(--white);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu a {
+  display: block;
+  min-height: 44px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  color: var(--soil);
+  text-decoration: none;
+}
+.menu a:hover { background: var(--spring-light); }
+.menu a:active { transform: translateY(1px); }
+
+/* The page you are on is filled in, like a ticked box. */
+.menu a[aria-current="page"] { background: var(--soil); color: var(--white); }
+
+.intro, .page-title, .section { max-width: 1160px; margin: 0 auto; padding: var(--space-l) var(--space-m) var(--space-m); }
+.lead { margin: 0 0 var(--space-s); font-size: var(--text-l); line-height: 1.4; color: var(--soil-soft); }
+.sun-key {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin: 0;
+  font-size: var(--text-s);
+  color: var(--soil-soft);
+}
+.key-bar {
+  flex: none;
+  width: 72px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--summer) 50%, var(--night) 50%);
+}
+
+/* THE GARDEN YEAR. A grid with 4 columns: the season name, then its 3 months. */
+.year {
+  display: grid;
+  grid-template-columns: 150px repeat(3, 1fr);
+  gap: var(--space-s);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 var(--space-m);
+}
+
+/* Each season has its own colour. */
+.season {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-m) var(--space-s);
+  border-radius: var(--round);
+  color: var(--white);
+  text-align: center;
+}
+.season h2 { margin: 0; font-size: var(--text-l); }
+.season-icon {
+  width: 52px;
+  height: 52px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.season.spring { background: var(--spring); }
+.season.summer { background: var(--summer); color: var(--soil); }
+.season.autumn { background: var(--autumn); }
+.season.winter { background: var(--winter); }
+
+.month { padding: var(--space-m); border-radius: var(--round); }
+.month h3 { margin-bottom: var(--space-xs); }
+.month.spring { background: var(--spring-light); }
+.month.summer { background: var(--summer-light); }
+.month.autumn { background: var(--autumn-light); }
+.month.winter { background: var(--winter-light); }
+
+/* The bar is a whole day and night. The yellow part is the daylight: --day hours out of 24.
+   The night colour starts at 0, which means: right where the yellow stops. That makes a sharp edge instead of a blur. */
+.daylight { margin: 0 0 var(--space-s); font-size: var(--text-s); color: var(--soil-soft); }
+.daylight::before {
+  content: "";
+  display: block;
+  height: 12px;
+  margin-bottom: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--summer) calc(var(--day) / 24 * 100%), var(--night) 0);
+}
+
+/* The icon hangs on the left, and the words stay in a neat column. */
+.job {
+  position: relative;
+  margin: 0 0 var(--space-xs);
+  padding-left: 32px;
+  font-size: var(--text-s);
+  line-height: 1.4;
+}
+.job .icon {
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--soil);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The summer sun turns very slowly. */
+@media (prefers-reduced-motion: no-preference) {
+  .spin { animation: spin 24s linear infinite; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.why { max-width: 1160px; margin: 0 auto; padding: var(--space-xl) var(--space-m) 0; }
+.why p { margin: 0 0 var(--space-m); }
+
+/* A red button, like the wheelbarrow. It lifts on hover and pushes in when you click. */
+.button {
+  display: inline-block;
+  min-height: 48px;
+  padding: 10px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tomato);
+  color: var(--white);
+  font-family: inherit;
+  font-size: var(--text-m);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { transform: translateY(-3px); background: var(--tomato-dark); }
+.button:active { transform: translateY(1px); }
+.button.light { background: var(--white); color: var(--soil); box-shadow: inset 0 0 0 2px var(--soil); }
+.button.light:hover { background: var(--summer-light); }
+
+/* PLANTS PAGE. The key: a definition list in two columns. */
+.key {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-s) var(--space-m);
+  align-items: center;
+  margin: var(--space-m) 0 0;
+}
+.key dt { display: flex; align-items: center; gap: var(--space-s); font-weight: 600; }
+.key dd { margin: 0; color: var(--soil-soft); }
+
+/* Sun and water ratings. A faded icon means "not so much". */
+.rating { flex: none; width: 84px; height: 28px; }
+.sun-icon { fill: var(--summer); stroke: var(--soil); stroke-width: 1.5; stroke-linecap: round; }
+.drop-icon { fill: var(--water); stroke: var(--soil); stroke-width: 1.5; }
+.rating .off { opacity: 0.2; }
+
+/* Seed packets on a shop rack. Real seed packets are all one size, so here same-size cards are the point:
+   the shape tells you "this is a seed packet" before you read a word. */
+.packets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-l) var(--space-m);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--space-m);
+}
+
+/* A plant card shaped like a seed packet. Each one hangs a little crooked, as packets do on a rack. */
+.packet {
+  position: relative;
+  padding: 36px var(--space-s) var(--space-s);
+  border-radius: 6px 6px var(--round) var(--round);
+  background: var(--packet);
+  box-shadow: var(--shadow);
+  transform: rotate(var(--tilt, 0deg));
+}
+.packet:nth-child(3n + 1) { --tilt: -1.2deg; }
+.packet:nth-child(3n + 2) { --tilt: 0.8deg; }
+.packet:nth-child(3n) { --tilt: -0.5deg; }
+
+/* The flap at the top is cut into a point with clip-path. */
+.packet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: rgba(45, 33, 24, 0.14);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 35%, 50% 100%, 0 35%);
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 50% 100%, 0 35%);
+}
+
+.peas { --packet: var(--winter-light); }
+.potatoes { --packet: var(--summer-light); }
+.berries { --packet: var(--spring-light); }
+.lettuce { --packet: var(--autumn-light); }
+.sunflower { --packet: var(--winter-light); }
+.thyme { --packet: var(--summer-light); }
+
+.packet-picture { width: 70%; margin: 0 auto var(--space-s); }
+.packet-label { padding: var(--space-m); border-radius: 12px; background: var(--white); }
+.packet-label h2 { font-size: var(--text-l); }
+.packet-label p { margin: 0 0 var(--space-s); font-size: var(--text-s); }
+.need { display: flex; align-items: center; gap: var(--space-s); font-weight: 600; }
+.packet-label .need { margin-bottom: var(--space-xs); }
+
+/* The drawings: every shape gets its paint from a class. */
+.pod, .leaf { fill: var(--leaf); }
+.pea, .leaf-light, .tiny-leaves { fill: var(--leaf-light); }
+.stem { fill: none; stroke: var(--leaf); stroke-width: 4; stroke-linecap: round; }
+.potato { fill: var(--potato); }
+.eye { fill: var(--middle); }
+.berry { fill: var(--berry); }
+.seed { fill: var(--summer); }
+.petals { fill: var(--petal); }
+.flower-middle { fill: var(--middle); }
+.flower { fill: var(--flower); }
+
+/* CLUB PAGE. Two panels side by side. */
+.club-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-m);
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 var(--space-m);
+  align-items: start;
+}
+.panel { padding: var(--space-m) var(--space-l) var(--space-l); border-radius: var(--round); background: var(--spring-light); }
+.panel.join { background: var(--summer-light); }
+.panel > p { margin-top: 0; }
+.checklist .form-note { margin-top: var(--space-s); }
+
+/* The real tick box hides, and the label draws its own box with ::before. */
+.checklist { counter-reset: done; }
+.checklist input { position: absolute; opacity: 0; }
+.checklist label {
+  position: relative;
+  display: block;
+  min-height: 44px;
+  padding: 10px 0 10px 48px;
+  border-bottom: 2px dotted rgba(45, 33, 24, 0.2);
+  cursor: pointer;
+}
+.checklist label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--soil);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+/* A ticked job: a green box, a white tick, and a line through the words. */
+.checklist input:checked + label { color: var(--soil-soft); text-decoration: line-through; }
+.checklist input:checked + label::before { border-color: var(--spring); background: var(--spring); }
+.checklist input:checked + label::after {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 13px;
+  width: 8px;
+  height: 15px;
+  border: solid var(--white);
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
+}
+.checklist input:focus-visible + label::before { outline: 3px solid var(--soil); outline-offset: 3px; }
+.checklist label:hover::before { border-color: var(--spring); }
+
+/* Every ticked box adds 1 to a counter, and the line below shows the number. */
+.checklist input:checked { counter-increment: done; }
+.done-count { margin: var(--space-m) 0; font-family: var(--title-font); font-size: var(--text-l); }
+.done-count::before { content: counter(done) " of 7 "; }
+
+/* The join form. */
+.join-form label, .days legend { display: block; margin: var(--space-m) 0 var(--space-xs); font-weight: 600; }
+.join-form input[type="text"], .join-form select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 2px solid var(--soil-soft);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--soil);
+  font-family: inherit;
+  font-size: var(--text-m);
+}
+.join-form input[type="text"]:focus, .join-form select:focus { border-color: var(--soil); }
+
+/* The grey example words inside an empty box. */
+.join-form input::placeholder { color: #7a6658; opacity: 1; }
+
+/* The select box loses its Mac look, so it matches the text boxes. The arrow is two small gradients. */
+.join-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 44px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--soil) 50%), linear-gradient(-45deg, transparent 50%, var(--soil) 50%);
+  background-position: right 24px center, right 18px center;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* The class box turns red if it is not a number and a capital letter. */
+.join-form input:not(:placeholder-shown):invalid { border-color: var(--tomato); background: #fdecea; }
+.hint, .form-note { margin: var(--space-xs) 0 0; font-size: var(--text-s); color: var(--soil-soft); }
+
+/* The hint under a red box turns red and bold too, so the words tell you what to fix. */
+.join-form input:not(:placeholder-shown):invalid + .hint { color: var(--tomato-dark); font-weight: 600; }
+
+.days { margin: 0; padding: 0; border: 0; }
+.days .day {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 44px;
+  margin: 0 var(--space-xs) var(--space-xs) 0;
+  padding: 8px 16px;
+  border: 2px solid var(--soil-soft);
+  border-radius: 999px;
+  background: var(--white);
+  font-weight: 400;
+  cursor: pointer;
+}
+.days input { accent-color: var(--tomato); }
+
+/* :has() finds the chosen day and colours its whole pill. */
+.days .day:has(input:checked) { border-color: var(--spring); background: var(--spring-light); box-shadow: inset 0 0 0 1px var(--spring); }
+
+/* A day you cannot pick looks faded. */
+.days .day:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.join-form .check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-bottom: var(--space-m);
+  font-weight: 400;
+}
+.check input { width: 24px; height: 24px; accent-color: var(--tomato); }
+
+/* The garden map. Each name in the quotes is a box, so the quotes draw the map. */
+.plan {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "shed peas potatoes potatoes"
+    "barrel path path path"
+    "compost berries herbs flowers";
+  gap: var(--space-s);
+  margin-top: var(--space-m);
+  padding: var(--space-s);
+  border-radius: var(--round);
+  background: #8a6a4f;
+}
+.bed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 110px;
+  padding: var(--space-s);
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.shed { grid-area: shed; background: var(--night); color: var(--white); }
+.barrel { grid-area: barrel; background: var(--winter-light); }
+.peas.bed { grid-area: peas; background: var(--spring-light); }
+.potatoes.bed { grid-area: potatoes; background: var(--summer-light); }
+.path { grid-area: path; min-height: 56px; background: #ddd3c6; }
+.compost { grid-area: compost; background: var(--middle); color: var(--white); }
+.berries.bed { grid-area: berries; background: #f9d6d2; }
+.herbs { grid-area: herbs; background: var(--spring-light); }
+.flowers { grid-area: flowers; background: var(--summer-light); }
+
+.bottom {
+  margin-top: var(--space-xl);
+  padding: var(--space-l) var(--space-m);
+  background: var(--soil);
+  color: #eadfd5;
+  text-align: center;
+  font-size: var(--text-s);
+}
+.bottom p { margin: var(--space-xs) auto; }
+.bottom a { color: var(--summer); }
+.bottom a:focus-visible { outline-color: var(--summer); }
+
+/* The buttons glide, for people who are happy to see movement. */
+@media (prefers-reduced-motion: no-preference) {
+  .button { transition: transform 0.3s var(--ease), background 0.3s var(--ease); }
+}
+
+/* On a tablet, the season name goes above its months, as a band. */
+@media (max-width: 900px) {
+  .top-bar { padding: var(--space-s) var(--space-m); }
+  .year { grid-template-columns: repeat(3, 1fr); }
+  .season { grid-column: 1 / -1; flex-direction: row; justify-content: flex-start; padding: var(--space-s) var(--space-m); }
+  .season-icon { width: 36px; height: 36px; }
+  .packets, .club-grid { grid-template-columns: 1fr 1fr; }
+  .club-grid { grid-template-columns: 1fr; }
+  .panel { padding: var(--space-m); }
+}
+
+/* On a phone, one month under the other. */
+@media (max-width: 600px) {
+  h1 { font-size: var(--text-2xl); }
+  h2 { font-size: var(--text-l); }
+  .lead { font-size: var(--text-m); }
+  .intro, .page-title, .section { padding-top: var(--space-m); }
+  .year, .packets { grid-template-columns: 1fr; }
+  .key { grid-template-columns: 1fr; }
+  .key dd { margin-bottom: var(--space-s); }
+  .plan {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "shed barrel" "peas potatoes" "path path" "compost berries" "herbs flowers";
+  }
+}
+@media (max-width: 480px) {
+  .menu { width: 100%; }
+  .menu ul { justify-content: space-between; flex-wrap: nowrap; }
+  .menu a { padding: 9px 10px; font-size: var(--text-s); }
+}

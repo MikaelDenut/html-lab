@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Puddlefern Animal Clinic - Book a visit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="24"></circle>
+        <path d="M20 10 H28 V20 H38 V28 H28 V38 H20 V28 H10 V20 H20 Z"></path>
+      </svg>
+      <span>Puddlefern<small>Animal Clinic</small></span>
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="team.html">Our team</a></li>
+        <li><a class="menu-button" href="appointment.html" aria-current="page">Book a visit</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="section">
+    <div class="page-title">
+      <h1>Book a visit</h1>
+      <p>Fill in the form and we will send you a time within one working day.</p>
+    </div>
+
+    <div class="booking-layout">
+      <aside class="side">
+        <section class="emergency">
+          <svg class="alert-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 6 L44 42 H4 Z"></path>
+            <path d="M24 19 V30 M24 35 V36"></path>
+          </svg>
+          <h2>Is it an emergency?</h2>
+          <p>Do not use this form. Come straight to the clinic and ring the red bell by the door. Someone is here day and night.</p>
+        </section>
+        <section class="next-steps">
+          <h2>What happens next</h2>
+          <ol>
+            <li>We read your form.</li>
+            <li>We send you a day and a time.</li>
+            <li>You come five minutes early. Biscuit says hello.</li>
+          </ol>
+        </section>
+      </aside>
+
+      <form class="booking-form">
+        <fieldset>
+          <legend><span class="step">1</span> Your pet</legend>
+          <label for="pet-name">Your pet's name</label>
+          <input id="pet-name" type="text" placeholder="For example: Pepper">
+          <fieldset class="choices">
+            <legend>What kind of animal?</legend>
+            <div class="choice-row">
+              <label class="choice">
+                <input type="radio" name="animal" value="dog" checked>
+                <span>
+                  <svg class="pet-icon" viewBox="0 0 48 48" aria-hidden="true">
+                    <circle cx="24" cy="26" r="13"></circle>
+                    <ellipse cx="11" cy="21" rx="5" ry="10"></ellipse>
+                    <ellipse cx="37" cy="21" rx="5" ry="10"></ellipse>
+                    <circle cx="24" cy="31" r="2"></circle>
+                  </svg>
+                  Dog
+                </span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="animal" value="cat">
+                <span>
+                  <svg class="pet-icon" viewBox="0 0 48 48" aria-hidden="true">
+                    <path d="M13 21 L14 7 L23 14 M35 21 L34 7 L25 14"></path>
+                    <circle cx="24" cy="27" r="13"></circle>
+                  </svg>
+                  Cat
+                </span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="animal" value="rabbit">
+                <span>
+                  <svg class="pet-icon" viewBox="0 0 48 48" aria-hidden="true">
+                    <ellipse cx="18" cy="12" rx="4" ry="10"></ellipse>
+                    <ellipse cx="30" cy="12" rx="4" ry="10"></ellipse>
+                    <circle cx="24" cy="32" r="12"></circle>
+                  </svg>
+                  Rabbit
+                </span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="animal" value="bird">
+                <span>
+                  <svg class="pet-icon" viewBox="0 0 48 48" aria-hidden="true">
+                    <circle cx="21" cy="26" r="13"></circle>
+                    <path d="M34 22 L44 26 L34 30 M13 27 Q21 36 29 27"></path>
+                  </svg>
+                  Bird
+                </span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="animal" value="other">
+                <span>
+                  <svg class="pet-icon" viewBox="0 0 48 48" aria-hidden="true">
+                    <ellipse cx="24" cy="32" rx="9" ry="8"></ellipse>
+                    <circle cx="12" cy="21" r="4"></circle>
+                    <circle cx="20" cy="13" r="4"></circle>
+                    <circle cx="28" cy="13" r="4"></circle>
+                    <circle cx="36" cy="21" r="4"></circle>
+                  </svg>
+                  Other
+                </span>
+              </label>
+            </div>
+          </fieldset>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">2</span> Why are you coming?</legend>
+          <label for="reason">Type of visit</label>
+          <select id="reason">
+            <option>Check-up</option>
+            <option>Vaccine</option>
+            <option>Teeth</option>
+            <option>Microchip</option>
+            <option>Something is wrong</option>
+          </select>
+          <label for="more">Tell us more (if you like)</label>
+          <textarea id="more" rows="4" placeholder="For example: he scratches his left ear a lot."></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">3</span> When can you come?</legend>
+          <label for="day">Best day</label>
+          <input id="day" type="date">
+          <fieldset class="choices">
+            <legend>Time of day</legend>
+            <div class="choice-row">
+              <label class="choice"><input type="radio" name="time" value="morning" checked><span>Morning<small>8:00 to 12:00</small></span></label>
+              <label class="choice"><input type="radio" name="time" value="afternoon"><span>Afternoon<small>12:00 to 18:00</small></span></label>
+              <label class="choice"><input type="radio" name="time" value="evening" disabled><span>Evening<small>Full this week</small></span></label>
+            </div>
+          </fieldset>
+        </fieldset>
+
+        <fieldset>
+          <legend><span class="step">4</span> About you</legend>
+          <label for="owner">Your name</label>
+          <input id="owner" type="text" autocomplete="name">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" placeholder="name@example.com">
+          <p class="hint">If the e-mail has no @, the box turns red.</p>
+          <label class="check"><input type="checkbox" checked> Send me a reminder the day before</label>
+        </fieldset>
+
+        <button class="button" type="submit">Ask for a time</button>
+        <p class="form-note">A practice form: HTML Lab does not send it.</p>
+      </form>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Puddlefern Animal Clinic</b>, 14 Hazelburr Road. A pretend clinic, made with HTML and CSS.</p>
+    <p>What does a vet do? <a href="https://simple.wikipedia.org/wiki/Veterinarian">Read about vets on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

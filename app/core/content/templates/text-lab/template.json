@@ -1,0 +1,15 @@
+{
+  "title": "Text lab",
+  "name": "My text lab",
+  "blurb": "A specimen sheet of letter tricks: outline, 3D, pressed and more",
+  "category": "effects",
+  "layout": "Type specimen sheet of text effects",
+  "shows": [
+    "Outline letters and 3D letters",
+    "Letters that open up and a drop cap",
+    "Words written from the top down",
+    "Pressed letters, underlines, text cut short",
+    "Letters cut out of a picture"
+  ],
+  "accent": "#d42a17"
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "space-poster",
+    "title": "Space poster",
+    "name": "Space poster",
+    "style": "inline",
+    "blurb": "Style inside the page. 1 file.",
+    "files": [
+      {
+        "name": "my-page.html",
+        "code": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>Space poster</title>\n  </head>\n  <body style=\"background: #0b1d3a; color: white;\">\n    <h1 style=\"color: gold;\">Welcome to space!</h1>\n    <p>Space is very big and very dark.</p>\n\n    <p style=\"background: #1e3a6e; padding: 12px;\">\n      A day on Venus is longer than its year!\n    </p>\n  </body>\n</html>\n",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "space-club",
+    "title": "Space club website",
+    "name": "Space club",
+    "style": "file",
+    "blurb": "Style in a separate file. 2 pages and 1 style file.",
+    "files": [
+      {
+        "name": "my-page.html",
+        "code": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>My Space Page</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>Welcome to space!</h1>\n    <p>Space is very big and very dark.</p>\n\n    <h2>My top planets</h2>\n    <ul>\n      <li>Saturn has rings</li>\n      <li>Mars is red</li>\n      <li>Jupiter is huge</li>\n    </ul>\n\n    <p class=\"fact\">\n      A day on Venus is longer than its year!\n    </p>\n    <p><a href=\"planets.html\">See my planets</a></p>\n  </body>\n</html>\n",
+        "hidden": false
+      },
+      {
+        "name": "planets.html",
+        "code": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>My Planets</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>My planets</h1>\n    <p>Saturn is my favorite one.</p>\n\n    <p class=\"fact\">\n      Saturn is so light it could float in water!\n    </p>\n\n    <p><a href=\"my-page.html\">Back to my page</a></p>\n  </body>\n</html>\n",
+        "hidden": false
+      },
+      {
+        "name": "style.css",
+        "code": "body {\n  background-color: #0b1d3a;\n  color: white;\n  font-family: Verdana, sans-serif;\n}\n\nh1 {\n  color: gold;\n}\n\n.fact {\n  background-color: #1e3a6e;\n  padding: 12px;\n  border-radius: 8px;\n}\n\na {\n  color: gold;\n}\n",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "my-hobby",
+    "title": "My hobby page",
+    "name": "My hobby",
+    "style": "inline",
+    "blurb": "Style block inside the page. 1 file.",
+    "files": [
+      {
+        "name": "my-page.html",
+        "code": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>My hobby</title>\n    <style>\n      body {\n        background-color: #fff7e6;\n        font-family: Verdana, sans-serif;\n      }\n\n      h1 {\n        color: #c2410c;\n      }\n\n      li {\n        margin-bottom: 6px;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>My hobby is football</h1>\n    <p>I play every week with my friends.</p>\n\n    <h2>Why I like it</h2>\n    <ul>\n      <li>It is fun to run and pass</li>\n      <li>I like being on a team</li>\n      <li>Scoring a goal feels great</li>\n    </ul>\n\n    <p>Now change the words. Write about your own hobby!</p>\n  </body>\n</html>\n",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "pancakes",
+    "title": "Pancake recipe",
+    "name": "Pancakes",
+    "style": "file",
+    "blurb": "Style in a separate file. 1 page and 1 style file.",
+    "files": [
+      {
+        "name": "recipe.html",
+        "code": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>Pancakes</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>My pancakes</h1>\n    <p class=\"note\">This makes about 8 pancakes. Ask a grown-up to help at the stove.</p>\n\n    <h2>You need</h2>\n    <ul>\n      <li>2 eggs</li>\n      <li>5 dl milk</li>\n      <li>3 dl flour</li>\n      <li>A little salt</li>\n      <li>Butter for the pan</li>\n    </ul>\n\n    <h2>What to do</h2>\n    <ol>\n      <li>Mix the eggs and the milk.</li>\n      <li>Stir in the flour and the salt.</li>\n      <li>Melt some butter in a hot pan.</li>\n      <li>Pour in a little batter and cook both sides.</li>\n    </ol>\n  </body>\n</html>\n",
+        "hidden": false
+      },
+      {
+        "name": "style.css",
+        "code": "body {\n  background-color: #fffdf5;\n  font-family: Verdana, sans-serif;\n}\n\nh1 {\n  color: #b45309;\n}\n\nh2 {\n  color: #0b6e69;\n}\n\n.note {\n  background-color: #fef3c7;\n  padding: 12px;\n  border-radius: 8px;\n}\n",
+        "hidden": false
+      }
+    ]
+  },
+  {
+    "id": "gallery",
+    "title": "Photo gallery",
+    "name": "My gallery",
+    "style": "file",
+    "blurb": "Style in a separate file, with 3 pictures.",
+    "files": [
+      {
+        "name": "gallery.html",
+        "code": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>My gallery</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n  </head>\n  <body>\n    <h1>My gallery</h1>\n    <p>Save this project. Then put your own photos in its folder, and use their names here.</p>\n\n    <div class=\"gallery\">\n      <figure>\n        <img src=\"sun.jpg\" alt=\"The sun going down over the sea\" width=\"160\" height=\"120\">\n        <figcaption>The sun</figcaption>\n      </figure>\n      <figure>\n        <img src=\"tree.jpg\" alt=\"A big tree in a field\" width=\"160\" height=\"120\">\n        <figcaption>A tree</figcaption>\n      </figure>\n      <figure>\n        <img src=\"boat.jpg\" alt=\"A sailboat on the sea\" width=\"160\" height=\"120\">\n        <figcaption>A boat</figcaption>\n      </figure>\n    </div>\n  </body>\n</html>\n",
+        "hidden": false
+      },
+      {
+        "name": "style.css",
+        "code": "body {\n  background-color: #f1f4f9;\n  font-family: Verdana, sans-serif;\n}\n\nh1 {\n  color: #0b6e69;\n}\n\n.gallery {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 16px;\n}\n\nfigure {\n  margin: 0;\n  padding: 8px;\n  background-color: white;\n  border-radius: 8px;\n  text-align: center;\n}\n\nimg {\n  width: 160px;\n  height: 120px;\n  object-fit: cover;\n}\n",
+        "hidden": false
+      },
+      {
+        "name": "sun.jpg",
+        "hidden": true,
+        "picture": true
+      },
+      {
+        "name": "tree.jpg",
+        "hidden": true,
+        "picture": true
+      },
+      {
+        "name": "boat.jpg",
+        "hidden": true,
+        "picture": true
+      }
+    ]
+  }
+]

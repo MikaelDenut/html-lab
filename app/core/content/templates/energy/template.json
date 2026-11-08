@@ -1,0 +1,15 @@
+{
+  "title": "Wind and Solar Power",
+  "name": "my-power-company",
+  "blurb": "A wind and sun power company with turbines that really turn",
+  "category": "industrial",
+  "layout": "Big-number band, process diagram, alternating rows",
+  "shows": [
+    "Wind turbine blades that turn, drawn in SVG",
+    "A wind ruler cut into four coloured parts",
+    "Arrows drawn with two CSS borders",
+    "Rows that swap sides with nth-of-type",
+    "A visitor centre drawn with SVG shapes"
+  ],
+  "accent": "#c8412a"
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text Lab - Tricks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="11"></circle>
+        <path d="M20 2 V38 M2 20 H38"></path>
+      </svg>
+      Text Lab
+    </a>
+    <nav class="menu" aria-label="Pages">
+      <ul>
+        <li><a href="index.html">Specimens</a></li>
+        <li><a href="fonts.html">Font pairs</a></li>
+        <li><a href="tricks.html" aria-current="page">Tricks</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="sheet">
+    <section class="sheet-head single">
+      <h1>Press, cut, underline</h1>
+      <p class="lead">Four bigger tricks. Point at a box, or press <kbd>Tab</kbd>, and the pressed letters, the short story and the marble letters play.</p>
+    </section>
+
+    <!-- tabindex="0" lets the Tab key stop on a box, so the keyboard can play it too. -->
+    <div class="specimens">
+      <article class="cell span-4 card cell-press" tabindex="0">
+        <h2>Pressed into paper</h2>
+        <p class="sample pressed">Printed</p>
+        <p class="how">A printing press pushes inked metal letters into the paper. On thick card it can leave a dent. Two <code>text-shadow</code>s copy the dent: a dark edge 1px up and a light edge 1px down. Point at it to press harder.</p>
+      </article>
+
+      <article class="cell span-2 cell-lines">
+        <h2>Fancy underlines</h2>
+        <p class="sample lines"><span class="wavy">wavy</span> <span class="double">double</span> <span class="thick">thick</span></p>
+        <p class="how"><code>text-decoration-style</code> makes the line wavy or double. <code>text-decoration-thickness</code> makes it fat, and <code>text-underline-offset</code> moves it down.</p>
+      </article>
+
+      <article class="cell span-3 cell-short" tabindex="0">
+        <h2>Text cut short</h2>
+        <p class="sample short">Once upon a time, a small metal letter A lived in a wooden box with all the other letters. Every morning the printer picked it up, put it in a line with its friends and pressed them onto paper. By the end of the day, the letter A had been in a hundred words: apple, cat, banana and many more.</p>
+        <p class="how"><code>-webkit-line-clamp: 3</code> stops the text after 3 lines and puts ... at the end. Shops and news sites use it for "read more" boxes. Point at it to read it all.</p>
+      </article>
+
+      <article class="cell span-3 cell-marble" tabindex="0">
+        <h2>Letters cut from a picture</h2>
+        <p class="sample marble">MARBLE</p>
+        <p class="how"><code>background-clip: text</code> cuts the picture to the shape of the letters. The picture is marbled paper from France, about 1880: paint floats on water, and a sheet of paper picks it up. Point at it and the paper slides.</p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="bottom">
+    <p>Text Lab: a sheet of letter tricks, made with HTML and CSS only.</p>
+    <p><a href="https://simple.wikipedia.org/wiki/Typeface">What is a typeface? Read about it on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

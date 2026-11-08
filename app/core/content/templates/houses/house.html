@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robin Cottage - Kettle and Key</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap top-bar">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><rect width="44" height="44" rx="12" fill="#b8352a"/><circle cx="16" cy="22" r="7" fill="none" stroke="#ffffff" stroke-width="3"/><path d="M23 22 H36 M31 22 V28 M35 22 V27" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/></svg>
+      Kettle and Key
+    </a>
+    <nav aria-label="Main menu">
+      <ul class="menu">
+        <li><a href="index.html">Homes for sale</a></li>
+        <li><a href="house.html" aria-current="page">Featured home</a></li>
+        <li><a href="sell.html">Sell your home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div class="house-head">
+      <div>
+        <h1>Robin Cottage</h1>
+        <p class="lead">7 Harbour Lane, Ambleford. 3 bedrooms, 112 m&sup2;, garden.</p>
+      </div>
+      <p class="big-price">&euro;345,000</p>
+    </div>
+
+    <!-- Scroll this row sideways: each photo snaps into place.
+         tabindex="0" lets the keyboard reach this box, so the arrow keys can scroll it. -->
+    <div class="strip" tabindex="0" role="region" aria-label="Photos of Robin Cottage. Scroll sideways for more.">
+      <figure><img src="houses-white-house.jpg" width="800" height="531" alt="The white front of Robin Cottage with its red door and picket fence"><figcaption>1 of 3: the front, with the picket fence</figcaption></figure>
+      <figure><img src="houses-living-room.jpg" width="860" height="573" alt="A bright living room with a blue sofa, a wooden floor and a big window"><figcaption>2 of 3: the living room looks onto the garden</figcaption></figure>
+      <figure><img src="houses-kitchen.jpg" width="860" height="571" alt="A white kitchen with an island and two black stools"><figcaption>3 of 3: the kitchen, new in 2024</figcaption></figure>
+    </div>
+
+    <div class="house-layout">
+      <div>
+        <section>
+          <h2>About this home</h2>
+          <p>Robin Cottage is a white wooden house from 1912, with a red front door and a picket fence. Inside, everything was made new in 2024. The living room has a big window onto the garden, and the kitchen is bright and white.</p>
+          <p>Upstairs are three bedrooms and the bathroom. The smallest bedroom has an arched window that looks out over the trees. The beach is six minutes away on foot.</p>
+        </section>
+
+        <section>
+          <h2>Facts</h2>
+          <table class="facts">
+            <tr><th scope="row">Price</th><td>&euro;345,000</td></tr>
+            <tr><th scope="row">Bedrooms</th><td>3</td></tr>
+            <tr><th scope="row">Bathrooms</th><td>1, and a toilet downstairs</td></tr>
+            <tr><th scope="row">Living space</th><td>112 m&sup2;</td></tr>
+            <tr><th scope="row">Garden</th><td>240 m&sup2;, with two apple trees</td></tr>
+            <tr><th scope="row">Built</th><td>1912</td></tr>
+            <tr><th scope="row">Heating</th><td>Heat pump and a wood stove</td></tr>
+          </table>
+        </section>
+
+        <section>
+          <h2>Floor plan</h2>
+          <!-- Each floor is its own drawing. Rooms are rectangles, doors are gaps, windows are blue lines.
+               The second drawing's viewBox starts at x=300, where the first floor is drawn. -->
+          <div class="plans">
+            <figure class="floor">
+              <figcaption>Ground floor</figcaption>
+              <svg class="plan" viewBox="0 30 300 220" role="img" aria-label="Ground floor: living room, kitchen, study, hall with stairs and a toilet.">
+                <rect x="20" y="40" width="260" height="200" fill="#ffffff" stroke="#22303c" stroke-width="6"/>
+                <path d="M20 150 H280 M170 40 V150 M100 150 V240 M200 150 V240" stroke="#22303c" stroke-width="3"/>
+                <path d="M50 40 H130 M200 40 H260 M20 180 V215" stroke="#3d8fc4" stroke-width="6"/>
+                <!-- White lines rub out bits of wall: those gaps are the doors. -->
+                <path d="M105 240 H135 M115 150 H140 M175 150 H197 M100 160 V185 M200 160 V185" stroke="#ffffff" stroke-width="5"/>
+                <path d="M140 200 H195 V236 H140 Z M151 200 V236 M162 200 V236 M173 200 V236 M184 200 V236" fill="none" stroke="#56677a" stroke-width="1.5"/>
+                <g text-anchor="middle">
+                  <text x="95" y="95">Living room</text><text x="95" y="113">24 m&sup2;</text>
+                  <text x="225" y="95">Kitchen</text><text x="225" y="113">16 m&sup2;</text>
+                  <text x="60" y="198">Study</text>
+                  <text x="150" y="180">Hall</text>
+                  <text x="240" y="200">Toilet</text>
+                </g>
+              </svg>
+            </figure>
+            <figure class="floor">
+              <figcaption>First floor</figcaption>
+              <svg class="plan" viewBox="300 30 300 220" role="img" aria-label="First floor: three bedrooms, a landing with stairs and a bathroom.">
+                <rect x="320" y="40" width="260" height="200" fill="#ffffff" stroke="#22303c" stroke-width="6"/>
+                <path d="M320 150 H580 M465 40 V150 M420 150 V240 M500 150 V240" stroke="#22303c" stroke-width="3"/>
+                <path d="M350 40 H430 M490 40 H555 M320 175 V215 M580 180 V215" stroke="#3d8fc4" stroke-width="6"/>
+                <path d="M425 150 H445 M472 150 H494 M420 165 V190 M500 165 V190" stroke="#ffffff" stroke-width="5"/>
+                <path d="M440 200 H495 V236 H440 Z M451 200 V236 M462 200 V236 M473 200 V236 M484 200 V236" fill="none" stroke="#56677a" stroke-width="1.5"/>
+                <g text-anchor="middle">
+                  <text x="392" y="95">Bedroom 1</text><text x="392" y="113">15 m&sup2;</text>
+                  <text x="522" y="95">Bedroom 2</text><text x="522" y="113">12 m&sup2;</text>
+                  <text x="370" y="200">Bedroom 3</text>
+                  <text x="460" y="180">Landing</text>
+                  <text x="540" y="200">Bath</text>
+                </g>
+              </svg>
+            </figure>
+          </div>
+        </section>
+
+        <p><a href="index.html">See all homes for sale</a></p>
+      </div>
+
+      <aside class="viewing">
+        <div class="agent">
+          <svg viewBox="0 0 64 64" role="img" aria-label="A drawing of Maya, the agent"><circle cx="32" cy="32" r="32" fill="#e3f1ec"/><path d="M12 64 C14 46 50 46 52 64 Z" fill="#b8352a"/><circle cx="32" cy="28" r="13" fill="#e2b08a"/><path d="M19 28 C19 12 45 12 45 28 C40 20 26 20 19 28 Z" fill="#22303c"/><g fill="#22303c"><circle cx="27" cy="29" r="1.8"/><circle cx="37" cy="29" r="1.8"/></g><path d="M27 35 Q32 39 37 35" fill="none" stroke="#22303c" stroke-width="2" stroke-linecap="round"/></svg>
+          <p><strong>Maya Penrose</strong><br>Your agent for this home</p>
+        </div>
+        <h2>Book a viewing</h2>
+        <form>
+          <!-- autocomplete tells the browser what this box is for. -->
+          <div><label for="name">Your name</label><input id="name" type="text" autocomplete="name" placeholder="First and last name"></div>
+          <div>
+            <label for="email">Your e-mail</label>
+            <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
+            <p class="hint">This does not look like an e-mail.</p>
+          </div>
+          <div>
+            <label for="day">Day for the viewing</label>
+            <div class="select-box"><select id="day"><option>Monday</option><option>Wednesday</option><option>Saturday</option><option disabled>Sunday: we are closed</option></select></div>
+          </div>
+          <div><label for="message">Message</label><textarea id="message" rows="3" placeholder="Any questions about the house?"></textarea></div>
+          <label class="check"><input type="checkbox"> Send me homes like this one</label>
+          <button class="button" type="button">Book a viewing</button>
+          <p class="practice">A practice form: HTML Lab does not send it.</p>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>Kettle and Key, Ambleford and its homes are made up for this website.</p>
+      <p>How to read a plan like this one: <a href="https://simple.wikipedia.org/wiki/Floor_plan">Floor plan (Simple English Wikipedia)</a></p>
+    </div>
+  </footer>
+</body>
+</html>

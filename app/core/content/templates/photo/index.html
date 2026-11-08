@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ada Fernwood - nature photos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">
+      <!-- A camera shutter: six blades around a hole. -->
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="18" fill="#f08c42"/>
+        <path d="M20 4 L30 12 L20 14 Z M34 18 L30 30 L26 20 Z M28 34 L14 34 L22 27 Z M8 30 L6 18 L15 24 Z M6 14 L16 5 L16 15 Z" fill="#0f1312"/>
+        <circle cx="20" cy="20" r="5" fill="#0f1312"/>
+      </svg>
+      Ada Fernwood
+    </a>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html" aria-current="page">Photos</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Wild places, quiet moments</h1>
+      <p>Foxes in the snow, puffins on the rocks, green lights in the night sky. Click a photo to see it big.</p>
+    </section>
+
+    <!-- The photo wall. CSS columns pour the photos into 3 columns,
+         like water into glasses. Tall and wide photos fit together. -->
+    <div class="wall" id="wall">
+      <a class="tile" id="tile-fox" href="#fox">
+        <figure><img src="photo-fox.jpg" alt="A red fox walking through snowy bushes" width="840" height="560"><figcaption>Fox in the snow</figcaption></figure>
+      </a>
+      <a class="tile" id="tile-waterfall" href="#waterfall">
+        <figure><img src="photo-waterfall.jpg" alt="A white waterfall rushing between brown rocks, with pine trees behind" width="480" height="720"><figcaption>The silky waterfall</figcaption></figure>
+      </a>
+      <div class="tile note">
+        <blockquote class="note-big">"Be quiet, be patient, and the forest comes to you."</blockquote>
+        <p>Ada Fernwood</p>
+      </div>
+      <a class="tile" id="tile-puffin" href="#puffin">
+        <figure><img src="photo-puffin.jpg" alt="A puffin with a big orange beak standing on a grey rock" width="840" height="559"><figcaption>A puffin says hello</figcaption></figure>
+      </a>
+      <a class="tile" id="tile-mushroom" href="#mushroom">
+        <figure><img src="photo-mushroom.jpg" alt="A red mushroom with white spots among brown leaves" width="600" height="800"><figcaption>Red cap, white dots</figcaption></figure>
+      </a>
+      <a class="tile" id="tile-aurora" href="#aurora">
+        <figure><img src="photo-aurora.jpg" alt="Green northern lights over the dark tops of pine trees" width="840" height="560"><figcaption>Northern lights</figcaption></figure>
+      </a>
+      <a class="tile" id="tile-fern" href="#fern">
+        <figure><img src="photo-fern.jpg" alt="A bright green fern leaf on a dark background" width="640" height="602"><figcaption>One green fern</figcaption></figure>
+      </a>
+      <div class="tile note note-fox">
+        <h2 class="note-big">Photo tip</h2>
+        <p>Get down low. Animals look best from their own eye level. <a href="about.html">More tips</a></p>
+      </div>
+    </div>
+
+    <!-- The lightboxes. Each one is hidden until its id is in the address.
+         Then :target in style.css shows it. The arrows go to the next one,
+         and Close goes back to the photo you opened.
+         tabindex="-1" lets the browser move the keyboard into the big photo when it opens. -->
+    <div class="lightbox" id="fox" tabindex="-1">
+      <a class="close" href="#tile-fox">Close photo</a>
+      <figure><img src="photo-fox.jpg" alt="A red fox walking through snowy bushes" width="840" height="560" loading="lazy"><figcaption>A red fox hunting for mice under the snow.</figcaption></figure>
+      <p class="arrows"><a class="arrow" href="#fern">Back: fern</a> <a class="arrow" href="#waterfall">Next: waterfall</a></p>
+    </div>
+    <div class="lightbox" id="waterfall" tabindex="-1">
+      <a class="close" href="#tile-waterfall">Close photo</a>
+      <figure><img src="photo-waterfall.jpg" alt="A white waterfall rushing between brown rocks, with pine trees behind" width="480" height="720" loading="lazy"><figcaption>A slow photo turns rushing water into silk.</figcaption></figure>
+      <p class="arrows"><a class="arrow" href="#fox">Back: fox</a> <a class="arrow" href="#puffin">Next: puffin</a></p>
+    </div>
+    <div class="lightbox" id="puffin" tabindex="-1">
+      <a class="close" href="#tile-puffin">Close photo</a>
+      <figure><img src="photo-puffin.jpg" alt="A puffin with a big orange beak standing on a grey rock" width="840" height="559" loading="lazy"><figcaption>An Atlantic puffin on the rocks by the sea.</figcaption></figure>
+      <p class="arrows"><a class="arrow" href="#waterfall">Back: waterfall</a> <a class="arrow" href="#mushroom">Next: mushroom</a></p>
+    </div>
+    <div class="lightbox" id="mushroom" tabindex="-1">
+      <a class="close" href="#tile-mushroom">Close photo</a>
+      <figure><img src="photo-mushroom.jpg" alt="A red mushroom with white spots among brown leaves" width="600" height="800" loading="lazy"><figcaption>A fly agaric. Pretty, but poisonous: only look!</figcaption></figure>
+      <p class="arrows"><a class="arrow" href="#puffin">Back: puffin</a> <a class="arrow" href="#aurora">Next: northern lights</a></p>
+    </div>
+    <div class="lightbox" id="aurora" tabindex="-1">
+      <a class="close" href="#tile-aurora">Close photo</a>
+      <figure><img src="photo-aurora.jpg" alt="Green northern lights over the dark tops of pine trees" width="840" height="560" loading="lazy"><figcaption>Northern lights dancing over the forest.</figcaption></figure>
+      <p class="arrows"><a class="arrow" href="#mushroom">Back: mushroom</a> <a class="arrow" href="#fern">Next: fern</a></p>
+    </div>
+    <div class="lightbox" id="fern" tabindex="-1">
+      <a class="close" href="#tile-fern">Close photo</a>
+      <figure><img src="photo-fern.jpg" alt="A bright green fern leaf on a dark background" width="640" height="602" loading="lazy"><figcaption>A fern leaf glowing green in the dark forest.</figcaption></figure>
+      <p class="arrows"><a class="arrow" href="#aurora">Back: northern lights</a> <a class="arrow" href="#fox">Next: fox</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Ada Fernwood is made up. The photos are free to use, from <a href="https://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a>.</p>
+  </footer>
+</body>
+</html>

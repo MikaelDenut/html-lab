@@ -1,0 +1,4 @@
+| cafe-hero.jpg | Baskets full of fresh bread and long loaves on an old wooden table (cropped to a square, made a little brighter) | 77 | 820x820 | Drew Coffman | CC0 | https://commons.wikimedia.org/wiki/File:Artisan_Loaves_of_Bread_(Unsplash).jpg |
+| cafe-cappuccino.jpg | A white cup of cappuccino with cinnamon on top, a croissant behind it (cropped to 4:3) | 28 | 600x450 | Katerina Pavlickova | CC0 | https://commons.wikimedia.org/wiki/File:Breakfast_on_a_table_(Unsplash).jpg |
+| cafe-buns.jpg | Two fruit buns with an icing cross and croissants in a glass counter (cropped to 4:3) | 53 | 600x450 | Rhett Noonan | CC0 | https://commons.wikimedia.org/wiki/File:The_Bakery_(Unsplash).jpg |
+| cafe-bread.jpg | A round seed-crusted loaf with more bread and yellow flowers around it (cropped to 4:3) | 61 | 600x450 | Kim Cruickshanks | CC0 | https://commons.wikimedia.org/wiki/File:Bread_(Unsplash).jpg |

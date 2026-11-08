@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thimbleford Library - Visit us</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M8 44 V22 A16 16 0 0 1 40 22 V44 Z M8 31 H40 M8 38 H40 M15 31 V24 M20 31 V22 M26 31 V25 M14 38 V33 M30 38 V33"></path>
+      </svg>
+      <span>Thimbleford Library <small>in the old fire station</small></span>
+    </a>
+    <nav class="menu" aria-label="Main menu">
+      <ul>
+        <li><a href="index.html">Shelves</a></li>
+        <li><a href="catalogue.html">Catalogue</a></li>
+        <li><a href="visit.html" aria-current="page">Visit us</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="page-title">
+      <h1>Come and visit</h1>
+      <p class="lead">Anyone can come in, read, and sit in the big window seat. To take books home, you need a library card. It is free.</p>
+    </section>
+
+    <div class="visit-grid">
+      <section class="hours">
+        <h2>Opening hours</h2>
+        <table class="hours-table">
+          <caption>When our red doors are open</caption>
+          <tbody>
+            <tr class="closed"><th scope="row">Monday</th><td>Closed</td></tr>
+            <tr><th scope="row">Tuesday</th><td>10 am to 6 pm</td></tr>
+            <tr><th scope="row">Wednesday</th><td>10 am to 6 pm</td></tr>
+            <tr><th scope="row">Thursday</th><td>10 am to 8 pm <span class="badge late">Late</span></td></tr>
+            <tr><th scope="row">Friday</th><td>10 am to 6 pm</td></tr>
+            <tr><th scope="row">Saturday</th><td>9 am to 3 pm <span class="badge story">Story time 11 am</span></td></tr>
+            <tr class="closed"><th scope="row">Sunday</th><td>Closed</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="find-us">
+        <h2>Find us</h2>
+        <address class="address">1 Hosereel Square<br>Thimbleford</address>
+        <p>Look for the two big red doors with LIBRARY written above them. Park your bike where the fire engine used to stand.</p>
+        <p>The ramp by the left door leads straight in, and the whole library is on one floor.</p>
+      </section>
+    </div>
+
+    <section class="card-steps">
+      <div>
+        <h2>Get your own library card</h2>
+        <ol class="step-list">
+          <li><b>Bring a grown-up.</b> They sign the form with you.</li>
+          <li><b>Fill in the form at the desk.</b> Just your name and where you live.</li>
+          <li><b>Get your card straight away.</b> Write your name on the back.</li>
+          <li><b>Choose your first books.</b> Up to eight, for three weeks.</li>
+        </ol>
+      </div>
+      <div class="library-card" aria-hidden="true">
+        <p class="card-name">Thimbleford Library</p>
+        <p class="card-holder">Card for<span>Your name here</span></p>
+        <svg class="barcode" viewBox="0 0 160 40">
+          <path class="thin" d="M4 2 V38 M14 2 V38 M20 2 V38 M33 2 V38 M45 2 V38 M52 2 V38 M66 2 V38 M79 2 V38 M88 2 V38 M101 2 V38 M110 2 V38 M124 2 V38 M137 2 V38 M150 2 V38"></path>
+          <path class="thick" d="M9 2 V38 M26 2 V38 M39 2 V38 M59 2 V38 M72 2 V38 M94 2 V38 M117 2 V38 M130 2 V38 M144 2 V38 M156 2 V38"></path>
+        </svg>
+      </div>
+    </section>
+
+    <section class="practice">
+      <div>
+        <h2>Try the card form</h2>
+        <p>This is a little like the form at our desk. Fill it in for fun.</p>
+        <p>At the real desk, your grown-up writes down where you live. Here we only ask for the fun parts.</p>
+      </div>
+      <form class="card-form">
+        <label for="first-name">Your first name</label>
+        <input id="first-name" name="first-name" type="text" placeholder="For example Mia" required minlength="2" aria-describedby="name-hint">
+        <p class="field-hint" id="name-hint">At least 2 letters.</p>
+        <label for="favourite-shelf">Your favourite shelf</label>
+        <select id="favourite-shelf" name="favourite-shelf">
+          <option>A: Adventure</option>
+          <option>B: Animals</option>
+          <option>C: Magic</option>
+        </select>
+        <label class="promise" for="promise"><input id="promise" name="promise" type="checkbox" required> I will look after the books I borrow</label>
+        <button type="submit">Ask for my card</button>
+        <p class="form-note">A practice form: HTML Lab does not send it.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <p><b>Thimbleford Library</b>, 1 Hosereel Square, Thimbleford. A pretend library, made with HTML and CSS.</p>
+    <p>What is a library, really? <a href="https://simple.wikipedia.org/wiki/Library">Read about libraries on Simple Wikipedia</a></p>
+  </footer>
+</body>
+</html>

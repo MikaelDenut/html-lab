@@ -1,0 +1,15 @@
+{
+  "title": "Volcano Observatory",
+  "name": "My volcano observatory",
+  "blurb": "A volcano cut in half, its three shapes and how scientists keep watch",
+  "category": "science",
+  "layout": "Cross-section diagram with labelled layers",
+  "shows": [
+    "A volcano cut in half, drawn with SVG",
+    "Labels placed on the picture with CSS",
+    "Point at a label and the other parts fade",
+    "Lava that fills a volcano when you point",
+    "Labels that move under the picture on a phone"
+  ],
+  "accent": "#e3461b"
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Seaside Hotel",
+  "name": "My seaside hotel",
+  "blurb": "A small hotel by the sea, with big photos and a room table",
+  "category": "professional",
+  "layout": "Full-bleed photo sections, room comparison table",
+  "shows": [
+    "Photos as wide as the window, text on top",
+    "A table with ticks and crosses drawn in CSS",
+    "Window views painted with gradients",
+    "Summer and winter tabs, no script",
+    "A lighthouse beam made with conic-gradient"
+  ],
+  "accent": "#f0b35a"
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planets - Mission Comet Kite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <a class="logo" href="index.html">
+      <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M6 34 L22 18" stroke="#3ed2ff" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="26" cy="14" r="9" fill="#ffc94d"/>
+      </svg>
+      Comet Kite
+    </a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="planets.html" aria-current="page">Planets</a></li>
+        <li><a href="crew.html">Crew</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-top">
+      <div class="twinkle"></div>
+      <div class="wrap">
+        <h1 class="big-title">Worlds on our trip</h1>
+        <p class="lead">Comet Kite starts on Earth and visits four more worlds. Put your mouse on a card and watch it light up in its own colour!</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <!-- Each card sets its own --glow colour. The ring and the shadow use it. -->
+        <div class="card-grid planet-grid">
+          <article class="planet-card" style="--glow: #4f9cff">
+            <img src="space-earth.jpg" alt="Earth, blue with white clouds" width="520" height="520">
+            <h2>Earth</h2>
+            <p class="planet-tag">Planet 3 from the Sun</p>
+            <p>Our home, where the trip begins. It is the only planet where we know there is life.</p>
+            <ul class="facts">
+              <li>1 moon</li>
+              <li>Day: 24 hours</li>
+            </ul>
+          </article>
+
+          <article class="planet-card" style="--glow: #c9cedf">
+            <img src="space-moon.jpg" alt="The grey Moon with dark spots and craters" width="440" height="440">
+            <h2>The Moon</h2>
+            <p class="planet-tag">Earth's moon</p>
+            <p>There is no air and no wind here, so footprints stay for a very long time.</p>
+            <ul class="facts">
+              <li>About 384,000 km away</li>
+              <li>Gravity: 1/6 of Earth's</li>
+            </ul>
+          </article>
+
+          <article class="planet-card" style="--glow: #ff7a45">
+            <img src="mars.jpg" alt="Mars, a red and orange planet" width="160" height="160">
+            <h2>Mars</h2>
+            <p class="planet-tag">Planet 4 from the Sun</p>
+            <p>Mars is red because its dust is rusty. It has the tallest volcano in the Solar System.</p>
+            <ul class="facts">
+              <li>2 moons</li>
+              <li>Day: a bit over 24 hours</li>
+            </ul>
+          </article>
+
+          <article class="planet-card" style="--glow: #e8b07a">
+            <img src="space-jupiter.jpg" alt="Jupiter with cream and brown stripes" width="500" height="472">
+            <h2>Jupiter</h2>
+            <p class="planet-tag">Planet 5 from the Sun</p>
+            <p>The biggest planet of all. More than 1,300 Earths could fit inside it.</p>
+            <ul class="facts">
+              <li>Day: about 10 hours</li>
+              <li>A giant ball of gas</li>
+            </ul>
+          </article>
+
+          <article class="planet-card" style="--glow: #ffd98a">
+            <img src="saturn.jpg" alt="Saturn with its wide rings" width="240" height="123">
+            <h2>Saturn</h2>
+            <p class="planet-tag">Planet 6 from the Sun</p>
+            <p>Its rings are made of ice and rock. Saturn is so light that it would float in a giant bathtub.</p>
+            <ul class="facts">
+              <li>Day: about 10.5 hours</li>
+              <li>Year: about 29 Earth years</li>
+            </ul>
+          </article>
+
+          <article class="planet-card your-planet" style="--glow: #9b6bff">
+            <div class="css-planet"></div>
+            <h2>Your planet?</h2>
+            <p class="planet-tag">Planet ? from the Sun</p>
+            <p>Invent a world! Copy a card in planets.html, then change the name, the words and the colour.</p>
+            <ul class="facts">
+              <li>? moons</li>
+              <li>Day: you decide</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="more-box">
+          <p>The Sun is so big that more than a million Earths could fit inside it.</p>
+          <a class="button" href="https://spaceplace.nasa.gov/planets/en/">Explore the planets at NASA</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Mission Comet Kite is pretend. The planets are real!</p>
+    <p>Learn more at <a href="https://spaceplace.nasa.gov/planets/en/">NASA Space Place: All about the planets</a></p>
+  </footer>
+</body>
+</html>
