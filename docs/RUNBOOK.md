@@ -1,6 +1,6 @@
 ---
 class:   truth
-updated: 2026-11-08
+updated: 2026-11-09
 status:  current
 ---
 
@@ -29,7 +29,7 @@ mini`). SSH must work with keys alone: the scripts use `BatchMode=yes`.
 |---|---|
 | Rust core tests | `cd core && cargo test` |
 | Rust app tests | `cd src-tauri && cargo test` |
-| Build the editor bundle | `npx esbuild ui-src/editor.js --bundle --minify --format=esm --target=safari15 --outfile=ui/editor.bundle.js` |
+| Build the editor bundle | `rm -rf ui/editor && npx esbuild ui-src/editor.js --bundle --minify --splitting --format=esm --target=safari15 --outdir=ui --entry-names=editor.bundle '--chunk-names=editor/[name]-[hash]' --log-level=warning` |
 | Build the preview helper | `npx esbuild ui-src/helper.js --bundle --minify --format=iife --target=safari15 --outfile=src-tauri/helper.min.js` |
 | Build for one architecture | `npx @tauri-apps/cli@2 build --target x86_64-apple-darwin --bundles app --no-sign` (or `aarch64-apple-darwin`) |
 | Self-test | `python3 scripts/selftest-run.py "<path to HTML Lab.app>" --host intel` |
@@ -40,10 +40,21 @@ mini`). SSH must work with keys alone: the scripts use `BatchMode=yes`.
 | Pack the templates | `python3 scripts/build-templates.py` (needs `cwebp`) |
 | Where each template stands | `python3 scripts/template-status.py` |
 | Signed, notarized release | `zsh scripts/sign-notarize.sh` |
+| Signed test build from any tree | `HTMLLAB_TEST_BUILD=1 zsh scripts/sign-notarize.sh` |
 
-`cargo test` in `core` runs 194 tests (last run 2026-11-08, all passed). The 14
-tests in `src-tauri` are a separate run. `cargo test` from `src-tauri` does not
-run the core tests.
+`cargo test` in `core` runs 315 tests (0.3.0, last run 2026-11-09, all passed).
+`cargo test` in `src-tauri` is a separate run: 24 unit tests, plus 3 in
+`src-tauri/tests/open_with.rs`, which check that the Open With endings agree in the
+macOS and Linux configs, the Windows installer hooks and this project's README.
+`cargo test` from `src-tauri` does not run the core tests.
+
+The editor bundle is built in parts. `ui/editor.bundle.js` is the entry that
+`ui/app.js` imports; the chunks it loads at start and the language chunks it loads
+when a file needs them are in `ui/editor/`, named `<name>-<hash>.js`. The
+`rm -rf ui/editor` at the start of the command makes a chunk that is no longer built
+show up as a deletion; commit the additions and deletions together. The quotes around
+`'--chunk-names=editor/[name]-[hash]'` are needed: the scripts run in zsh, where an
+unquoted `[ ]` is a pattern.
 
 Run `cargo test` in debug only, never with `--release`. A release build reads
 the gallery only from the folder the app gives it (`core/src/content.rs:59`), and
@@ -131,12 +142,12 @@ of 28 rows failing, so a speed run is expected to exit non-zero today.
 
 ```bash
 git status --porcelain -- .
-npx esbuild ui-src/editor.js --bundle --minify --format=esm --target=safari15 --outfile=ui/editor.bundle.js --log-level=warning
+rm -rf ui/editor && npx esbuild ui-src/editor.js --bundle --minify --splitting --format=esm --target=safari15 --outdir=ui --entry-names=editor.bundle '--chunk-names=editor/[name]-[hash]' --log-level=warning
 npx esbuild ui-src/helper.js --bundle --minify --format=iife --target=safari15 --outfile=src-tauri/helper.min.js --log-level=warning
 git status --porcelain -- .
 ```
 
-Both bundles are in git. If the second status lists a bundle, commit it. Empty
+Both bundles, and the chunks in `ui/editor/`, are in git. If the second status lists a bundle or a chunk, commit it. Empty
 output means go. Also make sure `src-tauri/tauri.conf.json`, `package.json` and
 `src-tauri/Cargo.toml` hold the same version, or the script stops.
 
@@ -230,6 +241,74 @@ account holder:
 ```bash
 xcrun notarytool store-credentials "<profile value>"
 ```
+
+The profile has not vanished, even when `notarytool` says "No Keychain password
+item found for profile" (seen at night on 2026-10-30 and 2026-11-09). `notarytool`
+keeps it in the data-protection keychain, which can only be read while the Mac is
+unlocked; with the screen locked or the display asleep it fails, and once the Mac is
+unlocked it works again with nothing done. `sign-notarize.sh` checks it before
+building. So unlock the Mac and run again before asking the owner to store it.
+
+**Fallback for test builds only.** When notarization fails, or there is no network,
+try once more after 10 minutes. If it still fails, make an ad hoc signed test build
+of a clean committed tree, and test that:
+
+```bash
+npx @tauri-apps/cli@2 build --target aarch64-apple-darwin --bundles app --no-sign
+APP="src-tauri/target/aarch64-apple-darwin/release/bundle/macos/HTML Lab.app"
+/usr/libexec/PlistBuddy -c "Add :HTMLLabRevision string $(git rev-parse --short=12 HEAD)" "$APP/Contents/Info.plist"
+codesign --force --deep -s - "$APP"
+python3 scripts/selftest-run.py "$APP" --host mini
+```
+
+The reports carry the revision as usual. This build is arm64 only and not
+notarized: it never leaves the test Macs and is never a release.
+
+---
+
+## Linux and Windows test runs (unsigned)
+
+These run by hand, from the maintainer's Mac. The host address, the VM id and the
+helper scripts are not in git: the scripts live on the Linux host and in
+`release/tools/` (ignored on purpose). Never run the signing steps for a test run.
+
+**Linux (Ubuntu 22.04 build host).** Use the live scripts in `/root/` on the host,
+not the older copies in `release/tools/`. From the html-lab folder:
+
+```bash
+COPYFILE_DISABLE=1 tar --no-xattrs -czf <scratch>/hl.tgz --exclude target --exclude node_modules --exclude test-history --exclude speed-history --exclude __pycache__ --exclude .DS_Store --exclude '._*' --exclude local.json app
+scp <scratch>/hl.tgz root@<linux-host>:/root/hl.tgz
+ssh root@<linux-host> "sed -i 's/HTML Lab_[0-9.]*_amd64.deb/HTML Lab_<version>_amd64.deb/' /root/hl_jammy_test.sh"
+perl -e 'alarm 7200; exec @ARGV' ssh root@<linux-host> 'bash /root/hl_jammy_build.sh'
+perl -e 'alarm 7200; exec @ARGV' ssh root@<linux-host> 'bash /root/hl_jammy_test.sh'
+```
+
+The `sed` puts this version's `.deb` name into the test script. The scripts already
+run at `nice -n -10`; add no `nice` of your own. They touch only
+`/home/builder/htmllab-worker` and `/root/hl*`. Core tests that check read-only
+permissions fail as root (root ignores file permissions): before calling a failure a
+regression, run the same scripts on the previous version and compare the failing
+names.
+
+**Windows (UTM VM on the maintainer's Mac).** Run `utmctl list` first. If the VM is
+already started, someone else is using it: do not start or stop it. If it is
+stopped, `utmctl start <vm id>`. If that fails with OSStatus -1712 (seen on
+2026-11-09), end the UTM process (the VM is stopped, so nothing is lost), open the
+VM bundle with `open -a UTM <vm bundle>`, wait 15 s, then start it through AppleScript:
+`osascript -e 'with timeout of 120 seconds' -e 'tell application "UTM" to start virtual machine "<vm name>"' -e 'end timeout'`.
+`utmctl list` then shows it started. When it is up, wait
+for SSH, then copy `release/tools/win020.sh` to a scratch file, set `S` (a scratch
+folder holding copies of `release/tools/w*.ps1`) and `V` (the version), and run only
+its build and test part (`w4`, `w5`, `w12`), never the `sign()` lines, under
+`perl -e 'alarm 9000; exec @ARGV'`. Run `utmctl stop` only if you started the VM;
+never suspend it.
+
+**Reading the result, on both.** Read the `test result:` line of each `cargo test`.
+A `FAILED`, `panicked` or `error`, or a passed count that differs from the Mac count
+by more than the tests gated by `cfg` (name them), is a failure. Compare the
+self-test and smoke totals with `MIN_TESTS` and `MIN_STEPS`. The Windows self-test
+can time out under host load (BACKLOG V5): run it again once. A host that does not
+answer is skipped and named in the handback.
 
 ---
 

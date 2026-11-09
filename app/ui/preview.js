@@ -1,17 +1,22 @@
-import { computerName, previewBase } from './platform.js';
+import { browserName, computerName, previewBase } from './platform.js';
 import { invoke } from './api.js';
 import {
   S,
   activeProject,
   activeTab,
   baseName,
+  dirName,
   isChanged,
   isOnDisk,
+  isOther,
   isPage,
   kindForName,
   kindOf,
+  kindOrCode,
   pageTabOf,
   projectOf,
+  sameFile,
+  stampArgs,
   tabByPath,
   tabsOf,
 } from './state.js';
@@ -50,6 +55,10 @@ const P = {
   loadDoc: null,
   shownDoc: null,
   pv: -1,
+  lastMsg: null,
+  loadWanted: false,
+  other: null,
+  posted: 0,
 };
 
 let iframe = null;
@@ -77,15 +86,22 @@ export function initPreview(hooks) {
   iframe.addEventListener('load', () => note(`frame load event, loadId ${P.loadId}`));
 }
 
+// Every message to the page goes through here, so a self-test can count them (C46).
+function postNow(msg) {
+  P.posted += 1;
+  iframe.contentWindow.postMessage(msg, '*');
+}
+
 function send(msg) {
   P.out = msg.id;
   P.outKind = msg.t;
   armWatchdog();
-  iframe.contentWindow.postMessage(msg, '*');
+  postNow(msg);
 }
 
 function pump() {
-  if (P.phase !== 'live' || P.out !== null || S.rightView === 'help' || P.hold || P.bigWait) return;
+  if (!S.sideShown) return;
+  if (P.phase !== 'live' || P.out !== null || S.rightView === 'help' || P.hold || P.bigWait || P.loadWanted) return;
   while (P.pendingCss.size) {
     const path = P.pendingCss.values().next().value;
     P.pendingCss.delete(path);
@@ -161,7 +177,17 @@ async function syncBuffers(project) {
 
 export async function load() {
   const project = S.projects.get(P.projectId);
-  if (!project || !P.showing) return;
+  if (!project || !P.showing) {
+    P.loadWanted = false;
+    return;
+  }
+  // A hidden side starts no load: it is remembered and done when the side comes back (C46).
+  if (!S.sideShown) {
+    P.loadWanted = true;
+    note(`load wanted ${P.showing}`);
+    return;
+  }
+  P.loadWanted = false;
   P.loadId += 1;
   const id = P.loadId;
   P.out = null;
@@ -186,9 +212,15 @@ export async function load() {
     note(`load ${id} gave way to ${P.loadId}`);
     return;
   }
+  // The side hid while the files were made ready: no address is set, the load is done when it comes back (C46).
+  if (!S.sideShown) {
+    P.loadWanted = true;
+    note(`load ${id} waits for the side`);
+    return;
+  }
   P.loadDoc = loading;
   if (project.folder) {
-    invoke('folder_stamp', { folder: project.folder }).then((stamp) => {
+    invoke('folder_stamp', stampArgs(project)).then((stamp) => {
       project.stamp = stamp;
     });
   }
@@ -207,7 +239,7 @@ export async function load() {
 // set again at once, one time per load, instead of waiting for the retry.
 function sendAgain(v) {
   const id = P.loadId;
-  if (P.phase !== 'loading' || P.srcFor !== id || P.againFor === id || !(typeof v === 'number' && v < id)) return;
+  if (!S.sideShown || P.phase !== 'loading' || P.srcFor !== id || P.againFor === id || !(typeof v === 'number' && v < id)) return;
   P.againFor = id;
   iframe.src = `${urlFor(P.showing, id)}&again=1`;
   note(`again ${iframe.src}`);
@@ -241,6 +273,7 @@ function onMessage(event) {
   if (!iframe || event.source !== iframe.contentWindow) return;
   const msg = event.data;
   if (!msg) return;
+  P.lastMsg = { t: msg.t, at: Date.now() };
   switch (msg.t) {
     case 'ready':
       note(`ready v${msg.v}, loadId ${P.loadId}`);
@@ -299,13 +332,19 @@ function onMessage(event) {
 
 function onReady(msg) {
   clearReadyWait();
+  // A page that got ready while the side was hidden hears nothing; it is loaded again when the side comes back (C46).
+  if (!S.sideShown) {
+    P.loadWanted = true;
+    note(`ready v${msg.v} while hidden`);
+    return;
+  }
   P.retried = false;
   P.phase = 'live';
   P.shownDoc = P.loadDoc;
   P.loadDoc = null;
   P.pv = typeof msg.pv === 'number' ? msg.pv : -1;
   const tab = pageTabOf(S.projects.get(P.projectId));
-  if (tab && P.showing === tab.path) iframe.contentWindow.postMessage({ t: 'scroll', y: tab.pageY }, '*');
+  if (tab && P.showing === tab.path) postNow({ t: 'scroll', y: tab.pageY });
   applyInfo(msg);
   pump();
   goToPlace();
@@ -318,7 +357,7 @@ function onReady(msg) {
 // a code element can be paired (PLAN "In step"). The document is compared by
 // identity: CodeMirror makes a new one on every change.
 export function inSync() {
-  if (P.phase !== 'live' || S.rightView === 'help') return false;
+  if (!S.sideShown || P.phase !== 'live' || S.rightView === 'help') return false;
   const page = pageTabOf(S.projects.get(P.projectId));
   if (!page || P.showing !== page.path) return false;
   return P.shownDoc === page.state.doc;
@@ -329,7 +368,9 @@ export function pageVersion() {
 }
 
 export function showingPageTab() {
-  if (P.phase !== 'live') return false;
+  if (!S.sideShown || P.phase !== 'live') return false;
+  const tab = activeTab();
+  if (tab && isOther(tab)) return false;
   const page = pageTabOf(S.projects.get(P.projectId));
   return !!page && P.showing === page.path;
 }
@@ -338,10 +379,10 @@ export function linkedCss(tab) {
   return P.lastLinks.includes(tab.name);
 }
 
-// False when the page is not live: the message is dropped and no reply comes.
+// False when the page is not live or the side is hidden: the message is dropped and no reply comes.
 export function postToPage(msg) {
-  if (P.phase !== 'live' || !iframe || !iframe.contentWindow) return false;
-  iframe.contentWindow.postMessage(msg, '*');
+  if (!S.sideShown || P.phase !== 'live' || !iframe || !iframe.contentWindow) return false;
+  postNow(msg);
   return true;
 }
 
@@ -372,9 +413,9 @@ function showPage(tab) {
 }
 
 function goToPlace() {
-  if (!P.place || P.phase !== 'live' || P.out !== null || P.pendingHtml) return;
+  if (!S.sideShown || !P.place || P.phase !== 'live' || P.out !== null || P.pendingHtml) return;
   if (P.place.path !== P.showing) return;
-  iframe.contentWindow.postMessage({ t: 'place', hash: P.place.hash }, '*');
+  postNow({ t: 'place', hash: P.place.hash });
   P.place = null;
 }
 
@@ -460,6 +501,8 @@ function updateHold(tab, keyPressed) {
 }
 
 export function onKey(tab) {
+  const kind = kindOf(tab);
+  if (!kind.isPage && kind.previewMode !== 'swap') return;
   updateHold(tab, true);
   restartBigWait();
   const project = projectOf(tab);
@@ -499,8 +542,18 @@ export function onLinkAdded(pageTab) {
 export function onTabSwitch(prev, next) {
   P.holdSpent = false;
   updateHold(next, false);
+  otherSeq += 1;
   const project = projectOf(next);
-  const same = project.id === P.projectId && prev && prev.projectId === project.id;
+  const wasOther = P.other !== null;
+  P.other = null;
+  if (S.sideShown && isOther(next)) {
+    link.onTabSwitch(prev, next);
+    showForOther(next);
+    updateHeader();
+    return;
+  }
+  // After a page shown for another file, the project's own page comes back with a real load.
+  const same = !wasOther && project.id === P.projectId && prev && prev.projectId === project.id;
   if (same) {
     if (isPage(next)) {
       project.pageTab = next.path;
@@ -537,9 +590,111 @@ export function onHelpHidden() {
   updateHeader();
 }
 
+// A load still running when the side hides is done again when it comes back, so the page
+// gets its scroll, place and Show the Boxes with the side shown (C46).
+export function onSideHidden() {
+  if (P.phase === 'loading') {
+    P.loadWanted = true;
+    clearReadyWait();
+  }
+  setWidthButtons(false);
+  updateHeader();
+}
+
+// The side is back: the wanted load, or the messages that waited, then the header and the width.
+export function onSideShown() {
+  setWidthButtons(iframe.style.visibility !== 'hidden');
+  const tab = activeTab();
+  if (tab && isOther(tab)) {
+    showForOther(tab);
+    return;
+  }
+  P.other = null;
+  const page = pageTabOf(S.projects.get(P.projectId));
+  if (P.loadWanted || (P.phase === 'none' && (P.showing || page))) {
+    if (!P.showing && page) P.showing = page.path;
+    load();
+  } else {
+    pump();
+  }
+  updateHeader();
+  if (P.width !== 'full') applyWidth();
+}
+
+// The page a file that is not a web page is shown with (WP3 step 6): (a) an open page tab
+// that uses it, (b) a page in its own folder that uses it, (c) the project's page tab or any
+// page in its folder, or nothing (d).
+const LINK_ATTR = /\b(?:src|href)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>"']+))/gi;
+
+function pageUses(page, file) {
+  const base = `file:///${dirName(page.path).replace(/^\/+/, '')}/`;
+  const want = `/${file.path.replace(/^\/+/, '')}`;
+  for (const m of page.state.doc.toString().matchAll(LINK_ATTR)) {
+    const value = (m[1] ?? m[2] ?? m[3] ?? '').trim();
+    if (!value || value.startsWith('//') || /^[a-z][a-z0-9+.-]*:/i.test(value)) continue;
+    try {
+      if (sameFile(decodeURIComponent(new URL(value, base).pathname), want)) return true;
+    } catch {
+      // A broken address uses nothing.
+    }
+  }
+  return false;
+}
+
+async function relatedPage(tab) {
+  const project = projectOf(tab);
+  const own = pageTabOf(project);
+  const pages = [
+    ...(own ? [own] : []),
+    ...tabsOf(project).filter((t) => t !== own && isPage(t)),
+    ...S.tabs.filter((t) => t.projectId !== project.id && isPage(t)),
+  ];
+  const using = pages.find((page) => pageUses(page, tab));
+  if (using) return { path: using.path, tab: using, project: projectOf(using), how: 'uses' };
+  if (isOnDisk(tab)) {
+    const list = await invoke('pages_using', { path: tab.path }).catch(() => []);
+    const path = (list || []).find((p) => !tabByPath(p));
+    if (path) return { path, tab: null, project, how: 'uses' };
+  }
+  const first = own || tabsOf(project).find(isPage);
+  if (first) return { path: first.path, tab: first, project, how: 'folder' };
+  if (project.folder && !project.bigFolder) {
+    const plan = await invoke('plan_open', { paths: [project.folder] }).catch(() => null);
+    const files = plan && plan.folders && plan.folders[0] ? plan.folders[0].files : [];
+    const path = files.find((p) => kindOrCode(baseName(p)).isPage);
+    if (path) return { path, tab: null, project, how: 'folder' };
+  }
+  return null;
+}
+
+let otherSeq = 0;
+
+async function showForOther(tab) {
+  const seq = ++otherSeq;
+  const found = await relatedPage(tab);
+  if (seq !== otherSeq || !S.sideShown || activeTab() !== tab) return;
+  const project = found ? found.project : projectOf(tab);
+  if (!project || !S.projects.has(project.id)) return;
+  P.other = { file: tab.path, how: found ? found.how : 'none' };
+  P.projectId = project.id;
+  if (!found) {
+    goEmpty();
+    return;
+  }
+  if (found.tab) project.pageTab = found.tab.path;
+  const was = P.showing;
+  P.showing = found.path;
+  if (was !== P.showing) link.onShowingChanged();
+  if (was !== P.showing || P.phase === 'none' || P.loadWanted) load();
+  else pump();
+  updateHeader();
+  if (P.width !== 'full') applyWidth();
+}
+
 export function goEmpty() {
   note('empty');
   P.phase = 'none';
+  P.loadWanted = false;
   P.loadId += 1;
   P.out = null;
   P.showing = null;
@@ -560,7 +715,10 @@ export function goEmpty() {
 
 export function reset() {
   P.projectId = null;
+  P.other = null;
+  otherSeq += 1;
   goEmpty();
+  link.onAllClosed();
 }
 
 export function cssTabClosed(tab, project) {
@@ -572,6 +730,11 @@ export function cssTabClosed(tab, project) {
 
 export function pageTabMoved(project) {
   if (project.id !== P.projectId) return;
+  const tab = activeTab();
+  if (P.other && tab && isOther(tab) && S.sideShown) {
+    showForOther(tab);
+    return;
+  }
   const page = pageTabOf(project);
   if (!page) {
     goEmpty();
@@ -592,30 +755,36 @@ export function pageTabMoved(project) {
 export function reloadAfterMove(project, pathMap) {
   if (project.id !== P.projectId) return;
   if (P.showing && pathMap.has(P.showing)) P.showing = pathMap.get(P.showing);
+  if (P.other && pathMap.has(P.other.file)) P.other.file = pathMap.get(P.other.file);
   link.onPathsMoved(pathMap);
   const moved = new Set();
   for (const old of P.sentCss) moved.add(pathMap.get(old) || old);
   P.sentCss = moved;
+  // A renamed style file still waiting to be sent, and a place still to go to (WP5).
+  const waiting = new Set();
+  for (const old of P.pendingCss) waiting.add(pathMap.get(old) || old);
+  P.pendingCss = waiting;
+  if (P.place && pathMap.has(P.place.path)) P.place = { ...P.place, path: pathMap.get(P.place.path) };
   load();
 }
 
 export async function onWindowFocused() {
   const project = activeProject();
   if (!project || !project.folder || S.dialogOpen || S.panelOpen) return;
-  const stamp = await invoke('folder_stamp', { folder: project.folder });
+  const stamp = await invoke('folder_stamp', stampArgs(project));
   if (stamp === project.stamp || S.dialogOpen || S.panelOpen) return;
   project.stamp = stamp;
   if (project.id === P.projectId && P.showing) load();
 }
 
 export async function noteWrite(project) {
-  if (project.folder) project.stamp = await invoke('folder_stamp', { folder: project.folder });
+  if (project.folder) project.stamp = await invoke('folder_stamp', stampArgs(project));
 }
 
 function showFrame(on) {
   empty.hidden = on;
   iframe.style.visibility = on ? '' : 'hidden';
-  setWidthButtons(on);
+  setWidthButtons(on && S.sideShown);
 }
 
 function setText(el, text) {
@@ -625,10 +794,45 @@ function setText(el, text) {
   }
 }
 
-function hintFor(tab, project) {
+const BROWSER_WORDS = `Open in ${browserName}`;
+export const SCRIPT_HINT = `Scripts do not run here. ${BROWSER_WORDS} to see them work.`;
+
+// The script hint carries a button for the Open in Browser command, so a page that needs its scripts has a way out.
+// The words around it shrink first, so a short header still shows the button.
+function setHint(el, text) {
+  if (el.textContent === text) return;
+  el.title = text;
+  el.classList.toggle('with-link', text === SCRIPT_HINT);
+  // While the hint carries the button, the page title gives up its room first, so a narrow side still shows it.
+  if (el.parentElement) el.parentElement.classList.toggle('hint-has-link', text === SCRIPT_HINT);
+  if (text !== SCRIPT_HINT) {
+    el.textContent = text;
+    return;
+  }
+  const at = text.indexOf(BROWSER_WORDS);
+  const words = (part, cls) => {
+    const span = document.createElement('span');
+    span.className = cls;
+    span.textContent = part;
+    return span;
+  };
+  const button = document.createElement('button');
+  button.id = 'hint-browser';
+  button.type = 'button';
+  button.className = 'link';
+  button.textContent = BROWSER_WORDS;
+  el.replaceChildren(
+    words(text.slice(0, at), 'hint-lead'),
+    button,
+    words(text.slice(at + BROWSER_WORDS.length), 'hint-tail'),
+  );
+}
+
+function hintFor(tab, project, other) {
   if (project.folderRefused) return `${computerName} said no to this folder, so other files may be missing.`;
   const page = pageTabOf(project);
-  if (P.hasScript) return 'Scripts do not run here. HTML Lab is for HTML and CSS.';
+  if (P.hasScript) return SCRIPT_HINT;
+  if (other && other.how === 'folder') return 'A page from this folder';
   if (project.kind === 'practice') return 'This is a practice copy';
   if (page && S.ed && S.ed.hintActive(page === tab ? S.ed.view.state : page.state)) {
     return 'The mistake changes your page too';
@@ -656,25 +860,51 @@ export function updateHeader() {
   if (!label) return;
   const tab = activeTab();
   const project = activeProject();
+  const other = tab && P.other && P.other.file === tab.path ? P.other : null;
+  setNoPage(other && other.how === 'none' ? tab : null);
   if (!tab || !project || !P.showing) {
     setText(label, 'Nothing to show yet');
-    setText(hint, '');
+    setHint(hint, '');
     updatePracticeBar(tab);
     return;
   }
   const single = project.kind === 'practice' && tabsOf(project).length === 1;
-  setText(label, single ? 'Showing the practice page' : `Showing ${baseName(P.showing)}`);
-  setText(hint, hintFor(tab, project));
+  const shown = baseName(P.showing);
+  if (other && other.how === 'uses') setText(label, `Showing ${shown}, which uses ${tab.name}`);
+  else setText(label, single ? 'Showing the practice page' : `Showing ${shown}`);
+  setHint(hint, hintFor(tab, project, other));
   updatePracticeBar(tab);
   updatePointButton(project);
+}
+
+// The no-page side of mockup 04, for a file with no page to show it with.
+let noPageFor = null;
+function setNoPage(tab) {
+  const panel = document.getElementById('page-panel');
+  const box = document.getElementById('page-none');
+  if (!panel || !box) return;
+  const name = tab ? tab.name : null;
+  if (name === noPageFor) return;
+  noPageFor = name;
+  panel.classList.toggle('no-page', !!name);
+  box.hidden = !name;
+  if (!name) return;
+  const code = document.createElement('code');
+  code.className = 'none-code';
+  code.textContent = name;
+  document.getElementById('page-none-line').replaceChildren(
+    code,
+    ' is not a web page. My page shows web pages made with HTML, and this folder has none.',
+  );
 }
 
 // Point needs the page tab's own page: a page reached by a link has no code open.
 function updatePointButton(project) {
   const button = document.getElementById('btn-point');
-  if (!button || iframe.style.visibility === 'hidden') return;
+  if (!button || iframe.style.visibility === 'hidden' || !S.sideShown) return;
   const page = pageTabOf(project);
-  const off = !page || P.showing !== page.path;
+  const tab = activeTab();
+  const off = !page || P.showing !== page.path || (!!tab && isOther(tab));
   if (button.disabled !== off) button.disabled = off;
 }
 
@@ -734,9 +964,11 @@ function applyWidth() {
     if (resizeObserver) resizeObserver.disconnect();
     return;
   }
+  // A hidden side has no room; the width is applied again when it comes back.
+  const room = wrap.clientWidth;
+  if (!room) return;
   wrap.classList.add('sized');
   const width = WIDTHS[P.width];
-  const room = wrap.clientWidth;
   style.width = `${width}px`;
   if (width <= room) {
     style.height = '100%';

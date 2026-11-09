@@ -11,20 +11,25 @@ import {
   isPage,
   kindForName,
   kindOf,
+  kindOrCode,
+  languageIdFor,
   newProjectId,
   pageTabOf,
+  plainStyle,
   projectOf,
   sameFile,
+  stampArgs,
   tabByPath,
   tabsOf,
+  writeStyle,
 } from './state.js';
 import * as preview from './preview.js';
 import { updateInside } from './inside.js';
-import { firstPageOf, forgetActive, noteDocChange, renderStrip, switchTo, syncMenu, updateStatus } from './tabs.js';
+import { firstPageOf, forgetActive, noteDocChange, renderStrip, switchTo, syncMenu, updateStatus, withSide } from './tabs.js';
 import {
   cancelDialog,
   isDialogOpen,
-  showAddFileDialog,
+  showNewFileDialog,
   showLinkedCssAsk,
   showMessage,
   showNewDialog,
@@ -43,8 +48,7 @@ export function initFlows(appHooks) {
 const whenEditor = () => hooks.whenEditor();
 
 function iconFor(name) {
-  const kind = kindForName(name);
-  return kind ? kind.icon : 'picture';
+  return kindOrCode(name).icon;
 }
 
 function addProject({ name, kind, folder = null, hiddenFiles = [] }) {
@@ -56,6 +60,9 @@ function addProject({ name, kind, folder = null, hiddenFiles = [] }) {
     pageTab: null,
     hiddenFiles,
     stamp: 0,
+    lone: false,
+    bigFolder: false,
+    fromFolder: false,
     writing: Promise.resolve(),
     autosaveOff: false,
     folderRefused: false,
@@ -64,14 +71,33 @@ function addProject({ name, kind, folder = null, hiddenFiles = [] }) {
   return project;
 }
 
-function addTab(project, { name, path, text, onDisk = true, topicId = null, bar = null }) {
-  const kind = kindForName(name);
-  const state = S.ed.newState(text, kind.language);
+function refreshLone(project) {
+  const tabs = tabsOf(project);
+  const onlyOthers = !project.fromFolder && tabs.length > 0 && tabs.every((t) => !kindOf(t).teaching);
+  project.lone = !!project.folder && (project.bigFolder || onlyOthers);
+}
+
+async function restamp(project) {
+  refreshLone(project);
+  if (project.folder) project.stamp = await invoke('folder_stamp', stampArgs(project));
+}
+
+// Every path that makes tabs awaits this once, with all its file names, before its first
+// addTab, which stays synchronous (newState throws for a language that is not loaded).
+const loadLanguagesFor = (names) => S.ed.loadLanguages(names.map(languageIdFor));
+
+function addTab(project, { name, path, text, style = null, onDisk = true, topicId = null, bar = null }) {
+  const kind = kindOrCode(name);
+  const tabStyle = style || plainStyle(kind);
+  const language = languageIdFor(name);
+  const state = S.ed.newState(text, language, tabStyle.indent, { teaching: !!kind.teaching, fileName: name });
   const tab = {
     path,
     name,
     projectId: project.id,
     kind: kind.id,
+    language,
+    style: tabStyle,
     state,
     savedDoc: onDisk ? state.doc : null,
     scroll: null,
@@ -83,6 +109,7 @@ function addTab(project, { name, path, text, onDisk = true, topicId = null, bar 
   };
   S.tabs.push(tab);
   if (!project.pageTab && kind.isPage) project.pageTab = path;
+  refreshLone(project);
   return tab;
 }
 
@@ -90,10 +117,11 @@ const newPath = (project, file) => `__new/${project.id}/${file}`;
 const realPath = (folder, file) => `${folder}/${file}`;
 const pathInProject = (project, file) => (project.folder ? realPath(project.folder, file) : newPath(project, file));
 
-const staysHidden = (f) => f.hidden && !(kindForName(f.name) || {}).isPage;
+const staysHidden = (f) => f.hidden && !kindOrCode(f.name).isPage;
 
 async function openContent(content, kind, extra = {}) {
   await whenEditor();
+  await loadLanguagesFor(content.files.filter((f) => !staysHidden(f)).map((f) => f.name));
   const hidden = content.files.filter(staysHidden).map(({ name, code, picture }) => ({ name, code: code || '', picture: Boolean(picture) }));
   const project = addProject({ name: content.name, kind, hiddenFiles: hidden });
   const tabs = content.files
@@ -105,6 +133,8 @@ async function openContent(content, kind, extra = {}) {
       ...hidden.map((f) => ({ path: newPath(project, f.name), text: f.code, picture: f.picture })),
     ],
   });
+  // New project, a sample, a template and Try it start with the side deciding for itself (WP3).
+  S.sideManual = null;
   hooks.layout();
   const first = firstPageOf(project) || tabs[0];
   switchTo(first.path);
@@ -157,26 +187,66 @@ export function openPageTab(projectId, path) {
   if (already) return already;
   const at = project.hiddenFiles.findIndex((f) => !f.picture && newPath(project, f.name) === path);
   if (at >= 0) {
-    const [file] = project.hiddenFiles.splice(at, 1);
-    return tabShown(addTab(project, { name: file.name, path, text: file.code }));
+    const name = project.hiddenFiles[at].name;
+    const open = () => {
+      const again = project.hiddenFiles.findIndex((f) => !f.picture && newPath(project, f.name) === path);
+      if (again < 0 || !S.projects.has(project.id)) return findOpen(path);
+      const [file] = project.hiddenFiles.splice(again, 1);
+      return tabShown(addTab(project, { name: file.name, path, text: file.code }));
+    };
+    return S.ed.languageLoaded(languageIdFor(name)) ? open() : loadLanguagesFor([name]).then(open);
   }
   if (!project.folder || !sameFile(dirName(path), project.folder)) return null;
-  return invoke('read_files', { paths: [path] }).then(([file]) => {
+  return invoke('read_files', { paths: [path] }).then(async ([file]) => {
     if (!file || typeof file.text !== 'string' || !S.projects.has(project.id)) return null;
-    return findOpen(file.path) || tabShown(addTab(project, { name: file.name, path: file.path, text: file.text }));
+    await loadLanguagesFor([file.name]);
+    if (!S.projects.has(project.id)) return null;
+    return findOpen(file.path) || tabShown(addTab(project, { name: file.name, path: file.path, text: file.text, style: file.style }));
   });
 }
 
-function messageForRead(failures) {
-  const names = failures.map((f) => f.name).join(', ');
-  const first = failures[0];
-  if (first.error === 'too_big') {
-    return { title: 'This file is too big for HTML Lab.', text: `${names} is bigger than 5 MB.` };
+// File names inside a sentence are code: at most 3 of them, then how many more.
+function namesList(names) {
+  const shown = names.slice(0, 3);
+  const rest = names.length - shown.length;
+  const parts = [];
+  shown.forEach((name, i) => {
+    if (i) parts.push(i === shown.length - 1 && !rest ? ' and ' : ', ');
+    parts.push({ code: name });
+  });
+  if (rest) parts.push(` and ${rest} more`);
+  return parts;
+}
+
+function messageForRead(error, names) {
+  const list = namesList(names);
+  const one = names.length === 1;
+  if (error === 'too_big') {
+    return { title: 'This file is too big for HTML Lab.', text: [...list, one ? ' is bigger than 5 MB.' : ' are bigger than 5 MB.'] };
   }
-  if (first.error === 'not_text') {
-    return { title: 'HTML Lab cannot read this file.', text: `${names} is not plain text.` };
+  if (error === 'not_text') {
+    return one
+      ? { title: 'HTML Lab cannot open this file.', text: [...list, ' is a picture or another file that is not text.'] }
+      : { title: 'HTML Lab cannot open these files.', text: [...list, ' are pictures or other files that are not text.'] };
   }
-  return { title: 'HTML Lab cannot open this file.', text: `${computerName} would not let it read ${names}.` };
+  if (error === 'other_encoding') {
+    return {
+      title: one ? 'HTML Lab cannot read this file.' : 'HTML Lab cannot read these files.',
+      text: ['HTML Lab can only open text saved as UTF-8 or UTF-16, so it does not open ', ...list, '.'],
+    };
+  }
+  return { title: 'HTML Lab cannot open this file.', text: [`${computerName} would not let it read `, ...list, '.'] };
+}
+
+async function explainReadFailures(failures) {
+  const groups = new Map();
+  for (const f of failures) {
+    if (!groups.has(f.error)) groups.set(f.error, []);
+    groups.get(f.error).push(f.name);
+  }
+  for (const [error, names] of groups) {
+    await showMessage({ ...messageForRead(error, names), buttons: [{ id: 'ok', label: 'OK', primary: true }] });
+  }
 }
 
 export async function openFlow() {
@@ -195,6 +265,7 @@ export async function openPaths(picked) {
   await whenEditor();
   let list = picked;
   let refused = false;
+  let big = false;
   if (picked.length === 1) {
     const already = findOpen(picked[0]);
     if (already) {
@@ -204,6 +275,8 @@ export async function openPaths(picked) {
     }
     const scan = await invoke('scan_folder', { picked: picked[0] });
     refused = scan.refused;
+    // A scan that stopped before the end of the folder counts as big too (C48).
+    big = !!(scan.tooBig || scan.stoppedEarly);
     const pickedName = baseName(picked[0]);
     if (scan.isProject) {
       const answer = await showOpenAsk({
@@ -220,18 +293,19 @@ export async function openPaths(picked) {
       if (answer === 'yes') list = [picked[0], ...scan.linkedCss.map((f) => f.path)];
     }
   }
-  await openList(list, refused);
+  await openList(list, refused, { big });
 }
 
-async function openList(list, refused = false) {
+async function openList(list, refused = false, { big = false, fromFolder = false } = {}) {
   const results = await invoke('read_files', { paths: list });
   const good = results.filter((r) => r.text !== null && r.text !== undefined);
   const bad = results.filter((r) => r.error);
-  if (bad.length) {
-    await showMessage({ ...messageForRead(bad), buttons: [{ id: 'ok', label: 'OK', primary: true }] });
-  }
+  if (bad.length) await explainReadFailures(bad);
+  await whenEditor();
+  await loadLanguagesFor(good.map((f) => f.name));
   const wanted = good[0] ? good[0].path : null;
   let target = null;
+  const touched = new Map();
   for (const file of good) {
     const open = findOpen(file.path);
     if (open) {
@@ -242,38 +316,37 @@ async function openList(list, refused = false) {
     let project = [...S.projects.values()].find((p) => p.folder && sameFile(p.folder, folder));
     if (!project) {
       project = addProject({ name: baseName(folder), kind: 'saved', folder });
+      touched.set(project, { fresh: true, lone: false });
       await invoke('add_root', { folder });
-      project.stamp = await invoke('folder_stamp', { folder });
     }
+    if (!touched.has(project)) touched.set(project, { fresh: false, lone: project.lone });
     if (refused) project.folderRefused = true;
+    if (big) project.bigFolder = true;
+    if (fromFolder) project.fromFolder = true;
     const again = findOpen(file.path);
     if (again) {
       target = target || again;
       continue;
     }
-    const tab = addTab(project, { name: file.name, path: file.path, text: file.text });
+    const tab = addTab(project, { name: file.name, path: file.path, text: file.text, style: file.style });
     if (file.path === wanted) target = tab;
   }
-  if (!target) return;
-  hooks.layout();
-  hooks.showRight('page');
-  switchTo(target.path);
-  renderStrip();
-  writeSession();
+  if (target) {
+    hooks.layout();
+    hooks.showRight('page');
+    switchTo(target.path);
+    renderStrip();
+    writeSession();
+  }
+  for (const [project, was] of touched) {
+    refreshLone(project);
+    if (S.projects.has(project.id) && (was.fresh || was.lone || project.lone)) await restamp(project);
+  }
 }
 
 export async function droppedFiles(paths) {
-  if (isDialogOpen() || S.panelOpen) return;
-  const keep = paths.filter((p) => kindForName(baseName(p)));
-  if (!keep.length) {
-    await showMessage({
-      title: 'HTML Lab opens HTML and CSS files.',
-      text: 'Drop an HTML page or a CSS file here.',
-      buttons: [{ id: 'ok', label: 'OK', primary: true }],
-    });
-    return;
-  }
-  await openPaths(keep);
+  if (isDialogOpen() || S.panelOpen || !paths.length) return;
+  await openPlanned(await invoke('plan_open', { paths }));
 }
 
 function showSavedLabel() {
@@ -290,7 +363,7 @@ function showSavedLabel() {
 
 function fileRows(project) {
   const rows = tabsOf(project).map((t) => ({ name: t.name, icon: kindOf(t).icon }));
-  for (const f of project.hiddenFiles) rows.push({ name: f.name, icon: iconFor(f.name) });
+  for (const f of project.hiddenFiles) rows.push({ name: f.name, icon: f.picture ? 'picture' : iconFor(f.name) });
   return rows;
 }
 
@@ -299,8 +372,13 @@ function allFiles(project) {
   return {
     docs: tabs.map((t) => t.state.doc),
     files: [
-      ...tabs.map((t) => ({ name: t.name, text: t.state.doc.toString() })),
-      ...project.hiddenFiles.map((f) => ({ name: f.name, text: f.code, picture: Boolean(f.picture) })),
+      ...tabs.map((t) => ({ name: t.name, text: t.state.doc.toString(), ...writeStyle(t.style) })),
+      ...project.hiddenFiles.map((f) => ({
+        name: f.name,
+        text: f.code,
+        picture: Boolean(f.picture),
+        ...writeStyle(plainStyle()),
+      })),
     ],
   };
 }
@@ -328,6 +406,8 @@ async function moveToFolder(project, saved, docs) {
   project.name = baseName(saved.folder);
   project.kind = 'saved';
   project.hiddenFiles = [];
+  project.bigFolder = false;
+  refreshLone(project);
   await invoke('drop_buffers', { paths: [...oldPaths, ...hiddenOld] });
   await invoke('add_root', { folder: saved.folder });
   if (oldFolder) await invoke('remove_root', { folder: oldFolder });
@@ -399,7 +479,12 @@ async function writeChanged(project) {
     if (!tabs.length) return { ok: true, failed: [] };
     const sent = tabs.map((tab) => ({ tab, doc: tab.state.doc, wasNew: tab.savedDoc === null }));
     const results = await invoke('write_files', {
-      files: sent.map(({ tab, doc, wasNew }) => ({ path: tab.path, text: doc.toString(), mustNotExist: wasNew })),
+      files: sent.map(({ tab, doc, wasNew }) => ({
+        path: tab.path,
+        text: doc.toString(),
+        mustNotExist: wasNew,
+        ...writeStyle(tab.style),
+      })),
     });
     const failed = [];
     const wrote = [];
@@ -441,6 +526,7 @@ async function detachFolder(project) {
   }
   project.folder = null;
   project.kind = 'new';
+  refreshLone(project);
   await invoke('set_buffers', { files: tabsOf(project).map((t) => ({ path: t.path, text: t.state.doc.toString() })) });
   if (oldFolder) await invoke('remove_root', { folder: oldFolder });
   renderStrip();
@@ -597,27 +683,19 @@ export function onDialogClosed() {
 let externalBusy = false;
 let externalAgain = false;
 
-function namesList(names) {
-  if (names.length === 1) return names[0];
-  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
-}
-
 async function openPlanned(plan) {
-  for (const folder of plan.folders) await openList(folder.files);
+  for (const folder of plan.folders) await openList(folder.files, false, { fromFolder: true });
   if (plan.files.length) await openPaths(plan.files);
   if (plan.emptyFolders.length) {
+    const one = plan.emptyFolders.length === 1;
     await showMessage({
-      title: `${namesList(plan.emptyFolders)} has no HTML or CSS files.`,
-      text: 'HTML Lab opens folders that have web pages or style files in them.',
+      title: [...namesList(plan.emptyFolders), one ? ' has no files HTML Lab can open.' : ' have no files HTML Lab can open.'],
+      text: 'HTML Lab opens web pages and other text files.',
       buttons: [{ id: 'ok', label: 'OK', primary: true }],
     });
   }
   if (plan.others.length) {
-    await showMessage({
-      title: 'HTML Lab opens HTML and CSS files.',
-      text: `${namesList(plan.others)} cannot be opened here.`,
-      buttons: [{ id: 'ok', label: 'OK', primary: true }],
-    });
+    await showMessage({ ...messageForRead('not_text', plan.others), buttons: [{ id: 'ok', label: 'OK', primary: true }] });
   }
 }
 
@@ -645,6 +723,9 @@ async function autosaveSilently(project) {
   await writeChanged(project);
 }
 
+// The + and File > New File... (0.3.0 WP4). HTML and CSS get new_file's starter text; every
+// other file starts empty with the full name. Either way the tab is new (savedDoc null), so
+// Save and Save Automatically write it with mustNotExist and never overwrite a file (C4).
 export async function addFileFlow() {
   const tab = activeTab();
   const project = projectOf(tab);
@@ -653,27 +734,35 @@ export async function addFileFlow() {
   const styleTabs = tabs.filter((t) => kindOf(t).previewMode === 'swap');
   const cssTab = styleTabs.find((t) => t.name === 'style.css') || styleTabs[0] || null;
   const page = pageTabOf(project);
+  const hasWeb = tabs.some((t) => kindOf(t).teaching) || project.hiddenFiles.some((f) => kindForName(f.name));
   let seq = 0;
-  const answer = await showAddFileDialog({
+  const answer = await showNewFileDialog({
     kinds: S.config.kinds,
-    kindDefault: S.config.kinds[0].id,
+    startChip: hasWeb ? 'page' : 'text',
     cssName: cssTab ? cssTab.name : null,
     pageName: page ? page.name : null,
     cleanName: async (raw) => (await invoke('clean_file_name', { raw, seq: ++seq })).stem,
+    checkName: (name) => invoke('check_name', { old: '', new: name }),
     nameFree: (file) =>
       invoke('file_name_free', { tabs: tabsOf(project).map((t) => t.name), folder: project.folder, file }),
   });
   if (!answer) return;
-  const kind = S.kinds.get(answer.kind);
-  const css = kind.isPage && answer.tick ? (cssTab ? cssTab.name : null) : null;
-  const made = await invoke('new_file', { kind: answer.kind, stem: answer.stem, css });
-  if (!made) return;
-  const path = pathInProject(project, made.file);
-  const added = addTab(project, { name: made.file, path, text: made.text, onDisk: !project.folder });
-  await invoke('set_buffers', { files: [{ path, text: made.text }] });
+  const kind = answer.kind ? S.kinds.get(answer.kind) : null;
+  let text = '';
+  if (kind) {
+    const css = kind.isPage && answer.tick ? (cssTab ? cssTab.name : null) : null;
+    const made = await invoke('new_file', { kind: answer.kind, stem: answer.stem, css });
+    if (!made) return;
+    text = made.text;
+  }
+  const path = pathInProject(project, answer.file);
+  await loadLanguagesFor([answer.file]);
+  if (!S.projects.has(project.id)) return;
+  const added = addTab(project, { name: answer.file, path, text, onDisk: !project.folder });
+  await invoke('set_buffers', { files: [{ path, text }] });
 
-  if (!kind.isPage && answer.tick && page) {
-    const insert = await invoke('add_link', { html: page.state.doc.toString(), cssFile: made.file });
+  if (kind && !kind.isPage && answer.tick && page) {
+    const insert = await invoke('add_link', { html: page.state.doc.toString(), cssFile: answer.file });
     if (insert) applyLink(page, insert);
   }
   switchTo(added.path);
@@ -698,6 +787,7 @@ function removeTab(tab) {
   S.ed.drop(tab);
 
   const rest = tabsOf(project);
+  refreshLone(project);
   if (!rest.length) {
     if (project.folder) invoke('remove_root', { folder: project.folder });
     if (project.hiddenFiles.length) {
@@ -712,6 +802,7 @@ function removeTab(tab) {
     preview.pageTabMoved(project);
   }
   if (!rest.length) S.projects.delete(project.id);
+  if (!S.tabs.length) S.sideManual = null;
 
   if (wasActive) {
     forgetActive();
@@ -735,7 +826,7 @@ function switchToAfterClose(next, closed) {
   S.ed.show(next);
   updateInside();
   if (!S.dialogOpen) S.ed.view.focus();
-  preview.onTabSwitch(closed, next);
+  withSide(() => preview.onTabSwitch(closed, next));
 }
 
 export async function closeTabFlow(path) {
@@ -808,6 +899,7 @@ export async function tryIt(topicId) {
   await whenEditor();
   const existing = S.tabs.find((t) => t.topicId === topicId);
   markTried(topicId);
+  S.sideManual = null;
   hooks.showRight('page');
   if (existing) {
     switchTo(existing.path);
@@ -880,10 +972,11 @@ export function placeForBlock(doc, selection, text, lang) {
   return null;
 }
 
-function writeSession() {
+// The side's own choice goes with the tabs; with no tab on disk nothing is kept (WP3).
+export function writeSession() {
   const tabs = S.tabs.filter(isOnDisk).map((t) => t.path);
   const active = tabs.includes(S.activePath) ? S.activePath : null;
-  const session = tabs.length ? { tabs, active } : null;
+  const session = tabs.length ? { tabs, active, side: S.sideManual } : null;
   S.prefs.session = session;
   invoke('set_prefs', { patch: { session } });
 }
@@ -893,19 +986,24 @@ export async function restoreSession(session) {
   const results = await invoke('read_files', { paths: session.tabs });
   const good = results.filter((r) => r.text !== null && r.text !== undefined);
   if (!good.length) return false;
+  await loadLanguagesFor(good.map((f) => f.name));
+  const touched = new Set();
   for (const file of good) {
     const folder = dirName(file.path);
     let project = [...S.projects.values()].find((p) => p.folder && sameFile(p.folder, folder));
     if (!project) {
       project = addProject({ name: baseName(folder), kind: 'saved', folder });
       await invoke('add_root', { folder });
-      project.stamp = await invoke('folder_stamp', { folder });
     }
-    if (!findOpen(file.path)) addTab(project, { name: file.name, path: file.path, text: file.text });
+    touched.add(project);
+    if (!findOpen(file.path)) addTab(project, { name: file.name, path: file.path, text: file.text, style: file.style });
   }
+  for (const project of touched) await restamp(project);
   const wanted = (session.active && findOpen(session.active)) || S.tabs[0];
   const project = projectOf(wanted);
   if (isPage(wanted)) project.pageTab = wanted.path;
+  const testRun = S.flags.selfTest || S.flags.smokeTest || S.flags.speedCheck;
+  S.sideManual = !testRun && (session.side === 'shown' || session.side === 'hidden') ? session.side : null;
   hooks.layout();
   switchTo(wanted.path);
   writeSession();
@@ -928,6 +1026,16 @@ export async function openInSafari() {
   const page = pageTabOf(project);
   if (page) await invoke('open_in_safari', { path: page.path });
 }
+
+// For Change Name (rename.js, 0.3.0 WP5): its steps run in the project's write queue, after the
+// auto-save timer is cleared, so no save can write the old name back. The auto-save also waits
+// while its Undo is offered.
+export function clearAutosave() {
+  clearTimeout(autosaveTimer);
+  autosaveTimer = 0;
+  autosaveWaiting = false;
+}
+export { queued, refreshLone, pathInProject, newPath, loadLanguagesFor, findOpen };
 
 export const __openContent = openContent;
 export const __openList = openList;

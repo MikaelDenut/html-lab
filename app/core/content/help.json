@@ -2163,7 +2163,7 @@
       "rows": [
         {
           "code": "Cmd+N",
-          "means": "Make a new page",
+          "means": "Make a new project",
           "color": null
         },
         {
@@ -2183,7 +2183,7 @@
         },
         {
           "code": "Cmd+Shift+N",
-          "means": "Add a new file",
+          "means": "Make a new file",
           "color": null
         },
         {
@@ -2264,6 +2264,11 @@
         {
           "code": "Cmd+Shift+M",
           "means": "Show my page",
+          "color": null
+        },
+        {
+          "code": "Cmd+Shift+Y",
+          "means": "Hide or show the My page side",
           "color": null
         },
         {

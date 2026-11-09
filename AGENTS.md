@@ -1,6 +1,6 @@
 ---
 class:   truth
-updated: 2026-11-08
+updated: 2026-11-09
 status:  current
 ---
 
@@ -20,7 +20,7 @@ The other gates are listed in [CONTRIBUTING.md](CONTRIBUTING.md). Run them all b
 ## What not to get wrong
 
 1. **Releasing is never automatic.** `scripts/sign-notarize.sh` runs on the maintainer's word only.
-2. **The bundles are committed.** After editing `ui-src/`, rebuild `ui/editor.bundle.js` and `src-tauri/helper.min.js`.
+2. **The bundles are committed.** After editing `ui-src/`, rebuild `ui/editor.bundle.js` with its chunks in `ui/editor/`, and `src-tauri/helper.min.js` (commands in [README.md](README.md)). Commit the added and deleted chunks together.
 3. **Version is three files.** `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`, `package.json` must match, and go up one for every build that leaves the build folder.
 4. **Scripts stay blocked in the preview.** `SCRIPT_POLICY` in `core/src/kinds.rs`. A runaway script would freeze the editor.
 5. **Check on the old engine.** Newer CSS can work here and fail on macOS 12's WebKit. Templates must pass `scripts/check-template.py`.

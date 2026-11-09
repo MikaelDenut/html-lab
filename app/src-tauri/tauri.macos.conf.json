@@ -3,6 +3,7 @@
     "fileAssociations": [
       { "ext": ["html", "htm"], "contentTypes": ["public.html"], "name": "HTML page", "role": "Editor", "rank": "Alternate" },
       { "ext": ["css"], "name": "CSS style file", "role": "Editor", "rank": "Default" },
+      { "ext": ["js", "json", "md", "txt"], "contentTypes": ["com.netscape.javascript-source", "public.json", "net.daringfireball.markdown", "public.plain-text"], "name": "Text file", "role": "Editor", "rank": "Alternate" },
       { "ext": [], "contentTypes": ["public.folder"], "name": "Folder", "role": "Viewer", "rank": "Alternate" }
     ]
   }

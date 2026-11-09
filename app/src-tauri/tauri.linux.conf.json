@@ -2,7 +2,11 @@
   "bundle": {
     "fileAssociations": [
       { "ext": ["html", "htm"], "mimeType": "text/html" },
-      { "ext": ["css"], "mimeType": "text/css" }
+      { "ext": ["css"], "mimeType": "text/css" },
+      { "ext": ["js"], "mimeType": "text/javascript" },
+      { "ext": ["json"], "mimeType": "application/json" },
+      { "ext": ["md"], "mimeType": "text/markdown" },
+      { "ext": ["txt"], "mimeType": "text/plain" }
     ],
     "linux": {
       "deb": { "section": "education", "desktopTemplate": "linux/html-lab.desktop" }

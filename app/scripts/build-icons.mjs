@@ -41,7 +41,7 @@ const UI_ICONS = [
   'x', 'plus', 'minus', 'caret-right', 'caret-left', 'caret-down', 'check',
   'magnifying-glass', 'device-mobile', 'device-tablet', 'desktop', 'compass',
   'text-indent', 'warning', 'lightbulb', 'arrow-right', 'arrow-square-out', 'image',
-  'copy', 'hand-pointing', 'bounding-box', 'caret-up',
+  'copy', 'hand-pointing', 'bounding-box', 'caret-up', 'sidebar-simple', 'browser', 'pencil-simple',
 ];
 
 const APP_ICON = '<symbol id="i-app" viewBox="0 0 64 64">'

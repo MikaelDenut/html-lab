@@ -5,7 +5,7 @@
 // The tests read only the DOM, the probe replies and exported functions, never CodeMirror internals.
 import { invoke } from './api.js';
 
-export const SEE_TESTS = 47;
+export const SEE_TESTS = 49;
 
 const SAMPLE_IDS = ['space-poster', 'space-club', 'my-hobby', 'pancakes', 'gallery'];
 // Code elements a sample page may hold that the page itself does not show as written.
@@ -962,6 +962,43 @@ async function boxesTests(h, d) {
       runCommand('boxes');
       await until(() => d.pressed('btn-boxes') === 'false', 'Boxes not pressed');
       await d.waitFor(d.inspect, (v) => v.boxes === false, 'boxes off in the page');
+    } finally {
+      await turnOff();
+    }
+  });
+
+  // Teeth: without link.onAllClosed in preview.reset, the next page comes up with the boxes on.
+  await t('Boxes: closing the last tab turns Show the Boxes off, and the next page has none', async () => {
+    try {
+      await openContent('A', [['a.html', BOXES]]);
+      runCommand('boxes');
+      await boxesAre(5, 'five boxes');
+      // The same removal a close runs after its question; a new project's tab would ask first.
+      h.flows.__closeAllNow();
+      eq(h.S.tabs.length, 0, 'tabs left');
+      eq(d.pressed('btn-boxes'), 'false', 'Boxes pressed with no tab');
+      await openContent('B', [['b.html', BOXES]]);
+      eq(d.pressed('btn-boxes'), 'false', 'Boxes pressed on the next page');
+      eq((await d.inspect()).boxes, false, 'boxes in the next page');
+    } finally {
+      await turnOff();
+    }
+  });
+
+  // Teeth: with every label put at its first spot (above, at the left), the
+  // label of the second li sits on the first letter of the li above it.
+  await t('Boxes: no label covers a letter, in a list and in the space sample', async () => {
+    try {
+      await openContent('A', [['a.html', BOXES]]);
+      await turnOff();
+      runCommand('boxes');
+      await d.waitFor(d.inspect, (v) => v.boxes === true && v.boxCount === 5 && v.boxLabels > 0, 'the list boxes');
+      eq((await d.inspect()).labelsOverText, 0, 'labels over text in the list');
+      await turnOff();
+      await h.sample('space-club');
+      runCommand('boxes');
+      await d.waitFor(d.inspect, (v) => v.boxes === true && v.boxLabels >= 8, 'the space sample boxes');
+      eq((await d.inspect()).labelsOverText, 0, 'labels over text in the space sample');
     } finally {
       await turnOff();
     }

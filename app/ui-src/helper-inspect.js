@@ -13,6 +13,8 @@ const LABEL_ROOM = 120;
 const MAX_RULE = 200;
 const MAX_RULE_LABELS = 20;
 const MAX_BOXES = 600;
+const MAX_TEXT = 3000;
+const ROW = 32;
 const DROP = /^(hover|focus(-within|-visible)?|active|visited|target|link|before|after|first-(line|letter))$/;
 const NAME = /^(?:[\w-]|[^\0-\x7f]|\\[^])*/;
 const SKIP = /^(script|style|template)$/;
@@ -98,6 +100,46 @@ export function labelRight(x, pageWidth) {
   return x + LABEL_ROOM > pageWidth;
 }
 
+// Where a box label may go, in the order tried: above the box, then inside its
+// top, each at the left and then at the right. Rects are in page coordinates.
+export function labelSpots(x, y, w, h, edge, width, pageWidth) {
+  const above = labelTop(y, h, edge);
+  const inside = Math.max(0, Math.min(edge - y, h - LABEL_H));
+  const sides = labelRight(x, pageWidth) ? [true] : [false, true];
+  const spots = [];
+  for (const top of above === inside ? [above] : [above, inside]) {
+    for (const right of sides) {
+      const l = right ? x + w - width : x - 2;
+      spots.push({ top, right, l, t: y + top, r: l + width, b: y + top + LABEL_H });
+    }
+  }
+  return spots;
+}
+
+export const labelWidth = (name) => name.length * 7 + 8;
+
+// Rects bucketed by rows of the page, so a label is tested only against what is near it.
+export function rectRows() {
+  const rows = new Map();
+  const span = (a, f) => {
+    for (let i = Math.floor(a.t / ROW); i <= Math.floor(a.b / ROW); i++) f(i);
+  };
+  return {
+    add(a) {
+      span(a, (i) => (rows.get(i) || rows.set(i, []).get(i)).push(a));
+    },
+    hits(a) {
+      let hit = false;
+      span(a, (i) => {
+        for (const b of rows.get(i) || []) {
+          if (a.l < b.r - 1 && a.r > b.l + 1 && a.t < b.b - 1 && a.b > b.t + 1) hit = true;
+        }
+      });
+      return hit;
+    },
+  };
+}
+
 export function numberElements(list, own) {
   const els = [];
   for (let i = 0; i < list.length; i++) {
@@ -131,6 +173,8 @@ export function initInspect({ post }) {
   let ruleSel = null;
   let ruleCount = null;
   let boxCount = 0;
+  let boxLabels = 0;
+  let labelsOverText = 0;
   let inside = false;
   let target = null;
   let mouseX = 0;
@@ -197,7 +241,8 @@ export function initInspect({ post }) {
   // Clamped to the page's own size: a box of something the page clips must not
   // make the page scroll further. An element no longer in the page has an
   // empty box, so it draws nothing.
-  function outline(el, color, label, edge, cls, r = el.getBoundingClientRect()) {
+  // `place`, when given, picks the label's spot from the box's page rect.
+  function outline(el, color, label, edge, cls, r = el.getBoundingClientRect(), place = null) {
     const x = Math.max(r.left + scrollX, 0);
     const y = Math.max(r.top + scrollY, 0);
     const w = Math.min(r.right + scrollX, pageW) - x;
@@ -205,10 +250,33 @@ export function initInspect({ post }) {
     if (!(w > 0 && h > 0)) return '';
     let s = `<div class="${cls}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;--c:${color}">`;
     if (label) {
-      const side = labelRight(x, pageW) ? ';left:auto;right:0' : '';
-      s += `<b style="top:${labelTop(y, h, edge)}px${side}">${nameOf(el).replace(/</g, '&lt;')}</b>`;
+      const name = nameOf(el);
+      const spot = place ? place(x, y, w, h, name) : { top: labelTop(y, h, edge), right: labelRight(x, pageW) };
+      const side = spot.right ? ';left:auto;right:0' : '';
+      s += `<b style="top:${spot.top}px${side}">${name.replace(/</g, '&lt;')}</b>`;
     }
     return s + '</div>';
+  }
+
+  // The lines of text on the page, so a box label can keep off the letters.
+  function textRows() {
+    const rows = rectRows();
+    if (!document.body) return rows;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const range = document.createRange();
+    let count = 0;
+    for (let n = walker.nextNode(); n && count < MAX_TEXT; n = walker.nextNode()) {
+      const p = n.parentElement;
+      if (!p || SKIP.test(p.localName) || !/\S/.test(n.data)) continue;
+      count++;
+      range.selectNodeContents(n);
+      for (const r of range.getClientRects()) {
+        if (r.width > 0 && r.height > 0) {
+          rows.add({ l: r.left + scrollX, t: r.top + scrollY, r: r.right + scrollX, b: r.bottom + scrollY });
+        }
+      }
+    }
+    return rows;
   }
 
   function ruleOutlines() {
@@ -228,12 +296,27 @@ export function initInspect({ post }) {
   function boxOutlines() {
     let s = '';
     let n = 0;
+    const text = textRows();
+    const labels = rectRows();
+    boxLabels = 0;
+    labelsOverText = 0;
+    // The first spot clear of text and of other labels, else the first clear of
+    // text, else the first. A label over a letter hides the very word it names.
+    const place = (x, y, w, h, name) => {
+      const spots = labelSpots(x, y, w, h, 0, labelWidth(name), pageW);
+      const spot =
+        spots.find((a) => !text.hits(a) && !labels.hits(a)) || spots.find((a) => !text.hits(a)) || spots[0];
+      labels.add(spot);
+      boxLabels++;
+      if (text.hits(spot)) labelsOverText++;
+      return spot;
+    };
     const walk = (parent, depth) => {
       for (let el = parent.firstElementChild; el && n <= MAX_BOXES; el = el.nextElementSibling) {
         if (SKIP.test(el.localName) || own(el)) continue;
         const r = el.getBoundingClientRect();
         if (r.width > 0 && r.height > 0 && ++n <= MAX_BOXES) {
-          s += outline(el, depthColor(depth), r.width >= 40 && r.height >= 16, 0, 'o', r);
+          s += outline(el, depthColor(depth), r.width >= 40 && r.height >= 16, 0, 'o', r, place);
         }
         walk(el, depth + 1);
       }
@@ -471,6 +554,8 @@ export function initInspect({ post }) {
           point,
           boxes: boxesOn,
           boxCount: boxesOn ? boxCount : 0,
+          boxLabels: boxesOn ? boxLabels : 0,
+          labelsOverText: boxesOn ? labelsOverText : 0,
           hover: num(hovEl),
           mark: num(markEl),
           markShown: shown(groups.mark),

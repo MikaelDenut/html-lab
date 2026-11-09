@@ -1,0 +1,1 @@
+import{a as p}from"./chunk-GT374VNL.js";import{c as r,e as t}from"./chunk-WERCO2IT.js";import"./chunk-2KTEC33I.js";import"./chunk-DYT227AT.js";import{na as o}from"./chunk-H3U6UN5B.js";var a=new o(r,t().support);function s(){return a}var u=!1;export{p as findMistake,u as legacy,s as support};

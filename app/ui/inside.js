@@ -1,4 +1,6 @@
-// The "You are inside" row under the code: the tags (or CSS rule) that hold the cursor.
+// The "You are inside" row under the code: the tags (or CSS rule) that hold the cursor. Other
+// languages show their own names (codePath) or no row at all (C47, WP2 step 10).
+import { kindOf } from './state.js';
 
 const LEAD = 'You are inside:';
 const NO_TAG = 'You are not inside a tag here.';
@@ -29,15 +31,30 @@ function tabView() {
   return view && view.htmllabTab && S.E && S.E.insidePath ? view : null;
 }
 
+// Teaching kinds get the tag or rule path; other files get codePath, which is null for a
+// language with no row.
+function pathFor(view) {
+  const tab = view.htmllabTab;
+  if (kindOf(tab).teaching) return S.E.insidePath(view.state);
+  return S.E.codePath ? S.E.codePath(view.state, tab.language) : null;
+}
+
 function render() {
   frame = 0;
   const view = tabView();
   if (!view) {
     if (shown !== '') host.textContent = '';
+    host.hidden = false;
     shown = '';
     return;
   }
-  const path = S.E.insidePath(view.state);
+  const path = pathFor(view);
+  host.hidden = !path;
+  if (!path) {
+    if (shown !== '') host.textContent = '';
+    shown = '';
+    return;
+  }
   if (path.key === shown) return;
   shown = path.key;
   draw(path);
@@ -59,7 +76,7 @@ function separator() {
 function draw(path) {
   host.textContent = '';
   if (!path.items.length) {
-    host.append(span('inside-none', path.kind === 'no-rule' ? NO_RULE : NO_TAG));
+    if (path.kind !== 'no-code') host.append(span('inside-none', path.kind === 'no-rule' ? NO_RULE : NO_TAG));
     return;
   }
   const crumbs = span('inside-crumbs', '');
@@ -113,7 +130,8 @@ function onClick(event) {
   const button = event.target.closest ? event.target.closest('.inside-crumb') : null;
   const view = tabView();
   if (!button || !view) return;
-  const path = S.E.insidePath(view.state);
+  const path = pathFor(view);
+  if (!path) return;
   const item = path.items[Number(button.dataset.i)];
   if (path.key !== shown) updateInside();
   if (item && item.label === button.textContent) S.E.selectRange(view, item.from, item.to);

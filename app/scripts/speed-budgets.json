@@ -25,6 +25,7 @@
   "templateOpen": {"p95": 300, "label": "Open a template, answer to its home page painted"},
   "idleCpu": {"maxValue": 1, "label": "Idle CPU, whole app (% of one core)"},
   "memoryMb": {"maxValue": 300, "label": "Memory, all app processes (MB)", "note": "Measured after a 5,000-line page was opened and closed; 174 MB before that test existed"},
-  "editorBundleKb": {"maxValue": 600, "label": "Editor bundle (KB)"},
+  "editorBundleKb": {"maxValue": 600, "label": "Editor bundle and the chunks it loads at start (KB)"},
+  "editorAllKb": {"maxValue": 1600, "label": "Editor bundle and all language chunks (KB)"},
   "appBundleMb": {"maxValue": 30, "label": "App bundle (MB)", "note": "Raised from 20 to 30 for the full gallery of 42 templates, 2026-11-08; 15 before the gallery"}
 }

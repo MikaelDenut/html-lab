@@ -8,8 +8,16 @@ APP="src-tauri/target/universal-apple-darwin/release/bundle/macos/HTML Lab.app"
 OUT="src-tauri/target/hand-over"
 
 security find-identity -v -p codesigning | grep -q "$IDENTITY" || { echo "signing identity missing"; exit 1; }
+# The notary profile lives in the data-protection keychain, which can only be read
+# while this Mac is unlocked. It is not deleted when the screen locks; it comes back.
+xcrun notarytool history --keychain-profile "$PROFILE" >/dev/null 2>&1 || {
+  echo "notary profile $PROFILE cannot be read now."
+  echo "It can only be read while this Mac is unlocked (screen on). Unlock it and run again;"
+  echo "if it still fails, check with: xcrun notarytool history --keychain-profile $PROFILE"
+  exit 1
+}
 
-npx esbuild ui-src/editor.js --bundle --minify --format=esm --target=safari15 --outfile=ui/editor.bundle.js --log-level=warning
+rm -rf ui/editor && npx esbuild ui-src/editor.js --bundle --minify --splitting --format=esm --target=safari15 --outdir=ui --entry-names=editor.bundle '--chunk-names=editor/[name]-[hash]' --log-level=warning
 npx esbuild ui-src/helper.js --bundle --minify --format=iife --target=safari15 --outfile=src-tauri/helper.min.js --log-level=warning
 
 REV="$(git rev-parse --short=12 HEAD)"

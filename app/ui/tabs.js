@@ -1,6 +1,6 @@
 import { refreshCanAdd } from './help.js';
 import { invoke } from './api.js';
-import { kindOf, projectOf, S, activeTab, activeProject, isChanged, tabByPath, tabsOf, isPage } from './state.js';
+import { kindOf, projectOf, S, activeTab, activeProject, isChanged, tabByPath, tabsOf, isPage, languageRow, tidyAllowed, tidyOffText } from './state.js';
 import { tabHtml } from './views.js';
 import * as preview from './preview.js';
 import { boxesOn } from './link.js';
@@ -21,6 +21,8 @@ export function dotOn(tab) {
 }
 
 function labelFor(tab) {
+  // While the Change Name dialog is open the tab shows the new name (WP5).
+  if (S.renaming && S.renaming.pending && S.renaming.path === tab.path) return S.renaming.pending;
   const project = projectOf(tab);
   if (project.kind === 'practice' && tabsOf(project).length === 1) return 'Practice';
   const twin = S.tabs.some((t) => t !== tab && t.name === tab.name);
@@ -32,9 +34,27 @@ function tooltipFor(tab) {
 }
 
 let lastStrip = '';
+let lastActive = null;
+let activeSince = 0;
+
+// How long the active tab has been the active one, in ms: a click on its name changes the name
+// only after 500 ms, so a double-click on another tab just switches to it (WP5).
+export function activeFor() {
+  return lastActive === S.activePath ? performance.now() - activeSince : 0;
+}
+
+// The Change Name field lives in a tab, so a rebuild of the strip takes it out and puts it back.
+let stripHooks = { before: () => {}, after: () => {} };
+export function setStripHooks(hooks) {
+  stripHooks = hooks;
+}
 
 export function renderStrip() {
   const list = document.getElementById('tab-list');
+  if (S.activePath !== lastActive) {
+    lastActive = S.activePath;
+    activeSince = performance.now();
+  }
   const rows = S.tabs.map((tab) => {
     const kind = kindOf(tab);
     tab.dotShown = dotOn(tab);
@@ -45,6 +65,7 @@ export function renderStrip() {
       kind: kind.id,
       kindIcon: kind.icon,
       kindColor: kind.colorToken,
+      letters: kind.teaching ? '' : languageRow(tab).letters,
       dirty: tab.dotShown,
       tooltip: tooltipFor(tab),
     };
@@ -52,7 +73,9 @@ export function renderStrip() {
   const key = JSON.stringify(rows);
   if (key !== lastStrip || list.children.length !== rows.length) {
     lastStrip = key;
+    stripHooks.before();
     list.innerHTML = rows.map((row) => tabHtml({ ...row, active: row.path === S.activePath })).join('');
+    stripHooks.after();
   } else {
     for (const el of list.children) el.classList.toggle('active', el.dataset.path === S.activePath);
   }
@@ -84,7 +107,42 @@ export function updateStatus() {
   document.getElementById('status-mark').dataset.state = row.mark;
 }
 
+const TIDY_TITLE = 'Fix the indents in this file';
+let lastFooter = '';
+
+// The language label and Tidy, for the active tab. Tidy that is off stays focusable
+// (aria-disabled, not disabled) and says why (WP2 step 9).
+export function updateFooter() {
+  const tab = activeTab();
+  if (!tab) return;
+  const teaching = !!kindOf(tab).teaching;
+  const label = teaching ? '' : languageRow(tab).label;
+  const off = tidyAllowed(tab) ? '' : tidyOffText(tab);
+  const key = `${label}|${off}`;
+  if (key === lastFooter) return;
+  lastFooter = key;
+  const lang = document.getElementById('lang-label');
+  lang.textContent = label;
+  lang.hidden = !label;
+  const tidy = document.getElementById('btn-tidy');
+  document.getElementById('tidy-off').textContent = off;
+  tidy.title = off || TIDY_TITLE;
+  if (off) {
+    tidy.setAttribute('aria-disabled', 'true');
+    tidy.setAttribute('aria-describedby', 'tidy-off');
+  } else {
+    tidy.removeAttribute('aria-disabled');
+    tidy.removeAttribute('aria-describedby');
+  }
+}
+
 let lastMenu = '';
+let menuNow = null;
+// The menu state last sent, for the tests.
+export function menuState() {
+  return menuNow;
+}
+
 export function syncMenu() {
   const project = activeProject();
   const state = {
@@ -96,8 +154,13 @@ export function syncMenu() {
     autosave: S.prefs.autosave,
     boxes: boxesOn(),
     pointable: preview.showingPageTab(),
+    sideShown: S.sideShown,
+    // A practice copy keeps its name; Undo Change Name only while the toast offers Undo (WP5).
+    renamable: !!(project && project.kind !== 'practice'),
+    undoRename: !!S.renameUndo,
   };
   const key = JSON.stringify(state);
+  menuNow = state;
   if (key === lastMenu) return;
   lastMenu = key;
   invoke('set_menu_state', { menuState: state });
@@ -129,8 +192,9 @@ export function switchTo(path, { focus = true } = {}) {
   lastStatus = null;
   renderStrip();
   updateStatus();
+  updateFooter();
   if (mark) mark.push(performance.now());
-  preview.onTabSwitch(prev, next);
+  withSide(() => preview.onTabSwitch(prev, next));
   if (mark) mark.push(performance.now());
   if (S.rightView === 'help') refreshCanAdd();
   syncMenu();
@@ -138,6 +202,22 @@ export function switchTo(path, { focus = true } = {}) {
     mark.push(performance.now());
     S.steps.push(mark.slice(1).map((t, i) => t - mark[i]));
   }
+}
+
+// The My page side is decided before the preview hears of a tab switch, so a hidden side
+// pauses it at once, and drawn after, so a side that comes back loads only once (WP3).
+let side = { wanted: () => S.sideShown, hiding: () => {}, draw: () => {} };
+export function setSideHooks(hooks) {
+  side = hooks;
+}
+
+export function withSide(fn) {
+  const was = S.sideShown;
+  const next = side.wanted();
+  if (was && !next) side.hiding();
+  S.sideShown = next;
+  fn();
+  side.draw(was);
 }
 
 export function forgetActive() {

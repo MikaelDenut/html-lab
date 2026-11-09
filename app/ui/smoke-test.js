@@ -1,9 +1,10 @@
 import { invoke } from './api.js';
 import { S, activeTab, activeProject } from './state.js';
+import * as flows from './flows.js';
 import { seeSteps } from './smoke-test-see.js';
 
-export const MIN_STEPS = 39; // 32 + SEE_STEPS (7)
-const MIN_TEMPLATES = 6;
+export const MIN_STEPS = 49; // 37 + SEE_STEPS (7) + RENAME_STEPS (5)
+const MIN_TEMPLATES = 42; // every template that ships; a missing one fails the run (T2)
 
 const results = [];
 let shot = 0;
@@ -203,6 +204,15 @@ async function step(name, fn) {
   const file = `smoke-${String(shot).padStart(2, '0')}-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}.png`;
   row.shot = (await invoke('test_snapshot', { name: file }).catch(() => false)) ? file : null;
   results.push(row);
+}
+
+// A picture in the middle of a step, named after the step that comes next, so the hidden side
+// is seen although every step that hides it shows it again before it ends.
+async function picture(label) {
+  await wait(150);
+  await frames(2);
+  const file = `smoke-${String(shot + 1).padStart(2, '0')}-${label}.png`;
+  await invoke('test_snapshot', { name: file }).catch(() => false);
 }
 
 function present(el) {
@@ -536,14 +546,18 @@ export async function run({ preview }) {
     if (missing.length) throw new Error(`the saved template has no ${missing.join(', ')}`);
   });
 
-  await step('Add a new file', async () => {
+  await step('Make a new file from the +', async () => {
     await newFrom('Style inside the page', 'a new project');
     await until(() => activeProject() && activeProject().kind === 'new', 'a new project');
     await clickOn($('tab-add'), 'the + button');
-    const box = await until(() => dialog(), 'the Add a new file dialog');
-    await clickOn(box.querySelector('#dlg-file'), 'the file name box');
+    const box = await until(() => dialog() && dialog().textContent.includes('Make a new file') && dialog(), 'the Make a new file dialog');
+    const name = box.querySelector('#dlg-file');
+    await clickOn(name, 'the Name box');
+    name.select();
     typeText('about');
-    await clickOn(byText('Add this file', box), 'Add this file');
+    await until(() => box.textContent.includes('You will get about.html.'), 'the hint to say about.html');
+    await picture('make-a-new-file-dialog');
+    await clickOn(byText('Make the file', box), 'Make the file');
     await until(() => !dialog(), 'the dialog to close');
     await until(() => activeTab() && activeTab().name === 'about.html', 'about.html to open');
   });
@@ -602,6 +616,252 @@ export async function run({ preview }) {
       if (a !== b) throw new Error(`${message || 'expected equal'}: got ${JSON.stringify(a)}, wanted ${JSON.stringify(b)}`);
     },
     S, E: S.E, P: preview.state, preview, $,
+  });
+
+  // WP3 (mockups 01 to 04). These steps come after every step that needs the page. A step that
+  // hides the side shows it again with a real click before it ends, also when it fails.
+  const sideButton = () => $('btn-side');
+  const sideShown = () => present($('right'));
+  const showSideAgain = async (label) => {
+    if (!S.sideShown) await clickOn(sideButton(), `${label}: the side button, to show the side again`);
+  };
+
+  await step('The side button hides My page and brings it back', async () => {
+    try {
+      const button = must(sideButton(), 'the side button');
+      if (button.title !== 'Hide the My page side') throw new Error(`the tooltip says ${button.title}`);
+      const before = button.getBoundingClientRect();
+      await clickOn(button, 'the side button');
+      if (sideShown() || S.sideShown) throw new Error('the side did not hide');
+      if (present(document.querySelector('.segs'))) throw new Error('the My page and Help switch still shows');
+      must(document.querySelector('.brand'), 'the brand');
+      const left = $('left').getBoundingClientRect();
+      const main = $('main').getBoundingClientRect();
+      if (main.right - left.right > 13) throw new Error(`the code ends ${Math.round(main.right - left.right)} px before the window edge`);
+      if (sideButton().title !== 'Show the My page side') throw new Error(`the tooltip says ${sideButton().title}`);
+      if (Math.round(sideButton().getBoundingClientRect().left) !== Math.round(before.left)) throw new Error('the side button moved');
+      await picture('side-hidden-by-hand');
+      await clickOn(sideButton(), 'the side button again');
+      if (!sideShown() || !S.sideShown) throw new Error('the side did not come back');
+      await settled(preview);
+      must($('preview'), 'the page');
+    } finally {
+      await showSideAgain('side button');
+    }
+  });
+
+  // WP2 (mockup 02). The files arrive the way a drop brings them; everything after that is real clicks.
+  const GAME_PY = '# A tiny jumping game\nimport random\n\nGRAVITY = 0.5\nJUMP = -9\n\nclass Player:\n'
+    + '    def __init__(self, name):\n        self.name = name\n        self.y = 0\n        self.speed = 0\n\n'
+    + '    def jump(self):\n        if self.y == 0:\n            self.speed = JUMP\n            print(f"{self.name} jumps!")\n\n'
+    + '    def fall(self):\n        self.speed += GRAVITY\n        self.y = min(0, self.y + self.speed)\n';
+  const LEVELS_JSON = '{\n"levels": [\n      { "coins": 3 },\n  { "coins": 5 }\n  ]\n}\n';
+  const dropFile = async (name, text, label) => {
+    if (!temp) throw new Error('no temp folder for the language files');
+    const dir = `${temp}/language-${name.replace(/\W/g, '-')}`;
+    if (!(await invoke('test_make_folder', { path: dir }))) throw new Error(`${label}: the folder was not made`);
+    const path = `${dir}/${name}`;
+    const ok = await invoke('test_write_bytes', { path, bytes: Array.from(new TextEncoder().encode(text)) });
+    if (!ok) throw new Error(`${label}: ${name} was not written`);
+    await flows.droppedFiles([path]);
+    await until(() => activeTab() && activeTab().name === name, `${label}: ${name} to open`);
+    const tab = document.querySelector('.tab.active');
+    await clickOn(tab && tab.querySelector('.tab-main'), `${label}: the ${name} tab`);
+    return must(document.querySelector('.tab.active'), `${label}: the active tab`);
+  };
+  const insideRow = () => {
+    const row = $('inside-line');
+    const crumbs = [...row.querySelectorAll('.inside-crumb')].map((b) => b.textContent.trim()).join(' › ');
+    return row.hidden ? '' : crumbs;
+  };
+
+  await step('A Python file shows its language, and Tidy says why it is off', async () => {
+    try {
+      await pythonStep();
+    } finally {
+      await showSideAgain('Python');
+    }
+  });
+
+  async function pythonStep() {
+    const tab = await dropFile('game.py', GAME_PY, 'Python');
+    if (sideShown() || S.sideShown) throw new Error('the side did not hide by itself for a Python file');
+    const room = $('main').getBoundingClientRect().right - $('left').getBoundingClientRect().right;
+    if (room > 13) throw new Error(`the code ends ${Math.round(room)} px before the window edge`);
+    const letters = tab.querySelector('.tab-letters text');
+    if (!letters || letters.textContent !== 'PY') throw new Error(`the tab shows ${letters ? letters.textContent : 'no letters'}`);
+    const label = must($('lang-label'), 'the language label');
+    if (label.textContent !== 'Python') throw new Error(`the label says ${label.textContent}`);
+    const tidy = must($('btn-tidy'), 'Tidy');
+    if (tidy.getAttribute('aria-disabled') !== 'true') throw new Error('Tidy is not greyed');
+    if (tidy.title !== 'Tidy is off for Python files, because spaces change what the code means.') throw new Error(`Tidy says ${tidy.title}`);
+    if (label.getBoundingClientRect().right > tidy.getBoundingClientRect().left + 1) throw new Error('the label is not left of Tidy');
+    await clickAfter('if self.y == 0:', 'click after the if line');
+    await until(() => insideRow() === 'class Player › def jump › if', () => `the inside row, saw "${insideRow()}"`, 3000);
+    const before = code();
+    await clickOn(tidy, 'the greyed Tidy');
+    await frames(3);
+    if (code() !== before) throw new Error('the greyed Tidy changed the code');
+    await picture('python-side-hidden-by-itself');
+  }
+
+  await step('With no page in its folder, the side says so, and Hide this side hides it', async () => {
+    try {
+      if (!activeTab() || activeTab().name !== 'game.py') throw new Error('game.py is not the active tab');
+      if (!S.sideShown) await clickOn(sideButton(), 'the side button');
+      const box = await until(() => present($('page-none')) && $('page-none'), 'the no-page side', 4000);
+      const title = box.querySelector('.none-title').textContent;
+      if (title !== 'This file has no page to show.') throw new Error(`the title says ${title}`);
+      const line = $('page-none-line').textContent;
+      const want = 'game.py is not a web page. My page shows web pages made with HTML, and this folder has none.';
+      if (line !== want) throw new Error(`the line says ${line}`);
+      must($('page-none-help'), 'Open Help');
+      await clickOn(must($('btn-hide-side'), 'Hide this side'), 'Hide this side');
+      if (sideShown() || S.sideShown) throw new Error('Hide this side did not hide the side');
+      await clickOn(sideButton(), 'the side button');
+      await until(() => present($('page-none')), 'the no-page side again', 4000);
+    } finally {
+      await showSideAgain('no page');
+    }
+  });
+
+  await step('A JSON file shows its key path, and Tidy fixes its indents', async () => {
+    const tab = await dropFile('levels.json', LEVELS_JSON, 'JSON');
+    const letters = tab.querySelector('.tab-letters text');
+    if (!letters || letters.textContent !== 'JSON') throw new Error(`the tab shows ${letters ? letters.textContent : 'no letters'}`);
+    const label = must($('lang-label'), 'the language label');
+    if (label.textContent !== 'JSON') throw new Error(`the label says ${label.textContent}`);
+    await clickAfter('{ "coins": 5', 'click after the second coins');
+    await until(() => insideRow() === 'levels › 1 › coins', () => `the inside row, saw "${insideRow()}"`, 3000);
+    const tidy = must($('btn-tidy'), 'Tidy');
+    if (tidy.hasAttribute('aria-disabled')) throw new Error('Tidy is greyed for JSON');
+    const before = code();
+    await clickOn(tidy, 'Tidy');
+    await until(() => code() !== before, 'Tidy to change the indents', 3000);
+    const lead = (needle) => /^[ \t]*/.exec(code().split('\n').find((line) => line.includes(needle)))[0];
+    const strip = (text) => text.replace(/^[ \t]+/gm, '');
+    if (strip(code()) !== strip(before)) throw new Error(`Tidy changed more than indents: ${JSON.stringify(code())}`);
+    if (lead('"coins": 3') !== lead('"coins": 5') || lead('"coins": 3').length <= lead('"levels"').length) {
+      throw new Error(`the coins lines are not lined up inside levels: ${JSON.stringify(code())}`);
+    }
+  });
+
+  const FROG_PAGE = '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Frog Jump</title>\n</head>\n'
+    + '<body>\n<h1>Frog Jump</h1>\n<p>Press any key to make the frog jump.</p>\n<div id="frog"></div>\n'
+    + '<script src="game.js"></script>\n</body>\n</html>\n';
+  const FROG_JS = "// Make the frog jump when a key is pressed\nconst frog = document.querySelector('#frog');\nlet height = 0;\n\n"
+    + 'function jump() {\n  if (height > 0) {\n    return;\n  }\n  height = 120;\n}\n\n'
+    + "document.addEventListener('keydown', jump);\n";
+
+  await step('A script file shows the page that uses it, with the script note', async () => {
+    try {
+      if (!temp) throw new Error('no temp folder for the frog files');
+      const dir = `${temp}/frog-jump`;
+      if (!(await invoke('test_make_folder', { path: dir }))) throw new Error('the frog folder was not made');
+      const bytes = (text) => Array.from(new TextEncoder().encode(text));
+      if (!(await invoke('test_write_bytes', { path: `${dir}/index.html`, bytes: bytes(FROG_PAGE) }))) throw new Error('index.html was not written');
+      if (!(await invoke('test_write_bytes', { path: `${dir}/game.js`, bytes: bytes(FROG_JS) }))) throw new Error('game.js was not written');
+      await flows.droppedFiles([`${dir}/game.js`]);
+      await until(() => activeTab() && activeTab().name === 'game.js', 'game.js to open');
+      if (S.tabs.some((t) => t.name === 'index.html' && t.path.startsWith(dir))) throw new Error('index.html opened as a tab');
+      if (S.sideShown) await clickOn(sideButton(), 'the side button, to hide the side');
+      if (sideShown()) throw new Error('the side did not hide');
+      await clickOn(sideButton(), 'the side button, to show the side');
+      await until(() => $('page-label').textContent === 'Showing index.html, which uses game.js', () => `the label, saw "${$('page-label').textContent}"`, 6000);
+      await settled(preview);
+      await until(() => $('page-hint').textContent === preview.SCRIPT_HINT, () => `the script note, saw "${$('page-hint').textContent}"`, 4000);
+      const h1 = await probe(preview, 'h1');
+      if (h1.text !== 'Frog Jump') throw new Error(`the page shows ${h1.text}`);
+    } finally {
+      await showSideAgain('script file');
+    }
+  });
+
+  // WP5 (mockups 05 to 08): Change Name through real pointer events and keys.
+  const RENAME_TIP = 'Type a new name. Press Enter to change it, or Esc to stop.';
+  const renameDir = temp ? `${temp}/rename-club` : null;
+  const renameField = () => document.querySelector('#tab-list .tab-rename');
+  const renameToast = () => ($('rename-toast').hidden ? '' : $('rename-toast-text').textContent);
+
+  // Teeth: with the `opens && rename.renameFlow(path)` branch taken out of the #tab-list click
+  // handler (app.js), the click only switches tabs and no field shows.
+  await step('Change Name: a click on the name of the active tab opens the field', async () => {
+    if (!renameDir) throw new Error('no temp folder for the rename files');
+    if (!(await invoke('test_make_folder', { path: renameDir }))) throw new Error('the rename folder was not made');
+    const bytes = (text) => Array.from(new TextEncoder().encode(text));
+    const page = '<!doctype html>\n<html lang="en">\n<head>\n<title>Club</title>\n</head>\n<body>\n'
+      + '<nav><a href="about.html">About</a></nav>\n<h1>Our club</h1>\n<p><a href="about.html">Read about us</a></p>\n</body>\n</html>\n';
+    const about = '<!doctype html>\n<html lang="en">\n<head>\n<title>About</title>\n</head>\n<body>\n<h1>About us</h1>\n<a href="index.html">Home</a>\n</body>\n</html>\n';
+    if (!(await invoke('test_write_bytes', { path: `${renameDir}/index.html`, bytes: bytes(page) }))) throw new Error('index.html was not written');
+    if (!(await invoke('test_write_bytes', { path: `${renameDir}/about.html`, bytes: bytes(about) }))) throw new Error('about.html was not written');
+    await flows.droppedFiles([`${renameDir}/index.html`, `${renameDir}/about.html`]);
+    const aboutTab = () => [...document.querySelectorAll('#tab-list .tab')].find((el) => el.dataset.path === `${renameDir}/about.html`);
+    await until(() => aboutTab(), 'the about.html tab');
+    await clickOn(aboutTab().querySelector('.tab-main'), 'the about.html tab');
+    await until(() => activeTab() && activeTab().name === 'about.html', 'about.html to be the active tab');
+    await wait(700);
+    await clickOn(aboutTab().querySelector('.tab-name'), 'the name of the active tab');
+    const field = must(await until(() => renameField(), 'the Change Name field'), 'the Change Name field');
+    if (document.activeElement !== field) throw new Error(`the focus is on ${describe(document.activeElement)}`);
+    if (field.value !== 'about.html') throw new Error(`the field says ${field.value}`);
+    must($('rename-tip'), 'the tooltip');
+    if ($('rename-tip').textContent !== RENAME_TIP) throw new Error(`the tooltip says ${$('rename-tip').textContent}`);
+  });
+
+  // Teeth: with `input.setSelectionRange(0, dot > 0 ? dot : tab.name.length)` in renameFlow
+  // (rename.js) set to `input.select()`, typing gives team, not team.html.
+  await step('Change Name: a new name and Enter show the places that use it', async () => {
+    const field = must(renameField(), 'the Change Name field');
+    if (field.selectionStart !== 0 || field.selectionEnd !== 5) throw new Error('the part before the dot is not chosen');
+    typeText('team');
+    if (field.value !== 'team.html') throw new Error(`the field says ${field.value}`);
+    await until(() => $('rename-tip').textContent === RENAME_TIP, 'the tooltip after typing');
+    key('Enter');
+    const box = await until(() => dialog() && dialog().textContent.includes('Change the name to team.html?') && dialog(), 'the Change Name dialog');
+    const places = box.querySelectorAll('.rn-place');
+    if (places.length !== 2) throw new Error(`the dialog lists ${places.length} places`);
+    must(box.querySelector('[data-tick]'), 'the tick');
+    if (!box.querySelector('[data-tick]').checked) throw new Error('the tick is off at first');
+    must(byText('Change the name', box), 'Change the name');
+  });
+
+  // Teeth: with `warn.hidden = on;` taken out of paintTick (dialogs.js), the warning is never
+  // visible and must() fails.
+  await step('Change Name: unticked, the amber warning and Change only the file name show', async () => {
+    const box = must(dialog(), 'the Change Name dialog');
+    await clickOn(box.querySelector('[data-tick]'), 'the tick');
+    const warn = must(box.querySelector('[data-warn]'), 'the amber warning');
+    if (!warn.textContent.includes('Are you sure? The 2 places will still say about.html')) throw new Error(`the warning says ${warn.textContent.trim()}`);
+    must(byText('Change only the file name', box), 'Change only the file name');
+    if (present(box.querySelector('[data-go]'))) throw new Error('Change the name still shows');
+    if (document.activeElement !== box.querySelector('[data-tick]')) throw new Error(`the focus is on ${describe(document.activeElement)}`);
+  });
+
+  // Teeth: with `#rename-toast { position: absolute; ... }` given `bottom: -200px`, the toast is
+  // off the panel and must() fails; with showToast not called in confirmAndRename (rename.js),
+  // no toast comes.
+  await step('Change Name: Change the name gives the toast with Undo', async () => {
+    const box = must(dialog(), 'the Change Name dialog');
+    await clickOn(box.querySelector('[data-tick]'), 'the tick again');
+    await clickOn(byText('Change the name', box), 'Change the name');
+    await until(() => !dialog(), 'the dialog to close', 8000);
+    await until(() => renameToast(), 'the toast');
+    must($('rename-toast'), 'the toast');
+    if (renameToast() !== 'Name changed. 2 places now say team.html, in 1 file.') throw new Error(`the toast says ${renameToast()}`);
+    must($('rename-undo'), 'Undo');
+    const files = await invoke('test_list_folder', { path: renameDir });
+    if (!files.includes('team.html') || files.includes('about.html')) throw new Error(`the folder holds ${files.join(', ')}`);
+    if (!activeTab() || activeTab().name !== 'team.html') throw new Error('the tab does not say team.html');
+  });
+
+  // Teeth: with `$('rename-undo').addEventListener('click', ...)` taken out of initRename
+  // (rename.js), the click does nothing and the toast never says the old name is back.
+  await step('Change Name: Undo puts the old name back', async () => {
+    await clickOn($('rename-undo'), 'Undo');
+    await until(() => renameToast() === 'The old name is back.', () => `the toast after Undo, saw "${renameToast()}"`);
+    const files = await invoke('test_list_folder', { path: renameDir });
+    if (!files.includes('about.html') || files.includes('team.html')) throw new Error(`the folder holds ${files.join(', ')}`);
+    if (!activeTab() || activeTab().name !== 'about.html') throw new Error('the tab does not say about.html');
   });
 
   await step('No script errors', async () => {

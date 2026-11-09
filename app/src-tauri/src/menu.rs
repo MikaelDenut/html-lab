@@ -22,21 +22,34 @@ const UNFOLD_KEY: &str = if cfg!(target_os = "macos") {
     "Ctrl+Shift+]"
 };
 
+// Free everywhere: not Ctrl+Alt (C42), not Ctrl+R, P or U (browserOnlyKey), and not one of
+// CodeMirror's keys (Shift-Mod-k deletes a line, Mod-y is Redo, Shift-Mod-y is unbound).
+pub const SIDE_KEY: &str = "CmdOrCtrl+Shift+Y";
+pub const SIDE_ID: &str = "toggle-side";
+pub const SIDE_LABEL: &str = "My Page Side";
+
 pub struct MenuHandles<R: Runtime> {
     pub items: Vec<(&'static str, MenuItem<R>)>,
     pub typing_helpers: CheckMenuItem<R>,
     pub autosave: CheckMenuItem<R>,
     pub boxes: CheckMenuItem<R>,
+    pub side: CheckMenuItem<R>,
 }
 
 pub const FILE_ITEMS: &[(&str, &str, Option<&str>)] = &[
-    ("new", "New...", Some("CmdOrCtrl+N")),
+    ("new", "New Project...", Some("CmdOrCtrl+N")),
     ("open", "Open...", Some("CmdOrCtrl+O")),
-    ("add-file", "Add a New File...", Some("CmdOrCtrl+Shift+N")),
+    ("add-file", "New File...", Some("CmdOrCtrl+Shift+N")),
     ("save", "Save", Some("CmdOrCtrl+S")),
     ("save-copy", "Save a Copy...", Some("CmdOrCtrl+Shift+S")),
 ];
+// Change Name (0.3.0 WP5): no keys of their own. Undo Change Name works only while the toast
+// after a change of name shows.
+pub const RENAME_ID: &str = "rename";
+pub const UNDO_RENAME_ID: &str = "undo-rename";
 pub const FILE_ITEMS_2: &[(&str, &str, Option<&str>)] = &[
+    (RENAME_ID, "Change Name...", None),
+    (UNDO_RENAME_ID, "Undo Change Name", None),
     ("close-tab", "Close Tab", Some("CmdOrCtrl+W")),
     ("show-folder", "Show Project Folder", None),
 ];
@@ -105,6 +118,8 @@ pub const HELP_GROUPS: &[(&str, &str, Option<&str>)] = &[
 
 const NEEDS_TAB: &[&str] = &[
     "add-file",
+    "rename",
+    "undo-rename",
     "save",
     "save-copy",
     "close-tab",
@@ -116,11 +131,14 @@ const NEEDS_TAB: &[&str] = &[
     "point",
     "safari",
     "help-word",
+    "toggle-side",
 ];
 const APP_COMMANDS: &[&str] = &[
     "new",
     "open",
     "add-file",
+    "rename",
+    "undo-rename",
     "save",
     "save-copy",
     "close-tab",
@@ -137,6 +155,7 @@ const APP_COMMANDS: &[&str] = &[
     "point",
     "my-page",
     "help",
+    "toggle-side",
     "bigger",
     "smaller",
     "normal-size",
@@ -218,6 +237,11 @@ pub fn build<R: Runtime>(
         .checked(false)
         .enabled(false)
         .build(app)?;
+    let side_item = CheckMenuItemBuilder::with_id(SIDE_ID, SIDE_LABEL)
+        .accelerator(SIDE_KEY)
+        .checked(true)
+        .enabled(false)
+        .build(app)?;
 
     let file_menu = {
         let mut b = SubmenuBuilder::new(app, "File");
@@ -267,7 +291,7 @@ pub fn build<R: Runtime>(
         for i in &view_a {
             b = b.item(i);
         }
-        b = b.separator();
+        b = b.item(&side_item).separator();
         for i in &view_b {
             b = b.item(i);
         }
@@ -343,8 +367,20 @@ pub fn build<R: Runtime>(
             typing_helpers: typing_item,
             autosave: autosave_item,
             boxes: boxes_item,
+            side: side_item,
         },
     ))
+}
+
+/// What the active tab adds to item_enabled: Point needs the page tab's own page, Change Name
+/// a tab that is not a practice copy, and Undo Change Name the toast with Undo.
+pub fn state_allows(id: &str, pointable: bool, renamable: bool, undo_rename: bool) -> bool {
+    match id {
+        "point" => pointable,
+        RENAME_ID => renamable,
+        UNDO_RENAME_ID => undo_rename,
+        _ => true,
+    }
 }
 
 pub fn item_enabled(id: &str, has_tabs: bool, has_folder: bool, dialog_open: bool) -> bool {
@@ -384,8 +420,12 @@ mod tests {
         ]
         .iter()
         .flat_map(|l| l.iter())
+        .chain(std::iter::once(&SIDE_ROW))
         .collect()
     }
+
+    // The side's check item is built on its own, so the tests add it to the lists by hand.
+    const SIDE_ROW: (&str, &str, Option<&str>) = (SIDE_ID, SIDE_LABEL, Some(SIDE_KEY));
 
     #[test]
     fn every_accelerator_parses() {
@@ -428,10 +468,86 @@ mod tests {
         assert!(item_enabled("new", false, false, false));
         assert!(item_enabled("undo", true, true, true));
         assert!(item_enabled("select-all", false, false, true));
-        for id in ["fold", "unfold", "unfold-all", "point"] {
+        for id in ["fold", "unfold", "unfold-all", "point", RENAME_ID, UNDO_RENAME_ID] {
             assert!(!item_enabled(id, false, false, false), "{id} without a tab");
             assert!(item_enabled(id, true, false, false), "{id} with a tab");
             assert!(!item_enabled(id, true, true, true), "{id} under a dialog");
+        }
+        // Teeth: with a branch of state_allows dropped (it answers true), Point, Change Name or
+        // Undo Change Name stays on when it must be off.
+        assert!(!state_allows("point", false, true, true), "point without the page tab");
+        assert!(state_allows("point", true, false, false), "point on the page tab");
+        assert!(!state_allows(RENAME_ID, true, false, true), "rename on a practice copy");
+        assert!(state_allows(RENAME_ID, false, true, false), "rename on a file");
+        assert!(!state_allows(UNDO_RENAME_ID, true, true, false), "undo rename with no toast");
+        assert!(state_allows(UNDO_RENAME_ID, false, false, true), "undo rename while the toast shows");
+        assert!(state_allows("save", false, false, false), "save does not depend on them");
+    }
+
+    // Teeth: with the File menu words changed or a key given to Change Name, this fails
+    // (0.3.0 WP5, copy table "Side and toolbar": File menu ... / Change Name...).
+    #[test]
+    fn the_file_menu_has_change_name_before_close_tab() {
+        let ids: Vec<&str> = FILE_ITEMS_2.iter().map(|(id, _, _)| *id).collect();
+        assert_eq!(ids, ["rename", "undo-rename", "close-tab", "show-folder"]);
+        assert_eq!(FILE_ITEMS_2[0], ("rename", "Change Name...", None));
+        assert_eq!(FILE_ITEMS_2[1], ("undo-rename", "Undo Change Name", None));
+        for id in [RENAME_ID, UNDO_RENAME_ID] {
+            assert!(NEEDS_TAB.contains(&id), "{id} needs a tab");
+            assert!(APP_COMMANDS.contains(&id), "{id} is off under a dialog");
+        }
+    }
+
+    // Teeth: with the File menu labels back at "New..." or "Add a New File...", or a key moved,
+    // this fails (0.3.0 WP4, copy table "Side and toolbar").
+    #[test]
+    fn the_file_menu_says_new_project_and_new_file() {
+        let row = |id: &str| {
+            FILE_ITEMS
+                .iter()
+                .find(|(i, _, _)| *i == id)
+                .copied()
+                .unwrap()
+        };
+        assert_eq!(row("new"), ("new", "New Project...", Some("CmdOrCtrl+N")));
+        assert_eq!(
+            row("add-file"),
+            ("add-file", "New File...", Some("CmdOrCtrl+Shift+N"))
+        );
+        assert!(NEEDS_TAB.contains(&"add-file"));
+    }
+
+    #[test]
+    fn the_side_item_is_a_command_that_needs_a_tab() {
+        assert_eq!(SIDE_ID, "toggle-side");
+        assert_eq!(SIDE_LABEL, "My Page Side");
+        assert_eq!(SIDE_KEY, "CmdOrCtrl+Shift+Y");
+        assert!(NEEDS_TAB.contains(&SIDE_ID));
+        assert!(APP_COMMANDS.contains(&SIDE_ID));
+        assert!(!item_enabled(SIDE_ID, false, false, false), "start screen");
+        assert!(!item_enabled(SIDE_ID, false, true, false), "start screen");
+        assert!(item_enabled(SIDE_ID, true, false, false), "a tab, no folder");
+        assert!(item_enabled(SIDE_ID, true, true, false), "a tab and a folder");
+        assert!(!item_enabled(SIDE_ID, true, true, true), "under a dialog");
+    }
+
+    #[test]
+    fn the_side_key_is_free() {
+        let side = muda::accelerator::Accelerator::from_str(SIDE_KEY).unwrap();
+        for (id, _, accel) in all() {
+            if *id == SIDE_ID {
+                continue;
+            }
+            if let Some(a) = accel {
+                let other = muda::accelerator::Accelerator::from_str(a).unwrap();
+                assert_ne!(other, side, "{id}: {a} is the side key");
+            }
+        }
+        // C42: no Ctrl+Alt off the Mac. browserOnlyKey: not R, P or U. CodeMirror: not K.
+        assert!(!SIDE_KEY.contains("Alt"), "{SIDE_KEY}");
+        let letter = SIDE_KEY.rsplit('+').next().unwrap().to_ascii_lowercase();
+        for taken in ["r", "p", "u", "k"] {
+            assert_ne!(letter, taken, "{SIDE_KEY}");
         }
     }
 

@@ -32,6 +32,7 @@ def main():
     ap.add_argument("--idle-cpu", type=float)
     ap.add_argument("--memory-mb", type=float)
     ap.add_argument("--editor-kb", type=float)
+    ap.add_argument("--editor-all-kb", type=float)
     ap.add_argument("--app-mb", type=float)
     args = ap.parse_args()
 
@@ -49,6 +50,8 @@ def main():
         rows["memoryMb"] = args.memory_mb
     if args.editor_kb is not None:
         rows["editorBundleKb"] = args.editor_kb
+    if args.editor_all_kb is not None:
+        rows["editorAllKb"] = args.editor_all_kb
     if args.app_mb is not None:
         rows["appBundleMb"] = args.app_mb
 

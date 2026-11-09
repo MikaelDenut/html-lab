@@ -1,0 +1,1 @@
+import{a as t}from"./chunk-7DHXZJCK.js";import"./chunk-JB3YJQA6.js";import"./chunk-DYT227AT.js";import"./chunk-H3U6UN5B.js";var e=t({indented:!0});function o(){return e}var r=!1;export{r as legacy,o as support};

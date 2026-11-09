@@ -1,20 +1,23 @@
 ---
 class:   truth
-updated: 2026-11-08
+updated: 2026-11-09
 status:  RECONSTRUCTED-UNCONFIRMED
 ---
 
 # Invariants of HTML Lab
 
-Reconstructed from the code on 2026-11-08 (version 0.1.4). Nothing here has been
-through the teeth ritual, which means breaking the rule on purpose and watching
-the test go red.
+C1 to C42 were reconstructed from the code on 2026-11-08 (version 0.1.4), and
+none of their tests has been through the teeth ritual, which means breaking the
+rule on purpose and watching the test go red. C43 to C48 were written with 0.3.0
+and confirmed by the owner through NEXT-0.3.0.md; each entry says which of its
+tests failed with the defect put back, as HANDBACK-0.3.0.md records it.
 
 **A test that would pass either way is worse than no test, because it certifies
 the defect.**
 
-Paths are relative to `app/`. Line numbers were read on 2026-11-08 and will
-drift; the quoted text will not.
+Paths are relative to `app/`. Line numbers were read on 2026-11-08, and on
+2026-11-09 for C9, C10, C37, C38 and C43 to C48; they will drift, the quoted
+text will not.
 
 Numbers are permanent. A retired entry keeps its number and is marked RETIRED
 with a date and a reason. Never renumber, never reuse a number.
@@ -23,7 +26,10 @@ with a date and a reason. Never renumber, never reuse a number.
 
 ## Enforced invariants
 
-None. No entry has had its guard test run against the restored defect.
+None. Before 0.3.0 no entry had had its guard test run against the restored
+defect. C43 to C48 now have guard tests that did fail that way (see each entry),
+but each covers part of its rule only, so they stay listed with their topics
+below; moving one here is the owner's call.
 
 ---
 
@@ -35,9 +41,9 @@ test that looks related; nobody has proven that it fails when the rule breaks.
 **Standing rule: no guard test may be written against an invariant the project
 owner has not confirmed.**
 
-Test names come from three places: Rust `#[test]` functions in `core/src` and
-`src-tauri/src`, `t('...')` in `ui/self-test.js`, and `step('...')` in
-`ui/smoke-test.js`.
+Test names come from these places: Rust `#[test]` functions in `core/src`,
+`src-tauri/src` and `src-tauri/tests`, `t('...')` in `ui/self-test.js` and its
+modules `ui/self-test-*.js`, and `step('...')` in `ui/smoke-test.js`.
 
 ### Not losing work
 
@@ -105,21 +111,36 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 - appears covered by: no test found; `grep -n -i quit ui/self-test.js ui/smoke-test.js` returns only the `test_quit` calls that end each run
 - what a guard would have to do: drive a real terminate request with a changed tab, restored against a build without the delegate method
 
-### C9. Nothing on disk changes until the user saves, unless Save Automatically is on
+### C9. Nothing on disk changes until Save, Save Automatically, or a rename the user confirmed in its dialog
 
-- evidence: `ui/flows.js:605` and `ui/flows.js:621` `if (!S.prefs.autosave) return;`
-- origin: reconstructed
-- confirmed: false
-- appears covered by: self-test `typing updates the page without saving`, self-test `E12: Save Automatically writes in about 2 s, and a failure gives one message`, self-test `editing and saving a sample leaves the one in the app unchanged`
-- what a guard would have to do: compare the disk before and after typing with the preference off
+- evidence: `ui/flows.js:652` (in `autosaveNow`) and `ui/flows.js:668` (in `noteChangeForAutosave`) `if (!S.prefs.autosave) return;`; `ui/rename.js:374` `const outcome = await doRename(tab, newName, plan, ticked);`, called only from the dialog's `submit`; `ui/rename.js:427` `` const got = await invoke('rename_file', { from: oldPath, to: `${dirName(oldPath)}/${newName}` }); ``, inside `doRename`. A file made with the + is written only by Save or Save Automatically, with `mustNotExist` (C4)
+- origin: reconstructed; reworded with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09, the new wording)
+- appears covered by: self-test `typing updates the page without saving`, self-test `E12: Save Automatically writes in about 2 s, and a failure gives one message`, self-test `editing and saving a sample leaves the one in the app unchanged`, self-test `a file from the + is on disk only after Save, and Save never overwrites one copied in (C4, C9)`, self-test `Tab to Keep the old name and Enter changes nothing on disk`, self-test `a changed tab keeps its edits unsaved under its new name, and only the disk copy moves (C9)`
+- teeth: the three 0.3.0 tests above failed with their defects put back (HANDBACK-0.3.0.md, WP4 and WP5); the three older ones have not been through it
+- note: Undo on the toast after a rename also writes the disk; it is a click of the user's own on a confirmed rename
+- what a guard would have to do: compare the disk before and after typing with the preference off, and before and after a dialog left with Keep the old name
 
-### C10. Reading refuses a file over 5 MB, with a NUL byte, or not valid UTF-8
+### C10. Reading takes UTF-8, or UTF-16 with a BOM; anything else is refused with its own message
 
-- evidence: `core/src/files.rs:13` `const MAX_READ_BYTES: u64 = 5 * 1024 * 1024;`; `core/src/files.rs:121` `String::from_utf8(bytes)`
-- origin: reconstructed
-- confirmed: false
-- appears covered by: the size checks in `core/src/files.rs` tests around line 581, self-test `a binary file and a too big file each give a message and open nothing`
-- what a guard would have to do: fail when a 5 MB plus 1 byte file opens
+- evidence: `core/src/files.rs:192` `pub fn decode_text(bytes: &[u8]) -> Result<Decoded, &'static str> {`, the one decoder for reading and for the preview (`src-tauri/src/preview.rs:112` `match files::decode_text(&bytes) {`); `core/src/files.rs:206` `return Err(NOT_TEXT);` for a zero 16-bit unit after a UTF-16 BOM; `core/src/files.rs:209` `return Err(OTHER_ENCODING);` for an odd length; `core/src/files.rs:218` `if bytes.contains(&0) {` (not text) without a UTF-16 BOM; `core/src/files.rs:225` `let text = std::str::from_utf8(rest).map_err(|_| OTHER_ENCODING)?;`; `core/src/files.rs:12` `const MAX_READ_BYTES: u64 = 5 * 1024 * 1024;` (too big); `ui/flows.js:232` `if (error === 'other_encoding') {` gives the copy-table message
+- origin: reconstructed; reworded with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09, the new wording)
+- appears covered by: `read_refuses_over_5_mb`, `read_refuses_a_nul_byte`, `read_refuses_invalid_utf8`, `read_strips_a_byte_order_mark`, `utf16_edge_cases_are_other_encoding_or_not_text`, `a_utf16_file_over_5_mb_is_still_too_big`, `the_preview_decoder_is_the_reader`, self-test `a binary file and a too big file each give a message and open nothing`, self-test `a file in another encoding gives its own message and opens nothing`
+- teeth: the self-test `a file in another encoding gives its own message and opens nothing` failed without the `other_encoding` branch in `messageForRead` (HANDBACK-0.3.0.md, WP1); the handback names no teeth run for the core tests
+- what a guard would have to do: fail when a 5 MB plus 1 byte file opens, or when a Latin-1 file opens
+
+### C43. Every save path writes back the file's own line ending, BOM, encoding and final newline
+
+Every save path (Save, Save Automatically, first save, Save a Copy, rename rewrites) writes back the file's own line ending (the most-used one), BOM, encoding and final newline. A file opened and saved without an edit is byte-identical, except a mixed-ending file, which gets its most-used ending.
+
+- evidence: `core/src/files.rs:314` `// The one encoder for every save path (C43): LF becomes the file's own line ending,` above `core/src/files.rs:316` `pub fn encode_text(`; its callers `core/src/files.rs:465` `let written = encode_text(&file.text, file.bom, &file.encoding, &file.eol)` (`write_files`: Save and Save Automatically), `core/src/files.rs:528` `encode_text(&file.text, file.bom, &file.encoding, &file.eol).map_err(|_| ())?` (`write_named_files`: first save and Save a Copy) and `core/src/files.rs:1120` `None => encode_text(&patched, file.bom, &file.encoding, &file.eol)?,` and `core/src/files.rs:1143` `(encode_text(&patched, decoded.bom, encoding, eol)?, None)` (`rewrite_one`, open tab and closed file); the style comes from `detect_style` (`core/src/files.rs:234`) in `ReadResult.style`, is kept as `tab.style`, and is sent by `ui/state.js:99` `export const writeStyle = (style) => ({` from `ui/flows.js:485` `...writeStyle(tab.style),` (`writeChanged`) and `ui/flows.js:374` (`allFiles`). The final newline is part of the text and `encode_text` neither adds nor removes one
+- origin: written with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09)
+- appears covered by: `every_style_reads_and_saves_back_byte_for_byte` (LF, CRLF, CR, mixed, BOM, UTF-16 LE and BE, only a BOM, tabs, 4 spaces, no final newline), `line_endings_count_and_ties_go_to_lf`, `encode_text_writes_the_ending_the_encoding_and_the_bom`, `encode_text_refuses_an_unknown_encoding_or_ending`, `write_files_refuses_only_the_file_with_an_unknown_style`, `save_project_writes_each_file_in_its_own_style`, `save_copy_keeps_a_crlf_bom_file_and_a_utf16_file_byte_for_byte`, `rewrite_changes_only_the_spans_in_every_style`, self-test `a CRLF file opened with Open keeps its CRLF endings when saved (C43)`, self-test `a CRLF page opened by a link keeps its CRLF endings when saved (C43)`, self-test `a CRLF file from a restored session keeps its CRLF endings when saved (C43)`, self-test `Save a Copy keeps a CRLF file with a BOM and a UTF-16 LE file as they were (C43)`
+- teeth: the four self-tests failed with their defects put back, among them no `eol` sent from `writeChanged` and no style in `allFiles` (HANDBACK-0.3.0.md, WP1); the handback names no teeth run for the WP1 core tests
+- note: two choices from the handback refine the wording. UTF-16 is always written with its BOM (`core/src/files.rs:356`), since it is read only by its BOM. A rename rewrite keeps every ending of a mixed-ending file, so that only the spans change (`core/src/files.rs:1130` to `:1133` for a closed file, and since cdfab87b `core/src/files.rs:1121` `splice_keeping_endings` for an open tab; C45 wins there)
+- what a guard would have to do: already test-shaped; the core tests need the teeth ritual
 
 ### Preview safety
 
@@ -215,7 +236,7 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 - origin: reconstructed
 - confirmed: false
 - appears covered by: self-test `every template, sample and Help topic uses only CSS and HTML this WebKit understands`
-- note: `MIN_TEMPLATES` at `ui/self-test.js:17` is 6 while 42 templates ship, so this floor would not notice 36 templates disappearing
+- note: until 0.2.0 `MIN_TEMPLATES` was 6 while 42 templates ship. Since 0.2.1 it is 42 in `ui/self-test.js` and `ui/smoke-test.js`; a test build with one template taken out of its gallery failed both runs (BACKLOG T2)
 - what a guard would have to do: shorten a content list and see the floor fail
 
 ### C22. The runner does not trust the app's report
@@ -270,7 +291,7 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 
 ### C28. Speed history keeps committed builds only
 
-- evidence: `scripts/speed-run.py:199` `if revision != "unstamped" and not revision.endswith("-dirty"):`
+- evidence: `scripts/speed-run.py`, `if revision != "unstamped" and not revision.endswith("-dirty"):`; since 0.2.1 `keep` writes a second run for the same build as `<version>-<revision>-2` instead of over the first (BACKLOG T3)
 - origin: reconstructed
 - confirmed: false
 - appears covered by: no test found
@@ -280,7 +301,7 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 
 ### C29. Every row of the speed budget is pass or fail on the Intel Mac
 
-- evidence: `scripts/speed-budgets.json` (28 rows); `scripts/speed-gate.py:74` `bad = failed or missing or errors`
+- evidence: `scripts/speed-budgets.json` (29 rows since 0.3.0 WP2 added `editorAllKb`); `scripts/speed-gate.py:69` `bad = failed or missing or errors`
 - origin: reconstructed
 - confirmed: false
 - appears covered by: `scripts/speed-run.py` and `scripts/speed-gate.py`
@@ -318,7 +339,7 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 - evidence: `ui-src/hints.js:17` `export function unfinishedTagAt(doc, pos)`; `ui/preview.js:412` calls it
 - origin: reconstructed
 - confirmed: false
-- appears covered by: self-test `typing <h2 above a paragraph does not make it vanish`, self-test `3 < 4 in his text never holds`, self-test `changing blue inside a style attribute updates on every key`
+- appears covered by: self-test `typing <h2 above a paragraph does not make it vanish`, self-test `3 < 4 in the text never holds`, self-test `changing blue inside a style attribute updates on every key`
 - what a guard would have to do: remove the hold and see the first test fail
 
 ### C34. Preview URLs encode each path segment alone
@@ -345,22 +366,33 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 - appears covered by: `the_real_help_file_passes_every_check`, `help_check_finds_a_broken_href`, `help_check_finds_a_broken_src`
 - what a guard would have to do: already test-shaped; needs the teeth ritual
 
-### C37. Only the kinds table names file kinds
+### C37. KINDS names the teaching kinds, LANGUAGES names languages, CODE_KIND is the one generic kind; nothing else names either
 
-- evidence: `core/src/kinds.rs:1` `The kinds table. This is the one place that may name "html" and "css".`
-- origin: reconstructed
-- confirmed: false
-- appears covered by: self-test `app config comes from the kinds table`
-- **known exception**: `ui/flows.js:878` `if (lang === 'css') {` branches on the name, and `ui/engine-check.js:262` does too. Either the rule is narrower than stated or these are defects. Undecided
+- evidence: `core/src/kinds.rs:28` `pub const KINDS: &[Kind] = &[` (html and css, `teaching: true`); `core/src/kinds.rs:61` `// The one kind for every file that is not a teaching kind. It is not a row of KINDS (C37).` above `core/src/kinds.rs:62` `pub const CODE_KIND: Kind = Kind {`; `core/src/kinds.rs:91` `// Languages only add comfort when editing. They never decide what is a web file (C37),` above `core/src/kinds.rs:95` `pub const LANGUAGES: &[Language] = &[`. The UI reads all three from `app_config` (`kinds`, `codeKind`, `languages`) through `kindForName`, `kindOrCode` and `languageForName` in `ui/state.js`. Outside `kinds.rs`, no Rust code before a `#[cfg(test)]` names `"html"` or `"css"` (searched 2026-11-09)
+- origin: reconstructed; reworded with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09, the new wording)
+- appears covered by: `table_has_two_rows_with_the_contract_values`, `the_code_kind_has_the_contract_values_and_is_not_a_row`, `languages_table_has_the_26_plan_rows_in_order`, `languages_rows_are_unique_and_leave_the_teaching_kinds_out` (its message `{ext} is a teaching kind (C37)`), self-test `app config comes from the kinds table`
+- **known exceptions** (2026-11-09): `ui/flows.js:954` `if (lang === 'css') {` and `ui/engine-check.js:234` `if (lang === 'css') return text.includes('{') ? checkCss(text, where) : checkStyleAttribute(text, where, new Map());` branch on a language name; `ui-src/editor.js:49` `function teachingLanguage(language) {` and `ui-src/editor.js:328` `if (language === 'html' || language === 'css') return [part, teachingLanguage(language).extension];` name the two built-in editor languages; `LANGUAGE_CHUNKS` (`ui-src/editor.js:60`) repeats the ids of `LANGUAGES`, one import per row, so esbuild can split them; `core/src/refs.rs:327` `// HTML and CSS come from the kinds table (C37); the other reference syntaxes are named here.` names endings by hand (`core/src/refs.rs:342` `"js" | "mjs" | "cjs" | "jsx" | "ts" | "mts" | "cts" | "tsx" => Some(Syntax::Js),`). Either the rule is narrower than stated or these are defects. Undecided
 - what a guard would have to do: a source scan outside `kinds.rs`, once the exceptions are ruled on
 
-### C38. File names are cleaned to at most 60 characters
+### C38. Names for web files are cleaned to 60 characters; other names are kept as typed and checked by check_rename
 
-- evidence: `core/src/names.rs:7` `const MAX_NAME_CHARS: usize = 60;`; `core/src/names.rs:10` `pub fn clean_file_name`
-- origin: reconstructed
-- confirmed: false
-- appears covered by: the tests in `core/src/names.rs` around line 138
-- what a guard would have to do: raise the limit and see the test fail
+- evidence: `core/src/names.rs:7` `const MAX_NAME_CHARS: usize = 60;`; `core/src/names.rs:11` `pub fn clean_file_name(raw: &str) -> String {` cuts at `core/src/names.rs:24` `stem.chars().take(MAX_NAME_CHARS).collect()`; `core/src/names.rs:92` `pub fn check_rename_for(old: &str, new: &str, windows: bool) -> Result<String, NameProblem> {` cleans a name ending in html, htm or css (`core/src/names.rs:101` `let stem: String = clean_stem(stem).chars().take(MAX_NAME_CHARS).collect();`) and keeps every other name (`core/src/names.rs:107` `None => new.to_string(),`), then refuses bad characters, a trailing dot, a space at either end, more than 255 bytes and, on Windows, reserved names. Change Name asks it through the `check_name` command (`src-tauri/src/main.rs:213`, called at `ui/rename.js:224`); the Make a new file dialog sends web endings to the web cleaner and every other name to `check_name` (`ui/dialogs.js:588`, `ui/flows.js:744`)
+- origin: reconstructed; reworded with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09, the new wording)
+- appears covered by: `file_name_cuts_to_sixty`, `rename_cleans_web_names_like_new_web_files`, `rename_keeps_case_and_characters_of_other_names`, `rename_refuses_bad_characters_and_names_the_character`, `rename_refuses_more_than_255_bytes`, `rename_refuses_reserved_names_on_windows_only`, self-test `Other with notes.md gives notes.md, and a name with no dot is a text file`, self-test `the Change Name field gives the copy-table line for a taken or bad name, and Enter then does nothing`
+- teeth: the two self-tests failed with their defects put back (HANDBACK-0.3.0.md, WP4 and WP5); the handback names no teeth run for the core tests
+- what a guard would have to do: raise the limit and see `file_name_cuts_to_sixty` fail; clean a `.py` name and see `rename_keeps_case_and_characters_of_other_names` fail
+
+### C47. Teaching features run only for kinds with `teaching: true` (html, css), decided by kind flags, never by extension strings outside the tables
+
+- evidence: in the editor, `ui-src/editor.js:327` `if (teaching && teachingLanguage(language)) return [part, teachingExtensions(language)];` (structure, page lighting, explanations, HTML hints) and `ui-src/editor.js:248` `if (!teaching) return [closeBrackets(), keymap.of(closeBracketsKeymap)];` (no tag closing or completion), both fed by `kind.teaching` (`ui/flows.js:93`); `ui/inside.js:38` `if (kindOf(tab).teaching) return S.E.insidePath(view.state);`; `ui/app.js:212` `if (!tab || !kindOf(tab).teaching || !S.ed || !S.ed.view.hasFocus) return;` (Help on This Word); `ui-src/editor.js:556` `// Help shows only teaching code (C47).`. The language wrappers leave out the teaching helpers their packages bring: `ui-src/langs/javascript.js:5` `// JSX parsing without the tag closer that javascript({ jsx: true }) adds: autoCloseTags is a teaching helper (C47).`
+- origin: written with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09)
+- appears covered by: `kind_or_code_gives_the_teaching_kind_or_the_code_kind`, `the_code_kind_has_the_contract_values_and_is_not_a_row`, self-test `Typing Helpers off and on with a .py tab: "pri" gives no suggestions (C47)`, self-test `Hover explanations, Help on This Word and the tag row do nothing outside HTML and CSS (C47)`, self-test `every language opens with its label, letters, folding and Tidy rule (C21)`
+- teeth: the three self-tests failed with their defects put back (teaching helpers for every tab, the tag path for every file, explanations for every language; HANDBACK-0.3.0.md, WP2)
+- note: the Help highlighter (`highlightRuns`) and `teachingLanguage` key on the editor language id `html` or `css`, not on the flag; see C37's exceptions
+- what a guard would have to do: give `CODE_KIND` `teaching: true` and see the C47 tests fail
 
 ### Page lighting (0.2.0)
 
@@ -393,6 +425,54 @@ Test names come from three places: Rust `#[test]` functions in `core/src` and
 - origin: written with 0.2.0: Ctrl+Alt is AltGr on Windows, and AltGr+[ types a bracket on many keyboards
 - confirmed: false
 - appears covered by: `fold_keys_avoid_altgr_off_the_mac` in `src-tauri/src/menu.rs`, `help_keys_match_the_menu_off_the_mac` in `src-tauri/src/main.rs`
+
+### C46. While the My page side is hidden, the preview sends no message, starts no load and lights no code; it catches up when shown
+
+- evidence: `ui/preview.js:103` `if (!S.sideShown) return;` at the top of `pump`; `ui/preview.js:184` `// A hidden side starts no load: it is remembered and done when the side comes back (C46).` and `ui/preview.js:185` `if (!S.sideShown) {`, which sets `P.loadWanted` before `P.loadId += 1` (`ui/preview.js:191`); since cdfab87b a load already running checks again after its awaits (`ui/preview.js:216` `if (!S.sideShown) {` with ``note(`load ${id} waits for the side`)``, before any address is set), a page that says ready while hidden is not made live (`ui/preview.js:336`, ``note(`ready v${msg.v} while hidden`)``), `sendAgain` and `goToPlace` stop while hidden (`ui/preview.js:242`, `:416`), `onSideHidden` marks a running load as wanted again (`ui/preview.js:595` to `:597`), and every message to the page goes through `postNow` (`ui/preview.js:90`), which counts `P.posted`; `ui/preview.js:360` `if (!S.sideShown || P.phase !== 'live' || S.rightView === 'help') return false;` in `inSync` (C39), and `ui/preview.js:371` the same check in `showingPageTab`, which `ui/app.js:595` gives `link.js` as `showingPage`; hiding calls `link.onHelpShown` (`ui/app.js:580`), which turns Point off and clears the lit lines; `ui/preview.js:605` `export function onSideShown() {` loads if a load was wanted, else pumps. A hide with the focus in the side moves it to the side button (a side button hid it) or to the code (`ui/app.js:168` `const focusOut = !shown && sideHasFocus();`)
+- origin: written with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09)
+- appears covered by: self-test `C46: a hidden side sends nothing and loads nothing, then catches up with one load` (asserts `P.nextId`, `P.loadId`, the frame address, `inSync()` and `showingPageTab()` while hidden, then exactly one load and the typed text and style), self-test `C46: a load already running when the side hides sends nothing, and the side comes back with the boxes on` (cdfab87b, `ui/self-test-side.js`: asserts `P.nextId`, `P.posted`, `P.loadId` and the frame address for a hide before the address is set and one after it, then one fresh load with the boxes on), self-test `Hide this side gives the focus to the side button, and View > My Page Side from the switch gives it to the code` (cdfab87b), smoke step `The side button hides My page and brings it back`
+- teeth: the self-test failed with the hidden check taken out of `pump()` (messages to a hidden page: 6, wanted 2) and, in a build of its own, out of `load()` (loads of a hidden page: 4, wanted 2) (HANDBACK-0.3.0.md, WP3); the teeth of the two cdfab87b self-tests are in HANDBACK-0.3.0.md, "Fixes after review (2026-11-09)"
+- what a guard would have to do: already test-shaped; the lit-lines half has no assertion of its own
+
+### Files and names (0.3.0)
+
+### C44. A rename never replaces an existing file, on any platform, case-only renames included
+
+Where the file system cannot rename exclusively, a check-then-rename is used and the small race is recorded in ADR 0010.
+
+- evidence: `core/src/files.rs:749` `pub fn rename_file(from: &str, to: &str) -> Result<String, String> {`; `core/src/files.rs:797` `if to.symlink_metadata().is_ok() {` gives `file_exists` for a name that is taken, and `core/src/files.rs:806` does the same for a case-only rename onto another file; the move is `move_no_replace` (`core/src/files.rs:869`): `core/src/files.rs:924` `if unsafe { libc::renamex_np(a.as_ptr(), b.as_ptr(), libc::RENAME_EXCL) } == 0 {` (macOS), `core/src/files.rs:941` `libc::RENAME_NOREPLACE,` (Linux `renameat2`), `core/src/files.rs:958` `if unsafe { MoveFileExW(a.as_ptr(), b.as_ptr(), 0) } != 0 {` (Windows); the fallbacks are `core/src/files.rs:873` `Err(_) => match (ops.link)(from, to) {` (hard link, then remove) and `core/src/files.rs:885` `if to.symlink_metadata().is_ok() {` before `fs::rename` (the accepted race); the command checks the root first (`src-tauri/src/main.rs:482`)
+- origin: written with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09)
+- appears covered by: `rename_never_replaces_an_existing_file`, `rename_to_a_name_taken_in_another_case_is_file_exists`, `rename_onto_a_hard_link_to_the_same_file_is_file_exists`, `rename_onto_a_symlink_or_a_folder_is_file_exists`, `a_case_only_rename_changes_the_case_and_leaves_no_temp`, `a_case_only_rename_onto_another_file_with_that_case_is_file_exists`, `a_file_made_between_the_check_and_the_rename_is_not_replaced`, `without_an_exclusive_rename_a_hard_link_is_used`, `without_links_either_a_check_then_rename_is_used`, `an_nfd_name_to_its_nfc_form_is_a_case_only_rename_on_macos`, self-test `a case-only Change Name, notes.txt to Notes.txt`
+- teeth: `a_file_made_between_the_check_and_the_rename_is_not_replaced` failed with `fs::rename` in place of the exclusive call, and the handback says each fallback defect failed its test (HANDBACK-0.3.0.md, WP5; it does not name those tests); the self-test failed with its defect put back
+- limit: both fallback tests are `#[cfg(unix)]`, and the Windows run of 0.3.0 did not happen (HANDBACK-0.3.0.md, WP8), so the Windows branch is untested
+- what a guard would have to do: already test-shaped for macOS and Linux; Windows needs a run
+
+### C45. A rename with reference updates changes only the matched reference spans, keeps each file's style, never writes a read-only or changed file, and reports per file
+
+In each file it changes only the matched reference spans, keeps each file's style (C43), never writes a read-only file, never writes a file whose bytes changed since the plan, and reports per file.
+
+- evidence: `core/src/files.rs:1024` `pub fn rewrite_references(plan: &[RewriteFile], roots: &[PathBuf]) -> Vec<RewriteResult> {`, one `RewriteResult` per file; `writable_inside` refuses a path outside the roots or not a regular file (`cannot_write`) and `core/src/files.rs:1071` `if meta.permissions().readonly() || !may_write(&real) {` (`read_only`); `core/src/files.rs:1125` `if original.len() as u64 != file.size || crate::refs::content_hash(&original) != file.hash {` (`changed_on_disk`, closed files) and `core/src/files.rs:1109` `let kept = if expected == original {` (open tabs: the tab's saved text, encoded, must be the bytes on disk; since cdfab87b a mixed-ending file also passes when its own text with every CR LF and CR made LF is the tab's text, and then `splice_keeping_endings` (`core/src/files.rs:1164`) puts the spans into its own text, so every ending stays); `core/src/files.rs:1118` `let patched = splice_spans(&text, &file.spans, true)?;` and `:1142` the same with `false` for closed files, where `splice_spans` refuses a span that does not hold its old text; then `encode_text` (C43); Undo checks every file first with `files::check_restore` (`core/src/files.rs:1266`, from `src-tauri/src/main.rs:545`), the guards and bytes test of `restore_bytes` with nothing written, so a file that became read-only stops Undo before anything is written; Undo ends when a file it wrote is opened in a new tab (`ui/rename.js:145` and `:749`, `openedOutside`), and a half-done Undo names the files that still say the new name (`ui/rename.js:736`); a new name sets the language again, so `.ts` to `.tsx` reads TSX (`ui/rename.js:598`); spans come from `refs::find_references` (`core/src/refs.rs:81`) and cover only the file-name part. In the UI the editors get the same spans as a transaction that Cmd+Z never undoes (`ui/rename.js:64` `annotations: [S.E.renameEdit.of(true), S.E.Transaction.addToHistory.of(false)],`)
+- origin: written with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09)
+- appears covered by: `rewrite_changes_only_the_spans_in_every_style`, `the_plan_from_find_references_goes_straight_in`, `an_open_tab_uses_utf16_offsets_into_its_text_and_its_own_style`, `a_span_that_does_not_fit_writes_nothing`, `spans_in_any_order_are_all_put_in`, `read_only_changed_symlinked_outside_and_missing_files_are_reported_and_not_written`, `rewrite_keeps_the_file_permissions_and_leaves_no_temp`, `a_file_with_no_spans_is_ok_and_not_written`, `rewrite_shapes_are_camel_case_and_never_send_the_original`, `the_span_covers_only_the_file_name`, `offsets_point_at_the_name_in_lf_crlf_bom_and_utf16_files`, self-test `Change Name on a comic copy changes story.html and its 4 places, on disk and in the tabs, and My page follows the links`, self-test `after Change Name a clean open tab that used the old name shows no unsaved dot`, self-test `a changed tab that used the old name keeps its own edit unsaved, and undoing that edit takes its dot away`, self-test `Cmd+Z in a tab that Change Name changed does not bring back the old name`, self-test `css/style.css open as its own tab is changed too, and a Save keeps the new name`; added in cdfab87b: `an_open_tab_of_a_mixed_ending_file_changes_only_its_spans_and_keeps_every_ending` and `check_restore_refuses_what_restore_bytes_would_refuse_and_writes_nothing` (`core/src/files.rs`), self-test `an open, unchanged tab of a file with mixed line endings is changed too and keeps every ending (C45)`, self-test `opening a file that Change Name wrote ends Undo, so its tab always shows what is on disk`, self-test `Change Name from app.ts to app.tsx reads TSX, so valid TSX shows no bracket hint` (`ui/self-test-rename.js`); the Cmd+Z self-test now types a part first and waits for the first Cmd+Z to take it away, so it proves Undo ran
+- teeth: all 15 Change Name self-tests failed with their defects put back, among them no savedDoc patch (the clean-tab and own-edit tests) and no `addToHistory.of(false)` (the Cmd+Z test); the handback says each guard and encoding defect failed its core test (HANDBACK-0.3.0.md, WP5; it does not name those tests). The cdfab87b tests: HANDBACK-0.3.0.md, "Fixes after review (2026-11-09)"
+- limit: between the size and hash check and the write in `atomic_write` another program's write can be lost; ADR 0010 records this race. A mixed-ending file keeps all its endings here, closed or open in a tab (C43's note)
+- what a guard would have to do: already test-shaped
+
+### C48. Opening a file in a huge folder reads it at most once and at most 2,000 entries; a window focus never stats more than 2,000 entries
+
+Opening a file in a folder with tens of thousands of entries reads that folder at most once and at most 2,000 entries; a window focus never stats more than 2,000 entries.
+
+- evidence: `core/src/project.rs:14` `pub const MAX_SCAN_ENTRIES: usize = 2_000;`; `core/src/project.rs:212` `// MAX_SCAN_ENTRIES entries, and only web file names are statted (C48).`; `core/src/project.rs:241` `if seen == MAX_SCAN_ENTRIES {`, which sets `too_big` (the file then opens alone); since cdfab87b a scan that stops at more than 20 web files sets `core/src/project.rs:277` `result.stopped_early = true;`, and `ui/flows.js:279` `big = !!(scan.tooBig || scan.stoppedEarly);` opens the file lone, so `folder_stamp` does not read the folder a second time; `core/src/files.rs:657` `// A window focus never stats more than this many entries, the folder's own included (C48).` above `core/src/files.rs:658` `pub const MAX_STAMP_STATS: usize = 2_000;`; with the files of a lone project `folder_stamp` stats only those files (`core/src/files.rs:674` to `:684`); the counts come from `core/src/counts.rs`, read by the test-only `test_fs_counts` (`src-tauri/src/main.rs:1059`) on a tree from `test_make_tree` (`src-tauri/src/main.rs:1047`, with `ext` for a tree of web files)
+- origin: written with 0.3.0 (NEXT-0.3.0.md)
+- confirmed: true (owner, NEXT-0.3.0.md, 2026-11-09)
+- appears covered by: `scan_stops_at_2000_entries_and_opens_the_file_alone`, `scan_stops_early_once_there_are_too_many_web_files`, `scan_stats_only_web_file_names`, `a_picked_file_that_is_not_a_web_file_opens_alone_without_reading_the_folder`, `stamp_stats_at_most_2000_entries_in_all`, `stamp_skips_node_modules_and_dot_folders`, `stamp_of_given_files_looks_at_nothing_else`, `counts_add_up_and_reset_to_zero`, self-test `a file in a folder of 20,000 files: one read of at most 2,000 entries, and a focus stats at most 2,000 (C48)`; added in cdfab87b: `a_scan_that_reads_the_whole_folder_did_not_stop_early` and the `stopped_early` asserts in `scan_stops_early_once_there_are_too_many_web_files` and `scan_result_says_too_big_in_camel_case` (`core/src/project.rs`), self-test `a page in a folder of 20,000 web files: the scan stops early and the folder is read once (C48)` (`ui/self-test-files.js`)
+- teeth: the self-test failed with its defect put back (HANDBACK-0.3.0.md, WP1; the brief's defect is the 2,000 cap removed); the handback names no teeth run for the core tests. The cdfab87b tests: HANDBACK-0.3.0.md, "Fixes after review (2026-11-09)"
+- measured: on the Mac mini, 20,000 entries: open 16 ms (1 folder read, 2,000 entries, 3 stats), focus 0 ms (1 stat) (HANDBACK-0.3.0.md, information only)
+- limit: opening a whole folder (`plan_open`'s listing of its web files) is not capped; C48 covers opening a file (BACKLOG, from the handback)
+- what a guard would have to do: already test-shaped
 
 ---
 

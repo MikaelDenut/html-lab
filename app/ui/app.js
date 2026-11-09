@@ -1,14 +1,15 @@
 import { invoke, listen } from './api.js';
 import { browserName, browserOnlyKey, commandKey } from './platform.js';
-import { S, activeTab, activeProject, pageTabOf, projectOf } from './state.js';
+import { S, activeTab, activeProject, baseName, isOther, kindOf, kindOrCode, pageTabOf, projectOf, tidyAllowed } from './state.js';
 import { installSprite } from './icons.js';
 import * as preview from './preview.js';
-import { nextTabPath, noteDocChange, renderStrip, switchTo, syncMenu } from './tabs.js';
+import { nextTabPath, noteDocChange, renderStrip, setSideHooks, switchTo, syncMenu, withSide } from './tabs.js';
 import * as flows from './flows.js';
 import { setDialogListener } from './dialogs.js';
 import { initHelp, refreshTried, showGroup, showHome, showTopic, showWord } from './help.js';
 import * as link from './link.js';
 import { initInside, updateInside } from './inside.js';
+import * as rename from './rename.js';
 
 let divider = null;
 
@@ -50,12 +51,16 @@ function onEditorUpdate(update) {
   const tab = update.view.htmllabTab;
   if (!tab) return;
   tab.state = update.state;
+  // Change Name edits a tab's text with its own transactions: they are not typing, they do not
+  // start the auto-save timer, and they do not end the Undo toast (WP5).
+  const byRename = update.docChanged && update.transactions.every((tr) => !tr.docChanged || tr.annotation(S.E.renameEdit));
+  if (update.docChanged && !byRename) rename.noteUserEdit(tab);
   if (tab.path !== S.activePath) return;
   if (update.docChanged) {
-    tab.typed = true;
+    if (!byRename) tab.typed = true;
     noteDocChange(tab);
     preview.onKey(tab);
-    flows.noteChangeForAutosave();
+    if (!byRename) flows.noteChangeForAutosave();
     link.onDocChange(tab);
   } else if (update.selectionSet) {
     preview.onCursor(tab);
@@ -121,6 +126,78 @@ export function layout() {
   $('seg-page').setAttribute('aria-pressed', String(!help));
   $('seg-help').setAttribute('aria-pressed', String(help));
   if (S.ed && hasTabs) S.ed.view.requestMeasure();
+  withSide(() => {});
+}
+
+// The My page side (WP3). It follows the active tab by itself: shown for pages and style
+// files, hidden for other files. A click of the user's own wins until it matches that again.
+// The start screen always shows it.
+const autoSide = () => {
+  const tab = activeTab();
+  return !tab || !isOther(tab);
+};
+
+function sideWanted() {
+  if (!S.tabs.length) return true;
+  return S.sideManual === null ? autoSide() : S.sideManual === 'shown';
+}
+
+const SIDE_HIDE = 'Hide the My page side';
+const SIDE_SHOW = 'Show the My page side';
+
+// A side that hides with the focus in it, or in the My page and Help switch, gives the focus to the
+// side button when a side button hid it, else to the code, so it never drops to the window (WP3).
+let sideByButton = false;
+function sideHasFocus() {
+  const at = document.activeElement;
+  return !!at && ($('right').contains(at) || !!at.closest('.segs'));
+}
+
+function drawSide(was) {
+  const shown = S.sideShown;
+  const button = $('btn-side');
+  const words = shown ? SIDE_HIDE : SIDE_SHOW;
+  if (button.title !== words) {
+    button.title = words;
+    button.setAttribute('aria-label', words);
+  }
+  // layout() and every tab switch come here, so only a real change touches the button.
+  if (button.getAttribute('aria-pressed') !== String(shown)) button.setAttribute('aria-pressed', String(shown));
+  if (button.disabled !== !S.tabs.length) button.disabled = !S.tabs.length;
+  if (was === shown) return;
+  const focusOut = !shown && sideHasFocus();
+  $('main').classList.toggle('side-hidden', !shown);
+  $('toolbar').classList.toggle('side-hidden', !shown);
+  if (focusOut) {
+    if (sideByButton) button.focus();
+    else if (S.ed && S.tabs.length) S.ed.view.focus();
+  }
+  if (shown) preview.onSideShown();
+  else preview.onSideHidden();
+  syncMenu();
+  if (S.ed && S.tabs.length) S.ed.view.requestMeasure();
+}
+
+function toggleSide() {
+  if (!S.tabs.length) return;
+  const next = !S.sideShown;
+  S.sideManual = next === autoSide() ? null : next ? 'shown' : 'hidden';
+  withSide(() => {});
+  flows.writeSession();
+}
+
+function sideButtonClick() {
+  sideByButton = true;
+  try {
+    toggleSide();
+  } finally {
+    sideByButton = false;
+  }
+}
+
+// Help and My page are on the side, so asking for them brings a hidden side back, as a click would.
+function showSide() {
+  if (S.tabs.length && !S.sideShown) toggleSide();
 }
 
 export function showRight(view) {
@@ -136,6 +213,7 @@ export function showRight(view) {
 }
 
 function openHelpView(show) {
+  showSide();
   helpOpened = true;
   if (S.rightView !== 'help') {
     S.rightView = 'help';
@@ -153,7 +231,7 @@ async function openHelpFirstTopic() {
 
 function helpOnThisWord() {
   const tab = activeTab();
-  if (!tab || !S.ed || !S.ed.view.hasFocus) return;
+  if (!tab || !kindOf(tab).teaching || !S.ed || !S.ed.view.hasFocus) return;
   const word = S.E.wordAtCursor(S.ed.view.state);
   const firstTime = !helpOpened;
   if (word) openHelpView(() => showWord(word));
@@ -188,6 +266,14 @@ function editorCommand(fn) {
   };
 }
 
+// Tidy that is off for the file's language changes nothing, from the button or the menu.
+async function tidyNow() {
+  const tab = activeTab();
+  if (!tab || !tidyAllowed(tab)) return;
+  await whenEditor();
+  if (activeTab() === tab) S.E.tidy(S.ed.view);
+}
+
 function toggleTyping() {
   const on = !S.prefs.typingHelpers;
   S.prefs.typingHelpers = on;
@@ -205,8 +291,9 @@ function toggleAutosave() {
 }
 
 // Point and Show the Boxes act on the page, so the page comes back first when Help shows.
+// A hidden side has no page to act on.
 function seeOnPage(fn) {
-  if (!activeTab()) return;
+  if (!activeTab() || !S.sideShown) return;
   if (S.rightView === 'help') showRight('page');
   fn();
 }
@@ -222,6 +309,8 @@ const COMMANDS = {
   autosave: toggleAutosave,
   'close-tab': () => flows.closeTabFlow(),
   'show-folder': () => flows.showProjectFolder(),
+  rename: () => rename.renameFlow(),
+  'undo-rename': () => rename.undoRename(),
   undo: () => S.E && S.E.runEdit(S.ed.view, 'undo'),
   redo: () => S.E && S.E.runEdit(S.ed.view, 'redo'),
   'select-all': () => S.E && S.E.runEdit(S.ed.view, 'select-all'),
@@ -230,14 +319,21 @@ const COMMANDS = {
   'find-prev': editorCommand((v) => S.E.runFind(v, 'find-prev')),
   replace: editorCommand((v) => S.E.runFind(v, 'replace')),
   comment: editorCommand((v) => S.E.commentLine(v)),
-  tidy: editorCommand((v) => S.E.tidy(v)),
+  tidy: tidyNow,
   fold: editorCommand((v) => S.E.foldHere(v)),
   unfold: editorCommand((v) => S.E.unfoldHere(v)),
   'unfold-all': editorCommand((v) => S.E.unfoldEverything(v)),
   point: () => seeOnPage(() => link.togglePoint()),
   boxes: () => seeOnPage(() => link.toggleBoxes()),
-  'my-page': () => showRight('page'),
-  help: () => showRight('help'),
+  'my-page': () => {
+    showSide();
+    showRight('page');
+  },
+  help: () => {
+    showSide();
+    showRight('help');
+  },
+  'toggle-side': toggleSide,
   bigger: () => setTextSize(S.prefs.textSize + 1),
   smaller: () => setTextSize(S.prefs.textSize - 1),
   'normal-size': () => setTextSize(16),
@@ -266,6 +362,8 @@ const COMMANDS = {
 
 function runCommand(id) {
   if (S.dialogOpen && !ALWAYS.has(id)) return;
+  // Undo, Redo and Select All act on the Change Name field; any other command stops it first.
+  if (!ALWAYS.has(id)) rename.cancelRename();
   const tabMatch = /^tab-(\d)$/.exec(id);
   if (tabMatch) {
     const tab = S.tabs[Number(tabMatch[1]) - 1];
@@ -278,11 +376,13 @@ function runCommand(id) {
 
 function handleCommandKey(key) {
   if (S.dialogOpen) return false;
+  if (key === '+' || key === '=' || key === '?') rename.cancelRename();
   if (key === '+' || key === '=') {
     setTextSize(S.prefs.textSize + 1);
     return true;
   }
   if (key === '?') {
+    showSide();
     showRight('help');
     return true;
   }
@@ -300,6 +400,7 @@ function wireDivider() {
   let drag = null;
 
   function start() {
+    if (!S.sideShown) return;
     const box = main.getBoundingClientRect();
     const line = divider.getBoundingClientRect();
     const padding = left.getBoundingClientRect().left - box.left;
@@ -350,6 +451,7 @@ function wireScreens() {
   $('btn-new').addEventListener('click', () => flows.newFlow());
   $('btn-open').addEventListener('click', () => flows.openFlow());
   $('btn-save').addEventListener('click', () => flows.saveFlow());
+  $('btn-side').addEventListener('click', sideButtonClick);
   $('seg-page').addEventListener('click', () => showRight('page'));
   $('seg-help').addEventListener('click', () => showRight('help'));
 
@@ -358,15 +460,34 @@ function wireScreens() {
   $('w-sample').addEventListener('click', () => flows.newFlow({ focusSamples: true }));
   $('w-open-help').addEventListener('click', () => showRight('help'));
 
+  // Change Name (WP5): a single click on the name of the tab that was already the active one
+  // at pointerdown, for 500 ms or more, opens the field; Enter on the focused active tab too.
+  let downOk = null;
+  $('tab-list').addEventListener('pointerdown', (event) => {
+    const tabEl = event.target.closest('.tab');
+    const path = tabEl && tabEl.dataset.path;
+    downOk = path && !rename.closedByPointer(event) && rename.clickOpens(path) ? path : null;
+  });
   $('tab-list').addEventListener('click', (event) => {
     const tabEl = event.target.closest('.tab');
-    if (!tabEl) return;
-    if (event.target.closest('.tab-close')) flows.closeTabFlow(tabEl.dataset.path);
-    else switchTo(tabEl.dataset.path);
+    if (!tabEl || event.target.closest('.tab-rename')) return;
+    const path = tabEl.dataset.path;
+    const opens = downOk === path && event.detail <= 1 && event.target.closest('.tab-name');
+    downOk = null;
+    if (event.target.closest('.tab-close')) flows.closeTabFlow(path);
+    else if (opens && rename.renameFlow(path)) return;
+    else switchTo(path);
+  });
+  $('tab-list').addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' || event.isComposing || !event.target.closest('.tab-main')) return;
+    const tabEl = event.target.closest('.tab');
+    if (tabEl.dataset.path !== S.activePath) return;
+    event.preventDefault();
+    rename.renameFlow(tabEl.dataset.path);
   });
   $('tab-add').addEventListener('click', () => flows.addFileFlow());
 
-  $('btn-tidy').addEventListener('click', editorCommand((v) => S.E.tidy(v)));
+  $('btn-tidy').addEventListener('click', tidyNow);
   $('size-minus').addEventListener('click', () => setTextSize(S.prefs.textSize - 1));
   $('size-plus').addEventListener('click', () => setTextSize(S.prefs.textSize + 1));
 
@@ -378,7 +499,12 @@ function wireScreens() {
   $('btn-safari').setAttribute('aria-label', `Open this page in ${browserName}`);
   $('btn-safari').title = `Open this page in ${browserName}`;
   $('btn-safari').addEventListener('click', () => flows.openInSafari());
+  $('page-hint').addEventListener('click', (event) => {
+    if (event.target.closest('#hint-browser')) flows.openInSafari();
+  });
   $('page-empty-link').addEventListener('click', () => openHelpView(() => showGroup('start')));
+  $('btn-hide-side').addEventListener('click', sideButtonClick);
+  $('page-none-help').addEventListener('click', () => openHelpView(() => showHome()));
   $('btn-back-help').addEventListener('click', () => showRight('help'));
 
   divider = wireDivider();
@@ -416,6 +542,17 @@ function fontsReady(capMs) {
   return Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, capMs))]);
 }
 
+// The blank screen before a restore has one panel when the side comes back hidden: hidden by
+// hand, or left to itself on a file that is not a web page. A test run never uses the saved side.
+function restoresHidden(session, flags) {
+  const testRun = flags.selfTest || flags.smokeTest || flags.speedCheck;
+  const side = testRun ? null : session.side;
+  if (side === 'hidden' || side === 'shown') return side === 'hidden';
+  const active = session.active || session.tabs[0];
+  const kind = kindOrCode(baseName(active));
+  return !kind.isPage && kind.previewMode !== 'swap';
+}
+
 async function boot() {
   const marks = { boot: performance.now() };
   window.__bootMarks = marks;
@@ -428,6 +565,7 @@ async function boot() {
   marks.invokes = performance.now();
   S.config = config;
   for (const kind of config.kinds) S.kinds.set(kind.id, kind);
+  S.kinds.set(config.codeKind.id, config.codeKind);
   S.prefs = prefs;
   S.flags = flags;
 
@@ -436,7 +574,10 @@ async function boot() {
   if (restoring) {
     $('main').hidden = true;
     $('blank-panels').hidden = false;
+    $('blank-panels').classList.toggle('one', restoresHidden(prefs.session, flags));
   }
+  // Point goes off and the lit lines clear while the page can still hear it.
+  setSideHooks({ wanted: sideWanted, hiding: () => link.onHelpShown(), draw: drawSide });
 
   wireScreens();
   wireNative();
@@ -452,7 +593,7 @@ async function boot() {
     pv: () => preview.pageVersion(),
     pageTab: () => pageTabOf(S.projects.get(preview.state.projectId)),
     showingPage: () => preview.showingPageTab(),
-    linkedCss: (tab) => preview.linkedCss(tab),
+    linkedCss: (tab) => S.sideShown && preview.linkedCss(tab),
     switchTo: (path) => switchTo(path),
     updateHeader: () => preview.updateHeader(),
     setPressed: (id, on) => {
@@ -462,6 +603,7 @@ async function boot() {
     syncMenu: () => syncMenu(),
   });
   flows.initFlows({ whenEditor, layout, showRight, onTriedChanged: () => refreshTried() });
+  rename.initRename();
   initHelp($('help-panel'), {
     helpIndex: () => invoke('help_index'),
     helpTopic: (id) => invoke('help_topic', { id }),

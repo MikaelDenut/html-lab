@@ -1,6 +1,6 @@
 ---
 class:   truth
-updated: 2026-11-08
+updated: 2026-11-09
 status:  current
 ---
 
@@ -35,7 +35,14 @@ would assume. Paths are relative to `app/`.
 | Term | Means here | Does NOT mean |
 |---|---|---|
 | project | A named group of files in one flat folder, or with no folder yet. Project kinds are `new`, `sample`, `practice` and `saved` | Something with a project file. There is none |
-| kinds table | `KINDS` in `core/src/kinds.rs`: the list of file kinds (HTML, CSS) that drives extensions, labels and preview mode | The project kinds above |
+| kinds table | `KINDS` in `core/src/kinds.rs`: the teaching kinds, html and css, and nothing else (C37). It drives extensions, labels, preview mode and what counts as a web file. Every other language is a row of `LANGUAGES` | The project kinds above, or a list of every file type HTML Lab opens |
+| teaching kind | A row of `KINDS`, with `teaching: true`: html (`.html`, `.htm`) and css. Only these get the teaching features (explanations, Point at the Page, Show the Boxes, page lighting, autocomplete, closing tags, Help on This Word, the HTML mistake hint), decided by the kind flag (C47) | Every kind of file that opens |
+| web file | A file of a teaching kind: `kind_for_name` in `core/src/kinds.rs` returns a kind for it. Only web files count towards a project (2 to 20) and only they are pages or style files | Any file a browser can show. A `.js` or `.svg` file is not a web file here |
+| `CODE_KIND` | The one generic kind (id `code`, `teaching: false`, preview mode `none`) for every file that is not a web file, in `core/src/kinds.rs`. It is not a row of `KINDS`. `kind_or_code` in Rust and `kindOrCode` in `ui/state.js` give it, and only where a file is opened or given a tab | A language. A Python and a JSON tab both have `CODE_KIND`; their languages differ |
+| language | A row of `LANGUAGES` in `core/src/kinds.rs` (JavaScript, Python, Text, ...), found by extension or by name (`Gemfile`, `.zshrc`). It gives colours, folding, the Tidy rule (`on`, `off-meaning`, `off-no-rules`), the footer label and the tab letters. Each loads as a chunk from `ui/editor/` when a file needs it. Any other text file is the `text` row | A file kind. A language never decides what is a web file (C37), and html and css are not rows |
+| text style | `TextStyle` in `core/src/files.rs`, kept as `tab.style`: a file's BOM, encoding (`utf8`, `utf16le`, `utf16be`), line ending (the most-used one), `mixedEol`, final newline and indent. Read with the file and sent back with every save, so a save gives back the same bytes (C43) | A CSS style, or the style file of a project |
+| lone project | `project.lone` in `ui/flows.js`: a project with a folder that was opened alone, because the folder has more than 2,000 entries or because it holds only files that are not web files. `folder_stamp` then stamps only its open files (`stampArgs` in `ui/state.js`, C48) | A project with one file. A one-page project in a small folder is not lone |
+| reference | A spot in a file's text that names another file by a path, in one of the forms `core/src/refs.rs` knows: `href`, `src`, `url(...)`, `@import`, a JS `import` or `require`, a Markdown link, and the like. `find_references` finds them for a rename | The file's name written in prose, which a rename never changes |
 | changed | The editor's text differs from `savedDoc` | A file changed on disk |
 | dot | The unsaved mark on a tab | Part of a file name |
 | hidden file | A file of a project that travels with it (`hiddenFiles`) but has no tab (`ui/flows.js:99`) | A dotfile |
@@ -62,9 +69,9 @@ would assume. Paths are relative to `app/`.
 | Term | Means here | Does NOT mean |
 |---|---|---|
 | My page / Help | The switch over the right panel | Separate windows |
-| mistake hint | The note under the code for a likely HTML mistake (`ui-src/hints.js`), with Hide this hint | A compiler error. Pages always render |
+| mistake hint | The note under the code for a likely mistake: HTML in `ui-src/hints.js`, with Hide this hint; JSON, JavaScript and TypeScript in `ui-src/code-hints.js` (a missing JSON comma, a bracket or a quote that never closes). Only the first mistake shows | A compiler error. Pages always render, and no code is run |
 | unfinished-tag hold | Pausing preview updates while the cursor is in a tag still being typed (`unfinishedTagAt`, `ui-src/hints.js:17`) | Debounce on every key. Normal pages update at once |
-| Tidy | Fixes indentation in one undo step and leaves `<pre>` alone | A formatter that changes content |
+| Tidy | Fixes indentation only, in one undo step, with the file's own indent unit; with a selection, only the selected lines. Leaves `<pre>` alone. Greyed for a language whose row says `off-meaning` or `off-no-rules` | A formatter that changes content |
 | Typing Helpers | Preference for auto-closing tags and similar | The preview helper |
 | Help on This Word | Opens the Help topic for the word under the cursor (Cmd+Shift+L) | Help search |
 | Keep working | The button that cancels a close or quit | A Save |
@@ -73,15 +80,17 @@ would assume. Paths are relative to `app/`.
 | lit lines | The lines of the element the mouse is on in the page, lit in the code. A "Line 40" chip leads to them when they are off screen | The cursor's line highlight |
 | You are inside | The row under the code naming the elements around the cursor, "html › body › p", or the CSS rule and its `@media` (`ui/inside.js`) | Breadcrumbs of folders |
 | Point at the Page | A mode (header button, View menu) in which a click on the page selects that element's code instead of following links | Clicking a link in the page |
-| Show the Boxes | A check item (header button, View menu) that outlines every box on the page in four colours by depth | The browser's developer tools |
+| Show the Boxes | A check item (header button, View menu) that outlines every box on the page in four colours by depth, each big box with its tag name in a label that keeps off the text. Closing the last tab turns it off | The browser's developer tools |
 | explanation | The box shown when the mouse rests on a tag name, CSS word, colour name or picture file name, with "More in Help" | A mistake hint |
+| My page side | The right panel (`#right`) with My page and Help, and the divider before it. The button `#btn-side`, View > My Page Side or Cmd+Shift+Y hides and shows it. It hides by itself for a file that is not a page or a style file; a click of the user's own (`S.sideManual`) wins over that. While hidden, the page gets no updates (C46) | The Mac's sidebar, or a second window |
+| place | One reference to the old name, as the rename dialog lists it: file, line and that line's text with the old name marked. Each is one span (`from`, `to`, old text, new text) of a `find_references` plan | A spot on the page, or a folder |
 
 ## Testing and release
 
 | Term | Means here | Does NOT mean |
 |---|---|---|
-| self-test | Hidden mode started with `--self-test`, code in `ui/self-test.js`. Drives the real logic through dispatch and DOM clicks. 85 tests. Run by `scripts/selftest-run.py` | A user-level test. It calls functions and can pass while a button is covered |
-| smoke test | Hidden mode `--smoke-test`, `ui/smoke-test.js`. Clicks whatever is on top at a button's middle, types through the focused element, and photographs each step. 32 steps | A short or shallow test |
+| self-test | Hidden mode started with `--self-test`, code in `ui/self-test.js`. Drives the real logic through dispatch and DOM clicks. The count is pinned by `MIN_TESTS`. Run by `scripts/selftest-run.py` | A user-level test. It calls functions and can pass while a button is covered |
+| smoke test | Hidden mode `--smoke-test`, `ui/smoke-test.js`. Clicks whatever is on top at a button's middle, types through the focused element, and photographs each step. The count is pinned by `MIN_STEPS` | A short or shallow test |
 | engine check | `ui/engine-check.js`: asks the running WebKit whether it accepts every piece of CSS and HTML shipped or taught | A static list of features |
 | speed check | Hidden mode `--speed-check`, `ui/speed-check.js`. Measures a fixed scenario. `scripts/speed-run.py` runs it and `scripts/speed-gate.py` compares with `scripts/speed-budgets.json` | A benchmark of the code in isolation. It runs in the visible window |
 | painted | Time until two animation frames have passed after an action | Time until the code returned |

@@ -8,7 +8,7 @@ TARGET="$APP_DIR/src-tauri/target/x86_64-apple-darwin/quick"
 BUNDLE="$TARGET/HTML Lab Test.app"
 
 if [[ "$2" != "--no-build" ]]; then
-  (cd "$APP_DIR" && npx esbuild ui-src/editor.js --bundle --minify --format=esm --target=safari15 --outfile=ui/editor.bundle.js --log-level=warning)
+  (cd "$APP_DIR" && rm -rf ui/editor && npx esbuild ui-src/editor.js --bundle --minify --splitting --format=esm --target=safari15 --outdir=ui --entry-names=editor.bundle '--chunk-names=editor/[name]-[hash]' --log-level=warning)
   (cd "$APP_DIR" && npx esbuild ui-src/helper.js --bundle --minify --format=iife --target=safari15 --outfile=src-tauri/helper.min.js --log-level=warning)
   (cd "$APP_DIR/src-tauri" && cargo build --profile quick --target x86_64-apple-darwin --features tauri/custom-protocol 2>&1 | grep -E '^error|^warning: unused|could not compile|Finished' | cut -c1-160)
 fi

@@ -1,4 +1,4 @@
-import { Compartment, EditorState, Prec } from '@codemirror/state';
+import { Annotation, Compartment, EditorState, Facet, Prec, Transaction } from '@codemirror/state';
 import {
   EditorView,
   drawSelection,
@@ -39,16 +39,82 @@ import { countMatches, countText, findPanel } from './find-panel.js';
 import { cssRuleAt, foldHere, insidePath, selectRange, structureExtension, unfoldEverything, unfoldHere } from './structure.js';
 import { alignPage, codeElements, elementAt, linkExtension, selectTagName, setLit } from './link-editor.js';
 import { explainExtension } from './explain.js';
+import { codePath } from './code-path.js';
+import { legacyFolding } from './legacy-fold.js';
 
-function languageFor(language) {
+// The teaching languages are built in. Every other language is a chunk of its own, loaded on
+// demand, one per row of LANGUAGES in core kinds.rs ("text" has none). A static map, so esbuild
+// can split them.
+function teachingLanguage(language) {
   switch (language) {
     case 'html':
       return { extension: html({ autoCloseTags: false }), parser: htmlLanguage.parser, hints: true, colors: false };
     case 'css':
       return { extension: css(), parser: cssLanguage.parser, hints: false, colors: true };
     default:
-      return { extension: [], parser: null, hints: false, colors: false };
+      return null;
   }
+}
+
+const LANGUAGE_CHUNKS = {
+  javascript: () => import('./langs/javascript.js'),
+  typescript: () => import('./langs/typescript.js'),
+  json: () => import('./langs/json.js'),
+  markdown: () => import('./langs/markdown.js'),
+  xml: () => import('./langs/xml.js'),
+  scss: () => import('./langs/scss.js'),
+  sass: () => import('./langs/sass.js'),
+  less: () => import('./langs/less.js'),
+  yaml: () => import('./langs/yaml.js'),
+  python: () => import('./langs/python.js'),
+  php: () => import('./langs/php.js'),
+  sql: () => import('./langs/sql.js'),
+  cpp: () => import('./langs/cpp.js'),
+  java: () => import('./langs/java.js'),
+  go: () => import('./langs/go.js'),
+  rust: () => import('./langs/rust.js'),
+  swift: () => import('./langs/swift.js'),
+  lua: () => import('./langs/lua.js'),
+  shell: () => import('./langs/shell.js'),
+  powershell: () => import('./langs/powershell.js'),
+  ruby: () => import('./langs/ruby.js'),
+  toml: () => import('./langs/toml.js'),
+  ini: () => import('./langs/ini.js'),
+};
+
+const BUILT_IN = new Set(['html', 'css', 'text']);
+const loaded = new Map(); // id -> wrapper module, or null for a language shown as plain text
+const loading = new Map();
+
+function loadOne(id) {
+  if (BUILT_IN.has(id) || loaded.has(id)) return null;
+  if (loading.has(id)) return loading.get(id);
+  const chunk = LANGUAGE_CHUNKS[id];
+  const wait = (chunk ? chunk() : Promise.resolve(null)).then(
+    (mod) => {
+      loaded.set(id, mod && typeof mod.support === 'function' ? mod : null);
+    },
+    (error) => {
+      // A missing chunk must not stop the child from opening the file: it opens as plain
+      // text, and the error still reaches the error log, so a test run fails.
+      loaded.set(id, null);
+      setTimeout(() => {
+        throw error;
+      });
+    },
+  );
+  loading.set(id, wait);
+  wait.finally(() => loading.delete(id));
+  return wait;
+}
+
+export function loadLanguages(ids) {
+  const waits = [...new Set(ids || [])].map(loadOne).filter(Boolean);
+  return waits.length ? Promise.all(waits).then(() => undefined) : Promise.resolve();
+}
+
+export function languageLoaded(id) {
+  return BUILT_IN.has(id) || loaded.has(id);
 }
 
 const codeColors = HighlightStyle.define([
@@ -57,11 +123,20 @@ const codeColors = HighlightStyle.define([
   { tag: [t.attributeValue, t.string], class: 'c-str' },
   { tag: [t.comment, t.documentMeta, t.processingInstruction, t.separator, t.punctuation], class: 'c-dim' },
   { tag: [t.propertyName, t.definitionKeyword], class: 'c-prop' },
+  { tag: [t.bool, t.null], class: 'c-bool' },
+  { tag: t.regexp, class: 'c-re' },
   {
-    tag: [t.number, t.unit, t.color, t.keyword, t.atom, t.bool, t.literal, t.constant(t.name), t.function(t.name)],
+    tag: [t.number, t.unit, t.color, t.keyword, t.atom, t.literal, t.constant(t.name), t.function(t.name)],
     class: 'c-val',
   },
   { tag: [t.className, t.labelName, t.constant(t.className), t.modifier], class: 'c-tag' },
+  { tag: t.typeName, class: 'c-type' },
+  { tag: t.variableName, class: 'c-var' },
+  { tag: t.operator, class: 'c-op' },
+  { tag: t.heading, class: 'c-head' },
+  { tag: t.emphasis, class: 'c-em' },
+  { tag: t.link, class: 'c-link' },
+  { tag: t.meta, class: 'c-meta' },
   { tag: [t.content, t.name], class: 'c-text' },
 ]);
 
@@ -153,8 +228,23 @@ const escapeClosesFind = Prec.low(
 
 const helpers = new Compartment();
 const measureStamp = new Compartment();
+const indenting = new Compartment();
+const languagePart = new Compartment();
 
-function helpersOn() {
+// Whether the state's file is a teaching kind (kind.teaching, C47). Set with the language.
+const teachingFlag = Facet.define({ combine: (values) => (values.length ? values[0] : false) });
+
+// Each file keeps its own indent: a tab, or 2 to 8 spaces. Both facets take the
+// first value they get, so the file's own indent comes first in every state.
+function indentFor(indent) {
+  const width = Math.min(8, Math.max(2, Math.round(Number(indent && indent.width)) || 2));
+  return [indentUnit.of(indent && indent.tabs ? '\t' : ' '.repeat(width)), EditorState.tabSize.of(width)];
+}
+
+// Teaching kinds get the tag closer and suggestions; other files only close their brackets (C47).
+export function helpersFor(teaching, on) {
+  if (!on) return [];
+  if (!teaching) return [closeBrackets(), keymap.of(closeBracketsKeymap)];
   return [
     autoCloseTags,
     closeBrackets(),
@@ -177,8 +267,6 @@ function makeShared() {
     selectionClass,
     escapeClosesFind,
     EditorView.lineWrapping,
-    indentUnit.of('  '),
-    EditorState.tabSize.of(2),
     syntaxHighlighting(codeColors),
     theme,
     contentAttrs,
@@ -200,8 +288,8 @@ export function createEditor(host, callbacks) {
     const value = state.field(hints.field, false);
     return value ? value.mistake : null;
   };
-  const seeing = [
-    structureExtension({ mistakeOf }),
+  const folding = structureExtension({ mistakeOf });
+  const teachingSeeing = [
     linkExtension(),
     explainExtension({
       lookup: callbacks.lookup,
@@ -216,31 +304,53 @@ export function createEditor(host, callbacks) {
     if (callbacks.onUpdate) callbacks.onUpdate(update);
   });
 
-  const perLanguage = new Map();
-  function languageExtensions(language) {
-    if (!perLanguage.has(language)) {
-      const info = languageFor(language);
-      perLanguage.set(language, [
+  const perTeaching = new Map();
+  function teachingExtensions(language) {
+    if (!perTeaching.has(language)) {
+      const info = teachingLanguage(language);
+      perTeaching.set(language, [
         info.extension,
         info.hints ? hints.extension : [],
         info.colors ? colorPicker : [],
+        teachingSeeing,
       ]);
     }
-    return perLanguage.get(language);
+    return perTeaching.get(language);
   }
 
-  function newState(text, language) {
+  // Throws for a language whose chunk is not loaded, so a path that forgot loadLanguages fails
+  // a test instead of showing the file without colours.
+  function languageExtensions(language, teaching, fileName) {
+    if (!languageLoaded(language)) throw new Error(`the language ${language} is not loaded`);
+    const part = [teachingFlag.of(!!teaching)];
+    if (teaching && teachingLanguage(language)) return [part, teachingExtensions(language)];
+    if (language === 'html' || language === 'css') return [part, teachingLanguage(language).extension];
+    const mod = loaded.get(language);
+    if (!mod) return part;
+    // JSON, JavaScript and TypeScript chunks bring their own mistake finder (code-hints.js, WP6).
+    const finder = mod.findMistake ? hints.forDetector(mod.findMistake) : [];
+    return [part, mod.support(fileName || ''), mod.legacy ? legacyFolding : [], finder];
+  }
+
+  function newState(text, language, indent, { teaching = false, fileName = '' } = {}) {
+    const langExt = languageExtensions(language, teaching, fileName);
     return EditorState.create({
       doc: text,
       extensions: [
+        indenting.of(indentFor(indent)),
         shared,
-        helpers.of(typingOn ? helpersOn() : []),
+        helpers.of(helpersFor(teaching, typingOn)),
         measureStamp.of([]),
-        languageExtensions(language),
-        seeing,
+        languagePart.of(langExt),
+        folding,
         updates,
       ],
     });
+  }
+
+  function applyEffects(tab, effects) {
+    if (tab.view) tab.view.dispatch({ effects });
+    else tab.state = tab.state.update({ effects }).state;
   }
 
   function makeView(state, hidden = false) {
@@ -255,7 +365,7 @@ export function createEditor(host, callbacks) {
     made.contentDOM.addEventListener('mousedown', wakeCaret);
     return made;
   }
-  const blank = makeView(newState('', 'html'));
+  const blank = makeView(newState('', 'html', null, { teaching: true }));
   let current = blank;
 
   function showView(next) {
@@ -270,6 +380,19 @@ export function createEditor(host, callbacks) {
       return current;
     },
     newState,
+    loadLanguages,
+    languageLoaded,
+    // Same state, so undo history and folds survive (a rename that changes the type, WP5).
+    setLanguage(tab, id, { teaching, fileName } = {}) {
+      const state = tab.view ? tab.view.state : tab.state;
+      const teach = teaching === undefined ? state.facet(teachingFlag) : !!teaching;
+      const effects = [
+        languagePart.reconfigure(languageExtensions(id, teach, fileName === undefined ? tab.name : fileName)),
+        helpers.reconfigure(helpersFor(teach, typingOn)),
+      ];
+      applyEffects(tab, effects);
+      tab.language = id;
+    },
     show(tab) {
       if (!tab.view) {
         tab.view = makeView(tab.state, true);
@@ -296,10 +419,9 @@ export function createEditor(host, callbacks) {
     },
     setTypingHelpers(on, tabs) {
       typingOn = on;
-      const effect = helpers.reconfigure(on ? helpersOn() : []);
       for (const tab of tabs) {
-        if (tab.view) tab.view.dispatch({ effects: effect });
-        else tab.state = tab.state.update({ effects: effect }).state;
+        const state = tab.view ? tab.view.state : tab.state;
+        applyEffects(tab, helpers.reconfigure(helpersFor(state.facet(teachingFlag), on)));
       }
     },
     remeasure(tabs) {
@@ -347,28 +469,56 @@ export function commentLine(view) {
   toggleComment(view);
 }
 
+// The lines Tidy works on: the selected lines, or every line. A selection that ends at the
+// start of a line leaves that line out.
+function tidyLines(state) {
+  const sel = state.selection.main;
+  if (sel.empty) return { from: 0, to: state.doc.length };
+  const first = state.doc.lineAt(sel.from);
+  let last = state.doc.lineAt(sel.to);
+  if (sel.to === last.from && last.number > first.number) last = state.doc.line(last.number - 1);
+  return { from: first.from, to: last.to };
+}
+
+// The string nodes of the grammars Tidy works on (Java text blocks, PHP heredocs and nowdocs,
+// JS and TS template literals, C++ and Rust raw strings, Go raw strings, Python strings).
+// The spaces at the start of a line inside one are part of the text.
+const TIDY_STRING_NODES = new Set([
+  'String',
+  'StringLiteral',
+  'TemplateString',
+  'TextBlock',
+  'HeredocString',
+  'NowdocString',
+  'RawString',
+  'FormatString',
+]);
+
+// True when the line that starts at pos is inside a string that began on an earlier line, or
+// inside <pre> or <textarea>. resolveInner also enters mounted trees, so the HTML in a PHP file
+// and the JS in a <script> are checked too.
+function tidyKeepsLine(state, tree, pos) {
+  for (let node = tree.resolveInner(pos, 1); node; node = node.parent) {
+    if (node.from >= pos) continue;
+    if (TIDY_STRING_NODES.has(node.name)) return true;
+    if (node.name === 'Element') {
+      const open = node.firstChild;
+      const nameNode = open && open.name === 'OpenTag' && pos > open.to ? open.getChild('TagName') : null;
+      const name = nameNode ? state.sliceDoc(nameNode.from, nameNode.to).toLowerCase() : '';
+      if (name === 'pre' || name === 'textarea') return true;
+    }
+  }
+  return false;
+}
+
+// Tidy only changes the indents, with the file's own indent unit (the indenting compartment).
 export function tidyChanges(state) {
   const tree = ensureSyntaxTree(state, state.doc.length, 1000);
   if (!tree) return null;
-  const keep = [];
-  tree.iterate({
-    enter(ref) {
-      if (ref.name !== 'Element') return true;
-      const node = ref.node;
-      const open = node.firstChild;
-      if (!open || open.name !== 'OpenTag') return true;
-      const nameNode = open.getChild('TagName');
-      const name = nameNode ? state.sliceDoc(nameNode.from, nameNode.to).toLowerCase() : '';
-      if (name === 'pre' || name === 'textarea') {
-        keep.push([open.to, node.to]);
-        return false;
-      }
-      return true;
-    },
-  });
   const changes = [];
-  indentRange(state, 0, state.doc.length).iterChanges((fromA, toA, fromB, toB, inserted) => {
-    if (keep.some(([from, to]) => fromA > from && fromA <= to)) return;
+  const { from, to } = tidyLines(state);
+  indentRange(state, from, to).iterChanges((fromA, toA, fromB, toB, inserted) => {
+    if (tidyKeepsLine(state, tree, fromA)) return;
     changes.push({ from: fromA, to: toA, insert: inserted.toString() });
   });
   return changes.length ? changes : null;
@@ -414,9 +564,10 @@ export function insertLineChange(state, lineIndex, text) {
   return { from: line.from, insert: text + '\n' };
 }
 
+// Help shows only teaching code (C47).
 export function highlightRuns(code, language) {
-  const info = languageFor(language);
-  if (!info.parser) return [{ text: code, cls: '' }];
+  const info = teachingLanguage(language);
+  if (!info) return [{ text: code, cls: '' }];
   const tree = info.parser.parse(code);
   const runs = [];
   let at = 0;
@@ -430,8 +581,12 @@ export function highlightRuns(code, language) {
 }
 
 export { findMistake, unfinishedTagAt, EditorView, ensureSyntaxTree, countMatches, countText };
-export { cssRuleAt, foldHere, insidePath, selectRange, unfoldEverything, unfoldHere };
+export { codePath, cssRuleAt, foldHere, insidePath, selectRange, unfoldEverything, unfoldHere };
 export { alignPage, codeElements, elementAt, selectTagName, setLit };
 
 export { runScopeHandlers } from '@codemirror/view';
-export { undo, redo };
+export { undo, redo, Transaction };
+
+// Marks the edits Change Name makes in a tab (0.3.0 WP5): they are not typing, and the
+// Undo toast does not count them as a change of the user's own.
+export const renameEdit = Annotation.define();

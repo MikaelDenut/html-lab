@@ -66,7 +66,9 @@ function moveTab(box, backwards) {
   if (list[next].tagName === 'INPUT' && list[next].type === 'text') list[next].select();
 }
 
-function openDialog({ cls, html, cancelValue, enterPresses = true, setup, firstFocus }) {
+// onEnter(event), when given, decides what Enter does instead of pressing [data-primary]
+// (the Change Name dialog, WP5).
+function openDialog({ cls, html, cancelValue, enterPresses = true, onEnter = null, setup, firstFocus }) {
   if (current) current.finish(current.cancelValue);
   const root = document.getElementById('dialog-root');
   const previous = document.activeElement;
@@ -100,6 +102,10 @@ function openDialog({ cls, html, cancelValue, enterPresses = true, setup, firstF
         e.preventDefault();
         e.stopPropagation();
         if (!dlg.busy) dlg.finish(dlg.cancelValue);
+      } else if (e.key === 'Enter' && onEnter && !e.isComposing) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!dlg.busy) onEnter(e);
       } else if (e.key === 'Enter' && enterPresses && !e.isComposing) {
         e.preventDefault();
         e.stopPropagation();
@@ -154,12 +160,20 @@ function rowIcon(file, size, fallback) {
   return icon(id, `${size} ic-${id}`, file.color);
 }
 
+// A title or line is a string, or a list of strings and { code } parts, so a
+// file name inside a sentence can show as code.
+function rich(value) {
+  if (!Array.isArray(value)) return esc(value);
+  return value.map((part) => (typeof part === 'string' ? esc(part) : `<code class="dlg-code">${esc(part.code)}</code>`)).join('');
+}
+
 function askHead({ title, line, tileIcon, amber }) {
+  const hasLine = Array.isArray(line) ? line.length > 0 : !!line;
   return `<div class="dlg-head">
     <span class="dlg-tile${amber ? ' amber' : ''}" aria-hidden="true">${icon(tileIcon, 's34')}</span>
     <div class="dlg-head-text">
-      <h2 id="dlg-title" class="dlg-title">${esc(title)}</h2>
-      <p class="dlg-line">${esc(line)}</p>
+      <h2 id="dlg-title" class="dlg-title">${rich(title)}</h2>
+      ${hasLine ? `<p class="dlg-line">${rich(line)}</p>` : ''}
     </div>
   </div>`;
 }
@@ -546,28 +560,65 @@ export function showSaveDialog({
   });
 }
 
-export function showAddFileDialog({ kinds, kindDefault, cssName = null, pageName = null, cleanName, nameFree }) {
-  const startKind = kinds.find((k) => k.id === kindDefault) || kinds[0];
-  const choices = kinds.map((k) => `
-    <label class="choice${k === startKind ? ' on' : ''}" data-kind="${esc(k.id)}">
-      <input type="radio" name="dlg-kind" value="${esc(k.id)}"${k === startKind ? ' checked' : ''}>
-      ${icon(k.icon, 's30', k.colorToken)}
-      <span><span class="choice-title">${esc(k.label)}</span><span class="choice-line">${esc(k.blurb)}</span></span>
-    </label>`).join('');
+// The copy-table field message ("Change a name") for a problem from check_name. A name or a
+// character inside the sentence is code. `name` is the name that was checked.
+export function nameProblemText(problem, name) {
+  switch (problem.code) {
+    case 'bad_char':
+      return ['A name cannot have ', { code: problem.char }, ' in it.'];
+    case 'space_edge':
+      return 'A name cannot start or end with a space.';
+    case 'dots':
+      return 'A name cannot end with a dot.';
+    case 'reserved':
+      return [{ code: name }, ' is a name the computer keeps for itself. Pick another name.'];
+    case 'too_long':
+      return 'This name is too long. Make it shorter.';
+    default:
+      return 'Type a name first.';
+  }
+}
+
+const NEW_FILE_NO_NAME = 'Your file needs a name.';
+const NEW_FILE_OTHER_HINT = 'Type the whole name with its ending, like notes.md.';
+const asciiLower = (text) => text.replace(/[A-Z]+/g, (part) => part.toLowerCase());
+
+// Make a new file (0.3.0 WP4, mockup 11). The chips are native radios, so arrow keys move
+// between them. Web page and Style take their ending and default name from the teaching
+// kinds and go through the web cleaner; every other name goes through check_name as typed.
+export function showNewFileDialog({ kinds, startChip, cssName = null, pageName = null, cleanName, checkName, nameFree }) {
+  const page = kinds.find((k) => k.isPage);
+  const style = kinds.find((k) => k.previewMode === 'swap');
+  const chips = [
+    page && { id: 'page', label: 'Web page', ending: `.${page.primaryExt}`, stem: page.defaultStem, kind: page },
+    style && { id: 'style', label: 'Style', ending: `.${style.primaryExt}`, stem: style.defaultStem, kind: style },
+    { id: 'script', label: 'Script', ending: '.js', stem: 'script', kind: null },
+    { id: 'text', label: 'Text', ending: '.txt', stem: 'notes', kind: null },
+    { id: 'other', label: 'Other', ending: '', stem: '', kind: null },
+  ].filter(Boolean);
+  const first = chips.find((c) => c.id === startChip) || chips[0];
+  const chipHtml = chips.map((c) => `
+      <label class="nf-chip" data-chip="${c.id}">
+        <input type="radio" name="dlg-kind" value="${c.id}"${c === first ? ' checked' : ''}>
+        <span class="nf-face">${esc(c.label)}${c.ending ? ` <code class="nf-end">${esc(c.ending)}</code>` : ''}</span>
+      </label>`).join('');
   const html = `
-    <h2 id="dlg-title" class="dlg-title-big add-title">Add a new file</h2>
-    <div class="choices" role="radiogroup" aria-label="Kind of file">${choices}</div>
-    <label class="dlg-label add-name-label" for="dlg-file">File name</label>
+    <div class="dlg-head nf-head">
+      <span class="dlg-tile" aria-hidden="true">${icon('file-plus', 's34')}</span>
+      <h2 id="dlg-title" class="dlg-title">Make a new file</h2>
+    </div>
+    <label class="dlg-label nf-label" for="dlg-file">Name</label>
     <div class="field mono"><input id="dlg-file" type="text" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><span class="field-ext" data-ext></span></div>
-    <p class="dlg-note" data-hint role="status"></p>
+    <div class="nf-chips" role="radiogroup" aria-label="Kind of file">${chipHtml}</div>
+    <p class="dlg-note nf-hint" data-hint role="status"></p>
     <label class="tick-row" data-tick-row><input type="checkbox" data-tick checked><span class="tick-text" data-tick-text></span></label>
     <div class="dlg-btns m22">
       ${button('Cancel', null, false)}
-      <button class="btn btn-primary" type="button" data-primary data-ok>Add this file</button>
+      <button class="btn btn-primary" type="button" data-primary data-ok>Make the file</button>
     </div>`;
 
   return openDialog({
-    cls: 'dlg-560',
+    cls: 'dlg-600',
     html,
     cancelValue: null,
     firstFocus: '#dlg-file',
@@ -581,70 +632,95 @@ export function showAddFileDialog({ kinds, kindDefault, cssName = null, pageName
       const tick = box.querySelector('[data-tick]');
       const tickText = box.querySelector('[data-tick-text]');
 
-      let kind = startKind;
+      let chip = first;
       let typed = false;
       let seq = 0;
-      let stem = '';
-      let taken = false;
+      // null while the first check runs; then { empty } | { problem, name } | { name, kind, stem, taken }
+      let found = null;
 
-      function ext() {
-        return `.${kind.primaryExt}`;
+      // A teaching kind for a name, from the kinds table (an Other name may end in .html).
+      function webKind(name) {
+        const dot = name.lastIndexOf('.');
+        if (dot <= 0) return null;
+        const ext = asciiLower(name.slice(dot + 1));
+        return kinds.find((k) => k.extensions.includes(ext)) || null;
       }
 
       function tickWording() {
-        if (kind.isPage) return cssName ? `Use ${cssName} on this page` : '';
-        return pageName ? `Link it to ${pageName}, so the page uses it` : '';
+        if (chip.id === 'page') return cssName ? `Use ${cssName} on this page` : '';
+        if (chip.id === 'style') return pageName ? `Link it to ${pageName}, so the page uses it` : '';
+        return '';
       }
 
       function paint() {
-        extEl.textContent = ext();
-        const file = stem + ext();
-        let text = `You will get ${file}`;
-        if (!stem) text = 'Your file needs a name.';
-        else if (taken) text = `You already have a file called ${file}.`;
-        hint.textContent = text;
-        hint.classList.toggle('warn', !stem || taken);
-        ok.disabled = !stem || taken;
+        extEl.textContent = chip.ending;
+        extEl.hidden = !chip.ending;
+        let text = '';
+        let warn = false;
+        if (found && found.empty) {
+          text = chip.id === 'other' ? NEW_FILE_OTHER_HINT : NEW_FILE_NO_NAME;
+          warn = chip.id !== 'other';
+        } else if (found && found.problem) {
+          text = nameProblemText(found.problem, found.name);
+          warn = true;
+        } else if (found && found.taken) {
+          text = ['You already have a file called ', { code: found.name }, '.'];
+          warn = true;
+        } else if (found) {
+          text = ['You will get ', { code: found.name }, '.'];
+        }
+        hint.innerHTML = rich(text);
+        hint.classList.toggle('warn', warn);
+        ok.disabled = !found || !!(found.empty || found.problem || found.taken);
         const wording = tickWording();
         tickText.textContent = wording;
         tickRow.hidden = !wording;
-        for (const label of box.querySelectorAll('.choice')) {
-          label.classList.toggle('on', label.dataset.kind === kind.id);
-        }
       }
 
+      async function resolve(raw, forChip) {
+        if (forChip.kind) {
+          const stem = await cleanName(raw);
+          if (!stem) return { empty: true };
+          return { name: stem + forChip.ending, kind: forChip.kind, stem };
+        }
+        let base = raw;
+        const end = forChip.ending;
+        if (end && asciiLower(base.slice(-end.length)) === end) base = base.slice(0, -end.length);
+        if (!base.trim()) return { empty: true };
+        const wanted = base + end;
+        const checked = await checkName(wanted);
+        if (!checked.name) {
+          return checked.problem.code === 'empty' ? { empty: true } : { problem: checked.problem, name: wanted };
+        }
+        const kind = webKind(checked.name);
+        const stem = kind ? checked.name.slice(0, checked.name.lastIndexOf('.')) : null;
+        return { name: checked.name, kind, stem };
+      }
+
+      // Runs the checks for the field as it is now; the newest call wins. Returns the
+      // result when the file can be made, else null.
       async function check() {
         const mine = ++seq;
-        const forKind = kind;
-        const value = await cleanName(input.value);
+        const forChip = chip;
+        const result = await resolve(input.value, forChip);
         if (mine !== seq || dlg.closed) return null;
-        if (!value) {
-          stem = '';
-          taken = false;
-          paint();
-          return null;
+        if (result.name && !result.problem) {
+          result.taken = !(await nameFree(result.name));
+          if (mine !== seq || dlg.closed) return null;
         }
-        const free = await nameFree(value + `.${forKind.primaryExt}`);
-        if (mine !== seq || dlg.closed) return null;
-        stem = value;
-        taken = !free;
+        found = result;
         paint();
-        return free ? { kind: forKind, stem: value } : null;
+        return result.empty || result.problem || result.taken ? null : { ...result, chip: forChip };
       }
 
       async function applyDefault() {
-        const mine = ++seq;
-        const forKind = kind;
-        input.value = forKind.defaultStem;
-        stem = forKind.defaultStem;
-        taken = false;
-        paint();
+        const forChip = chip;
+        input.value = forChip.stem;
         if (document.activeElement === input) input.select();
-        const free = await nameFree(`${forKind.defaultStem}.${forKind.primaryExt}`);
-        if (free || mine !== seq || dlg.closed) return;
+        await check();
+        if (dlg.closed || typed || chip !== forChip || !found || !found.taken) return;
         input.value = '';
-        stem = '';
-        paint();
+        await check();
       }
 
       input.addEventListener('input', () => {
@@ -654,7 +730,7 @@ export function showAddFileDialog({ kinds, kindDefault, cssName = null, pageName
 
       for (const radio of box.querySelectorAll('input[type="radio"]')) {
         radio.addEventListener('change', () => {
-          kind = kinds.find((k) => k.id === radio.value) || kind;
+          chip = chips.find((c) => c.id === radio.value) || chip;
           paint();
           if (typed) check();
           else applyDefault();
@@ -664,15 +740,16 @@ export function showAddFileDialog({ kinds, kindDefault, cssName = null, pageName
       ok.addEventListener('click', async () => {
         const result = await check();
         if (!result) return;
-        const file = result.stem + `.${result.kind.primaryExt}`;
         dlg.finish({
-          kind: result.kind.id,
+          chip: result.chip.id,
+          kind: result.kind ? result.kind.id : null,
           stem: result.stem,
-          file,
+          file: result.name,
           tick: !tickRow.hidden && tick.checked,
         });
       });
 
+      paint();
       applyDefault();
     },
   });
@@ -760,4 +837,132 @@ export function showMessage({ title, text, buttons }) {
     ${askHead({ title, line: text, tileIcon: 'oops-hint', amber: true })}
     <div class="dlg-btns">${list.map((b) => button(b.label, b.id, b === primary)).join('')}</div>`;
   return openDialog({ cls: 'dlg-540', html, cancelValue: (other || primary).id });
+}
+
+// Change the name (0.3.0 WP5, mockups 06, 07, 09). The places come from find_references:
+// [{ file, line, lineText, lineFrom, lineTo }] with lineFrom/lineTo marking the old name in
+// lineText. extra: [line, ...] (type change, a page that stops being a page). The tick is on at
+// first; unticked, the amber warning and the amber "Change only the file name" show. That button
+// never carries data-primary: Enter on a button presses it, Enter elsewhere presses "Change the
+// name" when ticked and "Keep the old name" when unticked, and Esc always keeps the old name.
+// submit(ticked) runs while the dialog is busy and gives { places, capped } to show a new list,
+// or { value } to close with that value. -> 'keep' | value
+export function showRenameDialog({ oldName, newName, places, capped, saved, extra = [], submit }) {
+  const old = { code: oldName };
+  function lineFor(n, stopped) {
+    if (n > 1) return [`${n} places in this project use the old name `, old, '. If they keep the old name, those links stop working.'];
+    if (n === 1) return ['1 place in this project uses the old name ', old, '. If it keeps the old name, that link stops working.'];
+    if (stopped) return ['HTML Lab did not find ', old, ' in the first 2,000 files. Other files may still use it.'];
+    return ['No other file in this project uses the name ', old, ', so nothing else needs to change.'];
+  }
+  function placeRow(place) {
+    const text = place.lineText || '';
+    const from = Math.max(0, Math.min(text.length, place.lineFrom));
+    const to = Math.max(from, Math.min(text.length, place.lineTo));
+    return `<div class="rn-place">
+      <span class="rn-file">${esc(place.file)}</span>
+      <span class="rn-line">line ${esc(place.line)}</span>
+      <span class="rn-code">${esc(text.slice(0, from))}<mark class="rn-old">${esc(text.slice(from, to))}</mark>${esc(text.slice(to))}</span>
+    </div>`;
+  }
+  function bodyHtml(list, stopped) {
+    const n = list.length;
+    const notes = [];
+    if (n && stopped) notes.push('HTML Lab looked at the first 2,000 files only. Other files may still use the old name.');
+    notes.push(...extra);
+    const tickText = n > 1 ? `Change these ${n} places too` : 'Change this place too';
+    const small = saved ? `HTML Lab writes ${newName} in each of them and saves those files.` : `HTML Lab writes ${newName} in each of them.`;
+    return `
+    <div class="dlg-head">
+      <span class="dlg-tile amber" aria-hidden="true">${icon('pencil-simple', 's34')}</span>
+      <div class="dlg-head-text">
+        <h2 id="dlg-title" class="dlg-title">${esc(`Change the name to ${newName}?`)}</h2>
+        <p class="dlg-line">${rich(lineFor(n, stopped))}</p>
+      </div>
+    </div>
+    ${n ? `<div class="file-list rn-places">${list.map(placeRow).join('')}</div>` : ''}
+    ${notes.map((note) => `<p class="dlg-note rn-note">${esc(note)}</p>`).join('')}
+    ${n ? `<label class="rn-tick"><input type="checkbox" data-tick checked><span class="rn-tick-words"><span class="rn-tick-text">${esc(tickText)}</span><span class="rn-tick-small">${esc(small)}</span></span></label>` : ''}
+    <div class="rn-warn" data-warn role="alert" hidden></div>
+    <div class="dlg-btns m22">
+      ${button('Keep the old name', 'keep', false)}
+      <button class="btn btn-primary" type="button" data-primary data-go>Change the name</button>
+      <button class="btn btn-amber" type="button" data-only hidden>Change only the file name</button>
+    </div>`;
+  }
+  function warnHtml(n) {
+    const words = n > 1
+      ? `The ${n} places will still say ${oldName}, so those links will not work any more. You will have to change them yourself.`
+      : `That place will still say ${oldName}, so that link will not work any more. You will have to change it yourself.`;
+    return `${icon('oops-hint-bold', 's22')}<span><b>Are you sure?</b> ${esc(words)}</span>`;
+  }
+
+  let ref = null;
+  return openDialog({
+    cls: 'dlg-640 dlg-rename',
+    html: bodyHtml(places, capped),
+    cancelValue: 'keep',
+    onEnter: () => {
+      const { box } = ref;
+      const focused = document.activeElement;
+      if (focused && focused.tagName === 'BUTTON' && box.contains(focused)) {
+        if (!focused.disabled) focused.click();
+        return;
+      }
+      const tick = box.querySelector('[data-tick]');
+      const target = !tick || tick.checked ? box.querySelector('[data-go]') : box.querySelector('[data-answer]');
+      if (target && !target.disabled) target.click();
+    },
+    setup(dlg) {
+      ref = dlg;
+      const { box } = dlg;
+      let count = places.length;
+
+      function paintTick() {
+        const tick = box.querySelector('[data-tick]');
+        const on = !tick || tick.checked;
+        const warn = box.querySelector('[data-warn]');
+        warn.innerHTML = on ? '' : warnHtml(count);
+        warn.hidden = on;
+        box.querySelector('[data-go]').hidden = !on;
+        box.querySelector('[data-only]').hidden = on;
+      }
+
+      async function go() {
+        if (dlg.busy) return;
+        const tick = box.querySelector('[data-tick]');
+        const ticked = !!(tick && tick.checked);
+        dlg.busy = true;
+        box.classList.add('busy');
+        for (const b of box.querySelectorAll('button, input')) b.disabled = true;
+        let reply;
+        try {
+          reply = await submit(ticked);
+        } catch {
+          reply = { value: { fail: 'cannot_write' } };
+        }
+        if (dlg.closed) return;
+        dlg.busy = false;
+        box.classList.remove('busy');
+        if (reply && reply.places) {
+          count = reply.places.length;
+          box.innerHTML = bodyHtml(reply.places, reply.capped);
+          paintTick();
+          box.querySelector('[data-go]').focus();
+          return;
+        }
+        dlg.finish(reply ? reply.value : 'keep');
+      }
+
+      box.addEventListener('change', (e) => {
+        if (!e.target.matches('[data-tick]')) return;
+        paintTick();
+        e.target.focus();
+      });
+      box.addEventListener('click', (e) => {
+        if (e.target.closest('[data-go], [data-only]')) go();
+      });
+      paintTick();
+    },
+  });
 }

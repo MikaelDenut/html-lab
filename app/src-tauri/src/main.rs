@@ -8,7 +8,7 @@ use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 use std::sync::{Mutex, OnceLock};
 use std::time::Duration;
 
-use htmllab_core::{content, files, kinds, names, prefs, project};
+use htmllab_core::{content, files, kinds, names, prefs, project, refs};
 use serde::{Deserialize, Serialize};
 use tauri::menu::MenuEvent;
 use tauri::{
@@ -31,6 +31,10 @@ struct AppState {
     window_shown: AtomicBool,
     flags: LaunchFlags,
     preview_trace: Mutex<std::collections::VecDeque<String>>,
+    browser_opened: Mutex<Vec<String>>,
+    // Change Name (WP5): each rewritten file's bytes from before, by path, until the Undo
+    // toast ends. They never go to the UI.
+    rewritten: Mutex<std::collections::HashMap<String, Vec<u8>>>,
 }
 
 #[derive(Clone, Default, Serialize)]
@@ -75,16 +79,20 @@ impl Drop for PanelGuard {
 
 #[tauri::command(async)]
 fn pick_files(app: AppHandle) -> Vec<String> {
-    let exts: Vec<&str> = kinds::KINDS
-        .iter()
-        .flat_map(|k| k.extensions.iter().copied())
-        .collect();
     let _guard = PanelGuard::new(&app);
-    let picked = app
-        .dialog()
-        .file()
-        .add_filter("Web pages and style files", &exts)
-        .blocking_pick_files();
+    let mut dialog = app.dialog().file();
+    // On a Mac every filter joins one list of allowed types, and "*" is not a type, so any
+    // filter would limit the choice. Elsewhere "All files" comes first.
+    if !cfg!(target_os = "macos") {
+        let exts: Vec<&str> = kinds::KINDS
+            .iter()
+            .flat_map(|k| k.extensions.iter().copied())
+            .collect();
+        dialog = dialog
+            .add_filter("All files", &["*"])
+            .add_filter("Web pages and style files", &exts);
+    }
+    let picked = dialog.blocking_pick_files();
     picked
         .unwrap_or_default()
         .into_iter()
@@ -127,8 +135,8 @@ fn write_files(files: Vec<files::WriteFile>) -> Vec<files::WriteResult> {
 }
 
 #[tauri::command(async)]
-fn folder_stamp(folder: String) -> u64 {
-    files::folder_stamp(&folder)
+fn folder_stamp(folder: String, files: Option<Vec<String>>) -> u64 {
+    files::folder_stamp(&folder, files.as_deref())
 }
 
 #[tauri::command(async)]
@@ -178,9 +186,53 @@ fn clean_project_name(raw: String, seq: u64) -> CleanedProject {
     }
 }
 
+/// `except` is the renamed file's own name (Change Name, WP5): it does not count as taken
+/// only for a case-only change of that name. Callers that leave it out get None.
 #[tauri::command(async)]
-fn file_name_free(tabs: Vec<String>, folder: Option<String>, file: String) -> bool {
-    names::file_name_free(&tabs, folder.as_deref().map(std::path::Path::new), &file)
+fn file_name_free(tabs: Vec<String>, folder: Option<String>, file: String, except: Option<String>) -> bool {
+    names::file_name_free(
+        &tabs,
+        folder.as_deref().map(std::path::Path::new),
+        &file,
+        except.as_deref(),
+    )
+}
+
+/// The name a file gets when `new` is typed for it, or why that name cannot be used.
+/// `old` is the file's current name, or "" for a file that does not exist yet (the
+/// Make a new file dialog, 0.3.0 WP4). A blank `new` is always the `empty` problem, so
+/// "" as `old` never lets an empty name through.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct CheckedName {
+    name: Option<String>,
+    problem: Option<names::NameProblem>,
+}
+
+#[tauri::command(async)]
+fn check_name(old: String, new: String) -> CheckedName {
+    checked_name(&old, &new)
+}
+
+fn checked_name(old: &str, new: &str) -> CheckedName {
+    let result = if new.trim().is_empty() {
+        Err(names::NameProblem {
+            code: "empty",
+            char: None,
+        })
+    } else {
+        names::check_rename(old, new)
+    };
+    match result {
+        Ok(name) => CheckedName {
+            name: Some(name),
+            problem: None,
+        },
+        Err(problem) => CheckedName {
+            name: None,
+            problem: Some(problem),
+        },
+    }
 }
 
 #[tauri::command(async)]
@@ -336,6 +388,178 @@ fn show_folder(app: AppHandle, path: String) {
     }
 }
 
+// The pages in a non-web file's own folder that use it, for the My page side (WP3 step 6b).
+#[tauri::command(async)]
+fn pages_using(app: AppHandle, path: String) -> Vec<String> {
+    if !state(&app).store.inside_root(std::path::Path::new(&path)) {
+        return Vec::new();
+    }
+    htmllab_core::refs::pages_using(std::path::Path::new(&path))
+}
+
+// ---- Change Name (0.3.0 WP5) ----
+
+/// The places under `root` that use `target`, with `new_name` as their new text. With `walk`
+/// the project folder is read as well, and then `root` must be inside an open root. Without
+/// it only the given texts are looked at: a project with no folder, or the saved texts of
+/// changed tabs. Nothing is written.
+#[tauri::command(async)]
+fn find_references(
+    app: AppHandle,
+    root: String,
+    target: String,
+    new_name: String,
+    open: Vec<refs::OpenText>,
+    walk: bool,
+) -> refs::RefPlan {
+    if !walk {
+        return references_in_texts(&root, &target, &new_name, &open);
+    }
+    if !state(&app).store.inside_root(std::path::Path::new(&root)) {
+        return refs::RefPlan {
+            files: Vec::new(),
+            capped: false,
+        };
+    }
+    refs::find_references(
+        std::path::Path::new(&root),
+        std::path::Path::new(&target),
+        &new_name,
+        &open,
+    )
+}
+
+// find_references over the given texts only: they are moved under a folder that does not
+// exist, so the walk reads nothing, and their paths are given back as they came.
+fn references_in_texts(root: &str, target: &str, new_name: &str, open: &[refs::OpenText]) -> refs::RefPlan {
+    let mut plan = refs::RefPlan {
+        files: Vec::new(),
+        capped: false,
+    };
+    let base = std::env::temp_dir();
+    let mut stamp = std::process::id() as u64;
+    let fake = loop {
+        let candidate = base.join(format!("htmllab-no-folder-{stamp}"));
+        if candidate.symlink_metadata().is_err() {
+            break candidate;
+        }
+        stamp += 1;
+    };
+    let fake_text = files::path_text(&fake);
+    let under = |path: &str| -> Option<String> {
+        let rel = path.strip_prefix(root)?.strip_prefix('/')?;
+        (!rel.is_empty()).then(|| format!("{fake_text}/{rel}"))
+    };
+    let Some(target) = under(target) else {
+        return plan;
+    };
+    let mut back = std::collections::HashMap::new();
+    let texts: Vec<refs::OpenText> = open
+        .iter()
+        .filter_map(|t| {
+            let moved = under(&t.path)?;
+            back.insert(moved.clone(), t.path.clone());
+            Some(refs::OpenText {
+                path: moved,
+                text: t.text.clone(),
+            })
+        })
+        .collect();
+    plan = refs::find_references(&fake, std::path::Path::new(&target), new_name, &texts);
+    plan.files.retain_mut(|file| match back.get(&file.path) {
+        Some(path) => {
+            file.path = path.clone();
+            true
+        }
+        None => false,
+    });
+    plan
+}
+
+/// Gives the file `from` the name in `to` (same folder), never replacing a file (C44). `from`
+/// must be inside an open root. Errors: file_exists, not_found, cannot_write.
+#[tauri::command(async)]
+fn rename_file(app: AppHandle, from: String, to: String) -> Result<String, String> {
+    let store = &state(&app).store;
+    let path = std::path::Path::new(&from);
+    // A file that is gone is not_found when its folder is still inside a root.
+    let inside = store.inside_root(path)
+        || (path.symlink_metadata().is_err() && path.parent().is_some_and(|d| store.inside_root(d)));
+    if !inside {
+        return Err("cannot_write".to_string());
+    }
+    files::rename_file(&from, &to)
+}
+
+/// Writes the planned new names into the referring files (C45), one result per file (C5).
+/// The bytes from before each written file stay here for restore_references.
+#[tauri::command(async)]
+fn rewrite_references(app: AppHandle, plan: Vec<files::RewriteFile>) -> Vec<files::RewriteResult> {
+    let st = state(&app);
+    let roots: Vec<PathBuf> = st.store.roots.read().unwrap().iter().cloned().collect();
+    let mut results = files::rewrite_references(&plan, &roots);
+    let mut kept = st.rewritten.lock().unwrap();
+    for result in &mut results {
+        if let (true, Some(original)) = (result.ok, result.original.take()) {
+            kept.insert(result.path.clone(), original);
+        }
+    }
+    results
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct WrittenFile {
+    path: String,
+    #[serde(default)]
+    at: Option<String>,
+    size: u64,
+    hash: String,
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct RestoreResult {
+    path: String,
+    ok: bool,
+    error: Option<String>,
+}
+
+/// For Undo and for a rollback: puts back the bytes a rewrite_references call replaced, only
+/// where the file still holds the bytes HTML Lab wrote (`size`, `hash`). `path` is the path the
+/// file was written at, `at` where it is now when that differs. With `check` nothing is
+/// written: every file is only compared. Errors: changed_on_disk, cannot_write, read_only.
+#[tauri::command(async)]
+fn restore_references(app: AppHandle, files: Vec<WrittenFile>, check: bool) -> Vec<RestoreResult> {
+    let st = state(&app);
+    let roots: Vec<PathBuf> = st.store.roots.read().unwrap().iter().cloned().collect();
+    let kept = st.rewritten.lock().unwrap();
+    files
+        .iter()
+        .map(|file| {
+            let at = file.at.clone().unwrap_or_else(|| file.path.clone());
+            let done = match kept.get(&file.path) {
+                None => Err("cannot_write".to_string()),
+                // The check uses the write's own guards, so a file that became read-only fails
+                // here and Undo does not start.
+                Some(_) if check => files::check_restore(&at, file.size, &file.hash, &roots),
+                Some(original) => files::restore_bytes(&at, original, file.size, &file.hash, &roots),
+            };
+            RestoreResult {
+                path: file.path.clone(),
+                ok: done.is_ok(),
+                error: done.err(),
+            }
+        })
+        .collect()
+}
+
+/// Lets go of the bytes kept for Undo, when the toast ends.
+#[tauri::command(async)]
+fn forget_rewrites(app: AppHandle) {
+    state(&app).rewritten.lock().unwrap().clear();
+}
+
 #[tauri::command(async)]
 fn copy_text(app: AppHandle, text: String) -> bool {
     write_pasteboard(&app, &text)
@@ -369,6 +593,10 @@ fn open_in_safari(app: AppHandle, path: String) -> bool {
     if !state(&app).store.inside_root(std::path::Path::new(&path)) {
         return false;
     }
+    if test_mode(&app) {
+        state(&app).browser_opened.lock().unwrap().push(path);
+        return true;
+    }
     let browser = if cfg!(target_os = "macos") {
         Some("Safari")
     } else {
@@ -390,6 +618,12 @@ struct MenuState {
     boxes: bool,
     #[serde(default)]
     pointable: bool,
+    #[serde(default)]
+    side_shown: bool,
+    #[serde(default)]
+    renamable: bool,
+    #[serde(default)]
+    undo_rename: bool,
 }
 
 #[tauri::command(async)]
@@ -400,13 +634,19 @@ fn set_menu_state(app: AppHandle, menu_state: MenuState) {
     let guard = st.menu.lock().unwrap();
     if let Some(handles) = guard.as_ref() {
         for (id, item) in &handles.items {
-            // Point needs the page tab's own page, not one reached by a link.
+            // Point needs the page tab's own page, not one reached by a link; Change Name a
+            // tab that is not a practice copy; Undo Change Name the toast (WP5).
             let on = menu::item_enabled(
                 id,
                 menu_state.has_tabs,
                 menu_state.has_folder,
                 menu_state.dialog_open,
-            ) && (*id != "point" || menu_state.pointable);
+            ) && menu::state_allows(
+                id,
+                menu_state.pointable,
+                menu_state.renamable,
+                menu_state.undo_rename,
+            );
             let _ = item.set_enabled(on);
         }
         let _ = handles
@@ -416,9 +656,17 @@ fn set_menu_state(app: AppHandle, menu_state: MenuState) {
         let _ = handles.typing_helpers.set_enabled(!menu_state.dialog_open);
         let _ = handles.autosave.set_enabled(!menu_state.dialog_open);
         let _ = handles.boxes.set_checked(menu_state.boxes);
-        let _ = handles
-            .boxes
-            .set_enabled(!menu_state.dialog_open && menu_state.has_tabs);
+        // The boxes are drawn on the page, so they need the side shown (C46).
+        let _ = handles.boxes.set_enabled(
+            !menu_state.dialog_open && menu_state.has_tabs && menu_state.side_shown,
+        );
+        let _ = handles.side.set_checked(menu_state.side_shown);
+        let _ = handles.side.set_enabled(menu::item_enabled(
+            menu::SIDE_ID,
+            menu_state.has_tabs,
+            menu_state.has_folder,
+            menu_state.dialog_open,
+        ));
     }
 }
 
@@ -645,6 +893,14 @@ fn test_preview_trace(app: AppHandle) -> Vec<String> {
     state(&app).preview_trace.lock().unwrap().iter().cloned().collect()
 }
 
+#[tauri::command]
+fn test_browser_opened(app: AppHandle) -> Vec<String> {
+    if !test_mode(&app) {
+        return Vec::new();
+    }
+    std::mem::take(&mut *state(&app).browser_opened.lock().unwrap())
+}
+
 #[tauri::command(async)]
 fn test_quit(app: AppHandle) {
     if test_mode(&app) {
@@ -778,6 +1034,33 @@ fn test_write_bytes(app: AppHandle, path: String, bytes: Vec<u8>) -> bool {
 }
 
 #[tauri::command(async)]
+fn test_read_bytes(app: AppHandle, path: String) -> Option<Vec<u8>> {
+    if !test_mode(&app) || !test_path_ok(&path) {
+        return None;
+    }
+    std::fs::read(path).ok()
+}
+
+const MAX_TEST_TREE: usize = 100_000;
+
+#[tauri::command(async)]
+fn test_make_tree(app: AppHandle, path: String, count: usize, ext: Option<String>) -> bool {
+    let ext = ext.unwrap_or_else(|| "dat".to_string());
+    let ext_ok = !ext.is_empty() && ext.len() <= 8 && ext.chars().all(|c| c.is_ascii_alphanumeric());
+    if !test_mode(&app) || !test_path_ok(&path) || count > MAX_TEST_TREE || !ext_ok {
+        return false;
+    }
+    let folder = std::path::Path::new(&path);
+    std::fs::create_dir_all(folder).is_ok()
+        && (0..count).all(|n| std::fs::File::create(folder.join(format!("e{n:05}.{ext}"))).is_ok())
+}
+
+#[tauri::command(async)]
+fn test_fs_counts(app: AppHandle, reset: bool) -> Option<htmllab_core::counts::FsCounts> {
+    test_mode(&app).then(|| htmllab_core::counts::fs_counts(reset))
+}
+
+#[tauri::command(async)]
 fn test_write_big(app: AppHandle, path: String, size: usize) -> bool {
     test_mode(&app) && test_path_ok(&path) && std::fs::write(path, vec![b'a'; size]).is_ok()
 }
@@ -841,6 +1124,17 @@ fn test_window_state(app: AppHandle) -> serde_json::Value {
         "height": size.map(|s| s.height),
         "theme": format!("{:?}", w.theme().ok()),
     })
+}
+
+// Self-test only: the 960 px toolbar check (0.3.0 WP4) sets the window's inner size, in points.
+#[tauri::command(async)]
+fn test_set_window_size(app: AppHandle, width: f64, height: f64) -> bool {
+    if !test_mode(&app) {
+        return false;
+    }
+    main_window(&app)
+        .map(|w| w.set_size(tauri::LogicalSize::new(width, height)).is_ok())
+        .unwrap_or(false)
 }
 
 fn read_flags() -> LaunchFlags {
@@ -1073,6 +1367,8 @@ fn main() {
                 window_shown: AtomicBool::new(false),
                 flags: flags.clone(),
                 preview_trace: Mutex::new(std::collections::VecDeque::new()),
+                browser_opened: Mutex::new(Vec::new()),
+                rewritten: Mutex::new(std::collections::HashMap::new()),
             });
 
             let (menu_bar, handles) = menu::build(&handle, typing, autosave)?;
@@ -1122,6 +1418,7 @@ fn main() {
             clean_file_name,
             clean_project_name,
             file_name_free,
+            check_name,
             add_link,
             new_project,
             new_file,
@@ -1139,6 +1436,12 @@ fn main() {
             open_external,
             show_folder,
             open_in_safari,
+            pages_using,
+            find_references,
+            rename_file,
+            rewrite_references,
+            restore_references,
+            forget_rewrites,
             set_menu_state,
             show_window,
             close_ack,
@@ -1148,6 +1451,9 @@ fn main() {
             test_temp_folder,
             test_quit,
             test_write_bytes,
+            test_read_bytes,
+            test_make_tree,
+            test_fs_counts,
             test_write_big,
             copy_text,
             test_make_folder,
@@ -1156,8 +1462,10 @@ fn main() {
             test_delete_tree,
             test_minimize,
             test_window_state,
+            test_set_window_size,
             test_snapshot,
             test_preview_trace,
+            test_browser_opened,
             test_queue_open,
             take_open_requests,
             plan_open,
@@ -1188,7 +1496,80 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use super::localize_text;
+    use super::{checked_name, localize_text, references_in_texts};
+    use htmllab_core::refs::OpenText;
+
+    fn text(path: &str, text: &str) -> OpenText {
+        serde_json::from_value(serde_json::json!({ "path": path, "text": text })).unwrap()
+    }
+
+    // Teeth: with the paths not given back (file.path left as the moved path), the path
+    // assertions fail; with texts outside the root kept, the outside file shows up.
+    #[test]
+    fn references_in_texts_reads_only_the_texts_and_gives_their_paths_back() {
+        let page = "<a href=\"story.html\">Story</a>\n<img src=\"story.html#x\">\n";
+        let plan = references_in_texts(
+            "__new/p7",
+            "__new/p7/story.html",
+            "tale.html",
+            &[
+                text("__new/p7/index.html", page),
+                text("__new/p7/story.html", "<a href=\"story.html\">me</a>"),
+                text("__new/p8/index.html", page),
+                text("__new/p7/notes.txt", "story.html in prose"),
+            ],
+        );
+        let paths: Vec<&str> = plan.files.iter().map(|f| f.path.as_str()).collect();
+        assert_eq!(paths, ["__new/p7/index.html", "__new/p7/story.html"]);
+        let first = &plan.files[0];
+        assert!(first.open);
+        assert_eq!(first.spans.len(), 2);
+        assert_eq!((first.spans[0].from, first.spans[0].to), (9, 19));
+        assert_eq!(first.spans[0].old_text, "story.html");
+        assert_eq!(first.spans[0].new_text, "tale.html");
+        assert!(!plan.capped);
+        // A target outside the root finds nothing.
+        let none = references_in_texts("__new/p7", "__new/p8/story.html", "tale.html", &[text("__new/p7/index.html", page)]);
+        assert!(none.files.is_empty());
+    }
+
+    // Teeth: with the blank check taken out of checked_name, check_rename("", "") is Ok("")
+    // and the first assertion fails.
+    #[test]
+    fn check_name_for_a_new_file() {
+        let blank = checked_name("", "");
+        assert_eq!(blank.name, None);
+        assert_eq!(blank.problem.map(|p| p.code), Some("empty"));
+        assert_eq!(
+            checked_name("", "  ").problem.map(|p| p.code),
+            Some("empty")
+        );
+        assert_eq!(checked_name("", "game.py").name.as_deref(), Some("game.py"));
+        assert_eq!(
+            checked_name("", "notes.md").name.as_deref(),
+            Some("notes.md")
+        );
+        assert_eq!(checked_name("", "README").name.as_deref(), Some("README"));
+        assert_eq!(
+            checked_name("", "My Page.HTML").name.as_deref(),
+            Some("my-page.html")
+        );
+        let slash = checked_name("", "a/b.txt").problem.unwrap();
+        assert_eq!((slash.code, slash.char.as_deref()), ("bad_char", Some("/")));
+        assert_eq!(
+            checked_name("", "notes.").problem.map(|p| p.code),
+            Some("dots")
+        );
+        assert_eq!(
+            checked_name("", " notes.txt").problem.map(|p| p.code),
+            Some("space_edge")
+        );
+        let json = serde_json::to_value(checked_name("", "a/b")).unwrap();
+        assert_eq!(
+            json,
+            serde_json::json!({ "name": null, "problem": { "code": "bad_char", "char": "/" } })
+        );
+    }
 
     #[test]
     fn help_keys_match_the_menu_off_the_mac() {

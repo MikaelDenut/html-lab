@@ -539,6 +539,16 @@ export function toggleBoxes() {
   H.updateHeader();
 }
 
+// The last tab closed: Show the Boxes ends with it, so the next page starts plain.
+export function onAllClosed() {
+  if (!H || !L.boxes) return;
+  L.boxes = false;
+  L.boxCount = 0;
+  H.setPressed('btn-boxes', false);
+  H.syncMenu();
+  H.updateHeader();
+}
+
 export function pointOn() {
   return L.point;
 }

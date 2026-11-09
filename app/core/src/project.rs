@@ -1,13 +1,20 @@
+use crate::counts;
 use crate::files::{path_text, read_text};
 use crate::kinds::{is_picture, kind_for_name, KINDS};
 use serde::Serialize;
 use std::fs;
+use std::io::Read;
 #[cfg(unix)]
 use std::os::unix::fs::MetadataExt;
 use std::path::Path;
 
 const MAX_PROJECT_FILES: usize = 20;
 const MAX_LINKED_CSS: usize = 5;
+// Opening a file reads its folder once and at most this many entries (C48).
+pub const MAX_SCAN_ENTRIES: usize = 2_000;
+const MAX_TEXT_FILES: usize = 10;
+const MAX_TEXT_BYTES: u64 = 5 * 1024 * 1024;
+const SNIFF_BYTES: u64 = 8 * 1024;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -25,6 +32,9 @@ pub struct ScanResult {
     pub folder_name: String,
     pub is_project: bool,
     pub refused: bool,
+    pub too_big: bool,
+    // The scan stopped at too many web files, before the end of the folder (C48).
+    pub stopped_early: bool,
     pub files: Vec<ScanFile>,
     pub linked_css: Vec<ScanFile>,
 }
@@ -41,6 +51,8 @@ fn scan_result(folder: &Path) -> ScanResult {
         folder_name: name_of(folder),
         is_project: false,
         refused: false,
+        too_big: false,
+        stopped_early: false,
         files: Vec::new(),
         linked_css: Vec::new(),
     }
@@ -95,20 +107,74 @@ fn folder_rank(name: &str) -> (u8, String) {
 }
 
 fn folder_files(folder: &Path) -> Vec<String> {
+    counts::read_dir();
     let Ok(entries) = fs::read_dir(folder) else {
         return Vec::new();
     };
-    let mut names: Vec<String> = entries
-        .filter_map(|e| e.ok())
-        .filter(|e| fs::metadata(e.path()).is_ok_and(|m| m.is_file()))
-        .map(|e| e.file_name().to_string_lossy().into_owned())
-        .filter(|n| !n.starts_with('.') && kind_for_name(n).is_some())
-        .collect();
-    names.sort_by_key(|n| folder_rank(n));
-    if names.len() > MAX_PROJECT_FILES {
-        names.truncate(1);
+    let mut names: Vec<String> = Vec::new();
+    for entry in entries.filter_map(|e| e.ok()) {
+        counts::entry();
+        let name = entry.file_name().to_string_lossy().into_owned();
+        if !name.starts_with('.') {
+            names.push(name);
+        }
     }
-    names.into_iter().map(|n| path_text(folder.join(n))).collect()
+    let is_file = |name: &String| {
+        counts::stat();
+        fs::metadata(folder.join(name)).is_ok_and(|m| m.is_file())
+    };
+    let mut web: Vec<String> = names
+        .iter()
+        .filter(|n| kind_for_name(n).is_some())
+        .filter(|n| is_file(n))
+        .cloned()
+        .collect();
+    if web.is_empty() {
+        return text_files(folder, names);
+    }
+    web.sort_by_key(|n| folder_rank(n));
+    if web.len() > MAX_PROJECT_FILES {
+        web.truncate(1);
+    }
+    web.into_iter().map(|n| path_text(folder.join(n))).collect()
+}
+
+fn text_rank(name: &str) -> (bool, String, String) {
+    let lower = name.to_lowercase();
+    (!lower.starts_with("readme"), lower, name.to_string())
+}
+
+// A folder with no web files opens its first text files, README first, then by name.
+fn text_files(folder: &Path, mut names: Vec<String>) -> Vec<String> {
+    names.retain(|n| !is_picture(n));
+    names.sort_by_key(|n| text_rank(n));
+    let mut found = Vec::new();
+    for name in names.into_iter().take(MAX_SCAN_ENTRIES) {
+        let path = folder.join(&name);
+        counts::stat();
+        let fits = fs::metadata(&path).is_ok_and(|m| m.is_file() && m.len() <= MAX_TEXT_BYTES);
+        if fits && looks_like_text(&path) {
+            found.push(path_text(&path));
+            if found.len() == MAX_TEXT_FILES {
+                break;
+            }
+        }
+    }
+    found
+}
+
+// A quick look at the start of a file: a NUL byte means it is not text. With a UTF-16
+// BOM the NUL test looks at whole 16-bit units instead, as the reader does.
+fn looks_like_text(path: &Path) -> bool {
+    let mut start = Vec::new();
+    let read = fs::File::open(path).and_then(|file| file.take(SNIFF_BYTES).read_to_end(&mut start));
+    if read.is_err() {
+        return false;
+    }
+    match start.get(..2) {
+        Some([0xFF, 0xFE] | [0xFE, 0xFF]) => start[2..].chunks_exact(2).all(|u| u != [0, 0]),
+        _ => !start.contains(&0),
+    }
 }
 
 pub fn plan_open(paths: &[String]) -> OpenPlan {
@@ -129,7 +195,8 @@ pub fn plan_open(paths: &[String]) -> OpenPlan {
             } else {
                 plan.folders.push(FolderOpen { folder_name: name_of(&path), files });
             }
-        } else if kind_for_name(&name_of(&path)).is_some() {
+        } else if meta.is_file() {
+            // Any regular file opens; the read decides whether it is text.
             let text = path_text(&path);
             if !plan.files.contains(&text) {
                 plan.files.push(text);
@@ -141,65 +208,86 @@ pub fn plan_open(paths: &[String]) -> OpenPlan {
     plan
 }
 
+// Only teaching-kind files count towards a project. The folder is read once, at most
+// MAX_SCAN_ENTRIES entries, and only web file names are statted (C48).
 pub fn scan_folder(picked: &Path) -> ScanResult {
     let given_folder = picked.parent().unwrap_or(Path::new(""));
     let Ok(picked) = dunce::canonicalize(picked) else {
         return refused(given_folder);
     };
+    counts::stat();
     let (Some(folder), Ok(picked_meta)) = (picked.parent(), fs::metadata(&picked)) else {
         return refused(given_folder);
     };
     if !picked_meta.is_file() {
         return refused(folder);
     }
-    let Ok(entries) = fs::read_dir(folder) else {
-        return refused(folder);
+    let picked_name = name_of(&picked);
+    let Some(picked_kind) = kind_for_name(&picked_name) else {
+        return scan_result(folder);
     };
 
-    let picked_name = name_of(&picked);
+    let mut result = scan_result(folder);
     let mut project_files = Vec::new();
-    let mut other_kind = false;
-    for entry in entries {
-        let Ok(entry) = entry else {
+    // A picked dotfile is never part of a project, so its folder need not be read.
+    let mut answer_known = picked_name.starts_with('.');
+    if !answer_known {
+        counts::read_dir();
+        let Ok(entries) = fs::read_dir(folder) else {
             return refused(folder);
         };
-        let name = entry.file_name().to_string_lossy().into_owned();
-        if name.starts_with('.') {
-            continue;
+        let mut seen = 0;
+        for entry in entries {
+            if seen == MAX_SCAN_ENTRIES {
+                result.too_big = true;
+                break;
+            }
+            seen += 1;
+            counts::entry();
+            let Ok(entry) = entry else {
+                return refused(folder);
+            };
+            let name = entry.file_name().to_string_lossy().into_owned();
+            if name.starts_with('.') {
+                continue;
+            }
+            let Some(kind) = kind_for_name(&name) else {
+                continue;
+            };
+            counts::stat();
+            let Ok(meta) = fs::metadata(entry.path()) else {
+                continue;
+            };
+            if !meta.is_file() {
+                continue;
+            }
+            #[cfg(unix)]
+            let is_picked = name == picked_name
+                || (meta.ino() == picked_meta.ino() && meta.dev() == picked_meta.dev());
+            #[cfg(not(unix))]
+            let is_picked = name.eq_ignore_ascii_case(&picked_name);
+            project_files.push(ScanFile {
+                path: path_text(folder.join(&name)),
+                name,
+                kind: kind.id.to_string(),
+                picked: is_picked,
+            });
+            if project_files.len() > MAX_PROJECT_FILES {
+                answer_known = true;
+                result.stopped_early = true;
+                break;
+            }
         }
-        let Ok(meta) = fs::metadata(entry.path()) else {
-            other_kind = true;
-            continue;
-        };
-        if meta.is_dir() || is_picture(&name) {
-            continue;
-        }
-        let Some(kind) = kind_for_name(&name) else {
-            other_kind = true;
-            continue;
-        };
-        #[cfg(unix)]
-        let is_picked = name == picked_name
-            || (meta.ino() == picked_meta.ino() && meta.dev() == picked_meta.dev());
-        #[cfg(not(unix))]
-        let is_picked = name.eq_ignore_ascii_case(&picked_name);
-        project_files.push(ScanFile {
-            path: path_text(folder.join(&name)),
-            name,
-            kind: kind.id.to_string(),
-            picked: is_picked,
-        });
     }
 
-    let mut result = scan_result(folder);
-    result.is_project = project_files.len() > 1
-        && project_files.len() <= MAX_PROJECT_FILES
-        && !other_kind
+    result.is_project = !answer_known
+        && !result.too_big
+        && project_files.len() > 1
         && project_files.iter().any(|f| f.picked);
     if result.is_project {
         project_files.sort_by_key(opening_rank);
         result.files = project_files;
-    } else if kind_for_name(&picked_name).is_some_and(|k| k.is_page) {
+    } else if picked_kind.is_page {
         if let Ok(html) = read_text(&picked) {
             result.linked_css = linked_css(&html, folder)
                 .into_iter()
@@ -224,7 +312,11 @@ pub fn linked_css(html: &str, folder: &Path) -> Vec<String> {
         let Some(name) = flat_stylesheet_name(href) else {
             continue;
         };
-        if found.iter().any(|f| f.eq_ignore_ascii_case(name)) || !folder.join(name).is_file() {
+        if found.iter().any(|f| f.eq_ignore_ascii_case(name)) {
+            continue;
+        }
+        counts::stat();
+        if !folder.join(name).is_file() {
             continue;
         }
         found.push(name.to_string());
@@ -489,21 +581,95 @@ mod tests {
     #[test]
     fn plan_open_keeps_pages_and_style_files_and_names_the_rest() {
         let (_dir, folder) = folder_with(&["a.html", "b.CSS", "c.txt"]);
-        let paths: Vec<String> = ["a.html", "b.CSS", "c.txt", "gone.html"]
+        let paths: Vec<String> = ["a.html", "b.CSS", "c.txt", "gone.html", "a.html"]
             .iter()
             .map(|n| path_text(folder.join(n)))
             .collect();
         let plan = plan_open(&paths);
-        assert_eq!(plan.files.len(), 2);
-        assert_eq!(plan.others, ["c.txt", "gone.html"]);
+        assert_eq!(
+            plan.files,
+            [
+                path_text(folder.join("a.html")),
+                path_text(folder.join("b.CSS")),
+                path_text(folder.join("c.txt"))
+            ]
+        );
+        assert_eq!(plan.others, ["gone.html"]);
+        assert!(plan.folders.is_empty() && plan.empty_folders.is_empty());
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn plan_open_names_what_is_not_a_regular_file() {
+        let (_dir, folder) = folder_with(&["photo.jpg"]);
+        let pipe = folder.join("pipe.txt");
+        let c_path = std::ffi::CString::new(std::os::unix::ffi::OsStrExt::as_bytes(pipe.as_os_str())).unwrap();
+        assert_eq!(unsafe { libc::mkfifo(c_path.as_ptr(), 0o644) }, 0);
+        let plan = plan_open(&[path_text(&pipe), path_text(folder.join("photo.jpg"))]);
+        assert_eq!(plan.others, ["pipe.txt"]);
+        assert_eq!(plan.files, [path_text(folder.join("photo.jpg"))]);
     }
 
     #[test]
     fn plan_open_reports_a_folder_with_nothing_to_open() {
         let (_dir, folder) = folder_with(&["notes.txt", "photo.jpg"]);
         let plan = plan_open(&[path_text(&folder)]);
+        assert_eq!(plan.folders.len(), 1);
+        assert_eq!(plan.folders[0].files, [path_text(folder.join("notes.txt"))]);
+        assert!(plan.empty_folders.is_empty());
+
+        let (_empty, empty) = folder_with(&[]);
+        fs::create_dir(empty.join("sub")).unwrap();
+        fs::write(empty.join("sub/notes.txt"), "x").unwrap();
+        let (_pictures, pictures) = folder_with(&["a.png", "b.JPG", "c.svg", ".hidden.txt"]);
+        let plan = plan_open(&[path_text(&empty), path_text(&pictures)]);
         assert!(plan.folders.is_empty());
-        assert_eq!(plan.empty_folders.len(), 1);
+        assert_eq!(plan.empty_folders, [name_of(&empty), name_of(&pictures)]);
+        assert!(plan.files.is_empty() && plan.others.is_empty());
+    }
+
+    #[test]
+    fn plan_open_opens_ten_text_files_readme_first_when_a_folder_has_no_web_files() {
+        let (_dir, folder) = folder_with(&[]);
+        let mut names: Vec<String> = (0..12).map(|n| format!("n{n:02}.txt")).collect();
+        names.extend(["ReadMe.md", "b.json", "README", "a.py", ".env"].map(String::from));
+        for name in &names {
+            fs::write(folder.join(name), "text\n").unwrap();
+        }
+        fs::write(folder.join("Makefile"), "all:\n").unwrap();
+        fs::write(folder.join("aa.bin"), b"PK\x03\x04\0\0rest").unwrap();
+        fs::write(folder.join("ab.dat"), [vec![b'a'; 9000], vec![0]].concat()).unwrap();
+        let big = fs::File::create(folder.join("ac.log")).unwrap();
+        big.set_len(5 * 1024 * 1024 + 1).unwrap();
+        fs::write(folder.join("ad.txt"), b"\xFF\xFEa\0b\0").unwrap();
+        fs::create_dir(folder.join("ae.txt")).unwrap();
+        let plan = plan_open(&[path_text(&folder)]);
+        assert_eq!(plan.folders.len(), 1);
+        assert_eq!(plan.folders[0].folder_name, name_of(&folder));
+        let opened: Vec<String> = plan.folders[0].files.iter().map(|f| name_of(Path::new(f))).collect();
+        assert_eq!(
+            opened,
+            ["README", "ReadMe.md", "a.py", "ab.dat", "ad.txt", "b.json", "Makefile", "n00.txt", "n01.txt", "n02.txt"]
+        );
+    }
+
+    #[test]
+    fn plan_open_web_files_still_win_over_text_files() {
+        let (_dir, folder) = folder_with(&["README.md", "notes.txt", "page.html"]);
+        let plan = plan_open(&[path_text(&folder)]);
+        assert_eq!(plan.folders[0].files, [path_text(folder.join("page.html"))]);
+    }
+
+    #[test]
+    fn plan_open_lists_a_folder_once_and_stats_only_names_that_can_open() {
+        let (_dir, folder) = folder_with(&["a.html", "b.css", "c.png", "d.txt", ".e.html"]);
+        counts::local_counts(true);
+        let plan = plan_open(&[path_text(&folder)]);
+        let used = counts::local_counts(true);
+        assert_eq!(plan.folders[0].files.len(), 2);
+        assert_eq!(used.read_dirs, 1);
+        assert_eq!(used.entries_read, 5);
+        assert_eq!(used.stats, 2);
     }
 
     #[test]
@@ -587,11 +753,103 @@ mod tests {
     }
 
     #[test]
-    fn another_kind_is_not_a_project() {
-        let (_dir, folder) = folder_with(&["a.html", "b.css", "notes.txt"]);
-        assert!(!scan_folder(&folder.join("a.html")).is_project);
+    fn another_kind_no_longer_stops_a_project() {
+        let (_dir, folder) = folder_with(&["a.html", "b.css", "notes.txt", "game.js"]);
+        let scan = scan_folder(&folder.join("a.html"));
+        assert!(scan.is_project);
+        assert_eq!(names(&scan.files), ["a.html", "b.css"]);
         let (_dir, folder) = folder_with(&["a.html", "b.css", "no-extension"]);
+        assert!(scan_folder(&folder.join("a.html")).is_project);
+        let (_dir, folder) = folder_with(&["a.html", "notes.txt", "data.json"]);
         assert!(!scan_folder(&folder.join("a.html")).is_project);
+    }
+
+    #[test]
+    fn a_picked_file_that_is_not_a_web_file_opens_alone_without_reading_the_folder() {
+        let (_dir, folder) = folder_with(&["a.html", "b.css", "notes.txt"]);
+        counts::local_counts(true);
+        let scan = scan_folder(&folder.join("notes.txt"));
+        let used = counts::local_counts(true);
+        assert!(!scan.is_project && !scan.refused && !scan.too_big);
+        assert!(scan.files.is_empty() && scan.linked_css.is_empty());
+        assert_eq!(scan.folder, path_text(&folder));
+        assert_eq!(used.read_dirs, 0);
+        assert_eq!(used.entries_read, 0);
+    }
+
+    #[test]
+    fn scan_stats_only_web_file_names() {
+        let mut list: Vec<String> = (0..100).map(|n| format!("n{n}.txt")).collect();
+        list.extend(["a.html", "b.css", "c.png"].map(String::from));
+        let refs: Vec<&str> = list.iter().map(String::as_str).collect();
+        let (_dir, folder) = folder_with(&refs);
+        counts::local_counts(true);
+        let scan = scan_folder(&folder.join("a.html"));
+        let used = counts::local_counts(true);
+        assert!(scan.is_project);
+        assert_eq!(used.read_dirs, 1);
+        assert_eq!(used.entries_read, 103);
+        assert_eq!(used.stats, 3);
+    }
+
+    #[test]
+    fn scan_stops_at_2000_entries_and_opens_the_file_alone() {
+        let (_dir, folder) = folder_with(&["a.html", "b.css"]);
+        fs::write(folder.join("a.html"), "<link rel=\"stylesheet\" href=\"b.css\">").unwrap();
+        for n in 0..(MAX_SCAN_ENTRIES - 2) {
+            fs::write(folder.join(format!("e{n:05}.dat")), "").unwrap();
+        }
+        counts::local_counts(true);
+        let scan = scan_folder(&folder.join("a.html"));
+        let used = counts::local_counts(true);
+        assert!(scan.is_project, "exactly 2,000 entries is still read whole");
+        assert!(!scan.too_big && !scan.stopped_early);
+        assert_eq!(used.entries_read, 2000);
+
+        fs::write(folder.join("one-more.dat"), "").unwrap();
+        counts::local_counts(true);
+        let scan = scan_folder(&folder.join("a.html"));
+        let used = counts::local_counts(true);
+        assert!(scan.too_big);
+        assert!(!scan.is_project && !scan.refused);
+        assert!(scan.files.is_empty());
+        assert_eq!(names(&scan.linked_css), ["b.css"]);
+        assert_eq!(used.read_dirs, 1);
+        assert_eq!(used.entries_read, 2000);
+        assert!(used.stats <= 2000, "{used:?}");
+    }
+
+    #[test]
+    fn scan_stops_early_once_there_are_too_many_web_files() {
+        let list: Vec<String> = (0..30).map(|n| format!("p{n:02}.html")).collect();
+        let refs: Vec<&str> = list.iter().map(String::as_str).collect();
+        let (_dir, folder) = folder_with(&refs);
+        counts::local_counts(true);
+        let scan = scan_folder(&folder.join("p00.html"));
+        let used = counts::local_counts(true);
+        assert!(!scan.is_project && !scan.too_big);
+        assert!(scan.stopped_early, "the folder was not read to its end");
+        assert_eq!(used.entries_read, 21);
+        assert_eq!(used.stats, 1 + 21);
+    }
+
+    #[test]
+    fn a_scan_that_reads_the_whole_folder_did_not_stop_early() {
+        let names_20: Vec<String> = (0..20).map(|n| format!("p{n}.html")).collect();
+        let refs: Vec<&str> = names_20.iter().map(String::as_str).collect();
+        let (_dir, folder) = folder_with(&refs);
+        let scan = scan_folder(&folder.join("p0.html"));
+        assert!(scan.is_project && !scan.stopped_early);
+        let (_dir, folder) = folder_with(&["a.html", "notes.txt"]);
+        assert!(!scan_folder(&folder.join("a.html")).stopped_early);
+        assert!(!scan_folder(&folder.join("notes.txt")).stopped_early);
+    }
+
+    #[test]
+    fn scan_result_says_too_big_in_camel_case() {
+        let value = serde_json::to_value(scan_result(Path::new("/a/b"))).unwrap();
+        assert_eq!(value["tooBig"], false);
+        assert_eq!(value["stoppedEarly"], false);
     }
 
     #[test]
@@ -703,9 +961,16 @@ mod tests {
         assert!(!scan.is_project);
     }
 
+    fn pages(count: usize) -> Vec<String> {
+        (0..count).map(|n| format!("filler{n:02}.html")).collect()
+    }
+
     #[test]
     fn not_a_project_and_a_page_picked_returns_linked_css() {
-        let (_dir, folder) = folder_with(&["style.css", "notes.txt", "other.css"]);
+        let mut list = pages(19);
+        list.extend(["style.css", "notes.txt", "other.css"].map(String::from));
+        let refs: Vec<&str> = list.iter().map(String::as_str).collect();
+        let (_dir, folder) = folder_with(&refs);
         fs::write(
             folder.join("page.html"),
             "<link rel=\"stylesheet\" href=\"style.css\"><link rel=\"stylesheet\" href=\"gone.css\">",
@@ -737,7 +1002,10 @@ mod tests {
 
     #[test]
     fn a_picked_css_file_returns_no_linked_css() {
-        let (_dir, folder) = folder_with(&["notes.txt", "other.css"]);
+        let mut list = pages(20);
+        list.extend(["notes.txt", "other.css"].map(String::from));
+        let refs: Vec<&str> = list.iter().map(String::as_str).collect();
+        let (_dir, folder) = folder_with(&refs);
         fs::write(folder.join("a.css"), "<link rel=stylesheet href=other.css>").unwrap();
         let scan = scan_folder(&folder.join("a.css"));
         assert!(!scan.is_project);

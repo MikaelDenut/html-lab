@@ -10,9 +10,13 @@ publish = false
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 dunce = "1"
+unicode-normalization = "=0.1.26"
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "=0.61.2", features = ["Win32_Storage_FileSystem"] }
 
 [dev-dependencies]
 tempfile = "3"

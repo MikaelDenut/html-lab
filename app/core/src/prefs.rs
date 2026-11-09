@@ -14,7 +14,13 @@ pub struct Session {
     pub tabs: Vec<String>,
     #[serde(default)]
     pub active: Option<String>,
+    /// The My page side with these tabs: "shown" or "hidden" (WP3). Anything else is None.
+    #[serde(default)]
+    pub side: Option<String>,
 }
+
+pub const SIDE_SHOWN: &str = "shown";
+pub const SIDE_HIDDEN: &str = "hidden";
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -103,7 +109,10 @@ pub fn merge(prefs: &mut Prefs, patch: &Value) {
     match patch.get("session") {
         Some(Value::Null) => prefs.session = None,
         Some(session) => {
-            if let Ok(session) = serde_json::from_value(session.clone()) {
+            if let Ok(mut session) = serde_json::from_value::<Session>(session.clone()) {
+                if !matches!(session.side.as_deref(), Some(SIDE_SHOWN | SIDE_HIDDEN)) {
+                    session.side = None;
+                }
                 prefs.session = Some(session);
             }
         }
@@ -190,6 +199,7 @@ mod tests {
             session: Some(Session {
                 tabs: vec!["/a/b.html".to_string()],
                 active: Some("/a/b.html".to_string()),
+                side: Some("hidden".to_string()),
             }),
             window_size: None,
         };
@@ -325,11 +335,68 @@ mod tests {
             session: Some(Session {
                 tabs: Vec::new(),
                 active: None,
+                side: None,
             }),
             ..Prefs::default()
         };
         merge(&mut prefs, &json!({ "savePlace": null, "session": null }));
         assert_eq!(prefs.save_place, None);
+        assert_eq!(prefs.session, None);
+    }
+
+    #[test]
+    fn a_session_side_defaults_to_none() {
+        let mut prefs = Prefs::default();
+        merge(
+            &mut prefs,
+            &json!({ "session": { "tabs": ["/x.py"], "active": "/x.py" } }),
+        );
+        assert_eq!(prefs.session.as_ref().unwrap().side, None);
+        let old: Session = serde_json::from_value(json!({ "tabs": ["/x.py"] })).unwrap();
+        assert_eq!(old.side, None);
+    }
+
+    #[test]
+    fn a_session_side_round_trips_with_its_tabs() {
+        let dir = tempdir().unwrap();
+        let path = dir.path().join("prefs.json");
+        for side in ["shown", "hidden"] {
+            let mut prefs = Prefs::default();
+            merge(
+                &mut prefs,
+                &json!({ "session": { "tabs": ["/a/run.py"], "active": "/a/run.py", "side": side } }),
+            );
+            assert_eq!(prefs.session.as_ref().unwrap().side.as_deref(), Some(side));
+            save(&path, &prefs).unwrap();
+            let back = load(&path);
+            assert_eq!(back, prefs);
+            assert_eq!(
+                serde_json::to_value(back.session.unwrap()).unwrap(),
+                json!({ "tabs": ["/a/run.py"], "active": "/a/run.py", "side": side })
+            );
+        }
+    }
+
+    #[test]
+    fn a_strange_session_side_becomes_none() {
+        let dir = tempdir().unwrap();
+        let path = dir.path().join("prefs.json");
+        for side in [json!("Hidden"), json!("gone"), json!(""), json!(null)] {
+            let mut prefs = Prefs::default();
+            merge(&mut prefs, &json!({ "session": { "tabs": ["/a.txt"], "side": side } }));
+            let session = prefs.session.as_ref().unwrap();
+            assert_eq!(session.tabs, ["/a.txt"], "{side}");
+            assert_eq!(session.side, None, "{side}");
+        }
+        fs::write(
+            &path,
+            r#"{ "session": { "tabs": ["/a.txt"], "side": "sideways" } }"#,
+        )
+        .unwrap();
+        assert_eq!(load(&path).session.unwrap().side, None);
+        // A side of the wrong type drops the whole session, as any wrong session does.
+        let mut prefs = Prefs::default();
+        merge(&mut prefs, &json!({ "session": { "tabs": ["/a.txt"], "side": 3 } }));
         assert_eq!(prefs.session, None);
     }
 }

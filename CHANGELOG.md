@@ -1,6 +1,6 @@
 ---
 class:   history
-updated: 2026-11-08
+updated: 2026-11-09
 status:  current
 ---
 
@@ -9,6 +9,117 @@ status:  current
 All notable changes to HTML Lab. The format follows Keep a Changelog. Every change
 that leaves the build folder bumps the version by one, and 0.1.9 is followed by
 0.2.0. Decisions are recorded in [docs/adr/](docs/adr/).
+
+## [0.3.0] - 2026-11-09
+
+Contains 0.2.1, which was never released on its own.
+
+### Added
+
+- Any text file under 5 MB opens, edits and saves, not only HTML and CSS. Pictures and
+  other files that are not text are still refused, with a message that says so.
+- A file is saved the way it was: its line endings, tabs or spaces, indent width, final
+  newline, BOM and encoding stay. Only your edit changes. A file opened and saved without
+  an edit is the same file, byte for byte. A file with mixed line endings gets the one
+  it uses most.
+- Text saved as UTF-16 with a BOM opens and saves. A file in another encoding gets its
+  own message: "HTML Lab cannot read this file."
+- Colours and folding for JavaScript, TypeScript, JSON, Markdown, XML and SVG, SCSS,
+  Sass, Less, YAML, Python, PHP, SQL, C and C++, Java, Go, Rust, Swift, Lua, Shell,
+  PowerShell, Ruby, TOML and settings files (ini, env and the like). Each language
+  loads only when a file needs it. C# and Kotlin files open as plain text, with no
+  colours yet.
+- Tidy for the languages where it is safe. Where spaces change what the code means
+  (Python, YAML, Markdown, Sass, Ruby) or where Tidy has no rules yet, the Tidy button
+  is greyed and says why.
+- The footer names the language of a file that is not HTML or CSS, and its tab shows
+  letters such as PY, JS or JSON.
+- The "You are inside" row works for JavaScript and TypeScript (class, function and
+  method names), Python (class and def names) and JSON (the path of keys).
+- Hide and show the My page side, with the new button at the right end of the left
+  toolbar, View > My Page Side, or Cmd+Shift+Y (Ctrl+Shift+Y on Windows and Linux).
+  The side hides by itself for files that are not web pages and comes back for HTML
+  and CSS. A click of your own wins. While it is hidden the page waits, and it catches
+  up when the side comes back.
+- The side shown on a file that is not a page shows a page that uses the file, or a
+  page from the same folder, or says "This file has no page to show."
+- Make a new file from the **+** after the last tab, or File > New File... (Cmd+Shift+N).
+  Pick Web page, Style, Script, Text or Other, and the file gets the right ending.
+  Other takes any name, such as `notes.md`.
+- Change a file's name: click the name of the active tab, or use File > Change Name....
+  A dialog lists every place in the project that uses the old name, and changes those
+  places too (ticked by default). Unticking shows an "Are you sure?" warning. A rename
+  never writes over another file.
+- Undo a name change from the button in the message that follows, or File > Undo Change
+  Name, for 15 seconds or until you edit one of the changed files.
+- Mistake hints for JSON, JavaScript and TypeScript: a missing comma between JSON items,
+  a bracket that never closes, a quote that never closes.
+- HTML Lab is in the Open With list for `.js`, `.json`, `.md` and `.txt` files on Mac,
+  Windows and Linux. It never becomes the default app for them.
+
+### Changed
+
+- The toolbar's New is now **New project**, and the File menu says New Project....
+  Add a New File... is now New File..., and opens the new "Make a new file" dialog.
+- The Open panel lets you pick any file. On Windows and Linux "All files" comes first.
+- Other files in a folder no longer stop it from being a project. Only HTML and CSS
+  files count, so a page with its style file and a `notes.txt` opens as a two-file
+  project.
+- A folder with no web pages opens its first text files, a README first.
+- A folder with tens of thousands of files no longer slows HTML Lab down: it reads at
+  most 2,000 entries of it.
+- The teaching help (explanations, Point at the Page, Show the Boxes, page lighting,
+  Help on This Word, autocomplete and closing tags) stays for HTML and CSS only. Other
+  languages get folding, bracket matching, Find, closing brackets and Tidy.
+- Tidy only changes indents, with the file's own indent. With a selection, it tidies
+  only the selected lines.
+- Each file keeps its own indent: a file with tabs gets tabs, a file with 4 spaces gets
+  4 spaces.
+- A message about many files names at most 3 of them, then "and 2 more".
+- Help's keyboard list has Cmd+Shift+N "Make a new file" and Cmd+Shift+Y "Hide or show
+  the My page side".
+- The editor loads in parts: the start part stays under 600 KB, and the language parts
+  load when needed.
+
+### Fixed
+
+- A file with Windows line endings (CRLF) or a BOM lost them when it was saved. It keeps
+  them now.
+- A UTF-16 file from Windows (for example a PowerShell script) was refused as "not text".
+  It opens now.
+- Found before release and fixed: Tidy left lines inside multi-line strings alone only
+  in some languages, and changed `<pre>` in a PHP file; a name change with an open file
+  of mixed line endings said the file had changed; changing `.ts` to `.tsx` kept the old
+  colours; hiding the My page side lost the keyboard focus; Undo of a name change could
+  stop half way without saying so.
+- Found in the Windows run and fixed: the Open in your browser button was hidden on a
+  narrow My page side, and on Windows a save could fail once while another program
+  looked at the file.
+
+## [0.2.1] - unreleased
+
+Not released on its own; part of 0.3.0.
+
+### Changed
+
+- A page with a script now says "Scripts do not run here. Open in Safari to see them
+  work." On Windows and Linux it says "Open in your browser". Those words are a button
+  that opens the page in the browser, where its scripts run.
+- The self-test's wait for the page names what was stuck when the wait ran out, not
+  what it saw when the wait began.
+- Test names say "the typing" and "the page", not "his".
+- The self-test and the smoke test now expect all 42 templates in the gallery, not 6.
+- `speed-run.py` keeps a second run for the same build as a new file ending in `-2`,
+  instead of writing over the first.
+- `app/docs/CONTRACTS.md` matches the code again, with the commands that check it.
+- The README says how to look inside a page someone else made.
+
+### Fixed
+
+- Show the Boxes: a label no longer covers the first letter of the box above it. Each
+  label goes where it covers no text.
+- Show the Boxes turns off when the last tab closes, so the next page starts without
+  boxes.
 
 ## [0.2.0] - 2026-11-08
 

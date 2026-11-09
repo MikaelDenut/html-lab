@@ -7,9 +7,15 @@ import { cancelDialog, isDialogOpen } from './dialogs.js';
 import { showHome, showTopic, showWord } from './help.js';
 import { checkFiles, checkTopic, counted, resetCounted } from './engine-check.js';
 import { seeTests } from './self-test-see.js';
+import { fileTests } from './self-test-files.js';
+import { langTests } from './self-test-langs.js';
+import { sideTests } from './self-test-side.js';
+import { newFileTests } from './self-test-newfile.js';
+import { codeHintTests } from './self-test-hints-code.js';
+import { renameTests } from './self-test-rename.js';
 
-export const MIN_TESTS = 137; // 90 + SEE_TESTS (47)
-const MIN_TEMPLATES = 6;
+export const MIN_TESTS = 202; // 92 + SEE_TESTS (49) + FILE_TESTS (10) + LANG_TESTS (7) + SIDE_TESTS (12) + NEWFILE_TESTS (6) + RENAME_TESTS (18) + CODE_HINT_TESTS (8)
+const MIN_TEMPLATES = 42; // every template that ships; a missing one fails the run (T2)
 const MIN_SAMPLES = 5 + MIN_TEMPLATES;
 const MIN_TOPICS = 100;
 const MIN_LESSONS = 53;
@@ -36,7 +42,7 @@ async function until(fn, message, ms = 4000) {
     if (value) return value;
     await wait(5);
   }
-  throw new Error(`timed out: ${message}`);
+  throw new Error(`timed out: ${typeof message === 'function' ? message() : message}`);
 }
 
 export async function run(ctx) {
@@ -53,10 +59,14 @@ export async function run(ctx) {
   });
   const P = preview.state;
 
+  // The message is read when the wait ends, so it names what was stuck then (V5).
   const settle = () =>
     until(
       () => P.phase === 'live' && P.out === null && !P.pendingHtml && P.pendingCss.size === 0,
-      `preview to settle (phase ${P.phase}, out ${P.out})`,
+      () => {
+        const last = P.lastMsg ? `${P.lastMsg.t} ${Date.now() - P.lastMsg.at} ms ago` : 'none';
+        return `preview to settle (phase ${P.phase}, out ${P.out}, pv ${P.pv}, html waiting ${P.pendingHtml}, css waiting ${P.pendingCss.size}, last message ${last})`;
+      },
       6000,
     );
   const probe = async (sel, prop, extra) => {
@@ -126,6 +136,14 @@ export async function run(ctx) {
     assert(!button.disabled, `button "${text}" is disabled`);
     button.click();
   };
+  // A dialog button can wait on an asynchronous check (a free name, say); a slow machine needs longer than a fixed wait.
+  const clickOn = async (text) => {
+    await until(() => {
+      const button = [...dialogRoot().querySelectorAll('button')].find((b) => b.textContent.trim().includes(text));
+      return button && !button.disabled;
+    }, `button "${text}" to turn on`);
+    click(text);
+  };
   const setField = (selector, value) => {
     const field = dialogRoot().querySelector(selector);
     assert(field, `no field ${selector}`);
@@ -138,8 +156,11 @@ export async function run(ctx) {
     if (isDialogOpen()) cancelDialog();
     await wait(0);
     flows.__closeAllNow();
+    // One failing test must not leave the My page side hidden for the rest (WP3).
+    S.sideManual = null;
     S.prefs.autosave = false;
     showRight('page');
+    if (!S.sideShown) throw new Error('the My page side did not come back');
     await wait(0);
   };
 
@@ -148,8 +169,10 @@ export async function run(ctx) {
     const start = performance.now();
     const errorsBefore = window.__htmllabErrors.length;
     try {
-      await fn();
-      results.push({ name, ok: true, ms: Math.round(performance.now() - start) });
+      const detail = await fn();
+      const row = { name, ok: true, ms: Math.round(performance.now() - start) };
+      if (typeof detail === 'string') row.detail = detail;
+      results.push(row);
     } catch (error) {
       results.push({ name, ok: false, error: String(error && error.message ? error.message : error) });
     }
@@ -383,7 +406,7 @@ export async function run(ctx) {
     eq((await probe('p', 'color')).value, 'rgb(255, 0, 0)');
   });
 
-  await t('3 < 4 in his text never holds', async () => {
+  await t('3 < 4 in the text never holds', async () => {
     await openContent('A', [['a.html', '<!doctype html><p>3 </p>\n']]);
     typeAfter('<p>3 ', '< 4');
     assert(!P.hold, 'held on a math sign');
@@ -452,7 +475,7 @@ export async function run(ctx) {
     await until(async () => (await preview.__probe('#i'))?.natural === 40, 'picture to show');
   });
 
-  await t('click a link to a picture, then type in CSS: back to his page with the new style', async () => {
+  await t('click a link to a picture, then type in CSS: back to the page with the new style', async () => {
     const c = await invoke('open_sample', { id: 'gallery' });
     const project = await flows.__openContent(c, 'sample');
     await settle();
@@ -495,7 +518,7 @@ export async function run(ctx) {
     eq((await probe('h1')).text, 'This page does not exist yet.', 'friendly page');
     assert($('page-label').textContent.includes('nowhere.html'), $('page-label').textContent);
     typeAfter('Saturn is my favorite', '!');
-    eq((await probe('h1')).text, 'My planets', 'next key returns to his page');
+    eq((await probe('h1')).text, 'My planets', 'next key returns to the page');
     eq(P.showing, planets.path);
   });
 
@@ -565,7 +588,8 @@ export async function run(ctx) {
     await invoke('test_make_folder', { path: dir });
     await invoke('test_write_bytes', { path: `${dir}/photo.html`, bytes: [0x3c, 0x70, 0x00, 0xff, 0xfe] });
     const flow = flows.openPaths([`${dir}/photo.html`]);
-    await waitDialog('HTML Lab cannot read this file.');
+    await waitDialog('HTML Lab cannot open this file.');
+    assert(dialogRoot().textContent.includes('photo.html is a picture or another file that is not text.'), dialogRoot().textContent);
     click('OK');
     await flow;
     eq(S.tabs.length, 0, 'tab opened');
@@ -588,8 +612,19 @@ export async function run(ctx) {
     await invoke('test_queue_open', { paths: [dir] });
     await until(() => S.tabs.length === 3, `three tabs, got ${S.tabs.length}`);
     eq(activeTab().name, 'index.html', 'the shown page');
+    eq(S.tabs.map((x) => x.name).sort().join(' '), 'about.html index.html style.css', 'web files only');
     assert(!isDialogOpen(), 'a dialog opened');
     eq((await probe('h1')).text, 'Home');
+    flows.__closeAllNow();
+    const words = `${parent}/words-${freshFolder()}`;
+    await invoke('test_make_folder', { path: words });
+    const files = [['b.txt', [98]], ['a.txt', [97]], ['README.md', [35, 32, 82]], ['.secret', [115]], ['data.bin', [1, 0, 2]]];
+    for (const [name, bytes] of files) await invoke('test_write_bytes', { path: `${words}/${name}`, bytes });
+    await invoke('test_queue_open', { paths: [words] });
+    await until(() => S.tabs.length === 3, `three text tabs, got ${S.tabs.length}`);
+    eq(S.tabs.map((x) => x.name).join(' '), 'README.md a.txt b.txt', 'README first, then by name, no dot file or binary');
+    eq(activeTab().name, 'README.md', 'the shown file');
+    assert(!isDialogOpen(), 'a dialog opened for the text folder');
   });
 
   await t('a page opened from outside while a dialog is open waits for the dialog', async () => {
@@ -600,7 +635,7 @@ export async function run(ctx) {
     await invoke('test_make_folder', { path: good });
     await invoke('test_write_bytes', { path: `${good}/later.html`, bytes: [...new TextEncoder().encode('<h1>Later</h1>\n')] });
     const flow = flows.openPaths([`${bad}/photo.html`]);
-    await waitDialog('HTML Lab cannot read this file.');
+    await waitDialog('HTML Lab cannot open this file.');
     await invoke('test_queue_open', { paths: [`${good}/later.html`] });
     await wait(300);
     eq(S.tabs.length, 0, 'opened behind the dialog');
@@ -609,19 +644,46 @@ export async function run(ctx) {
     await until(() => S.tabs.length === 1 && activeTab().name === 'later.html', 'later.html to open');
   });
 
-  await t('other files and empty folders opened from outside give a message', async () => {
+  await t('other files and empty folders opened from outside: text opens, the rest gives a message', async () => {
     const dir = `${parent}/odd-${freshFolder()}`;
     const empty = `${dir}/empty`;
+    const pics = `${dir}/pics`;
     await invoke('test_make_folder', { path: empty });
+    await invoke('test_make_folder', { path: pics });
+    const png = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52];
+    await invoke('test_write_bytes', { path: `${pics}/pic.png`, bytes: png });
     await invoke('test_write_bytes', { path: `${dir}/notes.txt`, bytes: [120] });
     await invoke('test_queue_open', { paths: [`${dir}/notes.txt`, empty] });
-    await waitDialog('empty has no HTML or CSS files.');
+    await waitDialog('empty has no files HTML Lab can open.');
+    assert(dialogRoot().textContent.includes('HTML Lab opens web pages and other text files.'), dialogRoot().textContent);
     click('OK');
     await dialogGone();
-    await waitDialog('notes.txt cannot be opened here.');
+    eq(S.tabs.map((x) => x.name).join(' '), 'notes.txt', 'notes.txt opened');
+    await invoke('test_queue_open', { paths: [pics] });
+    await waitDialog('pics has no files HTML Lab can open.');
     click('OK');
     await dialogGone();
-    eq(S.tabs.length, 0, 'tab opened');
+    await invoke('test_queue_open', { paths: [`${pics}/pic.png`] });
+    await waitDialog('HTML Lab cannot open this file.');
+    assert(dialogRoot().textContent.includes('pic.png is a picture or another file that is not text.'), dialogRoot().textContent);
+    click('OK');
+    await dialogGone();
+    eq(S.tabs.length, 1, 'only notes.txt is open');
+  });
+
+  // Teeth: with the message read before the wait, it says "start", as settle did in 0.2.0 (V5).
+  await t('a test that times out names the state at the end of the wait', async () => {
+    let phase = 'start';
+    setTimeout(() => {
+      phase = 'end';
+    }, 20);
+    let error = '';
+    try {
+      await until(() => false, () => `phase ${phase}`, 120);
+    } catch (e) {
+      error = e.message;
+    }
+    eq(error, 'timed out: phase end');
   });
 
   await t('smart text is off in the editor', async () => {
@@ -639,6 +701,48 @@ export async function run(ctx) {
     const inline = '<!doctype html><button onclick="while(true){}">x</button><a href="javascript:while(true){}">y</a>\n';
     setDoc(inline);
     await settle();
+  });
+
+  await t('a page with a script says to open it in the browser, and the words open it there', async () => {
+    const saved = await disk(null, [['a.html', '<!doctype html><script>document.title = "x";</script><h1>A</h1>\n']]);
+    await flows.__openList(saved.paths);
+    await settle();
+    await invoke('test_browser_opened');
+    await until(() => $('page-hint').textContent === preview.SCRIPT_HINT, $('page-hint').textContent);
+    assert(/Open in (Safari|your browser) to see them work\.$/.test($('page-hint').textContent), $('page-hint').textContent);
+    const button = $('hint-browser');
+    assert(button && button.tagName === 'BUTTON', 'the words are not a button');
+    const uncovered = () => {
+      const box = button.getBoundingClientRect();
+      const hit = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
+      return hit && hit.closest('#hint-browser') ? hit : null;
+    };
+    const coverName = () => {
+      const box = button.getBoundingClientRect();
+      const hit = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
+      return hit ? hit.outerHTML.slice(0, 80) : 'nothing';
+    };
+    // A narrow My page side, as on a small Windows screen: the title gives way, the button stays.
+    const header = $('page-header');
+    header.style.width = '460px';
+    try {
+      await wait(30);
+      assert(uncovered(), `something covers the button in a 460 px header: ${coverName()}`);
+    } finally {
+      header.style.width = '';
+    }
+    await wait(30);
+    const hit = uncovered();
+    assert(hit, `something covers the button: ${coverName()}`);
+    hit.click();
+    const opened = await until(async () => {
+      const list = await invoke('test_browser_opened');
+      return list.length ? list : null;
+    }, 'the browser command');
+    eq(JSON.stringify(opened), JSON.stringify([saved.paths[0]]), 'opened');
+    setDoc('<!doctype html><h1>A</h1>\n');
+    await settle();
+    await until(() => !$('hint-browser'), 'the button to go with the script');
   });
 
   await t('an unclosed <style> or <!-- updates once fixed, with no reload', async () => {
@@ -667,8 +771,7 @@ export async function run(ctx) {
     await waitDialog('Save your project');
     assert(doc().includes('<p>xy'), 'text lost');
     setField('input[type="text"]', 'Rescued');
-    await wait(60);
-    click('Save my project');
+    await clickOn('Save my project');
     await flow;
     await dialogGone();
     eq(baseName(activeProject().folder), 'Rescued', 'new folder');
@@ -680,17 +783,16 @@ export async function run(ctx) {
     await flows.__openList(saved.paths);
     await settle();
     const flow = flows.addFileFlow();
-    await waitDialog('Add a new file');
+    await waitDialog('Make a new file');
     setField('input[type="text"]', 'planets');
-    await wait(60);
-    click('Add this file');
+    await clickOn('Make the file');
     await flow;
-    await invoke('test_write_bytes', { path: `${saved.folder}/planets.html`, bytes: [...new TextEncoder().encode('his own')] });
+    await invoke('test_write_bytes', { path: `${saved.folder}/planets.html`, bytes: [...new TextEncoder().encode('own text')] });
     const save = flows.saveFlow();
     await waitDialog('There is already a file called planets.html');
     click('Keep working');
     await save;
-    eq(await readDisk(`${saved.folder}/planets.html`), 'his own', 'overwritten');
+    eq(await readDisk(`${saved.folder}/planets.html`), 'own text', 'overwritten');
     assert(document.querySelector('.tab.active .tab-dot, .tab.active .dot'), 'dot cleared');
   });
 
@@ -795,9 +897,9 @@ export async function run(ctx) {
     await until(() => document.activeElement && document.activeElement.classList.contains('row-templates'), 'New again');
     click('Template gallery');
     box = await until(() => dialogRoot().querySelector('.tpl-list') && dialogRoot(), 'the gallery again');
-    eq(box.querySelector('.tpl-chip[aria-pressed="true"]').dataset.filter, pick.dataset.filter, 'the filter he picked');
+    eq(box.querySelector('.tpl-chip[aria-pressed="true"]').dataset.filter, pick.dataset.filter, 'the filter picked');
     const first = [...box.querySelectorAll('.tpl-row')].find((r) => !r.hidden);
-    eq(document.activeElement, first, 'focus on the first row of his filter');
+    eq(document.activeElement, first, 'focus on the first row of the filter');
     box.querySelector('.tpl-chip[data-filter="all"]').click();
     click('Cancel');
     await flow;
@@ -839,7 +941,7 @@ export async function run(ctx) {
     await settle();
   };
 
-  await t('every template works as a site: each page is a tab, its menu goes there and home again, and each page takes his typing', async () => {
+  await t('every template works as a site: each page is a tab, its menu goes there and home again, and each page takes the typing', async () => {
     const templates = (await invoke('samples')).filter((s) => s.group === 'template');
     assert(templates.length >= MIN_TEMPLATES, `the gallery holds ${templates.length} templates`);
     for (const tpl of templates) {
@@ -854,7 +956,7 @@ export async function run(ctx) {
         assert((await probe(`a[aria-current="page"][href="${name}"]`)).found, `${tpl.id}/${name}: the menu marks the page`);
         const at = doc().indexOf('>', doc().indexOf('<h1')) + 1;
         view.dispatch({ changes: { from: at, insert: 'Zq ' }, selection: { anchor: at + 3 }, userEvent: 'input.type' });
-        assert((await probe('h1')).text.includes('Zq'), `${tpl.id}/${name}: his typing shows`);
+        assert((await probe('h1')).text.includes('Zq'), `${tpl.id}/${name}: the typing shows`);
         await clickLink('a[href="index.html"]');
         eq(activeTab().name, 'index.html', `${tpl.id}: back home from ${name}`);
         eq(baseName(P.showing), 'index.html', `${tpl.id}: the home page shows again after ${name}`);
@@ -929,7 +1031,7 @@ export async function run(ctx) {
       const folder = await flows.__firstSaveTo(project, parent, `${tpl.title} ${freshFolder()}`);
       const names = await invoke('test_list_folder', { path: folder });
       for (const f of c.files) assert(names.includes(f.name), `${tpl.id}: ${f.name} was not saved`);
-      assert((await readDisk(`${folder}/style.css`)).includes(`${name[1]}: #123456;`), `${tpl.id}: the saved style has his change`);
+      assert((await readDisk(`${folder}/style.css`)).includes(`${name[1]}: #123456;`), `${tpl.id}: the saved style has the change`);
       const pictures = c.files.filter((f) => f.picture);
       if (!withMostPictures || pictures.length > withMostPictures.pictures.length) withMostPictures = { tpl, folder, pictures, files: c.files };
       flows.__closeAllNow();
@@ -1006,10 +1108,10 @@ export async function run(ctx) {
   await t('+ adds a page and a CSS file, and the tick adds a working link', async () => {
     const project = await sample(SPACE);
     let flow = flows.addFileFlow();
-    await waitDialog('Add a new file');
+    await waitDialog('Make a new file');
     setField('input[type="text"]', 'My Moon');
     await until(() => dialogRoot().textContent.includes('my-moon.html'), 'the file name in the dialog');
-    click('Add this file');
+    click('Make the file');
     await flow;
     eq(activeTab().name, 'my-moon.html', 'new tab active');
     assert(doc().includes('<title>My moon</title>') || doc().includes('<title>My Moon</title>'), doc());
@@ -1017,13 +1119,12 @@ export async function run(ctx) {
     switchTo(tabNamed(project, 'my-page.html').path);
     await settle();
     flow = flows.addFileFlow();
-    await waitDialog('Add a new file');
-    const choice = [...dialogRoot().querySelectorAll('[data-kind]')].find((el) => el.dataset.kind !== 'html');
+    await waitDialog('Make a new file');
+    const choice = dialogRoot().querySelector('[data-chip="style"]');
     choice.click();
     await wait(30);
     setField('input[type="text"]', 'extra');
-    await wait(60);
-    click('Add this file');
+    await clickOn('Make the file');
     await flow;
     eq(activeTab().name, 'extra.css', 'css tab');
     assert(tabNamed(project, 'my-page.html').state.doc.toString().includes('href="extra.css"'), 'link added');
@@ -1039,10 +1140,10 @@ export async function run(ctx) {
     await flows.__openList([saved.paths[0]]);
     await settle();
     const flow = flows.addFileFlow();
-    await waitDialog('Add a new file');
+    await waitDialog('Make a new file');
     setField('input[type="text"]', 'a');
     await until(() => dialogRoot().textContent.includes('You already have a file called a.html.'), 'taken line');
-    const button = [...dialogRoot().querySelectorAll('button')].find((b) => b.textContent.includes('Add this file'));
+    const button = [...dialogRoot().querySelectorAll('button')].find((b) => b.textContent.includes('Make the file'));
     assert(button.disabled, 'button stayed on');
     click('Cancel');
     await flow;
@@ -1096,8 +1197,7 @@ export async function run(ctx) {
     const flow = flows.saveFlow();
     await waitDialog('Save your project');
     setField('input[type="text"]', 'Taken');
-    await wait(60);
-    click('Save my project');
+    await clickOn('Save my project');
     await until(() => dialogRoot().textContent.includes('You already have a folder called Taken here. Pick another name.'), 'error line');
     const list = await invoke('test_list_folder', { path: `${parent}/Taken` });
     eq(list.join(','), 'keep.txt', 'folder changed');
@@ -1136,11 +1236,15 @@ export async function run(ctx) {
     eq(S.tabs.length, 2);
   });
 
+  // Two to 20 web files make a project now, whatever else is there, so this folder
+  // holds 21 of them: it is no project, and the page still offers its style file.
   await t('a folder with other kinds asks nothing, and offers linked CSS (E6)', async () => {
+    const more = Array.from({ length: 19 }, (_, i) => [`p${String(i + 1).padStart(2, '0')}.html`, '<p>more</p>\n']);
     const saved = await disk(null, [
       ['a.html', '<!doctype html><link rel="stylesheet" href="style.css"><p>a</p>\n'],
       ['style.css', 'p { color: red; }\n'],
       ['notes.txt', 'x'],
+      ...more,
     ]);
     let flow = flows.openPaths([saved.paths[0]]);
     await waitDialog('Open style.css too?');
@@ -1200,13 +1304,12 @@ export async function run(ctx) {
     await flows.__openList(saved.paths);
     await settle();
     const flow = flows.addFileFlow();
-    await waitDialog('Add a new file');
-    const choice = [...dialogRoot().querySelectorAll('[data-kind]')].find((el) => el.dataset.kind !== 'html');
+    await waitDialog('Make a new file');
+    const choice = dialogRoot().querySelector('[data-chip="style"]');
     choice.click();
     await wait(30);
     setField('input[type="text"]', 'look');
-    await wait(60);
-    click('Add this file');
+    await clickOn('Make the file');
     await flow;
     eq(activeTab().savedDoc, null, 'not on disk yet');
     replace('color: teal', 'color: red');
@@ -1337,17 +1440,16 @@ export async function run(ctx) {
     }
     await sample(SPACE);
     const flow2 = flows.addFileFlow();
-    await waitDialog('Add a new file');
+    await waitDialog('Make a new file');
     setField('input[type="text"]', 'moon');
-    await wait(60);
-    click('Add this file');
+    await clickOn('Make the file');
     await flow2;
     assert(doc().includes(META), 'new page from +');
     const bones = await invoke('help_topic', { id: 'bones' });
     assert(bones.code[0].text.includes(META) && bones.legend.some((l) => l.word === META), 'Bones lesson');
   });
 
-  await t('Try it twice jumps to the copy, with his changes', async () => {
+  await t('Try it twice jumps to the copy, with the changes', async () => {
     const id = index.topics.find((x) => x.title.startsWith('Inline style')).id;
     await flows.tryIt(id);
     await settle();
@@ -1550,15 +1652,18 @@ export async function run(ctx) {
     assert(view.state.doc === before, 'second tidy made a step');
   });
 
-  await t('E10: a dropped folder gives the message, a dropped page opens', async () => {
+  await t('E10: a dropped folder opens its files, a dropped page and a dropped text file open', async () => {
     const saved = await disk(null, [['a.html', '<!doctype html><p>a</p>\n'], ['n.txt', 'x']]);
-    const flow = flows.droppedFiles([saved.folder]);
-    await waitDialog('HTML Lab opens HTML and CSS files.');
-    click('OK');
-    await flow;
-    eq(S.tabs.length, 0);
+    await flows.droppedFiles([saved.folder]);
+    assert(!isDialogOpen(), 'a dialog opened');
+    eq(S.tabs.map((x) => x.name).join(' '), 'a.html', 'the dropped folder');
+    flows.__closeAllNow();
     await flows.droppedFiles([saved.paths[0]]);
-    eq(S.tabs.length, 1, 'dropped page');
+    eq(S.tabs.map((x) => x.name).join(' '), 'a.html', 'dropped page');
+    flows.__closeAllNow();
+    await flows.droppedFiles([saved.paths[1]]);
+    assert(!isDialogOpen(), 'a dialog opened for the text file');
+    eq(S.tabs.map((x) => x.name).join(' '), 'n.txt', 'dropped text file');
   });
 
   await t('E12: Save Automatically writes in about 2 s, and a failure gives one message', async () => {
@@ -1591,13 +1696,12 @@ export async function run(ctx) {
     assert(dialogRoot().textContent.includes('and everything else in your folder'), 'extra line');
     const name = `Copy ${freshFolder()}`;
     setField('input[type="text"]', name);
-    await wait(60);
-    click('Save the copy');
+    await clickOn('Save the copy');
     await flow;
     await dialogGone();
     const folder = activeProject().folder;
     eq(baseName(folder), name, 'new folder');
-    assert((await readDisk(`${folder}/a.html`)).includes('<p>xy'), 'copy has his change');
+    assert((await readDisk(`${folder}/a.html`)).includes('<p>xy'), 'copy has the change');
     assert((await invoke('test_list_folder', { path: folder })).includes('pic.svg'), 'picture copied');
     assert(!(await readDisk(saved.paths[0])).includes('<p>xy'), 'old folder changed');
     assert(activeTab().path.startsWith(folder), 'tab points to the copy');
@@ -1622,6 +1726,15 @@ export async function run(ctx) {
     eq(config.scriptPolicy, 'blocked');
     eq(config.kinds.length, 2);
     assert(config.kinds.every((k) => k.previewMode && k.label && k.openFirst), 'fields');
+    assert(config.kinds.every((k) => k.teaching === true), 'html and css teach');
+    eq(config.codeKind.id, 'code', 'the code kind');
+    eq(config.codeKind.teaching, false, 'the code kind teaches');
+    eq(config.codeKind.isPage, false, 'the code kind is a page');
+    eq(config.codeKind.previewMode, 'none', 'the code kind preview');
+    eq(config.codeKind.language, 'text', 'the code kind language');
+    eq(config.languages.length, 26, 'language rows');
+    const text = config.languages.find((l) => l.id === 'text');
+    assert(text && text.extensions.includes('txt') && text.tidy === 'off-no-rules' && text.letters === 'TXT', 'the text row');
   });
 
   await t('a saved 3-file project closed and opened again 5 times shows its page live each time', async () => {
@@ -1644,6 +1757,37 @@ export async function run(ctx) {
   await seeTests({
     t, assert, eq, until, wait, settle, probe, openContent, sample, doc, setDoc, typeAfter, replace,
     view, S, E, P, preview, flows, runCommand, switchTo, tabNamed, pageTabOf, activeTab, $,
+  });
+
+  await fileTests({
+    t, assert, eq, until, wait, settle, probe, openContent, doc, typeAfter, view, S, E, P, preview, flows,
+    switchTo, tabNamed, activeTab, activeProject, tabsOf, showRight, parent, freshFolder, disk, clickLink,
+    dialogRoot, waitDialog, click, clickOn, setField, dialogGone,
+  });
+
+  await langTests({
+    t, assert, eq, until, wait, S, E, flows, runCommand, activeTab, showRight, view, doc, invoke, parent, freshFolder, $,
+  });
+
+  await sideTests({
+    t, assert, eq, until, wait, settle, probe, openContent, sample, typeAfter, view, S, P, preview, flows,
+    runCommand, switchTo, tabNamed, activeTab, activeProject, tabsOf, showRight, divider: ctx.divider,
+    waitDialog, click, modKey, $,
+  });
+
+  await newFileTests({
+    t, assert, eq, until, wait, openContent, sample, doc, view, S, flows, runCommand, activeTab, activeProject,
+    invoke, disk, readDisk, dialogRoot, waitDialog, click, setField, $,
+  });
+
+  await renameTests({
+    t, assert, eq, until, wait, settle, probe, clickLink, sample, doc, view, typeAfter, S, P, flows, runCommand,
+    switchTo, tabNamed, activeTab, tabsOf, invoke, disk, readDisk, parent, freshFolder, dialogRoot,
+    waitDialog, click, setField, isDialogOpen, baseName, $,
+  });
+
+  await codeHintTests({
+    t, assert, eq, until, wait, view, S, flows, runCommand, switchTo, activeTab, tabsOf,
   });
 
   if (filter === 'lost') {

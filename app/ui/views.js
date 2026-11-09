@@ -13,13 +13,22 @@ export function icon(id, cls, color) {
   return `<svg class="${klass}"${style} aria-hidden="true"><use href="#i-${id}"></use></svg>`;
 }
 
-export function tabHtml({ path, name, label, kind, kindIcon, kindColor, dirty, active, tooltip }) {
+// A file outline with the language's letters (PY, JS, JSON ...) for a file that is not a teaching kind.
+export function lettersIcon(letters, color) {
+  const size = letters.length <= 2 ? 7 : letters.length === 3 ? 6 : 5;
+  return `<svg class="icon s24 tab-letters" style="color:var(--${color})" viewBox="0 0 24 24" aria-hidden="true">`
+    + '<path d="M5 2.8h9.4l4.8 4.8v13.6H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>'
+    + `<text x="12.1" y="18.4" font-size="${size}" font-weight="700" text-anchor="middle" fill="currentColor">${escapeHtml(letters)}</text>`
+    + '</svg>';
+}
+
+export function tabHtml({ path, name, label, kind, kindIcon, kindColor, letters, dirty, active, tooltip }) {
   const shown = label || name;
   const cls = `tab${active ? ' active' : ''}${dirty ? ' dirty' : ''}`;
   const kindAttr = kind ? ` data-kind="${escapeHtml(kind)}"` : '';
   const dot = dirty ? '<span class="tab-dot" role="img" aria-label="Not saved yet"></span>' : '';
   return `<div class="${cls}" data-path="${escapeHtml(path)}"${kindAttr} title="${escapeHtml(tooltip || path)}">`
-    + `<button class="tab-main" type="button">${icon(kindIcon, 's24', kindColor)}`
+    + `<button class="tab-main" type="button">${letters ? lettersIcon(letters, kindColor) : icon(kindIcon, 's24', kindColor)}`
     + `<span class="tab-name">${escapeHtml(shown)}</span></button>`
     + dot
     + `<button class="tab-close" type="button" aria-label="Close ${escapeHtml(shown)}">${icon('x-bold', 's14')}</button>`

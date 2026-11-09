@@ -5,6 +5,7 @@ import os
 import pathlib
 import local_config
 import plistlib
+import re
 import subprocess
 import sys
 import time
@@ -14,6 +15,35 @@ SSH = ["ssh", "-4", "-o", "BatchMode=yes", "-o", "ConnectTimeout=8", "-o", "LogL
 LOGS = "~/Library/Logs/fi.cyborvent.htmllab"
 DEST = "/tmp/HTML Lab Test.app"
 HERE = pathlib.Path(__file__).resolve().parent
+
+
+# The import statements esbuild writes at the top of a module: import"x", import{a}from"x",
+# import*as a from"x", export{a}from"x", export*from"x". A dynamic import("x") is not one.
+TOP_IMPORT = re.compile(
+    r"""\s*(?:import|export)\s*(?:[\w$*{}\s,]*?\s*from\s*)?(["'])([^"']+)\1\s*;?"""
+)
+
+
+def static_closure(entry):
+    """The entry plus every chunk it imports statically, recursively: what loads at start."""
+    seen, todo = [], [entry.resolve()]
+    while todo:
+        path = todo.pop()
+        if path in seen:
+            continue
+        seen.append(path)
+        text, at = path.read_text(encoding="utf-8"), 0
+        while (found := TOP_IMPORT.match(text, at)) and found.end() > at:
+            at = found.end()
+            target = found.group(2)
+            if target.startswith("."):
+                todo.append((path.parent / target).resolve())
+    return seen
+
+
+def editor_files(ui):
+    """The editor bundle and every chunk in ui/editor/, loaded at start or not."""
+    return [ui / "editor.bundle.js"] + sorted((ui / "editor").glob("*.js"))
 
 
 def ssh(command, check=True):
@@ -105,8 +135,23 @@ def combine(reports):
     return {"rows": rows, "spread": spread, "errors": errors}
 
 
+def same_build(stem, name):
+    return stem == name or (stem.startswith(name + "-") and stem[len(name) + 1:].isdigit())
+
+
+def keep(history, name, combined, lines):
+    """Write the record under a name not yet taken, so a second run for one build adds -2 and keeps the first."""
+    stem, n = name, 1
+    while (history / f"{stem}.json").exists() or (history / f"{stem}.txt").exists():
+        n += 1
+        stem = f"{name}-{n}"
+    (history / f"{stem}.json").write_text(json.dumps(combined, indent=2))
+    (history / f"{stem}.txt").write_text("\n".join(lines) + "\n")
+    return stem
+
+
 def compare(now, history, name):
-    earlier = sorted((p for p in history.glob("*.json") if p.stem != name), key=lambda p: p.stat().st_mtime)
+    earlier = sorted((p for p in history.glob("*.json") if not same_build(p.stem, name)), key=lambda p: p.stat().st_mtime)
     if not earlier:
         return ["no earlier build in the history to compare with"]
     before = json.loads(earlier[-1].read_text())
@@ -165,13 +210,15 @@ def main():
     (out / "combined.json").write_text(json.dumps(combined, indent=2))
 
     size = subprocess.run(["du", "-sk", args.app], capture_output=True, text=True).stdout.split()[0]
-    editor = (HERE.parent / "ui/editor.bundle.js").stat().st_size / 1024
+    editor = sum(f.stat().st_size for f in static_closure(HERE.parent / "ui/editor.bundle.js")) / 1024
+    editor_all = sum(f.stat().st_size for f in editor_files(HERE.parent / "ui")) / 1024
     ssh(f"rm -rf '{DEST}'; true")
     gate = [
         sys.executable, str(HERE / "speed-gate.py"), str(out / "combined.json"),
         "--second-run", str(out / "reopen.json"),
         "--idle-cpu", str(combined["idle_cpu"]), "--memory-mb", str(combined["memory_mb"]),
-        "--editor-kb", str(round(editor, 1)), "--app-mb", str(round(int(size) / 1024, 1)),
+        "--editor-kb", str(round(editor, 1)), "--editor-all-kb", str(round(editor_all, 1)),
+        "--app-mb", str(round(int(size) / 1024, 1)),
     ]
     done = subprocess.run(gate, capture_output=True, text=True)
     lines = [f"HTML Lab {version} at {revision}, Intel test Mac, {args.runs} measured runs, medians",
@@ -182,8 +229,7 @@ def main():
     lines += [""] + compare(combined, history, name)
     print("\n".join(lines))
     if revision != "unstamped" and not revision.endswith("-dirty"):
-        (history / f"{name}.json").write_text(json.dumps(combined, indent=2))
-        (history / f"{name}.txt").write_text("\n".join(lines) + "\n")
+        print(f"\nkept in speed-history as {keep(history, name, combined, lines)}")
     else:
         print(f"\nnot kept in speed-history: {revision} is not a committed build")
     sys.exit(done.returncode)

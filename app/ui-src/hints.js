@@ -145,17 +145,21 @@ class HintWidget extends WidgetType {
     }
     const links = document.createElement('div');
     links.className = 'hint-links';
-    const learn = document.createElement('button');
-    learn.className = 'hint-link';
-    learn.dataset.act = 'learn';
-    learn.textContent = 'Learn about tags';
-    learn.addEventListener('click', () => this.callbacks.onLearn && this.callbacks.onLearn());
+    // The code hints (code-hints.js, WP6) have no lesson to point to.
+    if (this.mistake.learn !== false) {
+      const learn = document.createElement('button');
+      learn.className = 'hint-link';
+      learn.dataset.act = 'learn';
+      learn.textContent = 'Learn about tags';
+      learn.addEventListener('click', () => this.callbacks.onLearn && this.callbacks.onLearn());
+      links.append(learn);
+    }
     const hide = document.createElement('button');
     hide.className = 'hint-link';
     hide.dataset.act = 'hide';
     hide.textContent = 'Hide this hint';
     hide.addEventListener('click', () => view.dispatch({ effects: hideMistake.of(null) }));
-    links.append(learn, hide);
+    links.append(hide);
     body.append(title, text, links);
     box.append(body);
     return box;
@@ -200,7 +204,9 @@ export function mistakeHints(callbacks) {
     provide: (f) => EditorView.decorations.from(f, (v) => v.deco),
   });
 
-  const plugin = ViewPlugin.fromClass(
+  // One checker per detector: findMistake here for HTML, and the one in code-hints.js for JSON,
+  // JavaScript and TypeScript. All of them share the field, so fold pills see every mistake.
+  const checker = (find, skip) => ViewPlugin.fromClass(
     class {
       constructor(view) {
         this.view = view;
@@ -216,10 +222,10 @@ export function mistakeHints(callbacks) {
       }
       check() {
         const state = this.view.state;
-        if (unfinishedTagAt(state.doc, state.selection.main.head)) return;
+        if (skip && skip(state)) return;
         const tree = ensureSyntaxTree(state, state.doc.length, 100);
         if (!tree) return;
-        const next = findMistake(state, tree);
+        const next = find(state, tree);
         const current = state.field(field).mistake;
         const same =
           (!next && !current) ||
@@ -240,7 +246,15 @@ export function mistakeHints(callbacks) {
     }
   });
 
-  return { extension: [field, plugin, listener], field };
+  const made = new Map();
+  return {
+    extension: [field, checker(findMistake, (state) => unfinishedTagAt(state.doc, state.selection.main.head)), listener],
+    field,
+    forDetector(find) {
+      if (!made.has(find)) made.set(find, [field, checker(find), listener]);
+      return made.get(find);
+    },
+  };
 }
 
 function keyOf(state, mistake) {

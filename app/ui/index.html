@@ -14,9 +14,10 @@
 <header id="toolbar" data-tauri-drag-region>
   <div class="tb-left" data-tauri-drag-region>
     <div class="tb-lights" data-tauri-drag-region></div>
-    <button id="btn-new" class="tb" type="button"><svg class="icon s24" aria-hidden="true"><use href="#i-new"></use></svg>New</button>
+    <button id="btn-new" class="tb" type="button"><svg class="icon s24" aria-hidden="true"><use href="#i-new"></use></svg>New project</button>
     <button id="btn-open" class="tb" type="button"><svg class="icon s24" aria-hidden="true"><use href="#i-open"></use></svg>Open</button>
     <button id="btn-save" class="tb" type="button" disabled><svg class="icon s24" aria-hidden="true"><use href="#i-save"></use></svg><span class="label">Save</span></button>
+    <button id="btn-side" class="tb tb-side" type="button" aria-pressed="true" aria-label="Hide the My page side" title="Hide the My page side" disabled><svg class="icon s24 side-mirror" aria-hidden="true"><use href="#i-sidebar-simple"></use></svg></button>
   </div>
   <div class="tb-right" data-tauri-drag-region>
     <nav class="segs" aria-label="Right panel">
@@ -44,7 +45,13 @@
     <section id="code-panel" class="panel" aria-label="Code" hidden>
       <div id="tabstrip">
         <div id="tab-list"></div>
-        <button id="tab-add" class="ico" type="button" aria-label="Add a new file" title="Add a new file"><svg class="icon s18 tk-brand" aria-hidden="true"><use href="#i-plus-bold"></use></svg></button>
+        <button id="tab-add" class="ico" type="button" aria-label="Make a new file" title="Make a new file"><svg class="icon s18 tk-brand" aria-hidden="true"><use href="#i-plus-bold"></use></svg></button>
+      </div>
+      <div id="rename-tip" role="status" hidden></div>
+      <div id="rename-toast" role="status" hidden>
+        <svg class="icon s22" aria-hidden="true"><use href="#i-check-bold"></use></svg>
+        <span id="rename-toast-text"></span>
+        <button id="rename-undo" type="button" hidden>Undo</button>
       </div>
       <div id="editor-host"></div>
       <div id="inside-line"></div>
@@ -58,6 +65,8 @@
           <span id="status-text"></span>
         </div>
         <div class="status-right">
+          <span id="lang-label" hidden></span>
+          <span id="tidy-off" hidden></span>
           <button id="btn-tidy" class="ico ico-word" type="button" title="Fix the indents in this file"><svg class="icon s18" aria-hidden="true"><use href="#i-text-indent-bold"></use></svg>Tidy</button>
           <span class="size-label">Text size</span>
           <span id="size-value" hidden></span>
@@ -128,6 +137,15 @@
         <div id="page-empty" hidden>
           <p class="page-empty-text">Open or make an HTML page to see it here.</p>
           <button id="page-empty-link" class="link" type="button">Start here</button>
+        </div>
+      </div>
+      <div id="page-none" hidden>
+        <div class="none-tile" aria-hidden="true"><svg class="icon s36"><use href="#i-browser"></use></svg></div>
+        <h2 class="none-title">This file has no page to show.</h2>
+        <p id="page-none-line" class="none-line"></p>
+        <div class="none-row">
+          <button id="btn-hide-side" class="btn btn-secondary" type="button"><svg class="icon s20 tk-brand side-mirror" aria-hidden="true"><use href="#i-sidebar-simple"></use></svg>Hide this side</button>
+          <button id="page-none-help" class="link none-help" type="button"><svg class="icon s20" aria-hidden="true"><use href="#i-help"></use></svg>Open Help</button>
         </div>
       </div>
       <div id="practice-bar" hidden>

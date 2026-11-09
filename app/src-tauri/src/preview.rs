@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::RwLock;
 
-use htmllab_core::{content, kinds};
+use htmllab_core::{content, files, kinds};
 use percent_encoding::percent_decode_str;
 use tauri::http::{header, Response, StatusCode};
 
@@ -82,7 +82,7 @@ pub fn respond(store: &Store, raw_path: &str, nonce: &str) -> Response<Vec<u8>> 
 
     let buffer = store.buffers.read().unwrap().get(&key).cloned();
     if let Some(text) = buffer {
-        return serve(text.into_bytes(), &name, nonce, true);
+        return serve_text(text, &name, nonce);
     }
     let picture = store.pictures.read().unwrap().get(&key).copied();
     if let Some(bytes) = picture {
@@ -97,9 +97,34 @@ pub fn respond(store: &Store, raw_path: &str, nonce: &str) -> Response<Vec<u8>> 
         return missing(&name, nonce);
     }
     match std::fs::read(&path) {
-        Ok(bytes) => serve(bytes, &name, nonce, true),
+        Ok(bytes) => serve_disk(bytes, &name, nonce),
         Err(_) => missing(&name, nonce),
     }
+}
+
+// Text from disk goes through the reader's decoder, so a UTF-16 file reaches the page as
+// UTF-8 without its BOM. Pictures and fonts stay raw, and so does anything that is not text.
+fn serve_disk(bytes: Vec<u8>, name: &str, nonce: &str) -> Response<Vec<u8>> {
+    let mime = kinds::mime_for(name);
+    if kinds::is_picture(name) || mime.starts_with("image/") || mime.starts_with("font/") {
+        return serve(bytes, name, nonce, true);
+    }
+    match files::decode_text(&bytes) {
+        Ok(decoded) => serve_text(decoded.text, name, nonce),
+        Err(_) => serve(bytes, name, nonce, true),
+    }
+}
+
+fn serve_text(text: String, name: &str, nonce: &str) -> Response<Vec<u8>> {
+    let mut res = serve(text.into_bytes(), name, nonce, true);
+    let mime = kinds::mime_for(name);
+    let textual = mime.starts_with("text/") || mime.ends_with("/json") || mime.ends_with("/xml");
+    if textual && !mime.contains("charset") {
+        let typed = format!("{mime}; charset=utf-8");
+        res.headers_mut()
+            .insert(header::CONTENT_TYPE, typed.parse().unwrap());
+    }
+    res
 }
 
 fn serve(bytes: Vec<u8>, name: &str, nonce: &str, with_helper: bool) -> Response<Vec<u8>> {
@@ -355,6 +380,89 @@ mod tests {
             res.body().as_slice(),
             content::picture("saturn.jpg").unwrap()
         );
+    }
+
+    fn temp_root(name: &str) -> (Store, PathBuf) {
+        let dir = std::env::temp_dir().join(format!("htmllab-{name}-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let dir = dunce::canonicalize(&dir).unwrap();
+        let store = Store::default();
+        store.add_root(dir.to_str().unwrap());
+        (store, dir)
+    }
+
+    fn served(store: &Store, path: &Path) -> Response<Vec<u8>> {
+        let raw = format!("/{}", path.to_str().unwrap().trim_start_matches('/'));
+        respond(store, &raw, "n")
+    }
+
+    #[test]
+    fn a_utf16_page_on_disk_is_served_as_utf8_with_the_helper() {
+        let (store, dir) = temp_root("utf16-page");
+        let page = dir.join("page.html");
+        // "<!doctype html>\n<p>ä</p>" in UTF-16 LE with its BOM, written out by hand.
+        let mut bytes: Vec<u8> = vec![0xFF, 0xFE];
+        for c in b"<!doctype html>\n<p>" {
+            bytes.extend_from_slice(&[*c, 0x00]);
+        }
+        bytes.extend_from_slice(&[0xE4, 0x00]);
+        for c in b"</p>" {
+            bytes.extend_from_slice(&[*c, 0x00]);
+        }
+        std::fs::write(&page, &bytes).unwrap();
+
+        let res = served(&store, &page);
+        assert_eq!(res.status(), StatusCode::OK);
+        assert_eq!(res.headers()[header::CONTENT_TYPE], "text/html; charset=utf-8");
+        let body = res.body();
+        assert!(body.starts_with(b"<!doctype html><script nonce=\"n\">"));
+        assert!(!body.contains(&0));
+        let tail = b"\n<p>\xC3\xA4</p>";
+        assert!(body.ends_with(tail), "{}", String::from_utf8_lossy(body));
+        let text = String::from_utf8(body.clone()).unwrap();
+        assert!(text.contains("<script nonce=\"n\">"));
+        assert!(text.contains("<p>\u{e4}</p>"));
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn disk_text_loses_its_bom_and_pictures_stay_raw() {
+        let (store, dir) = temp_root("disk-kinds");
+        std::fs::write(dir.join("style.css"), b"\xEF\xBB\xBFp { color: red; }").unwrap();
+        std::fs::write(dir.join("notes.txt"), b"\xFE\xFF\x00h\x00i").unwrap();
+        std::fs::write(dir.join("data.json"), b"{\"a\": 1}").unwrap();
+        let png = b"\x89PNG\r\n\x1a\n\x00\x00\x00\x0dIHDR";
+        std::fs::write(dir.join("cat.png"), png).unwrap();
+        let svg = b"\xEF\xBB\xBF<svg/>";
+        std::fs::write(dir.join("star.svg"), svg).unwrap();
+        let font = b"wOF2\x00\x01";
+        std::fs::write(dir.join("a.woff2"), font).unwrap();
+        std::fs::write(dir.join("odd.css"), b"p\xFF").unwrap();
+
+        let res = served(&store, &dir.join("style.css"));
+        assert_eq!(res.body().as_slice(), b"p { color: red; }");
+        assert_eq!(res.headers()[header::CONTENT_TYPE], "text/css; charset=utf-8");
+        let res = served(&store, &dir.join("notes.txt"));
+        assert_eq!(res.body().as_slice(), b"hi");
+        assert_eq!(res.headers()[header::CONTENT_TYPE], "text/plain; charset=utf-8");
+        assert!(!res.headers()[header::CONTENT_SECURITY_POLICY]
+            .to_str()
+            .unwrap()
+            .contains("script-src"));
+        let res = served(&store, &dir.join("data.json"));
+        assert_eq!(res.headers()[header::CONTENT_TYPE], "application/json; charset=utf-8");
+        let res = served(&store, &dir.join("cat.png"));
+        assert_eq!(res.body().as_slice(), png);
+        assert_eq!(res.headers()[header::CONTENT_TYPE], "image/png");
+        let res = served(&store, &dir.join("star.svg"));
+        assert_eq!(res.body().as_slice(), svg);
+        assert_eq!(res.headers()[header::CONTENT_TYPE], "image/svg+xml");
+        let res = served(&store, &dir.join("a.woff2"));
+        assert_eq!(res.body().as_slice(), font);
+        let res = served(&store, &dir.join("odd.css"));
+        assert_eq!(res.body().as_slice(), b"p\xFF");
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 
     #[test]

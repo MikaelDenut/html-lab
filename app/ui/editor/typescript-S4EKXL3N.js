@@ -1,0 +1,1 @@
+import{a as s}from"./chunk-GT374VNL.js";import{b as r,d as e,e as p}from"./chunk-WERCO2IT.js";import"./chunk-2KTEC33I.js";import"./chunk-DYT227AT.js";import{na as t}from"./chunk-H3U6UN5B.js";var n=new t(r,p({typescript:!0}).support),a=new t(e,p({typescript:!0}).support);function c(o){return/\.tsx$/i.test(o||"")?a:n}var g=!1;export{s as findMistake,g as legacy,c as support};

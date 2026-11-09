@@ -1,6 +1,6 @@
 ---
 class:   truth
-updated: 2026-11-08
+updated: 2026-11-09
 status:  current
 ---
 
@@ -74,7 +74,7 @@ Do not hand-copy a value from the code into a document.
 ## Working rules
 
 - **Version.** Every build that leaves the build folder goes up by one: 0.1.9 is followed by 0.2.0. Keep `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml` and `package.json` the same; the release script refuses a mismatch.
-- **Committed bundles.** `ui/editor.bundle.js` and `src-tauri/helper.min.js` are in git. Rebuild them after changing `ui-src/`; the commands are in [README.md](README.md). The release script rebuilds them first, so a stale bundle shows up as a change and is refused.
+- **Committed bundles.** `ui/editor.bundle.js`, the chunks it loads in `ui/editor/` (`<name>-<hash>.js`, the language parts among them) and `src-tauri/helper.min.js` are in git. Rebuild them after changing `ui-src/`; the commands are in [README.md](README.md). The editor command starts with `rm -rf ui/editor`, so a chunk that is no longer built shows up as a deletion: commit the additions and deletions together. The release script rebuilds them first, so a stale bundle or chunk shows up as a change and is refused.
 - **Templates.** The rules are in `core/content/templates/RULES.md`. After changing one, run `python3 scripts/build-templates.py` to pack the gallery.
 - **Pictures.** Public domain or CC0 only, each with a row in the `SOURCES.md` files.
 - **npm.** Run it only when `npm prefix` prints the `app` folder.
